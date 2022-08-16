@@ -11,7 +11,6 @@
     Private CurrentPartsRequisitionStatus As String
     Private CurrentPartsRequisitionID = -1
 
-    Private CurrentPartsRequisitionsItemID = -1
 
     Private StoreSuppliesRequisitionsItemsFieldsToSelect = ""
     Private StoreSuppliesRequisitionsItemsTableLinks = ""
@@ -29,10 +28,18 @@
     Private CreatingRequisitionItems = False
     Private SavedCallingForm As Form
     Private PurposeOfEntry = ""
+    Private CurrentStoreSuppliesRequisitionsItemStatus = ""
     Private Sub PartsRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
-        MySelection = StoreSuppliesRequisitionsItemsFieldsToSelect & StoreSuppliesRequisitionsItemsTableLinks & StoreSuppliesRequisitionsItemsSelectionFilter & StoreSuppliesRequisitionsItemsSelectionOrder
         SavedCallingForm = CallingForm
-        SetScreenToDraftMode()
+        'NOTE Requisition header will only be created when submitting the requisition to procurement dept
+        '
+        StoreSuppliesRequisitionsItemsSelectionFilter = SetupTableSelectionFilter(
+                                                            GetStatusIdFor("StoreSuppliesRequisitionsItemsTable", "Draft", 1),
+                                                            2,
+                                                            Me,
+                                                            "Draft"
+                                                            )
+        FillStoreSuppliesRequisitionsItemsDataGridView()
 
     End Sub
 
@@ -44,63 +51,54 @@
             Case "Tunnel2IsMasterCodeBookID"
                 CurrentMasterCodeBookId = Tunnel2
                 PartTextBox.Text = Tunnel3
+                RequisitionItemProductDescTextBox.Enabled = True
+                POItemProductPartNoTextBox.Enabled = True
+                RequisitionItemQuantityTextBox.Enabled = True
             Case "Tunnel2IsProductPartID"
                 CurrentRequestedProductPartID = Tunnel2
                 RequisitionItemQuantityTextBox.Select()
             Case Else
-                MsgBox("setup this routine")
+                MsgBox("setup this routine, Returning called form name not indicated")
         End Select
     End Sub
     Private Sub FillStoreSuppliesRequisitionsItemsDataGridView()
-        Dim xxDraft = " IIf(StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Byte = 0, " & Chr(34) & "Draft" & Chr(34) & ","
-        Dim xxSubmitted = " IIf(StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Byte= 1, " & Chr(34) & "Submitted" & Chr(34) & ","
-        Dim xxReordered = " IIf(StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Byte= 2, " & Chr(34) & "Re-ordered" & Chr(34) & ","
-        Dim xxCompletelyOrdered = " IIf(StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Byte= 3, " & Chr(34) & "Ordered" & Chr(34) & ","
-
-        Dim StoreSuppliesRequisitionsItemStatus = xxDraft & xxSubmitted & xxCompletelyOrdered & xxReordered & Chr(34) & Chr(34) &
-                                " )))) AS StoreSuppliesRequisitionsItemStatus "
-
         StoreSuppliesRequisitionsItemsFieldsToSelect =
 "
-SELECT StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemID_AutoNumber,
-StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger,
-StoreSuppliesRequisitionsItemsTable.ProductPartID_LongInteger,
+SELECT 
+StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemID_AutoNumber, 
+MasterCodeBookTable.MasterCodeBookID_Autonumber, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld,
-StoreSuppliesRequisitionsItemsTable.StoreSupplyRequisitionQuantity_Double, 
-StoreSuppliesRequisitionsItemsTable.StoreSupplyRequisitionUnit_ShortText3, 
-StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger,
-StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Byte,
-ProductsPartsTableRequested.ManufacturerPartNo_ShortText30Fld,
-ProductsPartsTableRequested.ManufacturerDescription_ShortText250,
-ProductsPartsTableRequested.Unit_ShortText3, 
-BrandsTableRequested.BrandName_ShortText20,
-ProductsPartsTableRequested.BrandID_LongInteger,
-ProductsPartsTableRequested.MasterCodeBookID_LongInteger,
-PartsRequisitionsItemsTable.ProductPartID_LongInteger,
-PartsRequisitionsItemsTable.RequisitionQuantity_Double,
-PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger,
-ProductsPartsTablePurchased.ManufacturerPartNo_ShortText30Fld,
-ProductsPartsTablePurchased.ManufacturerDescription_ShortText250,
-ProductsPartsTablePurchased.Unit_ShortText3,
-BrandsTableOrdered.BrandName_ShortText20, 
-" & StoreSuppliesRequisitionsItemStatus & "
-FROM (((PartsRequisitionsItemsTable RIGHT JOIN (((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableRequested ON StoreSuppliesRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTableRequested.ProductsPartID_Autonumber) LEFT JOIN VehicleDescription ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) ON PartsRequisitionsItemsTable.OrderPartsRequisitionsItemID_LongInteger = StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTablePurchased ON PartsRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTablePurchased.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTablePurchased.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableRequested ON ProductsPartsTableRequested.BrandID_LongInteger = BrandsTableRequested.BrandID_Autonumber
+ProductsPartsTable.ProductsPartID_Autonumber, 
+VehicleDescription.VehicleDescription, 
+BrandsTableRequested.BrandName_ShortText20, 
+StoreSuppliesRequisitionsItemsTable.PartsRequisitionID_LongInteger,
+StoreSuppliesRequisitionsItemsTable.StoreSupplyRequisitionQuantity_Double,
+ProductsPartsTable.Unit_ShortText3, 
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld,
+ProductsPartsTable.ManufacturerDescription_ShortText250,
+StatusesTable.StatusSequence_LongInteger, 
+StatusesTable.StatusText_ShortText25, PartsRequisitionsTable.PartsRequisitionType_Byte
+FROM (((((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ProductsPartsTable ON StoreSuppliesRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN VehicleDescription ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) LEFT JOIN BrandsTable AS BrandsTableRequested ON ProductsPartsTable.BrandID_LongInteger = BrandsTableRequested.BrandID_Autonumber) LEFT JOIN StatusesTable ON StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN PartsRequisitionsTable ON StoreSuppliesRequisitionsItemsTable.PartsRequisitionID_LongInteger = PartsRequisitionsTable.PartsRequisitionID_AutoNumber
 "
-        StoreSuppliesRequisitionsItemsTableLinks =
-""
-        StoreSuppliesRequisitionsItemsFieldsToSelect =
-"
-"
-        MySelection = StoreSuppliesRequisitionsItemsFieldsToSelect & StoreSuppliesRequisitionsItemsTableLinks & StoreSuppliesRequisitionsItemsSelectionFilter & StoreSuppliesRequisitionsItemsSelectionOrder
+
+
+        MySelection = StoreSuppliesRequisitionsItemsFieldsToSelect & StoreSuppliesRequisitionsItemsSelectionFilter & StoreSuppliesRequisitionsItemsSelectionOrder
         JustExecuteMySelection()
 
         StoreSuppliesRequisitionsItemsRecordCount = RecordCount
         StoreSuppliesRequisitionsItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        Dim NoOfHeaderLines = 2, RecordsToDisplay = 28
-        SetGroupBoxHeight(NoOfHeaderLines, RecordsToDisplay, StoreSuppliesRequisitionsItemsRecordCount, StoreSuppliesRequisitionsItemsGroupBox, StoreSuppliesRequisitionsItemsDataGridView)
+        Dim RecordsToDisplay = 28
+        SetGroupBoxHeight(RecordsToDisplay, StoreSuppliesRequisitionsItemsRecordCount, StoreSuppliesRequisitionsItemsGroupBox, StoreSuppliesRequisitionsItemsDataGridView)
 
         If Not StoreSuppliesRequisitionsItemsDataGridViewAlreadyFormated Then
             FormatStoreSuppliesRequisitionsItemsDataGridView()
+        End If
+        If PartsRequisitionsRecordCount > 0 Then
+            StoreSuppliesRequisitionsItemsGroupBox.Top = PartsRequisitionsDataGridView.Top +
+                                                        PartsRequisitionsDataGridView.Height
+        Else
+            StoreSuppliesRequisitionsItemsGroupBox.Top = PartsRequisitionsMenuStrip.Top +
+                                                        PartsRequisitionsMenuStrip.Height
         End If
     End Sub
     Private Sub FormatStoreSuppliesRequisitionsItemsDataGridView()
@@ -111,6 +109,10 @@ FROM (((PartsRequisitionsItemsTable RIGHT JOIN (((StoreSuppliesRequisitionsItems
             StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = False
 
             Select Case StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Name
+                Case "VehicleDescription"
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "For Vehicle"
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 200
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Part"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 350
@@ -123,20 +125,20 @@ FROM (((PartsRequisitionsItemsTable RIGHT JOIN (((StoreSuppliesRequisitionsItems
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Req Unit"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 50
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTableRequested.ManufacturerPartNo_ShortText30Fld"
+                Case "ManufacturerPartNo_ShortText30Fld"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Reqstd. Part No"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 135
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTableRequested.ManufacturerDescription_ShortText250"
-                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Reqstd. Description"
+                Case "ManufacturerDescription_ShortText250"
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Reqstd. Product"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 350
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
                     StoreSuppliesRequisitionsItemsDataGridView.Columns(i).DefaultCellStyle.WrapMode = DataGridViewTriState.True
-                Case "ProductsPartsTableRequested.Unit_ShortText3"
+                Case "Unit_ShortText3"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Reqstd. Unit"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 120
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
-                Case "BrandsTableOrdered.BrandName_ShortText20"
+                Case "BrandName_ShortText20"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Reqstd Brand"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 150
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
@@ -144,19 +146,24 @@ FROM (((PartsRequisitionsItemsTable RIGHT JOIN (((StoreSuppliesRequisitionsItems
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Status"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 120
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTablePurchased.ManufacturerPartNo_ShortText30Fld"
+                Case "ManufacturerPartNo_ShortText30Fld"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Purchd. Part No"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 135
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTablePurchased.ManufacturerDescription_ShortText250"
+                Case "ManufacturerDescription_ShortText250"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Purchd. Description"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 350
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
                     StoreSuppliesRequisitionsItemsDataGridView.Columns(i).DefaultCellStyle.WrapMode = DataGridViewTriState.True
-                Case "ProductsPartsTablePurchased.Unit_ShortText3"
+                Case "Unit_ShortText3"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Purchd. Unit"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 120
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                Case "StatusText_ShortText25"
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Status"
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 120
+                    StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+
             End Select
             If StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True Then
                 'WIDTH OF DATAGRIDVIEW INSIDE A GROUPBOX AUTOMATICALLY ADJUST TO GroupBox.Width - 4
@@ -167,11 +174,11 @@ FROM (((PartsRequisitionsItemsTable RIGHT JOIN (((StoreSuppliesRequisitionsItems
             'WIDTH OF DATAGRIDVIEW INSIDE A GROUPBOX AUTOMATICALLY ADJUST TO GroupBox.Width - 4
             StoreSuppliesRequisitionsItemsGroupBox.Width = Me.Width - 2
         End If
-        StoreSuppliesRequisitionsItemsGroupBox.Top = PartsRequisitionsMenuStrip.Top + PartsRequisitionsMenuStrip.Height
-        StoreSuppliesRequisitionsItemsGroupBox.Left = Me.Left
+        HorizontalCenter(StoreSuppliesRequisitionsItemsGroupBox, Me)
+
 
     End Sub
-    Private Sub StoreSuppliesRequisitionsItemsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs)
+    Private Sub StoreSuppliesRequisitionsItemsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles StoreSuppliesRequisitionsItemsDataGridView.RowEnter
 
         CurrentStoreSuppliesRequisitionsItemID = -1
         If e.RowIndex < 0 Then
@@ -182,58 +189,48 @@ FROM (((PartsRequisitionsItemsTable RIGHT JOIN (((StoreSuppliesRequisitionsItems
         End If
         CurrentStoreSuppliesRequisitionsItemsDataGridViewRow = e.RowIndex
         CurrentStoreSuppliesRequisitionsItemID = StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSuppliesRequisitionsItemID_AutoNumber", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value
-        CurrentRequestedProductPartID = StoreSuppliesRequisitionsItemsDataGridView.Item("ProductPartID_LongInteger", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value
-        If StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSuppliesRequisitionsItemStatus", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value = "Ordered" Then
-            StoreSuppliesRequisitionsItemsDataGridView.Rows(CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).DefaultCellStyle.ForeColor = Color.Red
-        End If
-        If Not StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSuppliesRequisitionsItemStatus", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value = "Outstanding" Then
-            RequisitionDetailsToolStripMenuItem.Visible = True
-        Else
-            RequisitionDetailsToolStripMenuItem.Visible = False
-        End If
+        CurrentRequestedProductPartID = StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value
+        CurrentStoreSuppliesRequisitionsItemStatus = StoreSuppliesRequisitionsItemsDataGridView.Item("StatusText_ShortText25", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value
+        EditItemToolStripMenuItem.Visible = False
+        DeleteItemToolStripMenuItem.Visible = False
+        SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
+        Select Case CurrentStoreSuppliesRequisitionsItemStatus
+            Case "Draft"
+                EditItemToolStripMenuItem.Visible = True
+                DeleteItemToolStripMenuItem.Visible = True
+                SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = True
+            Case "Submitted"
+            Case "Received"
+        End Select
     End Sub
     Public Sub FillPartsRequisitionsDataGridView()
         PartsRequisitionsSelectionOrder = " ORDER BY PartsRequisitionID_AutoNumber DESC "
-        Dim xxOutstanding = " IIf(PartsRequisitionsTable.PartsRequisitionStatus_Integer = 0, " & Chr(34) & "Outstanding" & Chr(34) & ","
-        Dim xxDraft = " IIf(PartsRequisitionsTable.PartsRequisitionStatus_Integer = -1, " & Chr(34) & "Draft" & Chr(34) & ","
-        Dim xxPartiallyOrdered = " IIf(PartsRequisitionsTable.PartsRequisitionStatus_Integer = 1, " & Chr(34) & "Partially Ordered" & Chr(34) & ","
-        Dim xxReordered = " IIf(PartsRequisitionsTable.PartsRequisitionStatus_Integer = 2, " & Chr(34) & "Re-Ordered" & Chr(34) & ","
-        Dim xxCompletelyOrdered = " IIf(PartsRequisitionsTable.PartsRequisitionStatus_Integer = 3, " & Chr(34) & "Completely Ordered" & Chr(34) & ","
 
-        PartsRequisitionStatus = xxOutstanding & xxDraft & xxPartiallyOrdered & xxCompletelyOrdered & xxReordered & Chr(34) & Chr(34) &
-                                " ))))) AS PartsRequisitionStatus "
-
-        PartsRequisitionsFieldsToSelect = " 
-SELECT PartsRequisitionsTable.PartsRequisitionID_AutoNumber, 
+        '        VehicleDescription.VehicleDescription,
+        PartsRequisitionsFieldsToSelect =
+" 
+SELECT 
+PartsRequisitionsTable.PartsRequisitionID_AutoNumber, 
 PartsRequisitionsTable.RequisitionRevision_Integer, 
 PartsRequisitionsTable.RequisitionDate_ShortDate, 
-PartsRequisitionsTable.RequestedByID_LongInteger, 
-PartsRequisitionsTable.PartsRequisitionStatus_Integer, 
-PartsRequisitionsTable.VehicleID_LongInteger, 
-PartsRequisitionsTable.PartsRequisitionStatus_Integer, 
-PartsRequisitionsTable.PartsRequisitionStatus_Integer, 
-PartsRequisitionsTable.PartsRequisitionType_Byte, 
-PartsRequisitionsTable.PartsRequisitionStatus_Integer, 
-PartsRequisitionsTable.PartsRequisitionType_Byte, 
-VehicleDescription.VehicleDescription,
-PartsRequisitionsTable.PartsRequisitionStatus_Integer,
-" & PartsRequisitionStatus
-
-        PartsRequisitionsTableLinks = " 
-FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN VehiclesTable ON PartsRequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber
+(trim(PersonnelTable.FirstName_ShortText30) & space(1) & Trim(PersonnelTable.LastName_ShortText30)) AS RequestedBy, 
+PartsRequisitionsTable.PartsRequisitionType_Byte,
+StatusesTable.StatusText_ShortText25,
+StatusesTable.StatusSequence_LongInteger
+FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON PartsRequisitionsTable.PartsRequisitionStatus_Integer = StatusesTable.StatusID_Autonumber
 "
-        MySelection = PartsRequisitionsFieldsToSelect & PartsRequisitionsTableLinks & PartsRequisitionsSelectionFilter & PartsRequisitionsSelectionOrder
+        MySelection = PartsRequisitionsFieldsToSelect & PartsRequisitionsSelectionFilter & PartsRequisitionsSelectionOrder
         JustExecuteMySelection()
         PartsRequisitionsRecordCount = RecordCount
-        PartsRequisitionsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If PartsRequisitionsRecordCount = 0 Then
             PartsRequisitionsGroupBox.Visible = False
         Else
             PartsRequisitionsGroupBox.Visible = True
         End If
+        PartsRequisitionsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
 
-        Dim NoOfHeaderLines = 1, RecordsToDisplay = 10
-        SetGroupBoxHeight(NoOfHeaderLines, RecordsToDisplay, PartsRequisitionsRecordCount, PartsRequisitionsGroupBox, PartsRequisitionsDataGridView)
+        Dim RecordsToDisplay = 10
+        SetGroupBoxHeight(RecordsToDisplay, PartsRequisitionsRecordCount, PartsRequisitionsGroupBox, PartsRequisitionsDataGridView)
 
         If Not PartsRequisitionsDataGridViewAlreadyFormatted Then
             FormatPartsRequisitionsDataGridView()
@@ -278,15 +275,11 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
                     PartsRequisitionsDataGridView.Columns.Item(i).HeaderText = "Date"
                     PartsRequisitionsDataGridView.Columns.Item(i).Width = 100
                     PartsRequisitionsDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
-                    PartsRequisitionsDataGridView.Columns.Item(i).HeaderText = "For Vehicle"
-                    PartsRequisitionsDataGridView.Columns.Item(i).Width = 300
-                    PartsRequisitionsDataGridView.Columns.Item(i).Visible = True
                 Case "RequestedBy"
                     PartsRequisitionsDataGridView.Columns.Item(i).HeaderText = "Requested By"
                     PartsRequisitionsDataGridView.Columns.Item(i).Width = 250
                     PartsRequisitionsDataGridView.Columns.Item(i).Visible = True
-                Case "PartsRequisitionStatus"
+                Case "StatusText_ShortText25"
                     PartsRequisitionsDataGridView.Columns.Item(i).HeaderText = "Requisition Status"
                     PartsRequisitionsDataGridView.Columns.Item(i).Width = 150
                     PartsRequisitionsDataGridView.Columns.Item(i).Visible = True
@@ -304,23 +297,24 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
 
         CurrentPartsRequisitionsRow = e.RowIndex
         CurrentPartsRequisitionID = PartsRequisitionsDataGridView.Item("PartsRequisitionID_AutoNumber", CurrentPartsRequisitionsRow).Value
-        CurrentVehicleID = PartsRequisitionsDataGridView.Item("VehicleID_LongInteger", CurrentPartsRequisitionsRow).Value
-        CurrentPartsRequisitionStatus = NotNull(PartsRequisitionsDataGridView.Item("PartsRequisitionStatus_Integer", CurrentPartsRequisitionsRow).Value)
-        If CurrentPartsRequisitionStatus = -1 Then
-            SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = True
-            EnableRequisitionItemsMenu()
-        Else
-            SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
-            DisAbleRequisitionItemsMenu()
-        End If
+        CurrentPartsRequisitionStatus = NotNull(PartsRequisitionsDataGridView.Item("StatusText_ShortText25", CurrentPartsRequisitionsRow).Value)
+        SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
+        DisAbleRequisitionItemsMenu()
+        Select Case CurrentPartsRequisitionStatus
+            Case "Draft"
+                SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = True
+                EnableRequisitionItemsMenu()
+        End Select
         StoreSuppliesRequisitionsItemsSelectionFilter = " WHERE PartsRequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString
         FillStoreSuppliesRequisitionsItemsDataGridView()
     End Sub
     Private Sub EnableRequisitionItemsMenu()
         EditItemToolStripMenuItem.Visible = True
         DeleteItemToolStripMenuItem.Visible = True
+        AddItemToolStripMenuItem.Visible = True
     End Sub
     Private Sub DisAbleRequisitionItemsMenu()
+        AddItemToolStripMenuItem.Visible = False
         EditItemToolStripMenuItem.Visible = False
         DeleteItemToolStripMenuItem.Visible = False
     End Sub
@@ -368,43 +362,42 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
             RequisitionDetailsToolStripMenuItem.Text = "Requisition Details"
         End If
     End Sub
-    Private Sub DraftRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DraftRequisitionsToolStripMenuItem.Click
-        SetScreenToDraftMode()
-    End Sub
-    Private Sub SetScreenToDraftMode()
-        PartsRequisitionsGroupBox.Visible = False
-        StoreSuppliesRequisitionsItemsGroupBox.Visible = True
-        StoreSuppliesRequisitionsItemsSelectionFilter = " WHERE StoreSuppliesRequisitionsItemStatus_Byte = 0 "
-        FillStoreSuppliesRequisitionsItemsDataGridView()
-
-    End Sub
     Private Sub OutstandingRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OutstandingRequisitionsToolStripMenuItem.Click
-        SetRequisitionsSelectionFilter(0, Me, "OUTSTANDING REQUISITIONS")
+        SetRequisitionsSelectionFilter(GetStatusIdFor("Partially Ordered"), 1, Me, "OUTSTANDING REQUISITIONS")
     End Sub
 
     Private Sub PartiallyOrderedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartiallyOrderedToolStripMenuItem.Click
-        SetRequisitionsSelectionFilter(1, Me, "PARTIALLY ORDERED REQUISITIONS")
+        SetRequisitionsSelectionFilter(GetStatusIdFor("Partially Ordered"), 2, Me, "PARTIALLY ORDERED REQUISITIONS")
     End Sub
 
     Private Sub ReorderedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReorderedToolStripMenuItem.Click
-        SetRequisitionsSelectionFilter(2, Me, "RE-ORDERED REQUISITIONS")
+        SetRequisitionsSelectionFilter(GetStatusIdFor("Re-ordered"), 2, Me, "RE-ORDERED REQUISITIONS")
     End Sub
 
     Private Sub CompletlyOrderedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompletlyOrderedToolStripMenuItem.Click
-        SetRequisitionsSelectionFilter(3, Me, "COMPLETELY ORDERED REQUISITIONS")
+        SetRequisitionsSelectionFilter(GetStatusIdFor("Completely Ordered"), 2, Me, "COMPLETELY ORDERED REQUISITIONS")
     End Sub
 
     Private Sub AllRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllRequisitionsToolStripMenuItem.Click
-        SetRequisitionsSelectionFilter(10, Me, "ALL REQUISITIONS")
+        SetRequisitionsSelectionFilter(
+                        GetStatusIdFor("PartsRequisitionsTable", "Completely Ordered", 1),
+                        1,
+                        Me,
+                        "ALL REQUISITIONS"
+                        )
+        FillPartsRequisitionsDataGridView()
     End Sub
 
     Private Sub PrintRequissitionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintRequisitionToolStripMenuItem.Click
 
     End Sub
-    Private Sub SetRequisitionsSelectionFilter(PassedStatusCode As Integer, PassedForm As Form, FormHeaderText As String)
-
-        PartsRequisitionsSelectionFilter = SetupTableSelectionFilter(PassedStatusCode, PassedForm, FormHeaderText, " PartsRequisitionType_Byte = 2 ")
-        PartsRequisitionsSelectionFilter = Replace(PartsRequisitionsSelectionFilter, "StoreRequisitionStatus_Byte", "PartsRequisitionStatus_Integer")
+    Private Sub SetRequisitionsSelectionFilter(PassedStatusSequence As Integer, PassedStatusSequenceCondition As Integer, PassedForm As Form, FormHeaderText As String)
+        PartsRequisitionsSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence,
+                                                                     PassedStatusSequenceCondition,
+                                                                     PassedForm,
+                                                                     FormHeaderText,
+                                                                     "PartsRequisitionType_Byte = 2"
+                                                                     )
 
         FillPartsRequisitionsDataGridView()
     End Sub
@@ -422,58 +415,81 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         SaveChanges()
     End Sub
     Private Sub SaveChanges()
+
+        If AChangeOccured() Then
+            Dim xxmsgResult = MsgBox("Save Changes ?", MsgBoxStyle.YesNoCancel)
+            If xxmsgResult = vbNo Then
+                RequisitionItemDetailsGroupBox.Visible = False
+                Exit Sub
+            ElseIf xxmsgResult = MsgBoxResult.Cancel Then
+                Exit Sub
+            End If
+            'VALIDATION:
+            If IsEmpty(PartTextBox.Text) Then
+                PartTextBox.Select()
+                Exit Sub
+            End If
+            If IsEmpty(RequisitionItemQuantityTextBox.Text) Then
+                RequisitionItemQuantityTextBox.Select()
+                Exit Sub
+            End If
+            If IsEmpty(RequisitionItemProductDescTextBox.Text) And
+                IsEmpty(PartSpecificationTextBox.Text) Then
+                PartSpecificationTextBox.Select()
+                Exit Sub
+            End If
+
+        Else
+            RequisitionItemDetailsGroupBox.Visible = False 'NO CHANGES
+            Exit Sub
+        End If
         If PurposeOfEntry = "ADD" Then
             Dim FieldsToUpdate = "
                             MasterCodeBookID_LongInteger, 
                             ProductPartID_LongInteger, 
                             StoreSupplyRequisitionQuantity_Double,
-                            StoreSupplyRequisitionUnit_ShortText3,
-                            VehicleID_LongInteger
+                            StoreSuppliesRequisitionsItemStatus_Integer,
                             "
             Dim FieldsData =
                             CurrentMasterCodeBookId.ToString & "," &
                             CurrentRequestedProductPartID.ToString & "," &
                             RequisitionItemQuantityTextBox.Text & "," &
-                            Chr(34) & RequisitionItemUnitTextBox.Text & Chr(34) & ", " &
+                            GetStatusIdFor("StoreSuppliesRequisitionsItemsTable").ToString &
                             CurrentVehicleID.ToString
+            FieldsToUpdate = "
+                            MasterCodeBookID_LongInteger, 
+                            ProductPartID_LongInteger,
+                            StoreSupplyRequisitionQuantity_Double,
+                            StoreSuppliesRequisitionsItemStatus_Integer,
+                            VehicleID_LongInteger
+                            "
+            FieldsData =
+                            CurrentMasterCodeBookId.ToString & "," &
+                            CurrentRequestedProductPartID.ToString & "," &
+                            RequisitionItemQuantityTextBox.Text & "," &
+                            GetStatusIdFor("StoreSuppliesRequisitionsItemsTable").ToString() & "," &
+                            CurrentVehicleID.ToString()
 
-            CurrentPartsRequisitionID = InsertNewRecord("StoreSuppliesRequisitionsItemsTable", FieldsToUpdate, FieldsData)
+            CurrentStoreSuppliesRequisitionsItemID = InsertNewRecord("StoreSuppliesRequisitionsItemsTable", FieldsToUpdate, FieldsData)
         Else
-
-            If AChangeOccured() Then
-                Dim xxmsgResult = MsgBox("Save Changes ?", MsgBoxStyle.YesNoCancel)
-                If xxmsgResult = vbNo Then
-                    RequisitionItemDetailsGroupBox.Visible = False
-                    Exit Sub
-                ElseIf xxmsgResult = MsgBoxResult.Cancel Then
-                    Exit Sub
-                End If
-            Else
-                RequisitionItemDetailsGroupBox.Visible = False 'NO CHANGES
-                Exit Sub
-            End If
+            MsgBox("this segment has to be re coded")
             If MsgBox("About to replace original information, Continue ?", MsgBoxStyle.YesNo) = vbNo Then
                 Exit Sub
             End If
-            Dim RecordFilter = " WHERE PurchaseOrdersItemID_AutoNumber = " & CurrentPartsRequisitionsItemID.ToString
+            Dim RecordFilter = " WHERE StoreSuppliesRequisitionsItemID_AutoNumber = " & CurrentStoreSuppliesRequisitionsItemID.ToString
             Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentRequestedProductPartID.ToString & "," &
-                                      "StoreSupplyRequisitionQuantity_Double = " & Val(RequisitionItemQuantityTextBox.Text).ToString
-            UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
+                             "StoreSupplyRequisitionQuantity_Double = " & Val(RequisitionItemQuantityTextBox.Text).ToString
+            UpdateTable("StoreSuppliesRequisitionsItemsTable", SetCommand, RecordFilter)
+
+            MsgBox("following update was not yet tested")
+            RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentRequestedProductPartID.ToString
+            SetCommand = " SET  Selected = True "
+            UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
         End If
         RequisitionItemDetailsGroupBox.Visible = False
-        FillPartsRequisitionsDataGridView()
+        FillStoreSuppliesRequisitionsItemsDataGridView()
     End Sub
     Private Function AChangeOccured()
-
-
-
-        '*******************************************************
-        ' CHECK THIS THE TheseAreNotEqual ROUTINE WAS MODIFIED, WATCH PARAMETER pURPOSEOFENTRY
-
-
-
-
-
         If TheseAreNotEqual(SavedProductPartID, CurrentRequestedProductPartID, PurposeOfEntry) Then Return True
         If TheseAreNotEqual(PartTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("MasterCodeBookTable.SystemDesc_ShortText100Fld", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(POItemProductPartNoTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("Price_Currency", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
@@ -489,28 +505,42 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
                 Exit Sub
             End If
         End If
-        MasterCodeBookForm.ChangeVehicleDefaults.Enabled = True
         ShowCalledForm(Me, MasterCodeBookForm)
 
     End Sub
-
+    Private Sub PartSpecificationTextBox_Click(sender As Object, e As EventArgs) Handles PartSpecificationTextBox.Click
+        If IsNotEmpty(PartTextBox.Text) Then
+            If MsgBox("Do you want to change the part? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                Exit Sub
+            End If
+        End If
+        Tunnel1 = "Tunnel2IsMasterCodeBookID"
+        Tunnel2 = CurrentMasterCodeBookId
+        ShowCalledForm(Me, PartsSpecificationsForm)
+    End Sub
     Private Sub POItemProductDescTextBox_TextChanged(sender As Object, e As EventArgs) Handles RequisitionItemProductDescTextBox.Click
         If RequisitionItemProductDescTextBox.Text <> "" Then
             If MsgBox("Do you intend to replace the Product?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
                 Exit Sub
             End If
         End If
-        Tunnel1 = CurrentMasterCodeBookId
-        Tunnel2 = PartTextBox.Text
+        Tunnel2 = CurrentMasterCodeBookId
+        ProductsPartsForm.PartDescriptionSearchTextBox.Text = PartTextBox.Text
         ShowCalledForm(Me, ProductsPartsForm)
 
     End Sub
-
+    Private Sub POItemProductPartNoTextBox_Click(sender As Object, e As EventArgs) Handles POItemProductPartNoTextBox.Click
+        If RequisitionItemProductDescTextBox.Text <> "" Then
+            If MsgBox("Do you intend to replace the Product?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                Exit Sub
+            End If
+        End If
+        ShowCalledForm(Me, ProductsPartsForm)
+    End Sub
     Private Sub AddPartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddItemToolStripMenuItem.Click
         'note items will be selected from the PartsRequisitions for purchase
-        SetScreenToDraftMode()
         PurposeOfEntry = "ADD"
-        CurrentPartsRequisitionsItemID = -1
+        CurrentStoreSuppliesRequisitionsItemID = -1
         RequisitionItemDetailsGroupBox.Visible = True
         PartTextBox.Text = ""
         RequisitionItemProductDescTextBox.Text = ""
@@ -522,19 +552,6 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
     Private Sub SubmitRequisitionsForPurchaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitRequisitionsForPurchaseToolStripMenuItem.Click
         'VALIDATION
         Dim xxEmptyField = ""
-        For i = 0 To StoreSuppliesRequisitionsItemsRecordCount - 1
-            If IsEmpty(StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionUnit_ShortText3", i).Value) Then
-                xxEmptyField = "Unit"
-            ElseIf IsEmpty(StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionQuantity_Double", i).Value) Then
-                xxEmptyField = "Quantity"
-            ElseIf IsEmpty(StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartsTableRequested.MasterCodeBookID_LongInteger", i).Value) Then
-                xxEmptyField = "Kind of Part"
-            End If
-            If Not xxEmptyField = "" Then
-                MsgBox(xxEmptyField & " of item " & i + 1.ToString & " should not be empty")
-                Exit Sub
-            End If
-        Next
 
         If MsgBox("Continue submit requisition for purchase?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
@@ -542,13 +559,16 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
 
         Dim FieldsToUpdate = " RequisitionDate_ShortDate, " &
                                 " RequestedByID_LongInteger, " &
+                                " PartsRequisitionStatus_Integer,  " &
                                 " PartsRequisitionType_Byte  "
 
         Dim FieldsData = Chr(34) & DateString & Chr(34) & ", " &
                                 CurrentUserID.ToString & ", " &
+                                GetStatusIdFor("PartsRequisitionsTable", "Submitted").ToString & ", " &
                                 2.ToString
 
         CurrentPartsRequisitionID = InsertNewRecord("PartsRequisitionsTable", FieldsToUpdate, FieldsData)
+
 
 
 
@@ -556,13 +576,11 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         ' WITH THE NEWLY CREATED PartsRequisitionsHeader
         For i = 0 To StoreSuppliesRequisitionsItemsRecordCount - 1
             CurrentStoreSuppliesRequisitionsItemID = StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSuppliesRequisitionsItemID_AutoNumber", i).Value
-            CurrentRequestedProductPartID = -1
-            CurrentRequestedProductPartID = StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSuppliesRequisitionsItemsTable.ProductPartID_LongInteger", i).Value
-            CurrentPartsRequisitionsItemID = StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSuppliesRequisitionsItemID_AutoNumber", i).Value
+            CurrentRequestedProductPartID = StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartID_Autonumber", i).Value
 
             MySelection = " UPDATE StoreSuppliesRequisitionsItemsTable  " &
-                              " SET StoreSuppliesRequisitionsItemStatus_Byte = 1 " &
-                              " WHERE StoreSuppliesRequisitionsItemID_AutoNumber = " & CurrentPartsRequisitionsItemID.ToString
+                              " SET StoreSuppliesRequisitionsItemStatus_Integer = " & GetStatusIdFor("StoreSuppliesRequisitionsItemsTable", "Submitted") &
+                              " WHERE StoreSuppliesRequisitionsItemID_AutoNumber = " & CurrentStoreSuppliesRequisitionsItemID.ToString
             JustExecuteMySelection()
 
             FieldsToUpdate = " PartsRequisitionID_LongInteger, " &
@@ -577,20 +595,16 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
                     StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionQuantity_Double", i).Value & ", " &
                     GetStatusIdFor("PartsRequisitionsItemsTable").ToString
 
-            CurrentPartsRequisitionsItemID = InsertNewRecord("PartsRequisitionsItemsTable", FieldsToUpdate, FieldsData)
+            CurrentStoreSuppliesRequisitionsItemID = InsertNewRecord("PartsRequisitionsItemsTable", FieldsToUpdate, FieldsData)
+            MsgBox("following update was not yet tested")
+            Dim xxRecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentRequestedProductPartID.ToString
+            Dim xxSetCommand = " SET  Selected = True "
+            UpdateTable("ProductsPartsTable", xxSetCommand, xxRecordFilter)
         Next
 
         'check this
 
-        StoreSuppliesRequisitionsItemsGroupBox.Visible = False
         FillStoreSuppliesRequisitionsItemsDataGridView()
-
-
-
-
-
-
-
         Dim RecordFilter = " WHERE PartsRequisitionID_AutoNumber = " & CurrentPartsRequisitionID.ToString
         Dim SetCommand = " SET PartsRequisitionStatus_Integer = 0 "
         UpdateTable("PartsRequisitionsTable", SetCommand, RecordFilter)
@@ -600,7 +614,6 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
     End Sub
 
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditItemToolStripMenuItem.Click
-        StoreSuppliesRequisitionsItemsGroupBox.Visible = True
         PartTextBox.Text = NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("MasterCodeBookTable.SystemDesc_ShortText100Fld", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)
         RequisitionItemProductDescTextBox.Text = NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)
         POItemProductPartNoTextBox.Text = NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("Price_Currency", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)
@@ -613,8 +626,24 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         If MsgBox("Proceed to delete ?", MsgBoxStyle.YesNo) = vbNo Then
             Exit Sub
         End If
-        MySelection = "DELETE FROM PurchaseOrdersItemsTable WHERE PurchaseOrdersItemID_AutoNumber = " & Str(CurrentPartsRequisitionsItemID)
+        MySelection = "DELETE FROM StoreSuppliesRequisitionsItemsTable WHERE StoreSuppliesRequisitionsItemID_AutoNumber = " & Str(CurrentStoreSuppliesRequisitionsItemID)
         JustExecuteMySelection()
         FillStoreSuppliesRequisitionsItemsDataGridView()
     End Sub
+
+    Private Sub RequisitionItemDetailsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles RequisitionItemDetailsGroupBox.VisibleChanged
+        If RequisitionItemDetailsGroupBox.Visible = True Then
+            If CurrentMasterCodeBookId > 0 Then
+                RequisitionItemProductDescTextBox.Enabled = True
+                POItemProductPartNoTextBox.Enabled = True
+                RequisitionItemQuantityTextBox.Enabled = True
+            Else
+                RequisitionItemProductDescTextBox.Enabled = False
+                POItemProductPartNoTextBox.Enabled = False
+                RequisitionItemQuantityTextBox.Enabled = False
+                PartTextBox.Select()
+            End If
+        End If
+    End Sub
+
 End Class

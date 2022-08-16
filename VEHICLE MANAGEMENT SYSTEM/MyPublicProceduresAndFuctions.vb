@@ -5,6 +5,8 @@
     End Function
     Public Function IsEmpty(PassedObject)
         If PassedObject Is Nothing Then Return True
+        If PassedObject.GetType.Name = "DateTime" Then Return False
+        If PassedObject Is Nothing Then Return True
         If IsDBNull(PassedObject) Then
             Return True
         ElseIf Trim(PassedObject.ToString) = "" Then
@@ -17,14 +19,7 @@
         Return False
     End Function
     Public Function IsNotEmpty(PassedObject)
-
-        If PassedObject Is Nothing Then Return False
-        If IsDBNull(PassedObject) Then Return False
-        If PassedObject.GetType().Name = "String" Then
-            If Trim(PassedObject.ToString) = "" Then Return False
-        Else
-            If PassedObject < 1 Then Return False
-        End If
+        If IsEmpty(PassedObject) Then Return False
         Return True
     End Function
     Public Function ThereIsARecord()
@@ -116,6 +111,20 @@
         Return NewWorkOrderID
     End Function
     Public Function TheseAreNotEqual(PassedVariable1 As Object, PassedVariable2 As Object, PurposeOfEntry As String)
+        If IsEmpty(PassedVariable2) And IsEmpty(PassedVariable1) Is Nothing Then Return False
+        If PassedVariable2 Is Nothing And Not PassedVariable1 Is Nothing Then Return True
+        If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return true
+        If PassedVariable1.GetType.Name = "String" Then
+            If PassedVariable2.GetType.Name = "Decimal" Then
+                PassedVariable1 = Val(PassedVariable1)
+            End If
+        Else
+            If PassedVariable2.GetType.Name = "String" Then
+                If PassedVariable1.GetType.Name = "Decimal" Then
+                    PassedVariable2 = Val(PassedVariable2)
+                End If
+            End If
+        End If
         If IsEmpty(PassedVariable1) And IsEmpty(PassedVariable2) Then Return False  ' BOTH ARE EMPTY
         If IsEmpty(PassedVariable1) Or IsEmpty(PassedVariable2) Then Return True     ' 1 IS EMPTY
         If PassedVariable1 <> PassedVariable2 Then Return True
@@ -181,32 +190,47 @@
         End If
         MySelection = " SELECT TOP 1 * FROM " & SubjectTable & " ORDER BY " & SortField
         JustExecuteMySelection()
-
+        If RecordCount < 1 Then
+            Return -1
+        End If
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
         Return r(0)
+
     End Function
     Public Function SetupTableSelectionFilter(
-                                                ToSetRecordStatusSelection As Integer,
+                                                PassedStatusSequence As Integer,
+                                                PassedStatusSequenceCondition As Integer,
                                                 PassedForm As Form,
                                                 PassedFormText As String,
-                                                FixedFilter As String 'Note when there is already a determined passed
+                                                Optional FixedFilter As String = ""'Note when there is already a determined passed
                                                 )
-        Dim ToSetRecordsSelection = ""
-        If IsEmpty(FixedFilter) Then
-            ToSetRecordsSelection = ""
-        Else
-            ToSetRecordsSelection = FixedFilter
+        ' NOTE: PassedStatusSequenceConditionS  1 FOR <=
+        '                                       2 FOR =
+        '                                       3 FOR >=
+        '                                       4 FOR <
+        '                                       5 FOR >
+
+        If IsNotEmpty(PassedFormText) Then PassedForm.Text = PassedFormText
+        Dim logicalOperator = ""
+        Select Case PassedStatusSequenceCondition
+            Case 1
+                logicalOperator = " <= "
+            Case 2
+                logicalOperator = " = "
+            Case 3
+                logicalOperator = " >= "
+            Case 4
+                logicalOperator = " < "
+            Case 5
+                logicalOperator = " > "
+        End Select
+        Dim RecordsSelectionFilter = ""
+        RecordsSelectionFilter = " StatusSequence_LongInteger " & logicalOperator & PassedStatusSequence.ToString
+        If IsNotEmpty(FixedFilter) Then
+            RecordsSelectionFilter = FixedFilter & " AND " & RecordsSelectionFilter
         End If
-        If ToSetRecordStatusSelection <> 10 Then
-            Dim xxStatusFieldName = Replace(PassedForm.Name, "sForm", "") & "Status_Byte"
-            If IsEmpty(ToSetRecordsSelection) Then
-                ToSetRecordsSelection = xxStatusFieldName & "  = " & ToSetRecordStatusSelection.ToString
-            Else
-                ToSetRecordsSelection = ToSetRecordsSelection & " AND " & xxStatusFieldName & "  = " & ToSetRecordStatusSelection.ToString
-            End If
-        End If
-        If Not IsEmpty(ToSetRecordsSelection) Then ToSetRecordsSelection = " WHERE " & ToSetRecordsSelection
-        Return ToSetRecordsSelection
+        RecordsSelectionFilter = " WHERE " & RecordsSelectionFilter
+        Return RecordsSelectionFilter
     End Function
 
     Public Function RoundUp(DecimalValue)
@@ -223,6 +247,12 @@
         End If
         Return False
     End Function
+    Public Sub VerticalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
+        ObjectToCenter.top = (FormToCenterIn.height - ObjectToCenter.height) / 2
+    End Sub
+    Public Sub HorizontalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
+        ObjectToCenter.left = (FormToCenterIn.width - ObjectToCenter.width) / 2
+    End Sub
     Public Sub JustExecuteMySelection()
         If NoRecordFound() Then Exit Sub
     End Sub
@@ -237,13 +267,13 @@
         MenuOption.Enabled = False
     End Sub
     Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, RecordFilter As String)
-        MySelection = " Select  * FROM " & TableToUpdate & RecordFilter
+        MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
         JustExecuteMySelection()
         If RecordCount = 0 Then
             MsgBox("Unable to Update Table " & TableToUpdate & " FILTER: " & RecordFilter)
             Exit Sub
         End If
-        MySelection = " UPDATE " & TableToUpdate & SetCommand & RecordFilter
+        MySelection = " UPDATE " & TableToUpdate & Space(1) & SetCommand & Space(1) & RecordFilter
         JustExecuteMySelection()
     End Sub
 
@@ -301,7 +331,8 @@
 
         JustExecuteMySelection()
         If RecordCount = 0 Then
-            Dim msgbox("problem")
+            MsgBox("Input parameter error")
+            Return -1
         End If
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
         RequestedValue = r(RequestedField)
@@ -323,11 +354,17 @@
         End If
         Return CurrentCodeVehicleID
     End Function
-    Public Function GetStatusIdFor(PassedTable As String, Optional PassedStatus As String = "")
-        MySelection = " Select top 1 * From TableNamesTable Where TableName_ShortText60 = " & InQuotes(PassedTable)
+    Public Function GetStatusIdFor(PassedTable As String,
+                                   Optional PassedStatus As String = "",
+                                   Optional PassedNeededField As Decimal = 0)
+        '    PassedNeededField determines which field value is returned
+        '    DEFAULt is the id_autonumber
+
+        'Validation
+        MySelection = " Select top 1 * From TableNamesTable Where TableName_ShortText60 = " & InQuotes(LTrim(Trim(PassedTable)))
         JustExecuteMySelection()
         If RecordCount = 0 Then
-            MsgBox("Table name passed not found")
+            MsgBox("Problem with passed Table name " & PassedTable)
             Return False
         End If
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
@@ -337,13 +374,46 @@
         MySelection = " Select top 1 * From StatusesTable Where TableNameID_Integer = " & TableNameID.ToString & Filter2
         JustExecuteMySelection()
         If RecordCount = 0 Then
-            MsgBox("Status not found, need to correct this")
+            MsgBox("Passed Status not found, need to correct this")
             Return False
         End If
+        'end of validation
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-        Tunnel1 = r("StatusText_ShortText25")
-        Return r("StatusID_Autonumber")
+        Select Case PassedNeededField
+            Case 0
+                Return r("StatusID_Autonumber")
+            Case 1
+                Return r("StatusSequence_LongInteger")
+            Case Else
+                MsgBox("Needed Field value (" & PassedNeededField.ToString & ") is not correct")
+                Return ""
+        End Select
+
     End Function
+    Public Sub RevertCurrentStatusOf(PassedTable As String, PassedCurrentStatusSequence As Integer, CurrentRecordID As Integer)
+        If PassedCurrentStatusSequence = 0 Then Exit Sub
+        MySelection = " Select top 1 * From TableNamesTable Where TableName_ShortText60 = " & InQuotes(PassedTable)
+        JustExecuteMySelection()
+        If RecordCount = 0 Then
+            MsgBox("Problem with Table name passed " & PassedTable)
+            Exit Sub
+        End If
+        r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
+        Dim TableNameID = r("TableNameID_AutoNumber")
+        Dim Filter2 = " AND StatusSequence_LongInteger =  " & (PassedCurrentStatusSequence - 1).ToString
+        MySelection = " Select top 1 * From StatusesTable Where TableNameID_Integer = " & TableNameID.ToString & Filter2
+        JustExecuteMySelection()
+
+        r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
+        Dim PreviousStatusID = r("StatusID_Autonumber").ToString
+
+        Dim StatusField = Replace(PassedTable, "sTable", "StatusID_LongInteger")
+        Dim TableKeyField = Replace(PassedTable, "sTable", "ID_Autonumber")
+        MySelection = " UPDATE " & PassedTable &
+                       " SET " & StatusField & " = " & r("StatusID_Autonumber").ToString &
+                       " WHERE " & TableKeyField & "=" & CurrentRecordID
+        JustExecuteMySelection()
+    End Sub
     Public Sub ResetTunnels()
         Tunnel1 = ""
         Tunnel2 = -1
@@ -396,13 +466,10 @@
                             xxVehicleTrimName_ShortText25 & " " &
                             xxEngine_ShortText20
     End Sub
-    Public Sub SetGroupBoxHeight(NoOfHeaderLines As Integer, RecordsToDisplay As Integer, PassedRecordCount As Integer, PassedGroupBox As GroupBox, PassedDataGridView As DataGridView)
-        Dim ArrayCounter = RecordsToDisplay
+    Public Sub SetGroupBoxHeight(RecordsToDisplay As Integer, PassedRecordCount As Integer, PassedGroupBox As GroupBox, PassedDataGridView As DataGridView)
         If PassedRecordCount > RecordsToDisplay Then
             RecordsToDisplay = RecordsToDisplay
-            ArrayCounter = RecordsToDisplay
         Else
-            ArrayCounter = PassedRecordCount
             RecordsToDisplay = PassedRecordCount
         End If
         Dim TotalRowsHeight = 0
@@ -425,10 +492,10 @@
         CalledForm.Close()
         CallingForm.ShowInTaskbar = True
         CallingForm.Enabled = True
-        CallingForm.Show()             'enables the page to be active
-        CallingForm.Select()
         ShowInTaskbarFlag = False
         ResetTunnels() ' INFORMATION IN TUNNELS HAVE BEEN RECEIVED
+        CallingForm.Select()
+        CallingForm.Show()             'enables the page to be active
     End Sub
     Public Sub EnableMenu(SystemsDepartmentToolStripMenuItem As ToolStripMenuItem)
         If EnableMenus Then
@@ -438,5 +505,16 @@
         End If
 
     End Sub
+    Public Function LinkExistsIn(TablesToCheck As Array, FieldName As String, LinkKey As Integer)
 
+        For Each item As String In TablesToCheck
+            MySelection = " Select TOP 1 * FROM " & item & " Where " & FieldName & " = " & LinkKey.ToString
+            JustExecuteMySelection()
+            If RecordCount > 0 Then
+                MsgBox("link exist in " & item)
+                Return True
+            End If
+        Next
+        Return False
+    End Function
 End Module

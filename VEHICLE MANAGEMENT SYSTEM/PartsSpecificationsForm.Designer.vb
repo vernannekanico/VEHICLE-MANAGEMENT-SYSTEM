@@ -22,56 +22,81 @@ Partial Class PartsSpecificationsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SpecificationsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SpeceficationsItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PartSpecificationsItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemovePartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FluidSpecificationsDetailsGroup = New System.Windows.Forms.GroupBox()
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemovePartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.QuantitySpecificationsToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PartSpecificationsDetailsGroup = New System.Windows.Forms.GroupBox()
         Me.PartNumberButton = New System.Windows.Forms.Button()
-        Me.VolumeSpecificationButton = New System.Windows.Forms.Button()
-        Me.FluidTypeSpecificationButton = New System.Windows.Forms.Button()
-        Me.SpecifiedPartNumberTextBox = New System.Windows.Forms.TextBox()
+        Me.QuantitySpecificationButton = New System.Windows.Forms.Button()
+        Me.PartsTypeSpecificationButton = New System.Windows.Forms.Button()
+        Me.PartNumberSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.SpecifiedQuantityTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.SpecifiedUnitTextBox = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.ServiceToPerformTextBox = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.FluidSpecificationsTextBox = New System.Windows.Forms.TextBox()
+        Me.PartSpecificationsTextBox = New System.Windows.Forms.TextBox()
         Me.Specification = New System.Windows.Forms.Label()
-        Me.WorkOrderPartsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.PartDetailsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.SpecificationsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.SpecificationsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.ServiceToPerformTextBox = New System.Windows.Forms.TextBox()
         Me.PartDescriptionTextBox = New System.Windows.Forms.TextBox()
-        Me.Label20 = New System.Windows.Forms.Label()
+        Me.PartsSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.VehicleModelTextBox = New System.Windows.Forms.TextBox()
+        Me.VehicleLabel = New System.Windows.Forms.Label()
+        Me.QuantitySpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.CodeVehiclePNSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.CodeVehiclePartsSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.CodeVehiclePartsSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.PartsSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.QuantitySpecificationsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.CodeVehiclePNSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.PartNumberSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.PartNumberSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.JobLabel = New System.Windows.Forms.Label()
         Me.SpecificationsMenuStrip.SuspendLayout()
-        Me.FluidSpecificationsDetailsGroup.SuspendLayout()
-        CType(Me.WorkOrderPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PartDetailsGroupBox.SuspendLayout()
-        Me.SpecificationsGroupBox.SuspendLayout()
-        CType(Me.SpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PartSpecificationsDetailsGroup.SuspendLayout()
+        CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CodeVehiclePartsSpecificationsGroupBox.SuspendLayout()
+        CType(Me.CodeVehiclePartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PartsSpecificationsGroupBox.SuspendLayout()
+        Me.QuantitySpecificationsGroupBox.SuspendLayout()
+        Me.CodeVehiclePNSpecificationsGroupBox.SuspendLayout()
+        Me.PartNumberSpecificationsGroupBox.SuspendLayout()
+        CType(Me.PartNumberSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SpecificationsMenuStrip
         '
         Me.SpecificationsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SpecificationsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.SpeceficationsItemToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem1, Me.ToolStripMenuItem2})
+        Me.SpecificationsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.SpecificationsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartSpecificationsItemToolStripMenuItem, Me.ToolStripMenuItem1, Me.PartsSpecificationsHeaderMenuToolStripMenuItem, Me.QuantitySpecificationsToolStripTextBox, Me.SaveToolStripMenuItem})
         Me.SpecificationsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.SpecificationsMenuStrip.Name = "SpecificationsMenuStrip"
-        Me.SpecificationsMenuStrip.Size = New System.Drawing.Size(1284, 29)
+        Me.SpecificationsMenuStrip.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
+        Me.SpecificationsMenuStrip.Size = New System.Drawing.Size(963, 29)
         Me.SpecificationsMenuStrip.TabIndex = 54
         Me.SpecificationsMenuStrip.Text = "MenuStrip1"
         '
@@ -81,13 +106,93 @@ Partial Class PartsSpecificationsForm
         Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(40, 25)
         Me.CancelToolStripMenuItem.Text = "◄ "
         '
-        'SpeceficationsItemToolStripMenuItem
+        'PartSpecificationsItemToolStripMenuItem
         '
-        Me.SpeceficationsItemToolStripMenuItem.Enabled = False
-        Me.SpeceficationsItemToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SpeceficationsItemToolStripMenuItem.Name = "SpeceficationsItemToolStripMenuItem"
-        Me.SpeceficationsItemToolStripMenuItem.Size = New System.Drawing.Size(197, 25)
-        Me.SpeceficationsItemToolStripMenuItem.Text = "PART SPECIFICATIONS :"
+        Me.PartSpecificationsItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartNumberToolStripMenuItem, Me.AddPartNumberToolStripMenuItem, Me.EditPartNumberToolStripMenuItem, Me.RemovePartNumberToolStripMenuItem})
+        Me.PartSpecificationsItemToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartSpecificationsItemToolStripMenuItem.Name = "PartSpecificationsItemToolStripMenuItem"
+        Me.PartSpecificationsItemToolStripMenuItem.Size = New System.Drawing.Size(210, 29)
+        Me.PartSpecificationsItemToolStripMenuItem.Text = "PART # SPECIFICATIONS :"
+        Me.PartSpecificationsItemToolStripMenuItem.Visible = False
+        '
+        'SelectPartNumberToolStripMenuItem
+        '
+        Me.SelectPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SelectPartNumberToolStripMenuItem.Name = "SelectPartNumberToolStripMenuItem"
+        Me.SelectPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.SelectPartNumberToolStripMenuItem.Text = "Select"
+        '
+        'AddPartNumberToolStripMenuItem
+        '
+        Me.AddPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddPartNumberToolStripMenuItem.Name = "AddPartNumberToolStripMenuItem"
+        Me.AddPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.AddPartNumberToolStripMenuItem.Text = "Add"
+        '
+        'EditPartNumberToolStripMenuItem
+        '
+        Me.EditPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.EditPartNumberToolStripMenuItem.Name = "EditPartNumberToolStripMenuItem"
+        Me.EditPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.EditPartNumberToolStripMenuItem.Text = "Edit"
+        '
+        'RemovePartNumberToolStripMenuItem
+        '
+        Me.RemovePartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RemovePartNumberToolStripMenuItem.Name = "RemovePartNumberToolStripMenuItem"
+        Me.RemovePartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.RemovePartNumberToolStripMenuItem.Text = "Remove"
+        Me.RemovePartNumberToolStripMenuItem.Visible = False
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
+        '
+        'PartsSpecificationsHeaderMenuToolStripMenuItem
+        '
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem})
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Name = "PartsSpecificationsHeaderMenuToolStripMenuItem"
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Size = New System.Drawing.Size(189, 29)
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Text = "PART SPECIFICATIONS"
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = False
+        '
+        'SelectPartSpecificationsToolStripMenuItem
+        '
+        Me.SelectPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SelectPartSpecificationsToolStripMenuItem.Name = "SelectPartSpecificationsToolStripMenuItem"
+        Me.SelectPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.SelectPartSpecificationsToolStripMenuItem.Text = "Select"
+        '
+        'AddPartSpecificationsToolStripMenuItem
+        '
+        Me.AddPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddPartSpecificationsToolStripMenuItem.Name = "AddPartSpecificationsToolStripMenuItem"
+        Me.AddPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.AddPartSpecificationsToolStripMenuItem.Text = "Add"
+        '
+        'EditPartSpecificationsToolStripMenuItem
+        '
+        Me.EditPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.EditPartSpecificationsToolStripMenuItem.Name = "EditPartSpecificationsToolStripMenuItem"
+        Me.EditPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.EditPartSpecificationsToolStripMenuItem.Text = "Edit"
+        '
+        'RemovePartSpecificationsToolStripMenuItem
+        '
+        Me.RemovePartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RemovePartSpecificationsToolStripMenuItem.Name = "RemovePartSpecificationsToolStripMenuItem"
+        Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.RemovePartSpecificationsToolStripMenuItem.Text = "Remove"
+        '
+        'QuantitySpecificationsToolStripTextBox
+        '
+        Me.QuantitySpecificationsToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.QuantitySpecificationsToolStripTextBox.Name = "QuantitySpecificationsToolStripTextBox"
+        Me.QuantitySpecificationsToolStripTextBox.Size = New System.Drawing.Size(210, 29)
+        Me.QuantitySpecificationsToolStripTextBox.Text = "QUANTITY SPECIFICATIONS :"
+        Me.QuantitySpecificationsToolStripTextBox.Visible = False
         '
         'SaveToolStripMenuItem
         '
@@ -96,39 +201,28 @@ Partial Class PartsSpecificationsForm
         Me.SaveToolStripMenuItem.Text = "Save"
         Me.SaveToolStripMenuItem.Visible = False
         '
-        'ToolStripMenuItem1
+        'PartSpecificationsDetailsGroup
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(12, 25)
-        '
-        'FluidSpecificationsDetailsGroup
-        '
-        Me.FluidSpecificationsDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.FluidSpecificationsDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.PartNumberButton)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.VolumeSpecificationButton)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.FluidTypeSpecificationButton)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.SpecifiedPartNumberTextBox)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.SpecifiedQuantityTextBox)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.Label3)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.SpecifiedUnitTextBox)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.Label8)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.ServiceToPerformTextBox)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.Label9)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.FluidSpecificationsTextBox)
-        Me.FluidSpecificationsDetailsGroup.Controls.Add(Me.Specification)
-        Me.FluidSpecificationsDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.FluidSpecificationsDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FluidSpecificationsDetailsGroup.Location = New System.Drawing.Point(606, 50)
-        Me.FluidSpecificationsDetailsGroup.Name = "FluidSpecificationsDetailsGroup"
-        Me.FluidSpecificationsDetailsGroup.Size = New System.Drawing.Size(554, 435)
-        Me.FluidSpecificationsDetailsGroup.TabIndex = 56
-        Me.FluidSpecificationsDetailsGroup.TabStop = False
+        Me.PartSpecificationsDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.PartSpecificationsDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.PartNumberButton)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.QuantitySpecificationButton)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.PartsTypeSpecificationButton)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.PartNumberSpecificationTextBox)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.SpecifiedQuantityTextBox)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.Label3)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.SpecifiedUnitTextBox)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.Label8)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.PartSpecificationsTextBox)
+        Me.PartSpecificationsDetailsGroup.Controls.Add(Me.Specification)
+        Me.PartSpecificationsDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.PartSpecificationsDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartSpecificationsDetailsGroup.Location = New System.Drawing.Point(553, 32)
+        Me.PartSpecificationsDetailsGroup.Name = "PartSpecificationsDetailsGroup"
+        Me.PartSpecificationsDetailsGroup.Size = New System.Drawing.Size(554, 365)
+        Me.PartSpecificationsDetailsGroup.TabIndex = 56
+        Me.PartSpecificationsDetailsGroup.TabStop = False
+        Me.PartSpecificationsDetailsGroup.Visible = False
         '
         'PartNumberButton
         '
@@ -142,43 +236,47 @@ Partial Class PartsSpecificationsForm
         Me.PartNumberButton.Text = "PART NUMBER"
         Me.PartNumberButton.UseVisualStyleBackColor = True
         '
-        'VolumeSpecificationButton
+        'QuantitySpecificationButton
         '
-        Me.VolumeSpecificationButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.VolumeSpecificationButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.VolumeSpecificationButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.VolumeSpecificationButton.Location = New System.Drawing.Point(27, 246)
-        Me.VolumeSpecificationButton.Name = "VolumeSpecificationButton"
-        Me.VolumeSpecificationButton.Size = New System.Drawing.Size(504, 34)
-        Me.VolumeSpecificationButton.TabIndex = 60
-        Me.VolumeSpecificationButton.Text = "VOLUME SPECIFICATION"
-        Me.VolumeSpecificationButton.UseVisualStyleBackColor = True
+        Me.QuantitySpecificationButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.QuantitySpecificationButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.QuantitySpecificationButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.QuantitySpecificationButton.Location = New System.Drawing.Point(27, 246)
+        Me.QuantitySpecificationButton.Name = "QuantitySpecificationButton"
+        Me.QuantitySpecificationButton.Size = New System.Drawing.Size(504, 34)
+        Me.QuantitySpecificationButton.TabIndex = 60
+        Me.QuantitySpecificationButton.Text = "QUANTITY SPECIFICATIONS"
+        Me.QuantitySpecificationButton.UseVisualStyleBackColor = True
         '
-        'FluidTypeSpecificationButton
+        'PartsTypeSpecificationButton
         '
-        Me.FluidTypeSpecificationButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.FluidTypeSpecificationButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FluidTypeSpecificationButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.FluidTypeSpecificationButton.Location = New System.Drawing.Point(27, 115)
-        Me.FluidTypeSpecificationButton.Name = "FluidTypeSpecificationButton"
-        Me.FluidTypeSpecificationButton.Size = New System.Drawing.Size(504, 34)
-        Me.FluidTypeSpecificationButton.TabIndex = 59
-        Me.FluidTypeSpecificationButton.Text = "FLUID TYPE SPECIFICATIONS"
-        Me.FluidTypeSpecificationButton.UseVisualStyleBackColor = True
+        Me.PartsTypeSpecificationButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.PartsTypeSpecificationButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartsTypeSpecificationButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.PartsTypeSpecificationButton.Location = New System.Drawing.Point(27, 115)
+        Me.PartsTypeSpecificationButton.Name = "PartsTypeSpecificationButton"
+        Me.PartsTypeSpecificationButton.Size = New System.Drawing.Size(504, 34)
+        Me.PartsTypeSpecificationButton.TabIndex = 59
+        Me.PartsTypeSpecificationButton.Text = "PART SPECIFICATIONS"
+        Me.PartsTypeSpecificationButton.UseVisualStyleBackColor = True
         '
-        'SpecifiedPartNumberTextBox
+        'PartNumberSpecificationTextBox
         '
-        Me.SpecifiedPartNumberTextBox.Location = New System.Drawing.Point(126, 51)
-        Me.SpecifiedPartNumberTextBox.Name = "SpecifiedPartNumberTextBox"
-        Me.SpecifiedPartNumberTextBox.Size = New System.Drawing.Size(316, 26)
-        Me.SpecifiedPartNumberTextBox.TabIndex = 57
-        Me.SpecifiedPartNumberTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.SpecifiedPartNumberTextBox.WordWrap = False
+        Me.PartNumberSpecificationTextBox.Enabled = False
+        Me.PartNumberSpecificationTextBox.Location = New System.Drawing.Point(136, 51)
+        Me.PartNumberSpecificationTextBox.Name = "PartNumberSpecificationTextBox"
+        Me.PartNumberSpecificationTextBox.ReadOnly = True
+        Me.PartNumberSpecificationTextBox.Size = New System.Drawing.Size(316, 26)
+        Me.PartNumberSpecificationTextBox.TabIndex = 57
+        Me.PartNumberSpecificationTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.PartNumberSpecificationTextBox.WordWrap = False
         '
         'SpecifiedQuantityTextBox
         '
-        Me.SpecifiedQuantityTextBox.Location = New System.Drawing.Point(126, 365)
+        Me.SpecifiedQuantityTextBox.Enabled = False
+        Me.SpecifiedQuantityTextBox.Location = New System.Drawing.Point(136, 296)
         Me.SpecifiedQuantityTextBox.Name = "SpecifiedQuantityTextBox"
+        Me.SpecifiedQuantityTextBox.ReadOnly = True
         Me.SpecifiedQuantityTextBox.Size = New System.Drawing.Size(79, 26)
         Me.SpecifiedQuantityTextBox.TabIndex = 52
         Me.SpecifiedQuantityTextBox.WordWrap = False
@@ -186,7 +284,7 @@ Partial Class PartsSpecificationsForm
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(23, 365)
+        Me.Label3.Location = New System.Drawing.Point(23, 296)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(76, 20)
@@ -195,8 +293,10 @@ Partial Class PartsSpecificationsForm
         '
         'SpecifiedUnitTextBox
         '
-        Me.SpecifiedUnitTextBox.Location = New System.Drawing.Point(126, 397)
+        Me.SpecifiedUnitTextBox.Enabled = False
+        Me.SpecifiedUnitTextBox.Location = New System.Drawing.Point(136, 328)
         Me.SpecifiedUnitTextBox.Name = "SpecifiedUnitTextBox"
+        Me.SpecifiedUnitTextBox.ReadOnly = True
         Me.SpecifiedUnitTextBox.Size = New System.Drawing.Size(79, 26)
         Me.SpecifiedUnitTextBox.TabIndex = 50
         Me.SpecifiedUnitTextBox.WordWrap = False
@@ -204,41 +304,23 @@ Partial Class PartsSpecificationsForm
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(23, 399)
+        Me.Label8.Location = New System.Drawing.Point(23, 330)
         Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(46, 20)
         Me.Label8.TabIndex = 49
         Me.Label8.Text = "Unit :"
         '
-        'ServiceToPerformTextBox
+        'PartSpecificationsTextBox
         '
-        Me.ServiceToPerformTextBox.Enabled = False
-        Me.ServiceToPerformTextBox.Location = New System.Drawing.Point(126, 286)
-        Me.ServiceToPerformTextBox.Multiline = True
-        Me.ServiceToPerformTextBox.Name = "ServiceToPerformTextBox"
-        Me.ServiceToPerformTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.ServiceToPerformTextBox.Size = New System.Drawing.Size(405, 73)
-        Me.ServiceToPerformTextBox.TabIndex = 48
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(23, 286)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(104, 20)
-        Me.Label9.TabIndex = 47
-        Me.Label9.Text = "Service Done"
-        '
-        'FluidSpecificationsTextBox
-        '
-        Me.FluidSpecificationsTextBox.Location = New System.Drawing.Point(126, 155)
-        Me.FluidSpecificationsTextBox.Multiline = True
-        Me.FluidSpecificationsTextBox.Name = "FluidSpecificationsTextBox"
-        Me.FluidSpecificationsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.FluidSpecificationsTextBox.Size = New System.Drawing.Size(405, 73)
-        Me.FluidSpecificationsTextBox.TabIndex = 44
+        Me.PartSpecificationsTextBox.Enabled = False
+        Me.PartSpecificationsTextBox.Location = New System.Drawing.Point(136, 155)
+        Me.PartSpecificationsTextBox.Multiline = True
+        Me.PartSpecificationsTextBox.Name = "PartSpecificationsTextBox"
+        Me.PartSpecificationsTextBox.ReadOnly = True
+        Me.PartSpecificationsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.PartSpecificationsTextBox.Size = New System.Drawing.Size(405, 73)
+        Me.PartSpecificationsTextBox.TabIndex = 44
         '
         'Specification
         '
@@ -246,220 +328,346 @@ Partial Class PartsSpecificationsForm
         Me.Specification.Location = New System.Drawing.Point(23, 158)
         Me.Specification.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Specification.Name = "Specification"
-        Me.Specification.Size = New System.Drawing.Size(108, 20)
+        Me.Specification.Size = New System.Drawing.Size(116, 20)
         Me.Specification.TabIndex = 41
-        Me.Specification.Text = "Specification :"
+        Me.Specification.Text = "Specifications :"
         '
-        'WorkOrderPartsDataGridView
+        'ServiceToPerformTextBox
         '
-        Me.WorkOrderPartsDataGridView.AllowUserToAddRows = False
-        Me.WorkOrderPartsDataGridView.AllowUserToDeleteRows = False
-        Me.WorkOrderPartsDataGridView.AllowUserToOrderColumns = True
-        Me.WorkOrderPartsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.WorkOrderPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.WorkOrderPartsDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.WorkOrderPartsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderPartsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderPartsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
-        Me.WorkOrderPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle6
-        Me.WorkOrderPartsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderPartsDataGridView.Location = New System.Drawing.Point(12, 92)
-        Me.WorkOrderPartsDataGridView.Name = "WorkOrderPartsDataGridView"
-        Me.WorkOrderPartsDataGridView.ReadOnly = True
-        Me.WorkOrderPartsDataGridView.RowHeadersVisible = False
-        Me.WorkOrderPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.WorkOrderPartsDataGridView.Size = New System.Drawing.Size(96, 127)
-        Me.WorkOrderPartsDataGridView.TabIndex = 85
+        Me.ServiceToPerformTextBox.Enabled = False
+        Me.ServiceToPerformTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ServiceToPerformTextBox.Location = New System.Drawing.Point(114, 68)
+        Me.ServiceToPerformTextBox.Name = "ServiceToPerformTextBox"
+        Me.ServiceToPerformTextBox.ReadOnly = True
+        Me.ServiceToPerformTextBox.Size = New System.Drawing.Size(431, 26)
+        Me.ServiceToPerformTextBox.TabIndex = 48
+        Me.ServiceToPerformTextBox.WordWrap = False
         '
-        'PartDetailsGroupBox
+        'PartDescriptionTextBox
         '
-        Me.PartDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.PartDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.PartDetailsGroupBox.Controls.Add(Me.SpecificationsGroupBox)
-        Me.PartDetailsGroupBox.Controls.Add(Me.PartDescriptionTextBox)
-        Me.PartDetailsGroupBox.Controls.Add(Me.Label20)
-        Me.PartDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PartDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.PartDetailsGroupBox.Location = New System.Drawing.Point(47, 75)
-        Me.PartDetailsGroupBox.Name = "PartDetailsGroupBox"
-        Me.PartDetailsGroupBox.Size = New System.Drawing.Size(498, 543)
-        Me.PartDetailsGroupBox.TabIndex = 125
-        Me.PartDetailsGroupBox.TabStop = False
-        Me.PartDetailsGroupBox.Text = "Part Details"
-        Me.PartDetailsGroupBox.Visible = False
+        Me.PartDescriptionTextBox.Enabled = False
+        Me.PartDescriptionTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartDescriptionTextBox.Location = New System.Drawing.Point(114, 34)
+        Me.PartDescriptionTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.PartDescriptionTextBox.Name = "PartDescriptionTextBox"
+        Me.PartDescriptionTextBox.ReadOnly = True
+        Me.PartDescriptionTextBox.Size = New System.Drawing.Size(431, 26)
+        Me.PartDescriptionTextBox.TabIndex = 107
         '
-        'SpecificationsGroupBox
+        'PartsSpecificationsDataGridView
         '
-        Me.SpecificationsGroupBox.Controls.Add(Me.SpecificationsDataGridView)
-        Me.SpecificationsGroupBox.Controls.Add(Me.Label1)
-        Me.SpecificationsGroupBox.Controls.Add(Me.TextBox1)
-        Me.SpecificationsGroupBox.Controls.Add(Me.Label16)
-        Me.SpecificationsGroupBox.Controls.Add(Me.Label2)
-        Me.SpecificationsGroupBox.Controls.Add(Me.TextBox2)
-        Me.SpecificationsGroupBox.Enabled = False
-        Me.SpecificationsGroupBox.Location = New System.Drawing.Point(18, 66)
-        Me.SpecificationsGroupBox.Name = "SpecificationsGroupBox"
-        Me.SpecificationsGroupBox.Size = New System.Drawing.Size(724, 181)
-        Me.SpecificationsGroupBox.TabIndex = 125
-        Me.SpecificationsGroupBox.TabStop = False
-        Me.SpecificationsGroupBox.Text = "Specifications"
+        Me.PartsSpecificationsDataGridView.AllowUserToAddRows = False
+        Me.PartsSpecificationsDataGridView.AllowUserToDeleteRows = False
+        Me.PartsSpecificationsDataGridView.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        Me.PartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.PartsSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.PartsSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.PartsSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PartsSpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.PartsSpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.PartsSpecificationsDataGridView.Name = "PartsSpecificationsDataGridView"
+        Me.PartsSpecificationsDataGridView.ReadOnly = True
+        Me.PartsSpecificationsDataGridView.RowHeadersVisible = False
+        Me.PartsSpecificationsDataGridView.RowHeadersWidth = 51
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        Me.PartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle2
+        Me.PartsSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.PartsSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
+        Me.PartsSpecificationsDataGridView.TabIndex = 108
         '
-        'SpecificationsDataGridView
+        'VehicleModelTextBox
         '
-        Me.SpecificationsDataGridView.AllowUserToAddRows = False
-        Me.SpecificationsDataGridView.AllowUserToDeleteRows = False
-        Me.SpecificationsDataGridView.AllowUserToResizeRows = False
+        Me.VehicleModelTextBox.Enabled = False
+        Me.VehicleModelTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.VehicleModelTextBox.Location = New System.Drawing.Point(114, 102)
+        Me.VehicleModelTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.VehicleModelTextBox.Name = "VehicleModelTextBox"
+        Me.VehicleModelTextBox.ReadOnly = True
+        Me.VehicleModelTextBox.Size = New System.Drawing.Size(429, 26)
+        Me.VehicleModelTextBox.TabIndex = 109
+        '
+        'VehicleLabel
+        '
+        Me.VehicleLabel.AutoSize = True
+        Me.VehicleLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.VehicleLabel.Location = New System.Drawing.Point(66, 105)
+        Me.VehicleLabel.Name = "VehicleLabel"
+        Me.VehicleLabel.Size = New System.Drawing.Size(37, 20)
+        Me.VehicleLabel.TabIndex = 110
+        Me.VehicleLabel.Text = "For:"
+        '
+        'QuantitySpecificationsDataGridView
+        '
+        Me.QuantitySpecificationsDataGridView.AllowUserToAddRows = False
+        Me.QuantitySpecificationsDataGridView.AllowUserToDeleteRows = False
+        Me.QuantitySpecificationsDataGridView.AllowUserToResizeRows = False
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        Me.QuantitySpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.QuantitySpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.QuantitySpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.QuantitySpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.QuantitySpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.QuantitySpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.QuantitySpecificationsDataGridView.Name = "QuantitySpecificationsDataGridView"
+        Me.QuantitySpecificationsDataGridView.ReadOnly = True
+        Me.QuantitySpecificationsDataGridView.RowHeadersVisible = False
+        Me.QuantitySpecificationsDataGridView.RowHeadersWidth = 51
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        Me.QuantitySpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle4
+        Me.QuantitySpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.QuantitySpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
+        Me.QuantitySpecificationsDataGridView.TabIndex = 111
+        '
+        'CodeVehiclePNSpecificationsDataGridView
+        '
+        Me.CodeVehiclePNSpecificationsDataGridView.AllowUserToAddRows = False
+        Me.CodeVehiclePNSpecificationsDataGridView.AllowUserToDeleteRows = False
+        Me.CodeVehiclePNSpecificationsDataGridView.AllowUserToResizeRows = False
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        Me.CodeVehiclePNSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        Me.CodeVehiclePNSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.CodeVehiclePNSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.CodeVehiclePNSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CodeVehiclePNSpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.CodeVehiclePNSpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.CodeVehiclePNSpecificationsDataGridView.Name = "CodeVehiclePNSpecificationsDataGridView"
+        Me.CodeVehiclePNSpecificationsDataGridView.ReadOnly = True
+        Me.CodeVehiclePNSpecificationsDataGridView.RowHeadersVisible = False
+        Me.CodeVehiclePNSpecificationsDataGridView.RowHeadersWidth = 51
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        Me.CodeVehiclePNSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle6
+        Me.CodeVehiclePNSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.CodeVehiclePNSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
+        Me.CodeVehiclePNSpecificationsDataGridView.TabIndex = 112
+        '
+        'CodeVehiclePartsSpecificationsGroupBox
+        '
+        Me.CodeVehiclePartsSpecificationsGroupBox.Controls.Add(Me.CodeVehiclePartsSpecificationsDataGridView)
+        Me.CodeVehiclePartsSpecificationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CodeVehiclePartsSpecificationsGroupBox.Location = New System.Drawing.Point(60, 136)
+        Me.CodeVehiclePartsSpecificationsGroupBox.Name = "CodeVehiclePartsSpecificationsGroupBox"
+        Me.CodeVehiclePartsSpecificationsGroupBox.Size = New System.Drawing.Size(222, 94)
+        Me.CodeVehiclePartsSpecificationsGroupBox.TabIndex = 114
+        Me.CodeVehiclePartsSpecificationsGroupBox.TabStop = False
+        Me.CodeVehiclePartsSpecificationsGroupBox.Text = "Part Specifications for "
+        Me.CodeVehiclePartsSpecificationsGroupBox.Visible = False
+        '
+        'CodeVehiclePartsSpecificationsDataGridView
+        '
+        Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToAddRows = False
+        Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToDeleteRows = False
+        Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToResizeRows = False
         DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Navy
         DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White
         DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        Me.SpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
-        Me.SpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
-        Me.SpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.SpecificationsDataGridView.Location = New System.Drawing.Point(170, 34)
-        Me.SpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
-        Me.SpecificationsDataGridView.Name = "SpecificationsDataGridView"
-        Me.SpecificationsDataGridView.ReadOnly = True
-        Me.SpecificationsDataGridView.RowHeadersVisible = False
+        Me.CodeVehiclePartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        Me.CodeVehiclePartsSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.CodeVehiclePartsSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.CodeVehiclePartsSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CodeVehiclePartsSpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.CodeVehiclePartsSpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.CodeVehiclePartsSpecificationsDataGridView.Name = "CodeVehiclePartsSpecificationsDataGridView"
+        Me.CodeVehiclePartsSpecificationsDataGridView.ReadOnly = True
+        Me.CodeVehiclePartsSpecificationsDataGridView.RowHeadersVisible = False
+        Me.CodeVehiclePartsSpecificationsDataGridView.RowHeadersWidth = 51
         DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        Me.SpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle8
-        Me.SpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.SpecificationsDataGridView.Size = New System.Drawing.Size(543, 57)
-        Me.SpecificationsDataGridView.TabIndex = 125
+        Me.CodeVehiclePartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle8
+        Me.CodeVehiclePartsSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.CodeVehiclePartsSpecificationsDataGridView.Size = New System.Drawing.Size(216, 69)
+        Me.CodeVehiclePartsSpecificationsDataGridView.TabIndex = 114
         '
-        'Label1
+        'PartsSpecificationsGroupBox
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 27)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(89, 20)
-        Me.Label1.TabIndex = 119
-        Me.Label1.Text = "Description"
+        Me.PartsSpecificationsGroupBox.Controls.Add(Me.PartsSpecificationsDataGridView)
+        Me.PartsSpecificationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartsSpecificationsGroupBox.Location = New System.Drawing.Point(62, 236)
+        Me.PartsSpecificationsGroupBox.Name = "PartsSpecificationsGroupBox"
+        Me.PartsSpecificationsGroupBox.Size = New System.Drawing.Size(225, 94)
+        Me.PartsSpecificationsGroupBox.TabIndex = 115
+        Me.PartsSpecificationsGroupBox.TabStop = False
+        Me.PartsSpecificationsGroupBox.Text = "Part Specifications"
+        Me.PartsSpecificationsGroupBox.Visible = False
         '
-        'TextBox1
+        'QuantitySpecificationsGroupBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(170, 151)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(53, 26)
-        Me.TextBox1.TabIndex = 102
+        Me.QuantitySpecificationsGroupBox.Controls.Add(Me.QuantitySpecificationsDataGridView)
+        Me.QuantitySpecificationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.QuantitySpecificationsGroupBox.Location = New System.Drawing.Point(65, 336)
+        Me.QuantitySpecificationsGroupBox.Name = "QuantitySpecificationsGroupBox"
+        Me.QuantitySpecificationsGroupBox.Size = New System.Drawing.Size(225, 94)
+        Me.QuantitySpecificationsGroupBox.TabIndex = 116
+        Me.QuantitySpecificationsGroupBox.TabStop = False
+        Me.QuantitySpecificationsGroupBox.Text = "Related jobs for this Part"
+        Me.QuantitySpecificationsGroupBox.Visible = False
         '
-        'Label16
+        'CodeVehiclePNSpecificationsGroupBox
         '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(27, 127)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(68, 20)
-        Me.Label16.TabIndex = 101
-        Me.Label16.Text = "Quantity"
+        Me.CodeVehiclePNSpecificationsGroupBox.Controls.Add(Me.CodeVehiclePNSpecificationsDataGridView)
+        Me.CodeVehiclePNSpecificationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CodeVehiclePNSpecificationsGroupBox.Location = New System.Drawing.Point(65, 438)
+        Me.CodeVehiclePNSpecificationsGroupBox.Name = "CodeVehiclePNSpecificationsGroupBox"
+        Me.CodeVehiclePNSpecificationsGroupBox.Size = New System.Drawing.Size(225, 94)
+        Me.CodeVehiclePNSpecificationsGroupBox.TabIndex = 117
+        Me.CodeVehiclePNSpecificationsGroupBox.TabStop = False
+        Me.CodeVehiclePNSpecificationsGroupBox.Text = "PartNumber Specifications For"
+        Me.CodeVehiclePNSpecificationsGroupBox.Visible = False
+        '
+        'PartNumberSpecificationsGroupBox
+        '
+        Me.PartNumberSpecificationsGroupBox.Controls.Add(Me.PartNumberSpecificationsDataGridView)
+        Me.PartNumberSpecificationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartNumberSpecificationsGroupBox.Location = New System.Drawing.Point(321, 256)
+        Me.PartNumberSpecificationsGroupBox.Name = "PartNumberSpecificationsGroupBox"
+        Me.PartNumberSpecificationsGroupBox.Size = New System.Drawing.Size(225, 94)
+        Me.PartNumberSpecificationsGroupBox.TabIndex = 118
+        Me.PartNumberSpecificationsGroupBox.TabStop = False
+        Me.PartNumberSpecificationsGroupBox.Text = "PartNumber Specifications List"
+        Me.PartNumberSpecificationsGroupBox.Visible = False
+        '
+        'PartNumberSpecificationsDataGridView
+        '
+        Me.PartNumberSpecificationsDataGridView.AllowUserToAddRows = False
+        Me.PartNumberSpecificationsDataGridView.AllowUserToDeleteRows = False
+        Me.PartNumberSpecificationsDataGridView.AllowUserToResizeRows = False
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        Me.PartNumberSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
+        Me.PartNumberSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.PartNumberSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.PartNumberSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PartNumberSpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.PartNumberSpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.PartNumberSpecificationsDataGridView.Name = "PartNumberSpecificationsDataGridView"
+        Me.PartNumberSpecificationsDataGridView.ReadOnly = True
+        Me.PartNumberSpecificationsDataGridView.RowHeadersVisible = False
+        Me.PartNumberSpecificationsDataGridView.RowHeadersWidth = 51
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        Me.PartNumberSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle10
+        Me.PartNumberSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.PartNumberSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
+        Me.PartNumberSpecificationsDataGridView.TabIndex = 112
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(28, 154)
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(66, 37)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(38, 20)
-        Me.Label2.TabIndex = 124
-        Me.Label2.Text = "Unit"
+        Me.Label2.Size = New System.Drawing.Size(42, 20)
+        Me.Label2.TabIndex = 119
+        Me.Label2.Text = "Part:"
         '
-        'TextBox2
+        'JobLabel
         '
-        Me.TextBox2.Location = New System.Drawing.Point(170, 124)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(53, 26)
-        Me.TextBox2.TabIndex = 104
-        '
-        'PartDescriptionTextBox
-        '
-        Me.PartDescriptionTextBox.Enabled = False
-        Me.PartDescriptionTextBox.Location = New System.Drawing.Point(189, 32)
-        Me.PartDescriptionTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.PartDescriptionTextBox.Name = "PartDescriptionTextBox"
-        Me.PartDescriptionTextBox.Size = New System.Drawing.Size(547, 26)
-        Me.PartDescriptionTextBox.TabIndex = 107
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(11, 32)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(42, 20)
-        Me.Label20.TabIndex = 106
-        Me.Label20.Text = "Part "
+        Me.JobLabel.AutoSize = True
+        Me.JobLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.JobLabel.Location = New System.Drawing.Point(66, 74)
+        Me.JobLabel.Name = "JobLabel"
+        Me.JobLabel.Size = New System.Drawing.Size(39, 20)
+        Me.JobLabel.TabIndex = 120
+        Me.JobLabel.Text = "Job:"
         '
         'PartsSpecificationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1284, 574)
-        Me.Controls.Add(Me.PartDetailsGroupBox)
-        Me.Controls.Add(Me.FluidSpecificationsDetailsGroup)
-        Me.Controls.Add(Me.WorkOrderPartsDataGridView)
+        Me.ClientSize = New System.Drawing.Size(963, 574)
+        Me.Controls.Add(Me.JobLabel)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.PartNumberSpecificationsGroupBox)
+        Me.Controls.Add(Me.CodeVehiclePNSpecificationsGroupBox)
+        Me.Controls.Add(Me.QuantitySpecificationsGroupBox)
+        Me.Controls.Add(Me.PartsSpecificationsGroupBox)
+        Me.Controls.Add(Me.CodeVehiclePartsSpecificationsGroupBox)
+        Me.Controls.Add(Me.VehicleLabel)
+        Me.Controls.Add(Me.VehicleModelTextBox)
+        Me.Controls.Add(Me.PartDescriptionTextBox)
+        Me.Controls.Add(Me.ServiceToPerformTextBox)
+        Me.Controls.Add(Me.PartSpecificationsDetailsGroup)
         Me.Controls.Add(Me.SpecificationsMenuStrip)
         Me.Name = "PartsSpecificationsForm"
         Me.Text = "PartsSpecificationsForm"
         Me.SpecificationsMenuStrip.ResumeLayout(False)
         Me.SpecificationsMenuStrip.PerformLayout()
-        Me.FluidSpecificationsDetailsGroup.ResumeLayout(False)
-        Me.FluidSpecificationsDetailsGroup.PerformLayout()
-        CType(Me.WorkOrderPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PartDetailsGroupBox.ResumeLayout(False)
-        Me.PartDetailsGroupBox.PerformLayout()
-        Me.SpecificationsGroupBox.ResumeLayout(False)
-        Me.SpecificationsGroupBox.PerformLayout()
-        CType(Me.SpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PartSpecificationsDetailsGroup.ResumeLayout(False)
+        Me.PartSpecificationsDetailsGroup.PerformLayout()
+        CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CodeVehiclePartsSpecificationsGroupBox.ResumeLayout(False)
+        CType(Me.CodeVehiclePartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PartsSpecificationsGroupBox.ResumeLayout(False)
+        Me.QuantitySpecificationsGroupBox.ResumeLayout(False)
+        Me.CodeVehiclePNSpecificationsGroupBox.ResumeLayout(False)
+        Me.PartNumberSpecificationsGroupBox.ResumeLayout(False)
+        CType(Me.PartNumberSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents SpecificationsMenuStrip As MenuStrip
     Friend WithEvents CancelToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SpeceficationsItemToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PartSpecificationsItemToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
-    Friend WithEvents FluidSpecificationsDetailsGroup As GroupBox
-    Friend WithEvents SpecifiedPartNumberTextBox As TextBox
+    Friend WithEvents PartsSpecificationsHeaderMenuToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PartSpecificationsDetailsGroup As GroupBox
+    Friend WithEvents PartNumberSpecificationTextBox As TextBox
     Friend WithEvents SpecifiedQuantityTextBox As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents SpecifiedUnitTextBox As TextBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents FluidSpecificationsTextBox As TextBox
+    Friend WithEvents PartSpecificationsTextBox As TextBox
     Friend WithEvents Specification As Label
     Friend WithEvents PartNumberButton As Button
-    Friend WithEvents VolumeSpecificationButton As Button
-    Friend WithEvents FluidTypeSpecificationButton As Button
-    Friend WithEvents WorkOrderPartsDataGridView As DataGridView
+    Friend WithEvents QuantitySpecificationButton As Button
+    Friend WithEvents PartsTypeSpecificationButton As Button
     Friend WithEvents ServiceToPerformTextBox As TextBox
-    Friend WithEvents Label9 As Label
-    Friend WithEvents PartDetailsGroupBox As GroupBox
-    Friend WithEvents SpecificationsGroupBox As GroupBox
-    Friend WithEvents SpecificationsDataGridView As DataGridView
-    Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Label16 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents TextBox2 As TextBox
     Friend WithEvents PartDescriptionTextBox As TextBox
-    Friend WithEvents Label20 As Label
+    Friend WithEvents PartsSpecificationsDataGridView As DataGridView
+    Friend WithEvents VehicleModelTextBox As TextBox
+    Friend WithEvents VehicleLabel As Label
+    Friend WithEvents QuantitySpecificationsDataGridView As DataGridView
+    Friend WithEvents QuantitySpecificationsToolStripTextBox As ToolStripTextBox
+    Friend WithEvents CodeVehiclePNSpecificationsDataGridView As DataGridView
+    Friend WithEvents CodeVehiclePartsSpecificationsGroupBox As GroupBox
+    Friend WithEvents CodeVehiclePartsSpecificationsDataGridView As DataGridView
+    Friend WithEvents PartsSpecificationsGroupBox As GroupBox
+    Friend WithEvents QuantitySpecificationsGroupBox As GroupBox
+    Friend WithEvents CodeVehiclePNSpecificationsGroupBox As GroupBox
+    Friend WithEvents SelectPartSpecificationsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AddPartSpecificationsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EditPartSpecificationsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RemovePartSpecificationsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SelectPartNumberToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AddPartNumberToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EditPartNumberToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RemovePartNumberToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PartNumberSpecificationsGroupBox As GroupBox
+    Friend WithEvents PartNumberSpecificationsDataGridView As DataGridView
+    Friend WithEvents Label2 As Label
+    Friend WithEvents JobLabel As Label
 End Class

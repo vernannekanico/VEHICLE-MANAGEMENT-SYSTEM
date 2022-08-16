@@ -5,6 +5,7 @@
     Private PurchaseOrdersSelectionOrder = ""
     Private PurchaseOrdersRecordCount As Integer = -1
     Private CurrentPurchaseOrderID As Integer = -1
+    Private CurrentPurchaseOrderRevision As Integer = 0
     Private CurrentPurchaseOrdersDataGridViewRow As Integer = -1
     Private PurchaseOrdersDataGridViewAlreadyFormated = False
     Private PurchaseOrderStatus = ""
@@ -22,12 +23,11 @@
 
     Private PurchaseStatusSelection = 0
     Private PurposeOfEntry As String
-
+    Private CurrentPackagePriceID = -1
     Private CurrentSupplierID = -1
-    Private CurrentPurchaseOrdersStatusSelection = -1
     Private CurrentProductPartId = -1
     Private SavedProductPartID = CurrentProductPartId
-
+    Private CurrentPurchaseOrdersItemNo = -1
     Private SavedPurchaseOrderDiscount = 0
     Private SavedTaxAmount = 0
     Private SavedTax = 0
@@ -37,13 +37,20 @@
 
     Private Sub PurchaseOrdersForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
-        CurrentPurchaseOrdersStatusSelection = 0
+        RequisitionDetailsGroupBox.Top = PurchaseOrdersMenuStrip.Top + PurchaseOrdersMenuStrip.Height
+        PurchaseOrderDetailsGroupBox.Top = (Me.Height - PurchaseOrderDetailsGroupBox.Height) / 2
+        PurchaseOrderDetailsGroupBox.Left = (Me.Width - PurchaseOrderDetailsGroupBox.Width) / 2
         If Tunnel1 = "Delivery Update" Then
             Me.Text = "SELECT ITEMS DELIVERED"
             SetToDeliveryMode()
             SetPurchaseOrdersSelectionFilter("Approved and Finalized")
         Else
-            SetPurchaseOrdersSelectionFilter("Draft")
+            Select Case CurrentUserGroup
+                Case "Procurement Manager"
+                    SetPurchaseOrdersSelectionFilter("For Approval")
+                Case "Purchaser"
+                    SetPurchaseOrdersSelectionFilter("Draft")
+            End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
             DeliveredToolStripMenuItem.Visible = False
         End If
@@ -60,6 +67,8 @@
         Select Case Tunnel1
             Case "Tunnel2IsProductPartID"
                 CurrentProductPartId = Tunnel2
+                SavePurchaseOrderToolStripMenuItem.Visible = True
+                CurrentPurchaseOrdersItemID = -1
             Case "Tunnel2IsSupplierID"
                 CurrentSupplierID = Tunnel2
                 SupplierNameTextBox.Text = Tunnel3
@@ -69,14 +78,6 @@
     Private Sub FillPurchaseOrdersDataGridView()
         PurchaseOrderDate.Text = DateString
         PurchaseOrderRevisionNoTextBox.Text = "0"
-
-        Dim xxDraft = " IIf(PurchaseOrdersTable.PurchaseOrderStatus_Byte = 0, " & Chr(34) & "Draft" & Chr(34) & ","
-        Dim xxForApproval = " IIf(PurchaseOrdersTable.PurchaseOrderStatus_Byte = 1, " & Chr(34) & "For Approval" & Chr(34) & ","
-        Dim xxFinalized = " IIf(PurchaseOrdersTable.PurchaseOrderStatus_Byte = 2, " & Chr(34) & "Finalized" & Chr(34) & ","
-
-        PurchaseOrderStatus = xxDraft & xxForApproval & xxFinalized & Chr(34) & Chr(34) &
-                                " ))) AS PurchaseOrderStatus "
-
         PurchaseOrdersFieldsToSelect = " 
 SELECT 
 PurchaseOrdersTable.PurchaseOrderID_AutoNumber,
@@ -87,10 +88,10 @@ PurchaseOrdersTable.Discount_Integer,
 PurchaseOrdersTable.ShippingCost_Double, 
 PurchaseOrdersTable.TaxedAmount_Double, 
 PurchaseOrdersTable.POTotal_Double, 
-PurchaseOrdersTable.PurchaseOrderStatus_Byte,
-SupplierTable.SupplierName_ShortText35, 
-StatusesTable.StatusText_ShortText25
-FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.SupplierID_LongInteger = SupplierTable.SupplierID_AutoNumber) LEFT JOIN StatusesTable ON PurchaseOrdersTable.PurchaseOrderStatusID_LongInteger = StatusesTable.StatusID_Autonumber
+SuppliersTable.SupplierName_ShortText35, 
+StatusesTable.StatusSequence_LongInteger,
+StatusesTable.StatusText_ShortText25 as PurchaseOrderStatus
+FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.SupplierID_LongInteger = SuppliersTable.SupplierID_AutoNumber) LEFT JOIN StatusesTable ON PurchaseOrdersTable.PurchaseOrderStatusID_LongInteger = StatusesTable.StatusID_Autonumber
 "
         PurchaseOrdersSelectionOrder = " ORDER BY PurchaseOrderID_AutoNumber DESC"
 
@@ -109,7 +110,7 @@ FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.Supplie
             FormatPurchaseOrderDataGridView()
         End If
 
-        SetGroupBoxHeight(1, 10, PurchaseOrdersRecordCount, PurchaseOrdersGroupBox, PurchaseOrdersDataGridView)
+        SetGroupBoxHeight(6, PurchaseOrdersRecordCount, PurchaseOrdersGroupBox, PurchaseOrdersDataGridView)
 
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
@@ -117,7 +118,6 @@ FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.Supplie
         PurchaseOrdersItemsGroupBox.Left = Me.Left
         PurchaseOrdersGroupBox.Top = PurchaseOrdersSearchToolStrip.Top + PurchaseOrdersSearchToolStrip.Height + 5
         PurchaseOrdersItemsGroupBox.Top = PurchaseOrdersGroupBox.Top + PurchaseOrdersGroupBox.Height + 5
-        PurchaseOrderDetailsGroupBox.Top = PurchaseOrdersGroupBox.Top
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
         RequisitionDetailsGroupBox.Top = (Me.Height - RequisitionDetailsGroupBox.Height) / 2
         RequisitionDetailsGroupBox.Left = (Me.Width - RequisitionDetailsGroupBox.Width) / 2
@@ -162,9 +162,9 @@ FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.Supplie
                     PurchaseOrdersDataGridView.Columns.Item(i).HeaderText = "Supplier"
                     PurchaseOrdersDataGridView.Columns.Item(i).Width = 200
                     PurchaseOrdersDataGridView.Columns.Item(i).Visible = True
-                Case "StatusText_ShortText25"
+                Case "PurchaseOrderStatus"
                     PurchaseOrdersDataGridView.Columns.Item(i).HeaderText = "Status"
-                    PurchaseOrdersDataGridView.Columns.Item(i).Width = 150
+                    PurchaseOrdersDataGridView.Columns.Item(i).Width = 200
                     PurchaseOrdersDataGridView.Columns.Item(i).Visible = True
             End Select
             If PurchaseOrdersDataGridView.Columns.Item(i).Visible = True Then
@@ -195,8 +195,9 @@ FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.Supplie
 
         CurrentPurchaseOrdersDataGridViewRow = e.RowIndex
         CurrentPurchaseOrderID = PurchaseOrdersDataGridView.Item("PurchaseOrderID_Autonumber", CurrentPurchaseOrdersDataGridViewRow).Value
+        CurrentPurchaseOrderRevision = PurchaseOrdersDataGridView.Item("PurchaseOrderRevision_Integer", CurrentPurchaseOrdersDataGridViewRow).Value
         CurrentSupplierID = PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value
-        CurrentPOStatus = PurchaseOrdersDataGridView.Item("StatusText_ShortText25", CurrentPurchaseOrdersDataGridViewRow).Value
+        CurrentPOStatus = PurchaseOrdersDataGridView.Item("PurchaseOrderStatus", CurrentPurchaseOrdersDataGridViewRow).Value
         SupplierNameTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("SupplierName_ShortText35", CurrentPurchaseOrdersDataGridViewRow).Value)
         PurchaseOrderRevisionNoTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderRevision_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)
         PurchaseOrderDate.Text = NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersDataGridViewRow).Value)
@@ -205,7 +206,6 @@ FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.Supplie
         POTaxAmountTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value)
         POTotalTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value)
         PurchaseOrderIDTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderID_AutoNumber", CurrentPurchaseOrdersDataGridViewRow).Value)
-        PurchaseOrdersItemsSelectionFilter = " WHERE PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = " & CurrentPurchaseOrderID.ToString
         EditPurchaseOrderToolStripMenuItem.Visible = False
         DeletePurchaseOrderToolStripMenuItem.Visible = False
         SubmitForApprovalToolStripMenuItem.Visible = False
@@ -224,21 +224,18 @@ FROM (PurchaseOrdersTable LEFT JOIN SupplierTable ON PurchaseOrdersTable.Supplie
                 ApproveStripMenuItem.Visible = True
                 AddPurchaseOrderToolStripMenuItem.Visible = True
         End Select
+        PurchaseOrdersItemsSelectionFilter = " WHERE PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = " & CurrentPurchaseOrderID.ToString
         FillPurchaseOrdersItemsDataGridView()
 
     End Sub
 
 
     Private Sub FillPurchaseOrdersItemsDataGridView()
-        Dim xxDraft = " IIf(PurchaseOrdersItemsTable.PurchaseOrdersItemStatus_Byte = 0, " & Chr(34) & "Draft" & Chr(34) & ","
-        Dim xxForApproval = " IIf(PurchaseOrdersItemsTable.PurchaseOrdersItemStatus_Byte = 1, " & Chr(34) & "For Approval" & Chr(34) & ","
-        Dim xxOrdered = " IIf(PurchaseOrdersItemsTable.PurchaseOrdersItemStatus_Byte = 2, " & Chr(34) & "Ordered" & Chr(34) & ","
 
-        PurchaseOrdersItemStatus = xxDraft & xxForApproval & xxOrdered & Chr(34) & Chr(34) &
-                                " ))) AS PurchaseOrderStatus "
-
-        PurchaseOrdersItemsFieldsToSelect = "
-SELECT 
+        PurchaseOrdersItemsFieldsToSelect =
+"
+Select 
+PurchaseOrdersItemsTable.POItem_Integer,
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 ProductsPartsOrderedTable.ManufacturerDescription_ShortText250, 
 ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld, 
@@ -247,7 +244,7 @@ ProductsPartsOrderedTable.Unit_ShortText3,
 PurchaseOrdersItemsTable.Price_Currency, 
 PurchaseOrdersItemsTable.ItemDiscount_Integer, 
 BrandsOrderedTable.BrandName_ShortText20, 
-PurchaseOrdersItemsTable.DeliveryMode_Byte,
+PurchaseOrdersItemsTable.DeliveryMode_Byte, 
 MasterCodeBookTable.MasterCodeBookID_Autonumber, 
 WorkOrderPartsTable.Unit_ShortText3, 
 ProductsPartsRequestedTable.ManufacturerPartNo_ShortText30Fld, 
@@ -262,16 +259,19 @@ PartsRequisitionsItemsTable.PartsRequisitionsItemID_AutoNumber,
 PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger, 
 PartsRequisitionsItemsTable.ProductPartID_LongInteger, 
 PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber, 
-PurchaseOrdersItemsTable.PurchaseOrdersItemStatus_Byte, 
-VehicleDescription.VehicleDescription
-FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable ON PurchaseOrdersItemsTable.PartsRequisitionsItemID_LongInteger = PartsRequisitionsItemsTable.PartsRequisitionsItemID_AutoNumber) LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsRequestedTable ON PartsRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsRequestedTable.ProductsPartID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsRequestedTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN BrandsTable AS BrandsRequestedTable ON ProductsPartsRequestedTable.BrandID_LongInteger = BrandsRequestedTable.BrandID_Autonumber) LEFT JOIN WorkOrderPartsRequisitionsItemsTable ON PartsRequisitionsItemsTable.OrderPartsRequisitionsItemID_LongInteger = WorkOrderPartsRequisitionsItemsTable.WorkOrderPartsRequisitionsItemID_AutoNumber) LEFT JOIN WorkOrderPartsTable ON WorkOrderPartsRequisitionsItemsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsOrderedTable ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsOrderedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsOrderedTable ON ProductsPartsOrderedTable.BrandID_LongInteger = BrandsOrderedTable.BrandID_Autonumber) LEFT JOIN PartsRequisitionsTable ON PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger = PartsRequisitionsTable.PartsRequisitionID_AutoNumber) LEFT JOIN VehicleDescription ON PartsRequisitionsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber
+VehicleDescription.VehicleDescription, 
+PackagePricesTable.LastItem_Integer, 
+PackagePricesTable.PackagePrice_Double, 
+PackagePricesTable.PackagePriceID_LongInteger,
+PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger, 
+PackagePricesTable.LastItem_Integer, 
+PackagePricesTable.PackagePrice_Double,
+StatusesTable.StatusText_ShortText25
+FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsOrderedTable ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsOrderedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsOrderedTable ON ProductsPartsOrderedTable.BrandID_LongInteger = BrandsOrderedTable.BrandID_Autonumber) LEFT JOIN ((((((PartsRequisitionsItemsTable LEFT JOIN ProductsPartsTable AS ProductsPartsRequestedTable ON PartsRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsRequestedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsRequestedTable ON ProductsPartsRequestedTable.BrandID_LongInteger = BrandsRequestedTable.BrandID_Autonumber) LEFT JOIN WorkOrderRequestedPartsTable ON PartsRequisitionsItemsTable.WorkOrderPartsRequisitionsItemID_LongInteger = WorkOrderRequestedPartsTable.[WorkOrderRequestedPartID_AutoNumber]) LEFT JOIN WorkOrderPartsTable ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN PartsRequisitionsTable ON PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger = PartsRequisitionsTable.PartsRequisitionID_AutoNumber) LEFT JOIN VehicleDescription ON PartsRequisitionsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) ON PurchaseOrdersItemsTable.PartsRequisitionsItemID_LongInteger = PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger) LEFT JOIN PackagePricesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber = PackagePricesTable.PackagePriceID_LongInteger) LEFT JOIN MasterCodeBookTable ON ProductsPartsOrderedTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN StatusesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber
 "
+        PurchaseOrdersItemsSelectionOrder = " ORDER BY PurchaseOrderID_LongInteger, POItem_Integer"
 
-        PurchaseOrdersItemsTableLinks = " 
-"
-        PurchaseOrdersItemsSelectionOrder = " ORDER BY PurchaseOrdersItemID_AutoNumber DESC"
-
-        MySelection = PurchaseOrdersItemsFieldsToSelect & PurchaseOrdersItemsTableLinks & PurchaseOrdersItemsSelectionFilter & PurchaseOrdersItemsSelectionOrder '
+        MySelection = PurchaseOrdersItemsFieldsToSelect & PurchaseOrdersItemsSelectionFilter & PurchaseOrdersItemsSelectionOrder '
         JustExecuteMySelection()
         PurchaseOrdersItemsRecordCount = RecordCount
         PurchaseOrdersItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
@@ -279,9 +279,8 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
             FormatPurchaseOrdersItemsDataGridView()
         End If
 
-
         Dim MaxBottom = 20 - PurchaseOrdersItemsRecordCount
-        SetGroupBoxHeight(1, MaxBottom, PurchaseOrdersRecordCount, PurchaseOrdersGroupBox, PurchaseOrdersDataGridView)
+        SetGroupBoxHeight(MaxBottom, PurchaseOrdersRecordCount, PurchaseOrdersGroupBox, PurchaseOrdersDataGridView)
 
         PurchaseOrdersItemsGroupBox.Top = PurchaseOrdersGroupBox.Top + PurchaseOrdersGroupBox.Height
         Dim RowsHeight = 0
@@ -301,6 +300,10 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Part "
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 200
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "POItem_Integer"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Itm"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 70
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld"
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Manufac Part #"
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 130
@@ -319,6 +322,14 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
                 Case "Price_Currency"
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Price"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 60
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "PackagePrice_Double "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Package Price"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 60
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "LastItem_Integer "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Upto Item"
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 60
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ItemDiscount_Integer"
@@ -361,6 +372,15 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Req Brand"
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 150
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "PackagePrice_Double"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Package Price"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 150
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "StatusText_ShortText25"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Status"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 150
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+
             End Select
             If PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True Then
                 PurchaseOrdersItemsGroupBox.Width = PurchaseOrdersItemsGroupBox.Width + PurchaseOrdersItemsDataGridView.Columns.Item(i).Width
@@ -368,7 +388,7 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
         Next
 
         ' NOTE" SYSTEM AUTOFITS THE GRIDVIEW FIELDS ACCORDING TO THEIR WITDH
-
+        PurchaseOrdersItemsGroupBox.Width = Me.Width - 6
     End Sub
     Private Sub PurchaseOrdersItemsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles PurchaseOrdersItemsDataGridView.RowEnter
         If ShowInTaskbarFlag Then
@@ -379,6 +399,8 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
         CurrentPurchaseOrdersItemsDataGridViewRow = e.RowIndex
         CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductPartID_LongInteger", CurrentPurchaseOrdersItemsDataGridViewRow).Value
         CurrentPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
+        CurrentPurchaseOrdersItemNo = PurchaseOrdersItemsDataGridView.Item("POItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value
+        FillField(CurrentPackagePriceID, PurchaseOrdersItemsDataGridView.Item("PackagePriceID_LongInteger", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         If PurchaseOrderDetailsGroupBox.Visible Then
@@ -403,6 +425,7 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
         PurchaseOrderDetailsGroupBox.Enabled = True
         PurposeOfEntry = "ADD"
         CurrentPurchaseOrderID = -1
+        CurrentPurchaseOrderRevision = 0
         SupplierNameTextBox.Select()
         DisablePurchaseOrderMenus()
     End Sub
@@ -416,7 +439,7 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
                                 " ShippingCost_Double, " &
                                 " TaxedAmount_Double, " &
                                 " POTotal_Double, " &
-                                " PurchaseOrderStatus_Byte "
+                                " PurchaseOrderStatusID_LongInteger "
 
         Dim FieldsData = 0.ToString & ", " &
                                 Chr(34) & DateString & Chr(34) & ", " &
@@ -426,7 +449,7 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
                                 0.ToString & ", " &
                                 0.ToString & ", " &
                                 0.ToString & ", " &
-                                0.ToString
+                                GetStatusIdFor("PurchaseOrdersTable", "Draft").ToString
 
         CurrentPurchaseOrderID = InsertNewRecord("PurchaseOrdersTable", FieldsToUpdate, FieldsData)
 
@@ -480,22 +503,6 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
         DoCommonSaveRoutine()
     End Sub
     Private Function AChangeOccuredInPOEdit()
-
-
-
-
-
-        '*******************************************************
-        ' CHECK THIS THE TheseAreNotEqual ROUTINE WAS MODIFIED, WATCH PARAMETER pURPOSEOFENTRY
-
-
-
-
-
-
-
-
-
 
         If TheseAreNotEqual(CurrentSupplierID, NotNull(PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(PurchaseOrderDate.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
@@ -655,8 +662,9 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
     End Sub
 
     Private Sub PurchaseOrderDetailsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles PurchaseOrderDetailsGroupBox.EnabledChanged
+        'only draft status can be modified
         If CurrentPurchaseOrdersDataGridViewRow > -1 Then
-            If PurchaseOrdersDataGridView.Item("PurchaseOrderStatus_Byte", CurrentPurchaseOrdersDataGridViewRow).Value > 0 Then Exit Sub
+            If CurrentPOStatus <> "Draft" Then Exit Sub
         End If
         If PurchaseOrderDetailsGroupBox.Enabled = True Then
             PurchaseOrderDetailsGroupBox.Visible = True
@@ -682,29 +690,37 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
         End If
         ShowCalledForm(Me, SuppliersForm)
     End Sub
-    Private Sub AddPOItemsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPOItemsToolStripMenuItem.Click
+
+    Private Sub FromRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FromRequisitionsToolStripMenuItem.Click
         'note items will be selected from the PartsRequisitions for purchase
-        PurchaseOrderDetailsGroupBox.Enabled = False
-        PurchaseOrderDetailsGroupBox.Enabled = True
+        RequisitionDetailsGroupBox.Visible = True
         AddPurchaseOrderToolStripMenuItem.Enabled = False
+        DisablePurchaseOrderMenus()
         PurposeOfEntry = "ADD"
-        CurrentPurchaseOrderID = -1
 
         ShowCalledForm(Me, PartsRequisitionsForm)
 
-        PurchaseOrderDate.Text = DateString
-        SupplierNameTextBox.Select()
+    End Sub
 
+    Private Sub AdditionalItemNotFromRequisitionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdditionalItemNotFromRequisitionToolStripMenuItem.Click
+        RequisitionDetailsGroupBox.Visible = True
+        AddPurchaseOrderToolStripMenuItem.Enabled = False
+        DisablePurchaseOrderMenus()
+        PurposeOfEntry = "ADD"
+        ShowCalledForm(Me, ProductsPartsForm)
     End Sub
 
     Private Sub EditPOItemToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles EditPOItemToolStripMenuItem.Click
         RequisitionDetailsGroupBox.Visible = True
         POItemProductPartNoTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
+        POItemNoTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("POItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         POItemProductDescTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         POItemQuantityTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         POItemUnitTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.Unit_ShortText3", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         POItemPriceTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("Price_Currency", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         DeliveryModeTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("DeliveryMode_Byte", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
+        PackagePriceLastItemTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("LastItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
+        PackagePriceTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("PackagePrice_Double", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         RequisitionItemProductDescText.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         RequisitionItemProductPartNoTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.ManufacturerPartNo_ShortText30Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         RequisitionItemQuantityTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("RequisitionQuantity_Double", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
@@ -769,54 +785,133 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
 
 
     Private Sub ItemPurchseHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ItemPurchseHistoryToolStripMenuItem.Click
-
+        ShowCalledForm(Me, PurchasedItemsForm)
     End Sub
-
-
     Private Sub ConfirmQuantitiesButton_Click(sender As Object, e As EventArgs) Handles EXITSAVEChangesButton.Click
         SaveChanges()
     End Sub
     Private Sub SaveChanges()
+        ' Validation
+        If (POItemPriceTextBox.Text) > 0 And (PackagePriceTextBox.Text) > 0 Then
+            If Val(PackagePriceLastItemTextBox.Text) > 0 Then
+                MsgBox("The item price should be zero otherwise reset Package Price and Last Item to 0 ")
+                POItemPriceTextBox.Text = "0"
+                PackagePriceTextBox.Select()
+                If Not Val(PackagePriceLastItemTextBox.Text) > CurrentPurchaseOrdersItemNo Then
+                    PackagePriceLastItemTextBox.Select()
+                End If
+            End If
+        End If
+        If Val(PackagePriceLastItemTextBox.Text) > PurchaseOrdersItemsRecordCount Then
+            MsgBox(PackagePriceLastItemTextBox.Text + Space(20) + "Package Price Last Item exceeds to total number of PO Items")
+        End If
+        Dim NoChangesOccuredInHeader = False
         If AChangeOccured() Then
+
             Dim xxmsgResult = MsgBox("Save Changes ?", MsgBoxStyle.YesNoCancel)
+            If xxmsgResult = vbNo Then
+                RequisitionDetailsGroupBox.Visible = False
+                NoChangesOccuredInHeader = True
+            ElseIf xxmsgResult = MsgBoxResult.Cancel Then
+                NoChangesOccuredInHeader = True
+            End If
+        Else
+            NoChangesOccuredInHeader = True
+        End If
+        If NoChangesOccuredInHeader = False Then
+            If MsgBox("About to replace original information, Continue ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                If CurrentPurchaseOrdersItemID = -1 Then
+                    InsertNewPurchaseOrderItem()
+                Else
+                    Dim RecordFilter = " WHERE PurchaseOrdersItemID_AutoNumber = " & CurrentPurchaseOrdersItemID.ToString
+                    Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartId.ToString & "," &
+                                  "POQty_Integer = " & Val(POItemQuantityTextBox.Text).ToString & "," &
+                                  "Price_Currency = " & Val(POItemPriceTextBox.Text).ToString
+                    UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
+                    RequisitionDetailsGroupBox.Visible = False
+
+                    'UPDATE ProductsPartTable AND MARK FIELD Selected true
+                    UpdateTable("ProductsPartTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartId.ToString)
+                End If
+            End If
+        End If
+        If ChangesInPackagePricesOccured() Then
+            Dim xxmsgResult = MsgBox("Save Changes to Package price info ?", MsgBoxStyle.YesNoCancel)
             If xxmsgResult = vbNo Then
                 RequisitionDetailsGroupBox.Visible = False
                 Exit Sub
             ElseIf xxmsgResult = MsgBoxResult.Cancel Then
                 Exit Sub
             End If
-        Else
-            RequisitionDetailsGroupBox.Visible = False 'NO CHANGES
-            Exit Sub
         End If
         If MsgBox("About to replace original information, Continue ?", MsgBoxStyle.YesNo) = vbNo Then
+            RequisitionDetailsGroupBox.Visible = False
             Exit Sub
         End If
-        Dim RecordFilter = " WHERE PurchaseOrdersItemID_AutoNumber = " & CurrentPurchaseOrdersItemID.ToString
-        Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartId.ToString & "," &
-                                  "POQty_Integer = " & Val(POItemQuantityTextBox.Text).ToString & "," &
-                                  "Price_Currency = " & Val(POItemPriceTextBox.Text).ToString
-        UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
+        If CurrentPackagePriceID = -1 Then
+            InsertNewPackagePriceItem()
+        Else
+            Dim RecordFilter = " WHERE PackagePriceID_LongInteger = " & CurrentPackagePriceID.ToString
+            Dim SetCommand = " SET LastItem_Integer = " & PackagePriceLastItemTextBox.Text & "," &
+                                  "PackagePrice_Double = " & PackagePriceTextBox.Text
+            UpdateTable("PackagePricesTable", SetCommand, RecordFilter)
+        End If
         RequisitionDetailsGroupBox.Visible = False
         FillPurchaseOrdersItemsDataGridView()
     End Sub
+    Private Sub InsertNewPurchaseOrderItem()
+        If IsEmpty(POItemPriceTextBox.Text) Then POItemPriceTextBox.Text = 0
+        POItemNoTextBox.Text = PurchaseOrdersItemsRecordCount + 1
+
+        Dim FieldsToUpdate = " PurchaseOrderID_LongInteger, " &
+                                " PurchaseOrderRevision_Integer, " &
+                                " ProductPartID_LongInteger, " &
+                                " POItem_Integer, " &
+                                " POQty_Integer, " &
+                                " Price_Currency, " &
+                                " PurchaseOrdersItemStatusID_LongInteger "
+
+        Dim FieldsData = CurrentPurchaseOrderID.ToString & ", " &
+                         CurrentPurchaseOrderRevision.ToString & ", " &
+                         CurrentProductPartId.ToString & ", " &
+                          POItemNoTextBox.Text & ", " &
+                          POItemQuantityTextBox.Text & ", " &
+                          POItemPriceTextBox.Text & ", " &
+                         GetStatusIdFor("PurchaseOrdersItemsTable").ToString
+
+        CurrentPurchaseOrdersItemID = InsertNewRecord("PurchaseOrdersItemsTable", FieldsToUpdate, FieldsData)
+        'UPDATE ProductsPartTable AND MARK FIELD Selected true
+        UpdateTable("ProductsPartTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartId.ToString)
+
+    End Sub
+    Private Sub InsertNewPackagePriceItem()
+        Dim FieldsToUpdate = " PackagePriceID_LongInteger, " &
+                                " LastItem_Integer, " &
+                                " PackagePrice_Double "
+
+        Dim FieldsData = CurrentPurchaseOrdersItemID.ToString & ", " &
+                         PackagePriceLastItemTextBox.Text & ", " &
+                         PackagePriceTextBox.Text
+
+        MySelection = " INSERT INTO PackagePricesTable " & " (" & FieldsToUpdate & ") VALUES (" & FieldsData & ")"
+        JustExecuteMySelection()
+
+    End Sub
     Private Function AChangeOccured()
 
-
-
-        '*******************************************************
-        ' CHECK THIS THE TheseAreNotEqual ROUTINE WAS MODIFIED, WATCH PARAMETER pURPOSEOFENTRY
-
-
-
-
-
         If TheseAreNotEqual(SavedProductPartID, CurrentProductPartId, PurposeOfEntry) Then Return True
-
+        If TheseAreNotEqual(POItemNoTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("POItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(POItemPriceTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("Price_Currency", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(POItemProductPartNoTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+        Return False
+    End Function
+    Private Function ChangesInPackagePricesOccured()
+        ' there is a package price but there is no Package Price linked
+        If Val(PackagePriceTextBox.Text) > 0 And CurrentPackagePriceID = -1 Then Return True
+        If TheseAreNotEqual(PackagePriceTextBox.Text, PurchaseOrdersItemsDataGridView.Item("PackagePrice_Double", CurrentPurchaseOrdersItemsDataGridViewRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(PackagePriceLastItemTextBox.Text, PurchaseOrdersItemsDataGridView.Item("LastItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value, PurposeOfEntry) Then Return True
         Return False
     End Function
 
@@ -940,7 +1035,7 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
         SubmitForApprovalToolStripMenuItem.Visible = False
     End Sub
     Private Sub ApproveStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApproveStripMenuItem.Click
-        If MsgBox("Shall we proceed for Spproval and execution of thi Purchase Order ?", MsgBoxStyle.YesNo) = vbNo Then
+        If MsgBox("Shall we proceed for Approval and execution of this Purchase Order ?", MsgBoxStyle.YesNo) = vbNo Then
             Exit Sub
         End If
         UpdatePOStatus(2)
@@ -948,9 +1043,21 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
     End Sub
     Private Sub UpdatePOStatus(PassedStatus)
         Dim RecordFilter = " WHERE PurchaseOrderID_AutoNumber = " & Str(CurrentPurchaseOrderID)
-        Dim SetCommand = " SET PurchaseOrderStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersTable", "For Approval"))
+        Dim SetCommand = ""
+        If PassedStatus = 1 Then
+            SetCommand = " SET PurchaseOrderStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersTable", "For Approval"))
+        Else
+            SetCommand = " SET PurchaseOrderStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersTable", "Approved and Finalized"))
+        End If
         UpdateTable("PurchaseOrdersTable", SetCommand, RecordFilter)
         PurchaseOrderDetailsGroupBox.Enabled = False
+        SetCommand = " SET PurchaseOrdersItemStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersItemsTable", "Approved and Finalized"))
+
+        For I = 0 To PurchaseOrdersItemsRecordCount - 1
+            CurrentPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", I).Value
+            RecordFilter = " WHERE PurchaseOrdersItemID_AutoNumber = " & Str(CurrentPurchaseOrdersItemID)
+            UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
+        Next
         FillPurchaseOrdersDataGridView()
     End Sub
 
@@ -960,10 +1067,9 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
                 Exit Sub
             End If
         End If
-        ProductsPartsForm.PartNoToolStripTextBox.Text = "?"
-        Tunnel1 = NotNull(PurchaseOrdersItemsDataGridView.Item("MasterCodeBookID_Autonumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
-        Tunnel2 = NotNull(PurchaseOrdersItemsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
-        ProductsPartsForm.VehicleFilterToolStripTextBox.Text = CurrentVehicleString
+        ProductsPartsForm.PartNoSearchTextBox.Text = "?"
+        ProductsPartsForm.CurrentVehicleID = CurrentVehicleID
+        ProductsPartsForm.VehicleModelSearchTextBox.Text = CurrentVehicleString
         ShowCalledForm(Me, ProductsPartsForm)
     End Sub
 
@@ -999,4 +1105,9 @@ FROM ((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable O
 
 
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles PackagePriceButton.Click
+
+    End Sub
+
 End Class

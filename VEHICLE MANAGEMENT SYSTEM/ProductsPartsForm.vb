@@ -12,72 +12,92 @@
     Private CurrentPartDescription = ""
     Private CurrentBrandID = -1
     Private CurrentStocksID = -1
-     Private CurrentProductPartsPackingID = -1
+    Private CurrentProductPartsPackingID = -1
     Private SavedCallingForm As Form
-    Private ViewMode = "Products"
     Private CurrentSpecificationsPartID = -1
     Private BackToEditMode = False
     Private ProductsMode = False
+    Private CurrentProductSpecificationID = -1
+    Private RequestedMasterCodeBook = -1
+    Public CurrentVehicleID = -1
 
     Private Sub ProductsPartsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
-        'NOTE  Tunnel1 = CurrentMasterCodeBookID
-        '      Tunnel2 = description
-        '      Tunnel3 = MODE  1 OE NULL OR EMPTY (pRODUCTS mODE) 2 (STOCKS MODE)
-        ExecuteSearchParameters()
+        'NOTE  
+        '      Tunnel2 = CurrentMasterCodeBookID
+        '      Tunnel3 = MODE  1 = NULL OR EMPTY (pRODUCTS mODE) 2 (STOCKS MODE)
+        VerticalCenter(FiltersGroupBox, Me)
+        HorizontalCenter(FiltersGroupBox, Me)
+        VerticalCenter(ProductDetailsGroup, Me)
+        HorizontalCenter(ProductDetailsGroup, Me)
+        ProductSpecificationTextBox.Enabled = True
+        Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top +
+                VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         If IsEmpty(Tunnel3) Then
             ProductsMode = True
-            SetToProductsViewMode()
-        Else
-            SetToStocksViewMode()
         End If
+        CurrentMasterCodeBookID = Tunnel2
+        If IsNotEmpty(Tunnel2) Then RequestedMasterCodeBook = Tunnel2
+        ExecuteSearchParameters()
+    End Sub
+    Private Sub ProductsPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+        If Me.Enabled = False Then Exit Sub
+        CallingForm = SavedCallingForm
+
+        ' GET RETURNED DATA HERE
+
+        Select Case Tunnel1
+            Case "Tunnel2IsPartsSpecificationsID"
+                CurrentProductSpecificationID = Tunnel2
+            Case "Tunnel2IsBrandID"
+                CurrentBrandID = Tunnel2
+            Case "Tunnel2IsProductPartsPackingID"
+                CurrentProductPartsPackingID = Tunnel2
+                PackingTextBox.Text = Tunnel3
+                PackingTextBox.Visible = True
+            Case "Tunnel2IsMasterCodeBookID"
+                ProductDetailsGroup.Visible = True
+                ProductDetailsGroup.BringToFront()
+                CurrentMasterCodeBookID = Tunnel2
+                SystemPartDescriptionTextBox.Text = Tunnel3
+        End Select
+
     End Sub
     Private Sub SetToStocksViewMode()
-        ViewMode = "Stocks"
         FormatProductsPartsDataGridView()
-        SelectToolStripMenuItem.Visible = False
-        VehicleFilterToolStripTextBox.Visible = False
+        If Not SavedCallingForm.Name = "StoreRequisitionsForm" Then
+            SelectToolStripMenuItem.Visible = False
+        End If
     End Sub
 
     Private Sub SetToProductsViewMode()
-        ViewMode = "Products"
         FormatProductsPartsDataGridView()
         SelectToolStripMenuItem.Visible = True
-        VehicleFilterToolStripTextBox.Visible = True
         ProductsPartsMenuStrip.Visible = True
         ProductsPartsMenuStrip.Left = CancelToolStripMenuItem.Width + 2
         ProductsPartsMenuStrip.Top = 0
 
-        If IsNotEmpty(VehicleFilterToolStripTextBox.Text) Then
-            ToggleVehiclefilterToolStripMenuItem.Text = "ON"
-        Else
-            ToggleVehiclefilterToolStripMenuItem.Text = "OFF"
-        End If
-
-        If Not IsEmpty(Tunnel1) Then
+        If IsNotEmpty(Tunnel3) Then
             CurrentMasterCodeBookID = Tunnel1
             CurrentPartDescription = Tunnel2
-            SearchDescriptionToolStripTextBox.Text = Tunnel2
+            PartDescriptionSearchTextBox.Text = Tunnel2
             SetSearchParameters()
         End If
+
     End Sub
 
-    Private Sub ToggleVehiclefilterToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleVehiclefilterToolStripMenuItem.Click
-        If ToggleVehiclefilterToolStripMenuItem.Text = "ON" Then
-            ToggleVehiclefilterToolStripMenuItem.Text = "OFF"
-        Else
-            ToggleVehiclefilterToolStripMenuItem.Text = "ON"
-        End If
-    End Sub
 
     Private Sub FillProductsPartsDataGridView()
 
         ProductsPartsFieldsToSelect =
 "
 SELECT 
+ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
+PartsSpecificationsTable.PartSpecifications_ShortText255,
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
 StocksTable.QuantityInStock_Double, 
@@ -90,21 +110,18 @@ StocksTable.MinimumQuantity_Double,
 ProductsPartsTable.VehicleRepairClassID_LongInteger, 
 VehicleDescription.VehicleDescription, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
-ProductPartPackingsQuery.QuantityPerPack_Double, 
-ProductPartPackingsQuery.UnitOfTheQuantity_ShortText3
-FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN ProductPartPackingsQuery ON ProductsPartsTable.ProductsPartID_Autonumber = ProductPartPackingsQuery.ProductPartID_LongInteger
-"
+ProductPartsPackingsTable.QuantityPerPack_Double, 
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3
+FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber"
 
-        ProductsPartsSelectionOrder = "
- ORDER BY SystemDesc_ShortText100Fld
-"
 
+        ProductsPartsSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld, ManufacturerPartNo_ShortText30Fld "
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
         JustExecuteMySelection()
+        ProductsPartsRecordCount = RecordCount
         ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
         ProductsPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        ProductsPartsRecordCount = RecordCount
         If Not ProductsPartsDataGridViewAlreadyFormated Then
             If ProductsMode Then
                 SetToProductsViewMode()
@@ -112,27 +129,31 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
                 SetToStocksViewMode()
             End If
         End If
+        Dim RowsHeight = 0
+        Dim AvailableHeightSpace = VehicleManagementSystemForm.Height -
+                                    (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height) +
+                                    ProductsPartsDataGridView.ColumnHeadersHeight
+        Dim MyMaximumHeight = VehicleManagementSystemForm.Height -
+                                  VehicleManagementSystemForm.VehicleManagementMenuStrip.Top
 
-        Dim NoOfHeaderLines = 2
-        Dim RecordsDisplyed = ProductsPartsRecordCount
-        If ProductsPartsRecordCount > 27 Then
-            RecordsDisplyed = 27
-        Else
-            RecordsDisplyed = ProductsPartsRecordCount
-        End If
         If CurrentProductsPartsRow > -1 Then
-            Dim RowsHeight = 0
             For i = 0 To ProductsPartsRecordCount - 1
-                RowsHeight = RowsHeight + ProductsPartsDataGridView.Rows(CurrentProductsPartsRow).Height
+                RowsHeight = RowsHeight + ProductsPartsDataGridView.Rows(i).Height
+                If RowsHeight > AvailableHeightSpace Then Exit For
             Next
-            ProductsPartsDataGridView.Height = RowsHeight + ProductsPartsDataGridView.ColumnHeadersHeight + 60
+            If RowsHeight > AvailableHeightSpace Then
+                ProductsPartsDataGridView.Height = AvailableHeightSpace - 120
+            Else
+                ProductsPartsDataGridView.Height = RowsHeight + ProductsPartsDataGridView.ColumnHeadersHeight
+            End If
         End If
-        Me.Height = ProductsPartsDataGridView.Top + ProductsPartsDataGridView.Height + 100
-        Dim MinimumHeight = ProductsPartsDataGridView.Top + ProductDetailsGroup.Height + 30
-        If Me.Height < MinimumHeight Then
-            Me.Height = MinimumHeight
+        If ProductsPartsDataGridView.Height > MyMaximumHeight Then
+            Me.Height = ProductsPartsDataGridView.Height + 20
+        Else
+            Me.Height = mymaximumheight
         End If
         ProductDetailsGroup.Top = ProductsPartsDataGridView.Top
+        ProductsPartsDataGridView.Top = ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height
     End Sub
 
     Private Sub FormatProductsPartsDataGridView()
@@ -141,15 +162,26 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
         For i = 0 To ProductsPartsDataGridView.Columns.GetColumnCount(0) - 1
 
             ProductsPartsDataGridView.Columns.Item(i).Visible = False
-
             Select Case ProductsPartsDataGridView.Columns.Item(i).Name
+                Case "Selected"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "*"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 20
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "MasterCodeBookID_LongInteger"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "CodeBookID"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 80
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
+                Case "ProductPartID_LongInteger"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "linked as"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 80
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Part Desc"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 300
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
+                Case "PartSpecifications_ShortText255"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Specification"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 150
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerPartNo_ShortText30Fld"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Manufacturer PN"
@@ -221,8 +253,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
             ProductsPartsDataGridView.Left = Me.Left
             ProductsPartsDataGridView.Width = Me.Width
         End If
-        ProductsPartsDataGridView.Top = 80
-        Me.Location = New Point(Me.Location.X, 55)
+        ProductsPartsDataGridView.Top = (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height)
         Me.Left = VehicleManagementSystemForm.Left
     End Sub
     Private Sub ProductsPartsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ProductsPartsDataGridView.RowEnter
@@ -231,28 +262,15 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
         If ProductsPartsRecordCount = 0 Then Exit Sub
         CurrentProductsPartsRow = e.RowIndex
         CurrentProductPartID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
-        CurrentStocksID = ProductsPartsDataGridView.Item("StockID_Autonumber", CurrentProductsPartsRow).Value
+        FillField(CurrentProductSpecificationID, ProductsPartsDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsPartsRow).Value)
+        CurrentMasterCodeBookID = ProductsPartsDataGridView.Item("MasterCodeBookID_LongInteger", CurrentProductsPartsRow).Value
+        FillField(CurrentStocksID, ProductsPartsDataGridView.Item("StockID_Autonumber", CurrentProductsPartsRow).Value)
         CurrentBrandID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
-
-    End Sub
-    Private Sub ProductsPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
-        If Me.Enabled = False Then Exit Sub
-        CallingForm = SavedCallingForm
-
-        ' GET RETURNED DATA HERE
-
-        Select Case Tunnel1
-            Case "Tunnel2IsBrandID"
-                CurrentBrandID = Tunnel2
-            Case "Tunnel2IsProductPartsPackingID"
-                CurrentProductPartsPackingID = Tunnel2
-                PackingTextBox.Text = Tunnel3
-                PackingTextBox.Visible = True
-            Case "Tunnel2IsMasterCodeBookID"
-                ProductDetailsGroup.Visible = True
-                CurrentMasterCodeBookID = Tunnel2
-                SystemPartDescriptionTextBox.Text = Tunnel3
-        End Select
+        If RequestedMasterCodeBook = CurrentMasterCodeBookID Then
+            SelectToolStripMenuItem.Visible = True
+        Else
+            SelectToolStripMenuItem.Visible = False
+        End If
 
     End Sub
 
@@ -262,6 +280,11 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
             ShowMasterCodeBookForm()
             Exit Sub
         End If
+        If IsEmpty(ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value) Then
+            MsgBox("There are no product informations attached " & CurrentPartDescription & "?")
+            SetupEditMode()
+            Exit Sub
+        End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
 
@@ -269,7 +292,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
             Case "PurchaseOrdersForm"
                 PurchaseOrdersForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 PurchaseOrdersForm.POItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
-                PurchaseOrdersForm.RequisitionItemUnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
+                PurchaseOrdersForm.POItemUnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
             Case "PartsRequisitionsForm"
                 StoreRequisitionsForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 StoreRequisitionsForm.RequisitionItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
@@ -284,47 +307,42 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
                 RequestPartsForm.ProductTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
                 RequestPartsForm.CustomerSuppliedUnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
                 RequestPartsForm.PackingTextBox.Text = PackingTextBox.Text
-
+            Case "StoreRequisitionsForm"
+                StoreRequisitionsForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
+                StoreRequisitionsForm.RequisitionItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
+                StoreRequisitionsForm.RequisitionItemUnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
+                If IsNotEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
+                    StoreRequisitionsForm.PackingTextBox.Text = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & Space(1) &
+                                      ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString &
+                                        " / " &
+                                      ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value.ToString
+                End If
+                FillField(StoreRequisitionsForm.BrandTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value)
+                StoreRequisitionsForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value
 
         End Select
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub UpdateStocksTable()
 
-        MySelection = " SELECT * FROM  StocksTable WHERE " &
-                                       " ProductPartID_LongInteger = " & CurrentProductPartID.ToString
-        JustExecuteMySelection()
-
-        If RecordCount > 0 Then
-            Exit Sub
+    End Sub
+    Private Sub ExecuteSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExecuteSearchToolStripMenuItem.Click
+        FiltersGroupBox.Visible = False
+        If PartDescriptionSearchTextBox.Text = "" And PartNoSearchTextBox.Text = "" Then Exit Sub
+        ExecuteSearchParameters()
+        If ProductsPartsRecordCount > 0 Then
+            ProductsPartsDataGridView.Rows(0).Selected = False
         End If
 
-        Dim FieldsToUpdate =
-                               "
-                               ProductPartID_LongInteger,
-                               Location_ShortText10,
-                               MinimumQuantity_Double,
-                               QuantityInStock_Double
-                                "
-        Dim FieldsData =
-                                CurrentProductPartID.ToString & "," &
-                                InQuotes(LocationTextBox.Text) & "," &
-                                Val(MinimumQantityTextBox.Text) & "," &
-                                Val(AvailableQuantitiesTextBox.Text)
-
-
-        CurrentStocksID = InsertNewRecord("StocksTable", FieldsToUpdate, FieldsData)
-    End Sub
-
-    Private Sub SearchDescriptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchDescriptionToolStripMenuItem.Click
-        If SearchDescriptionToolStripTextBox.Text = "" And PartNoToolStripTextBox.Text = "" Then Exit Sub
-        ExecuteSearchParameters()
     End Sub
     Private Sub ExecuteSearchParameters()
-        If SearchDescriptionToolStripTextBox.Text = "" And PartNoToolStripTextBox.Text = "" Then
+        If PartDescriptionSearchTextBox.Text = "" And
+            PartNoSearchTextBox.Text = "" And
+            CurrentMasterCodeBookID = -1 Then
             ProductsPartsSelectionFilter = " WHERE StocksTable.MinimumQuantity_Double > 0 "
             FillProductsPartsDataGridView()
             Exit Sub
+
         End If
         SetSearchParameters()
         FillProductsPartsDataGridView()
@@ -332,16 +350,19 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
     Private Sub SetSearchParameters()
         ProductsPartsSelectionFilter = " WHERE "
         Dim xxOR = ""
-        If IsNotEmpty(PartNoToolStripTextBox.Text) Then
-            ProductsPartsSelectionFilter &= " ManufacturerPartNo_ShortText30Fld Like " & InQuotes("%" & Trim(PartNoToolStripTextBox.Text) & "%")
-            ProductsPartsSelectionFilter &= " OR ManufacturerPartNoClean_ShortText30Fld Like " & InQuotes("%" & GetCleanedManufacturerPartNo(PartNoToolStripTextBox.Text) & "%")
+        If IsNotEmpty(PartNoSearchTextBox.Text) Then
+            ProductsPartsSelectionFilter &= " ManufacturerPartNo_ShortText30Fld Like " & InQuotes("%" & Trim(PartNoSearchTextBox.Text) & "%")
+            ProductsPartsSelectionFilter &= " OR ManufacturerPartNoClean_ShortText30Fld Like " & InQuotes("%" & GetCleanedManufacturerPartNo(PartNoSearchTextBox.Text) & "%")
             xxOR = " OR "
         End If
-        If IsNotEmpty(SearchDescriptionToolStripTextBox.Text) Then
-            ProductsPartsSelectionFilter &= xxOR & " ProductDescription_ShortText250 Like " & InQuotes("%" & Trim(SearchDescriptionToolStripTextBox.Text) & "%")
-            ProductsPartsSelectionFilter &= " OR  ManufacturerDescription_ShortText250 Like " & InQuotes("%" & Trim(SearchDescriptionToolStripTextBox.Text) & "%")
-            ProductsPartsSelectionFilter &= " OR  SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchDescriptionToolStripTextBox.Text) & "%")
+        If IsNotEmpty(PartDescriptionSearchTextBox.Text) Then
+            ProductsPartsSelectionFilter &= xxOR & " ProductDescription_ShortText250 Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
+            ProductsPartsSelectionFilter &= " OR  ManufacturerDescription_ShortText250 Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
+            ProductsPartsSelectionFilter &= " OR  SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
             '            
+        End If
+        If IsNotEmpty(CurrentMasterCodeBookID) Then
+            ProductsPartsSelectionFilter &= " OR ProductsPartsTable.MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
         End If
     End Sub
 
@@ -361,40 +382,84 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
     End Sub
 
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem.Click
+        SetupEditMode()
+    End Sub
+
+    Private Sub SetupEditMode()
+
         PurposeOfEntry = "EDIT"
         ProductDetailsGroup.Visible = True
+        SelectToolStripMenuItem.Visible = False
+        UpdateMasterCodeLinkToolStripMenuItem.Visible = False
+        AddToolStripMenuItem.Visible = False
+        DeleteToolStripMenuItem.Visible = False
+        EditToolStripMenuItem.Visible = False
+        ToolStripMenuItem1.Visible = False
+
         lOADProductDetails()
         ManufacturerPartDescTextBox.Select()
+        ManufacturerPartNoTextBox.Enabled = True
         BrandNameTextBox.Enabled = True
         UnitTextBox.Enabled = True
         AvailableQuantitiesTextBox.Enabled = True
         MinimumQantityTextBox.Enabled = True
         LocationTextBox.Enabled = True
     End Sub
+    Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+        Dim TablesToCheck = {
+                                             "WorkOrderPartsTable",
+                                             "WorkOrderReceivedPartsTable",
+                                             "WorkOrderRequestedPartsTable",
+                                             "StoreSuppliesRequisitionsItemsTable",
+                                             "PurchaseOrdersItemsTable",
+                                             "PartsRequisitionsItemsTable",
+                                             "DeliveryItemsTable"
+                                             }
+
+        If Not LinkExistsIn(TablesToCheck, "ProductPartID_LongInteger", CurrentProductPartID) Then
+            MySelection = " DELETE FROM StocksTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
+            JustExecuteMySelection()
+            ' delete all related records in stokcstable and StocksTable (delete stocks record)
+            '           ProductPartsPackingsTable
+            MySelection = " DELETE FROM ProductPartsPackingsTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
+            JustExecuteMySelection()
+            If MsgBox("Continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+            MySelection = " DELETE FROM ProductsPartsTable WHERE ProductsPartID_Autonumber =  " & CurrentProductPartID
+            JustExecuteMySelection()
+            FillProductsPartsDataGridView()
+        End If
+
+    End Sub
 
     Private Sub lOADProductDetails()
+        FillField(ProductSpecificationTextBox.Text, ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value)
         FillField(SystemPartDescriptionTextBox.Text, ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value)
         FillField(ManufacturerPartNoTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value)
         FillField(ManufacturerPartDescTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
         FillField(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value)
+        FillField(CurrentBrandID, ProductsPartsDataGridView.Item("BrandID_Autonumber", CurrentProductsPartsRow).Value)
         FillField(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value)
         FillField(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value)
         FillField(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value)
         FillField(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value)
-        If Not IsEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
-            Dim xxxx = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString
-            Dim vgbhgfg = ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString
+        If IsNotEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
             PackingTextBox.Text = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & Space(1) &
                                       ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString &
                                         " / " &
                                       ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value.ToString
             PackingTextBox.Visible = True
         Else
+            PackingTextBox.Text = ""
             PackingTextBox.Visible = False
         End If
     End Sub
 
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+        If IsEmpty(SystemPartDescriptionTextBox.Text) Then
+            MsgBox("This Product is not linked to the MasterCodeBook, link this as " & CurrentPartDescription & "?")
+            ShowMasterCodeBookForm()
+            Exit Sub
+        End If
         'VALIDATIONS
         Dim AnswerToMessage = ""
         If Trim(ManufacturerPartNoTextBox.Text) = "" Then
@@ -429,22 +494,82 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
         If AChangeInProductDetails() Then
             RegisterProductDetailsChanges()
         End If
+        If AChangeInStocksDetails() Then
+            RegisterStocksDetailsChanges()
+        End If
         If BackToEditMode Then Exit Sub
         FillProductsPartsDataGridView()
         ProductDetailsGroup.Visible = False
         SaveToolStripMenuItem.Visible = False
+        SelectToolStripMenuItem.Visible = True
+        UpdateMasterCodeLinkToolStripMenuItem.Visible = True
+        AddToolStripMenuItem.Visible = True
+        DeleteToolStripMenuItem.Visible = True
+        EditToolStripMenuItem.Visible = True
+        ToolStripMenuItem1.Visible = True
     End Sub
+    Private Function AChangeInStocksDetails()
+
+        If IsEmpty(CurrentStocksID) Then Return True
+        If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
+        Return False
+    End Function
+    Private Sub RegisterStocksDetailsChanges()
+
+        If IsEmpty(CurrentStocksID) Then
+            InsertNewStocksInfoChanges()
+        Else
+            If MsgBox("Continue Save Stocks Info Changes ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                If MsgBox("Disregard your changes ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                    SystemPartDescriptionTextBox.Select()
+                    BackToEditMode = True
+                    Exit Sub
+                End If
+            End If
+            UpdateStocksInfoChanges()
+        End If
+        RegisterProductPartnumnberChanges()
+    End Sub
+    Private Sub InsertNewStocksInfoChanges()
+        Dim FieldsToUpdate =
+                               "
+                               ProductPartID_LongInteger,
+                               Location_ShortText10,
+                               MinimumQuantity_Double,
+                               QuantityInStock_Double
+                                "
+        Dim FieldsData =
+                                CurrentProductPartID.ToString & "," &
+                                InQuotes(LocationTextBox.Text) & "," &
+                                Val(MinimumQantityTextBox.Text) & "," &
+                                Val(AvailableQuantitiesTextBox.Text)
+
+        CurrentStocksID = InsertNewRecord("StocksTable", FieldsToUpdate, FieldsData)
+
+        'UPDATE ProductsPartTable AND MARK FIELD Selected true
+        UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
+    End Sub
+    Private Sub UpdateStocksInfoChanges()
+        Dim RecordFilter = " WHERE StockID_Autonumber = " & Str(CurrentStocksID)
+        Dim SetCommand =
+                    " Set " &
+                    " Location_ShortText10 = " & InQuotes(LocationTextBox.Text) & "," &
+                    " MinimumQuantity_Double = " & Val(MinimumQantityTextBox.Text) & "," &
+                    " QuantityInStock_Double = " & Val(AvailableQuantitiesTextBox.Text)
+        UpdateTable("StocksTable", SetCommand, RecordFilter)
+    End Sub
+
     Private Function AChangeInProductDetails()
 
         If CurrentProductsPartsRow > -1 Then
             If TheseAreNotEqual(SystemPartDescriptionTextBox.Text, ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
             If TheseAreNotEqual(ManufacturerPartNoTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
             If TheseAreNotEqual(ManufacturerPartDescTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(ProductSpecificationTextBox.Text, ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
             If TheseAreNotEqual(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
             If TheseAreNotEqual(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
         Else
             If IsNotEmpty(ManufacturerPartDescTextBox.Text) Then Return True
         End If
@@ -456,7 +581,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
 
         Dim xxMessage = ""
         If RecordCount = 0 Then
-            xxMessage = ("Continue Save this Product ? ")
+            xxMessage = ("Continue ADD this Product ? ")
         Else
             xxMessage = ("Continue Save Changes ? ")
         End If
@@ -484,6 +609,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
                     " ManufacturerPartNoClean_ShortText30Fld, " &
                     " ManufacturerDescription_ShortText250, " &
                     " MasterCodeBookID_LongInteger, " &
+                    " PartsSpecificationID_LongInteger, " &
                     " BrandID_LongInteger, " &
                    " Unit_ShortText3 "
 
@@ -492,6 +618,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
                     InQuotes(GetCleanedManufacturerPartNo(ManufacturerPartNoTextBox.Text)) & ", " &
                     InQuotes(Trim(ManufacturerPartDescTextBox.Text)) & ", " &
                     Str(CurrentMasterCodeBookID) & ", " &
+                    CurrentProductSpecificationID.ToString & ", " &
                     Str(CurrentBrandID) & ", " &
                     InQuotes(Trim(UnitTextBox.Text).ToUpper)
 
@@ -501,21 +628,21 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
             Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductPartsPackingID.ToString
             Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
             UpdateTable("ProductPartsPackingsTable", SetCommand, RecordFilter)
+
+            'UPDATE ProductsPartTable AND MARK FIELD Selected true
+            UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
         End If
     End Sub
 
 
     Private Sub UpdateProductsPartChanges()
-        If MsgBox("About to register changes, Continue ?", MsgBoxStyle.YesNo) = vbNo Then
-            BackToEditMode = True
-            Exit Sub
-        End If
         Dim RecordFilter = " WHERE ProductsPartID_Autonumber = " & Str(CurrentProductPartID)
         Dim SetCommand =
                     " Set " &
                     " ManufacturerPartNo_ShortText30Fld = " & InQuotes(ManufacturerPartNoTextBox.Text) & ", " &
                     " ManufacturerPartNoClean_ShortText30Fld = " & InQuotes(GetCleanedManufacturerPartNo(ManufacturerPartNoTextBox.Text)) & ", " &
                     " ManufacturerDescription_ShortText250 = " & InQuotes(Trim(ManufacturerPartDescTextBox.Text)) & ", " &
+                    " PartsSpecificationID_LongInteger = " & CurrentProductSpecificationID.ToString & ", " &
                     " MasterCodeBookID_LongInteger = " & Str(CurrentMasterCodeBookID) & ", " &
                     " BrandID_LongInteger = " & Str(CurrentBrandID) & ", " &
                     " Unit_ShortText3 = " & InQuotes(Trim(UnitTextBox.Text).ToUpper)
@@ -532,7 +659,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
     End Sub
     Private Sub ShowMasterCodeBookForm()
         Me.Enabled = False
-        FillField(MasterCodeBookForm.SearchMasterCodeBookTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
+        MasterCodeBookForm.SearchMasterCodeBookTextBox.Text = PartDescriptionSearchTextBox.Text
         MasterCodeBookForm.ChangeVehicleDefaults.Enabled = False
         ShowCalledForm(Me, MasterCodeBookForm)
     End Sub
@@ -579,15 +706,24 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
     End Function
     Private Sub ProductDetailsGroup_VisibleChanged(sender As Object, e As EventArgs) Handles ProductDetailsGroup.VisibleChanged
         If ProductDetailsGroup.Visible = True Then
-            AddToolStripMenuItem.Visible = False
-            EditToolStripMenuItem.Visible = False
-            DeleteToolStripMenuItem.Visible = False
+            If Not PurposeOfEntry = "ADD" Then lOADProductDetails()
             SaveToolStripMenuItem.Visible = True
-        Else
+                AddToolStripMenuItem.Visible = False
+                EditToolStripMenuItem.Visible = False
+                DeleteToolStripMenuItem.Visible = False
+                SelectToolStripMenuItem.Visible = False
+                ProductDetailsToolStripMenuItem.Visible = False
+                ToolStripMenuItem1.Visible = False
+                UpdateMasterCodeLinkToolStripMenuItem.Visible = False
+            Else
+                SaveToolStripMenuItem.Visible = False
             AddToolStripMenuItem.Visible = True
             EditToolStripMenuItem.Visible = True
             DeleteToolStripMenuItem.Visible = True
-            SaveToolStripMenuItem.Visible = False
+            SelectToolStripMenuItem.Visible = True
+            ProductDetailsToolStripMenuItem.Visible = True
+            ToolStripMenuItem1.Visible = True
+            UpdateMasterCodeLinkToolStripMenuItem.Visible = True
         End If
     End Sub
     Private Sub BrandNameTextBox_GotFocus(sender As Object, e As EventArgs) Handles BrandNameTextBox.Click
@@ -613,7 +749,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
 
     Private Sub CancelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelToolStripMenuItem.Click
         If ProductDetailsGroup.Visible = True Then
-            If Not IsEmpty(ManufacturerPartDescTextBox.Text) Then
+            If IsNotEmpty(ManufacturerPartDescTextBox.Text) Then
                 SaveChanges()
             End If
             ProductDetailsGroup.Visible = False
@@ -623,8 +759,8 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
     End Sub
 
 
-    Private Sub SearchDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles SearchDescriptionToolStripTextBox.Click
-        SearchDescriptionToolStripTextBox.SelectAll()
+    Private Sub PartDescriptionSearchTextBox_Click(sender As Object, e As EventArgs) Handles PartDescriptionSearchTextBox.Click
+        PartDescriptionSearchTextBox.SelectAll()
     End Sub
 
 
@@ -632,6 +768,7 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
         If IsEmpty(UnitTextBox.Text) Then
             MsgBox("Unit should not be empty before working on the packing")
             UnitTextBox.Select()
+            Exit Sub
         End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
@@ -642,8 +779,89 @@ FROM (StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON P
         End If
     End Sub
 
-    Private Sub StocksMenuToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StocksMenuToolStripMenuItem.Click
+    Private Sub ProductDetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductDetailsToolStripMenuItem.Click
         If ProductsPartsRecordCount < 1 Then Exit Sub
         ProductDetailsGroup.Visible = True
+    End Sub
+
+    Private Sub SpecificationTextBox_Click(sender As Object, e As EventArgs) Handles PartSpecificationTextBox.Click
+        If MsgBox("Register Specification for this product ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        If IsEmpty(PartSpecificationTextBox.Text) Then Exit Sub
+        If IsEmpty(CurrentMasterCodeBookID) Then
+            SystemPartDescriptionTextBox.Select()
+            Exit Sub
+        End If
+
+        PartsSpecificationsForm.PartDescriptionTextBox.Text = ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value
+        Tunnel1 = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
+        Tunnel2 = -1
+        Tunnel3 = CurrentMasterCodeBookID
+        ShowCalledForm(Me, PartsSpecificationsForm)
+
+    End Sub
+
+    Private Sub PartDescriptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartDescriptionToolStripMenuItem.Click
+        PartDescriptionSearchTextBox.Select()
+        FiltersGroupBox.Visible = True
+
+    End Sub
+    Private Sub PartDescriptionSearchTextBox_TextChanged(sender As Object, e As EventArgs) Handles PartDescriptionSearchTextBox.TextChanged
+        PartDescriptionToolStripMenuItem.Text = "Product Description = " & PartDescriptionSearchTextBox.Text
+    End Sub
+    Private Sub PartNoSearchTextBox_TextChanged(sender As Object, e As EventArgs) Handles PartNoSearchTextBox.TextChanged
+        PartDescriptionToolStripMenuItem.Text = "Part No = " & PartNoSearchTextBox.Text
+    End Sub
+    Private Sub PartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartNumberToolStripMenuItem.Click
+        FiltersGroupBox.Visible = True
+    End Sub
+    Private Sub PartSpecificationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartSpecificationToolStripMenuItem.Click
+        FiltersGroupBox.Visible = True
+    End Sub
+
+    Private Sub VehicleFilterOFFToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleVehiclefilterToolStripMenuItem.Click
+        If ToggleVehiclefilterToolStripMenuItem.Text = "ON" Then
+            ToggleVehiclefilterToolStripMenuItem.Text = "OFF"
+        Else
+            ToggleVehiclefilterToolStripMenuItem.Text = "ON"
+        End If
+        FiltersGroupBox.Visible = True
+    End Sub
+
+    Private Sub ProductSpecificationTextBox_Click(sender As Object, e As EventArgs) Handles ProductSpecificationTextBox.Click
+        If MsgBox("Update Specification for this product ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+
+        PartsSpecificationsForm.PartDescriptionTextBox.Text = ProductSpecificationTextBox.Text
+        PartsSpecificationsForm.JobLabel.Visible = False
+        PartsSpecificationsForm.ServiceToPerformTextBox.Visible = False
+        PartsSpecificationsForm.VehicleLabel.Visible = False
+        PartsSpecificationsForm.VehicleModelTextBox.Visible = False
+        ' Tunnel 1 - InformationsHeaderID (Job Description)
+        ' Tunnel 2 - CodeVehicleID
+        ' Tunnel 3 - MasterCodeBookID
+
+        Tunnel1 = ""
+        Tunnel2 = -1
+        Tunnel3 = CurrentMasterCodeBookID
+        ShowCalledForm(Me, PartsSpecificationsForm)
+    End Sub
+
+    Private Sub ProductSpecificationButton_Click(sender As Object, e As EventArgs) Handles ProductSpecificationButton.Click
+
+    End Sub
+
+    Private Sub VehicleModelButton_Click(sender As Object, e As EventArgs) Handles VehicleModelButton.Click
+
+    End Sub
+
+    Private Sub PurchasesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PurchasesToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub UsageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UsageToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub VehicleLinksToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VehicleLinksToolStripMenuItem.Click
+
     End Sub
 End Class
