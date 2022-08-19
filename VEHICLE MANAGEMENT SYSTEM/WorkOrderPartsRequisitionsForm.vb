@@ -86,7 +86,7 @@
                               " SET ProductPartID_LongInteger = " & CurrentProductsPartID & xxFilter
                     JustExecuteMySelection()
                     MsgBox("following update was not yet tested")
-                    Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductsPartID.ToString
+                    Dim RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
                     Dim SetCommand = " SET  Selected = True "
                     UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
                     FillWorkOrderRequestedPartsDataGridView()
@@ -968,7 +968,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
 
                 JustExecuteMySelection()
                 MsgBox("following update was not yet tested")
-                Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductsPartID.ToString
+                Dim RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
                 Dim SetCommand = " SET  Selected = True "
                 UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
 
@@ -998,7 +998,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                                     " RequisitionQuantity_Double = " & ToOrderQuantityTextBox.Text & xxFilter
                     JustExecuteMySelection()
                     MsgBox("following update was not yet tested")
-                    Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductsPartID.ToString
+                    Dim RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
                     Dim SetCommand = " SET  Selected = True "
                     UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
                 End If
@@ -1032,7 +1032,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                                         GetStatusIdFor("PartsRequisitionsItemsTable")
         CurrentPartsRequisitionsItemID = InsertNewRecord("PartsRequisitionsItemsTable", FieldsToUpdate, FieldsData)
         MsgBox("following update was not yet tested")
-        Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductsPartID.ToString
+        Dim RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
         Dim SetCommand = " SET  Selected = True "
         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
         Dim xxRequisitionsItemsDataGridViewRow = CurrentPartsRequisitionsItemsDataGridViewRow
@@ -1074,7 +1074,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         End If
         JustExecuteMySelection()
         MsgBox("following update was not yet tested")
-        Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductsPartID.ToString
+        Dim RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
         Dim SetCommand = " SET  Selected = True "
         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
     End Sub

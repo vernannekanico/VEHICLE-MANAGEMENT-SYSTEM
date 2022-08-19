@@ -430,7 +430,7 @@ FROM (((((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTabl
 
                 Dim CurrentPurchaseOrderItemID = InsertNewRecord("PurchaseOrdersItemsTable", FieldsToUpdate, FieldsData)
                 MsgBox("following update was not yet tested")
-                RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductsPartID.ToString
+                RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
                 SetCommand = " SET  Selected = True "
                 UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
             Else

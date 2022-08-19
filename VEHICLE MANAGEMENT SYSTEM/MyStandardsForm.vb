@@ -11,6 +11,7 @@
     Private SavedCallingForm As Form
 
     Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MsgBox("Set this form and all containers to 12pt pixel")
         SavedCallingForm = CallingForm
         FillReleasedPartsDataGridView()
 
