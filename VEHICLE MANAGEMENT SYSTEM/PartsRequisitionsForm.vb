@@ -116,37 +116,14 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         If PartsRequisitionsItemsDataGridViewAlreadyFormated Then
 
             FormatPartsRequisitionsDataGridView()
-            SetFormWidthAndGroupBoxLeft()
+            SetFormWidthAndGroupBoxLeft(Me,
+                                        WorkOrderPartsMenuStrip,
+                                        PartsRequisitionsGroupBox,
+                                        PartsRequisitionsItemsGroupBox,
+                                        PartsRequisitionsGroupBox,
+                                        PartsRequisitionsGroupBox
+                                        )
         End If
-    End Sub
-    Private Sub SetFormWidthAndGroupBoxLeft()
-        Dim xxVehicleManagementSystemForm = VehicleManagementSystemForm.Width
-        If PartsRequisitionsGroupBox.Width >= VehicleManagementSystemForm.Width Then
-            PartsRequisitionsGroupBox.Width = VehicleManagementSystemForm.Width - 4
-        End If
-        If PartsRequisitionsItemsGroupBox.Width >= VehicleManagementSystemForm.Width Then
-            PartsRequisitionsItemsGroupBox.Width = VehicleManagementSystemForm.Width - 4
-        End If
-
-        Dim LargestWidth = 0
-        For i = 1 To 2
-            If PartsRequisitionsGroupBox.Width > LargestWidth Then
-                LargestWidth = PartsRequisitionsGroupBox.Width
-
-            ElseIf PartsRequisitionsItemsGroupBox.Width > LargestWidth Then
-                LargestWidth = PartsRequisitionsItemsGroupBox.Width
-            End If
-        Next
-        Me.Width = LargestWidth + 4
-        Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
-
-        PartsRequisitionsGroupBox.Top = WorkOrderPartsMenuStrip.Top + WorkOrderPartsMenuStrip.Height
-        PartsRequisitionsGroupBox.Left = (Me.Width - (PartsRequisitionsGroupBox.Width) + 6) / 2
-
-        PartsRequisitionsItemsGroupBox.Top = PartsRequisitionsGroupBox.Top + PartsRequisitionsGroupBox.Height
-        PartsRequisitionsItemsGroupBox.Left = (Me.Width - (PartsRequisitionsItemsGroupBox.Width + 6)) / 2
-
-
     End Sub
     Private Sub FormatPartsRequisitionsDataGridView()
         PartsRequisitionsDataGridViewAlreadyFormatted = True
@@ -195,7 +172,7 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         CurrentVehicleID = PartsRequisitionsDataGridView.Item("VehicleID_LongInteger", CurrentPartsRequisitionsRow).Value
         CurrentPartsRequisitionStatus = NotNull(PartsRequisitionsDataGridView.Item("PartsRequisitionType_Byte", CurrentPartsRequisitionsRow).Value)
 
-        PartsRequisitionsItemsSelectionFilter = " WHERE PartsRequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString
+        PartsRequisitionsItemsSelectionFilter = " WHERE PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString
         FillPartsRequisitionsItemsDataGridView()
         SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = False
         CreatePurchaseOrderToolStripMenuItem.Visible = False
@@ -228,7 +205,8 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         PartsRequisitionsItemsFieldsToSelect =
 " 
 
-SELECT MasterCodeBookTableWorkOrder.SystemDesc_ShortText100Fld,
+SELECT 
+MasterCodeBookTableWorkOrder.SystemDesc_ShortText100Fld,
 MasterCodeBookTableStoreSupplies.SystemDesc_ShortText100Fld,
 ProductsPartsTableWorkOrder.ManufacturerPartNo_ShortText30Fld,
 ProductsPartsTableWorkOrder.ManufacturerDescription_ShortText250,
@@ -246,16 +224,11 @@ VehicleDescriptionWorkOrder.VehicleDescription,
 StatusesTable.StatusText_ShortText25
 FROM (((((((((((((PurchaseOrdersItemsTable RIGHT JOIN PartsRequisitionsItemsTable ON PurchaseOrdersItemsTable.PartsRequisitionsItemID_LongInteger = PartsRequisitionsItemsTable.PartsRequisitionsItemID_AutoNumber) LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableWorkOrder ON PartsRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTableWorkOrder.ProductsPartID_Autonumber) LEFT JOIN BrandsTable ON ProductsPartsTableWorkOrder.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN WorkOrderRequestedPartsTable ON PartsRequisitionsItemsTable.[WorkOrderPartsRequisitionsItemID_LongInteger] = WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber) LEFT JOIN WorkOrderPartsTable ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN StoreSuppliesRequisitionsItemsTable ON PartsRequisitionsItemsTable.WorkOrderPartsRequisitionsItemID_LongInteger= StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemID_AutoNumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableWorkOrder ON WorkOrderPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTableWorkOrder.MasterCodeBookID_Autonumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableStoreSupplies ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTableStoreSupplies.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription AS VehicleDescriptionStoreSupplies ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleDescriptionStoreSupplies.VehicleID_AutoNumber) LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehicleDescription AS VehicleDescriptionWorkOrder ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleDescriptionWorkOrder.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON PartsRequisitionsItemsTable.PartsRequisitionItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber
 "
-        PartsRequisitionsItemsTableLinks =
-""
-        MySelection = PartsRequisitionsItemsFieldsToSelect & PartsRequisitionsItemsTableLinks & PartsRequisitionsItemsSelectionFilter '& PartsRequisitionsItemsSelectionOrder
+        MySelection = PartsRequisitionsItemsFieldsToSelect & PartsRequisitionsItemsSelectionFilter '& PartsRequisitionsItemsSelectionOrder
         JustExecuteMySelection()
 
         PartsRequisitionsItemsRecordCount = RecordCount
         PartsRequisitionsItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If PartsRequisitionsItemsRecordCount > 0 Then
-            PartsRequisitionsItemsDataGridView.Rows(0).Selected = False
-        End If
         Dim RecordsToDisplay = 28
         SetGroupBoxHeight(RecordsToDisplay, PartsRequisitionsItemsRecordCount, PartsRequisitionsItemsGroupBox, PartsRequisitionsItemsDataGridView)
 

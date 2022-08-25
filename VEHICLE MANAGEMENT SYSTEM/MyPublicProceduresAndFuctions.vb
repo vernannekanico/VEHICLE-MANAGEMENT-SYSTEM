@@ -247,6 +247,59 @@
         End If
         Return False
     End Function
+    Public Sub SetFormWidthAndGroupBoxLeft(ActiveForm As Form,
+                                           ActiveFormMenuStrip As MenuStrip,
+                                           GroupBox1 As GroupBox,
+                                           GroupBox2 As GroupBox,
+                                           GroupBox3 As GroupBox,
+                                           GroupBox4 As GroupBox)
+        'Note: IF ONLY 2 OR 3 BOXES ARE INVOLVED,
+        '   INDICATE GROUPBOX3 AND / OR GROUPBOX4 = GROUPBOX1
+        If GroupBox1.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox1.Width = VehicleManagementSystemForm.Width - 4
+        End If
+        If GroupBox2.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox2.Width = VehicleManagementSystemForm.Width - 4
+        End If
+        If GroupBox3.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox3.Width = VehicleManagementSystemForm.Width - 4
+        End If
+
+        If GroupBox3.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox3.Width = VehicleManagementSystemForm.Width - 4
+        End If
+
+        Dim LargestWidth = 0
+        For i = 1 To 4
+            If GroupBox1.Width > LargestWidth Then
+                LargestWidth = GroupBox1.Width
+
+            ElseIf GroupBox2.Width > LargestWidth Then
+                LargestWidth = GroupBox2.Width
+            ElseIf GroupBox3.Width > LargestWidth Then
+                LargestWidth = GroupBox3.Width
+            ElseIf GroupBox4.Width > LargestWidth Then
+                LargestWidth = GroupBox4.Width
+            End If
+        Next
+        ActiveForm.Width = LargestWidth + 4
+        ActiveForm.Left = (VehicleManagementSystemForm.Width - ActiveForm.Width) / 2
+
+        GroupBox1.Top = ActiveFormMenuStrip.Top + ActiveFormMenuStrip.Height
+        GroupBox1.Left = (ActiveForm.Width - GroupBox1.Width) / 2
+
+        GroupBox2.Top = GroupBox1.Top + GroupBox1.Height
+        GroupBox2.Left = (ActiveForm.Width - GroupBox2.Width) / 2
+
+        If GroupBox3.Name = GroupBox1.Name Then Exit Sub
+        GroupBox3.Top = GroupBox2.Top + GroupBox2.Height
+        GroupBox3.Left = (ActiveForm.Width - GroupBox3.Width) / 2
+
+        If GroupBox4.Name = GroupBox1.Name Then Exit Sub
+        GroupBox4.Top = GroupBox3.Top + GroupBox3.Height
+        GroupBox4.Left = (ActiveForm.Width - GroupBox4.Width) / 2
+
+    End Sub
     Public Sub VerticalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
         ObjectToCenter.top = (FormToCenterIn.height - ObjectToCenter.height) / 2
     End Sub

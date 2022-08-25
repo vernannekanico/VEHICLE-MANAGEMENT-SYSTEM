@@ -41,14 +41,18 @@
         ' HERE AT ROW_ENTER, FillReleasedPartConcernsDataGridView is called and ReleasedPartConcernsbOX IS ALREADY FORMATTED
         If Not ReleasedPartsDataGridViewAlreadyFormated Then
             FormatReleasedPartsDataGridView()
-            SetFormWidthAndGroupBoxLeft()
+            SetFormWidthAndGroupBoxLeft(Me,
+                                        MyStandardsFormMenuStrip,
+                                        ReleasedPartsGroupBox,
+                                        ReleasedPartsGroupBox,
+                                        ReleasedPartsGroupBox,
+                                        ReleasedPartsGroupBox)
         End If
 
         SetGroupBoxHeight(5, ReleasedPartsRecordCount, ReleasedPartsGroupBox, ReleasedPartsDataGridView)
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
-        ReleasedPartsGroupBox.Top = SearchToolStrip.Top + SearchToolStrip.Height + 5
 
     End Sub
     Private Sub FormatReleasedPartsDataGridView()
@@ -123,34 +127,6 @@
         Select Case CurrentReleasedPartStatus
             Case "Assigned"
         End Select
-
-    End Sub
-    Private Sub SetFormWidthAndGroupBoxLeft()
-        Dim LargestWidth = 0
-        'note for multiple pyramidal datagrid
-        For i = 1 To 4
-            '           If WorkOrdersGroupBox.Width > LargestWidth Then
-            '          LargestWidth = WorkOrdersGroupBox.Width
-            '            ElseIf WorkOrderConcernsGroupBox.Width > LargestWidth Then
-            '            LargestWidth = WorkOrderConcernsGroupBox.Width
-            '         ElseIf WorkOrderConcernJobsGroupBox.Width > LargestWidth Then
-            '           LargestWidth = WorkOrderConcernJobsGroupBox.Width
-            '           ElseIf WorkOrderPartsPerJobGroupBox.Width > LargestWidth Then
-            '           LargestWidth = WorkOrderPartsPerJobGroupBox.Width
-            '            End If
-        Next
-
-        If LargestWidth > VehicleManagementSystemForm.Width Then
-            Me.Width = VehicleManagementSystemForm.Width - 4
-        Else
-            Me.Width = LargestWidth + 4
-        End If
-
-        Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
-        ReleasedPartsGroupBox.Left = (Me.Width - ReleasedPartsGroupBox.Width) / 2
-        '       WorkOrderConcernsGroupBox.Left = (Me.Width - WorkOrderConcernsGroupBox.Width) / 2
-        '       WorkOrderConcernJobsGroupBox.Left = (Me.Width - WorkOrderConcernJobsGroupBox.Width) / 2
-        '       WorkOrderPartsPerJobGroupBox.Left = (Me.Width - WorkOrderPartsPerJobGroupBox.Width) / 2
 
     End Sub
 
