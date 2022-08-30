@@ -391,19 +391,21 @@ Partial Class PartsRequisitionsForm
         Me.CreatePurchaseOrderToolStripMenuItem.Name = "CreatePurchaseOrderToolStripMenuItem"
         Me.CreatePurchaseOrderToolStripMenuItem.Size = New System.Drawing.Size(307, 25)
         Me.CreatePurchaseOrderToolStripMenuItem.Text = "Create Purchase Order for Items Selected"
+        Me.CreatePurchaseOrderToolStripMenuItem.Visible = False
         '
         'SubmitForExistingPurchaseOrderToolStripMenuItem
         '
-        Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Enabled = False
         Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Name = "SubmitForExistingPurchaseOrderToolStripMenuItem"
         Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Size = New System.Drawing.Size(467, 25)
         Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Text = "Submit Selected Requested Items for an Existing Purchase Order"
+        Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = False
         '
         'AssignToolStripMenuItem
         '
         Me.AssignToolStripMenuItem.Name = "AssignToolStripMenuItem"
         Me.AssignToolStripMenuItem.Size = New System.Drawing.Size(68, 25)
         Me.AssignToolStripMenuItem.Text = "Assign"
+        Me.AssignToolStripMenuItem.Visible = False
         '
         'PartsRequisitionsForm
         '
