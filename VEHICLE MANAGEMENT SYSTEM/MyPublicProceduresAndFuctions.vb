@@ -319,7 +319,7 @@
     Public Sub DisAbleAccess(MenuOption As ToolStripMenuItem)
         MenuOption.Enabled = False
     End Sub
-    Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, RecordFilter As String)
+    Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, Optional RecordFilter As String = "")
         MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
         JustExecuteMySelection()
         If RecordCount = 0 Then

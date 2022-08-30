@@ -34,6 +34,7 @@
     Private SavedPurchaseOrderTotal = 0
     Private SavedSupplierName = ""
     Private SavedCallingForm As Form
+    Private CurrentUserFilter = ""
 
     Private Sub PurchaseOrdersForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
@@ -49,6 +50,7 @@
                 Case "Procurement Manager"
                     SetPurchaseOrdersSelectionFilter("For Approval")
                 Case "Purchaser"
+                    CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
                     SetPurchaseOrdersSelectionFilter("Draft")
             End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
@@ -88,6 +90,7 @@ PurchaseOrdersTable.Discount_Integer,
 PurchaseOrdersTable.ShippingCost_Double, 
 PurchaseOrdersTable.TaxedAmount_Double, 
 PurchaseOrdersTable.POTotal_Double, 
+PurchaseOrdersTable.Purchaser_LongInteger,
 SuppliersTable.SupplierName_ShortText35, 
 StatusesTable.StatusSequence_LongInteger,
 StatusesTable.StatusText_ShortText25 as PurchaseOrderStatus
@@ -285,7 +288,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         PurchaseOrdersItemsGroupBox.Top = PurchaseOrdersGroupBox.Top + PurchaseOrdersGroupBox.Height
         Dim RowsHeight = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
-            RowsHeight = RowsHeight + PurchaseOrdersItemsDataGridView.Rows(CurrentPurchaseOrdersItemsDataGridViewRow).Height
+            RowsHeight = RowsHeight + PurchaseOrdersItemsDataGridView.Rows(i).Height
         Next
         PurchaseOrdersItemsGroupBox.Height = RowsHeight + PurchaseOrdersItemsDataGridView.ColumnHeadersHeight + 60
 
@@ -621,11 +624,17 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         SetPurchaseOrdersSelectionFilter("Approved and Finalized")
     End Sub
     Private Sub AllPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllPurchaseOrdersToolStripMenuItem.Click
-        PurchaseOrdersSelectionFilter = ""
+        Select Case CurrentUserGroup
+            Case "Procurement Manager"
+                PurchaseOrdersSelectionFilter = ""
+            Case "Purchaser"
+                PurchaseOrdersSelectionFilter = " WHERE Purchaser_LongInteger = " & CurrentPersonelID.ToString
+        End Select
         FillPurchaseOrdersDataGridView()
     End Sub
     Private Sub SetPurchaseOrdersSelectionFilter(Passed As String)
-        PurchaseOrdersSelectionFilter = " WHERE PurchaseOrderStatusID_LongInteger = " & GetStatusIdFor("PurchaseOrdersTable", Passed)
+        Dim PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", Passed, 1)
+        PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 2, Me, Passed, CurrentUserFilter)
         FillPurchaseOrdersDataGridView()
     End Sub
     Private Sub PrintPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintPurchaseOrderToolStripMenuItem.Click

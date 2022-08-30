@@ -38,7 +38,7 @@
     Private CreatingRequisitionItems = False
     Private SavedCallingForm As Form
     Private CurrentPurchaseOrderID = -1
-    Private CurrentUserFilter = -1
+    Private CurrentUserFilter = ""
 
     Private Sub PartsRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
