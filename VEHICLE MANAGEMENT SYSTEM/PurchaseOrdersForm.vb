@@ -48,8 +48,11 @@
         Else
             Select Case CurrentUserGroup
                 Case "Procurement Manager"
+                    DisablePurchaseOrderMenus()
+                    DisablePurchaseOrderItemMenus()
                     SetPurchaseOrdersSelectionFilter("For Approval")
                 Case "Purchaser"
+                    AddPurchaseOrderToolStripMenuItem.Visible = True
                     CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
                     SetPurchaseOrdersSelectionFilter("Draft")
             End Select
@@ -114,14 +117,13 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         End If
 
         SetGroupBoxHeight(6, PurchaseOrdersRecordCount, PurchaseOrdersGroupBox, PurchaseOrdersDataGridView)
+        SetFormWidthAndGroupBoxLeft(Me,
+                                    PurchaseOrdersMenuStrip,
+                                    PurchaseOrdersGroupBox,
+                                    PurchaseOrdersItemsGroupBox,
+                                    PurchaseOrdersGroupBox,
+                                    PurchaseOrdersGroupBox)
 
-        Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
-        Me.Left = VehicleManagementSystemForm.Left
-        PurchaseOrdersGroupBox.Left = (Me.Width - PurchaseOrdersGroupBox.Width) / 2
-        PurchaseOrdersItemsGroupBox.Left = Me.Left
-        PurchaseOrdersGroupBox.Top = PurchaseOrdersSearchToolStrip.Top + PurchaseOrdersSearchToolStrip.Height + 5
-        PurchaseOrdersItemsGroupBox.Top = PurchaseOrdersGroupBox.Top + PurchaseOrdersGroupBox.Height + 5
-        Me.Height = VehicleManagementSystemForm.Height - Me.Top
         RequisitionDetailsGroupBox.Top = (Me.Height - RequisitionDetailsGroupBox.Height) / 2
         RequisitionDetailsGroupBox.Left = (Me.Width - RequisitionDetailsGroupBox.Width) / 2
     End Sub
@@ -214,18 +216,21 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         SubmitForApprovalToolStripMenuItem.Visible = False
         ApproveStripMenuItem.Visible = False
         DisablePurchaseOrderItemMenus()
-        Select Case CurrentPOStatus
-            Case "Draft"
-                EditPurchaseOrderToolStripMenuItem.Visible = True
-                DeletePurchaseOrderToolStripMenuItem.Visible = True
-                SubmitForApprovalToolStripMenuItem.Visible = True
-                EnablePurchaseOrderMenus()
-                EnablePurchaseOrderItemMenus()
-            Case "For Approval"
-                DisablePurchaseOrderMenus()
-                DisablePurchaseOrderItemMenus()
-                ApproveStripMenuItem.Visible = True
-                AddPurchaseOrderToolStripMenuItem.Visible = True
+        Select Case CurrentUserGroup
+            Case "Procurement Manager"
+                Select Case CurrentPOStatus
+                    Case "For Approval"
+                        ApproveStripMenuItem.Visible = True
+                End Select
+            Case "Purchaser"
+                Select Case CurrentPOStatus
+                    Case "Draft"
+                        EditPurchaseOrderToolStripMenuItem.Visible = True
+                        DeletePurchaseOrderToolStripMenuItem.Visible = True
+                        SubmitForApprovalToolStripMenuItem.Visible = True
+                        EnablePurchaseOrderMenus()
+                        EnablePurchaseOrderItemMenus()
+                End Select
         End Select
         PurchaseOrdersItemsSelectionFilter = " WHERE PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = " & CurrentPurchaseOrderID.ToString
         FillPurchaseOrdersItemsDataGridView()
@@ -282,10 +287,8 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             FormatPurchaseOrdersItemsDataGridView()
         End If
 
-        Dim MaxBottom = 20 - PurchaseOrdersItemsRecordCount
-        SetGroupBoxHeight(MaxBottom, PurchaseOrdersRecordCount, PurchaseOrdersGroupBox, PurchaseOrdersDataGridView)
+        SetGroupBoxHeight(10, PurchaseOrdersItemsRecordCount, PurchaseOrdersItemsGroupBox, PurchaseOrdersItemsDataGridView)
 
-        PurchaseOrdersItemsGroupBox.Top = PurchaseOrdersGroupBox.Top + PurchaseOrdersGroupBox.Height
         Dim RowsHeight = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
             RowsHeight = RowsHeight + PurchaseOrdersItemsDataGridView.Rows(i).Height
@@ -642,15 +645,15 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     End Sub
 
 
-    Private Sub PODetailsToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PODetailsToolStripMenuItem1.Click
+    Private Sub PODetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PODetailsToolStripMenuItem.Click
         PurposeOfEntry = "VIEW"
         PurchaseOrderDetailsGroupBox.Visible = True
         PODetailsOFFToolStripMenuItem.Visible = True
-        PODetailsToolStripMenuItem1.Visible = False
+        PODetailsToolStripMenuItem.Visible = False
     End Sub
     Private Sub PODetailsOFFToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PODetailsOFFToolStripMenuItem.Click
         PODetailsOFFToolStripMenuItem.Visible = False
-        PODetailsToolStripMenuItem1.Visible = True
+        PODetailsToolStripMenuItem.Visible = True
         PurchaseOrderDetailsGroupBox.Visible = False
     End Sub
     Private Sub PurchaseOrderDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles PurchaseOrderDetailsGroupBox.VisibleChanged
@@ -679,7 +682,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             PurchaseOrderDetailsGroupBox.Visible = True
             SavePurchaseOrderToolStripMenuItem.Visible = True
             PurchaseOrdersGroupBox.Enabled = False
-            PurchaseOrdersItemsGroupBox.Enabled = False
+            PurchaseOrdersItemsGroupBox.Visible = True
             EnablePurchaseOrderItemMenus()
             DisablePurchaseOrderMenus()
             CalculatePOTotals()
@@ -689,7 +692,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             EnablePurchaseOrderMenus()
             EnablePurchaseOrderItemMenus()
             PurchaseOrdersGroupBox.Enabled = True
-            PurchaseOrdersItemsGroupBox.Enabled = True
+            PurchaseOrdersItemsGroupBox.Visible = False
         End If
     End Sub
 
@@ -747,13 +750,13 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         If RequisitionDetailsGroupBox.Visible = True Then
             EditPOItemToolStripMenuItem.Visible = False
             PurchaseOrdersGroupBox.Enabled = False
-            PurchaseOrdersItemsGroupBox.Enabled = False
+            PurchaseOrdersItemsGroupBox.Visible = False
             DisablePurchaseOrderMenus()
             DisablePurchaseOrderItemMenus()
         Else
             EditPOItemToolStripMenuItem.Visible = True
             PurchaseOrdersGroupBox.Enabled = True
-            PurchaseOrdersItemsGroupBox.Enabled = True
+            PurchaseOrdersItemsGroupBox.Visible = True
             EnablePurchaseOrderMenus()
             EnablePurchaseOrderItemMenus()
         End If

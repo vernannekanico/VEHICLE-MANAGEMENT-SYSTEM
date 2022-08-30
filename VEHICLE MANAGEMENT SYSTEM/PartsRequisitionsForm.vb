@@ -45,7 +45,7 @@
         If Val(Tunnel1) > 0 Then CurrentPurchaseOrderID = Tunnel1
         PartsRequisitionsItemsDataGridView.DefaultCellStyle.WrapMode = DataGridViewTriState.True
         CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
-        SetRequisitionsSelectionFilter("Partially Ordered", 1, Me, "OUTSTANDING REQUISITIONS")
+        SetRequisitionsSelectionFilter("Outstanding Requisition", 2, Me, "OUTSTANDING REQUISITIONS")
     End Sub
 
     Private Sub PartsRequisitionsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
