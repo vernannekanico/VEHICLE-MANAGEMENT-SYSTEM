@@ -30,6 +30,8 @@
     Private PurposeOfEntry = ""
     Private CurrentStoreSuppliesRequisitionsItemStatus = ""
     Private Sub PartsRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+        HorizontalCenter(RequisitionItemDetailsGroupBox, Me)
+        VerticalCenter(RequisitionItemDetailsGroupBox, Me)
         SavedCallingForm = CallingForm
         'NOTE Requisition header will only be created when submitting the requisition to procurement dept
         '
@@ -94,8 +96,8 @@ FROM (((((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON S
             FormatStoreSuppliesRequisitionsItemsDataGridView()
         End If
         If PartsRequisitionsRecordCount > 0 Then
-            StoreSuppliesRequisitionsItemsGroupBox.Top = PartsRequisitionsDataGridView.Top +
-                                                        PartsRequisitionsDataGridView.Height
+            StoreSuppliesRequisitionsItemsGroupBox.Top = PartsRequisitionsGroupBox.Top +
+                                                        PartsRequisitionsGroupBox.Height
         Else
             StoreSuppliesRequisitionsItemsGroupBox.Top = PartsRequisitionsMenuStrip.Top +
                                                         PartsRequisitionsMenuStrip.Height
@@ -270,8 +272,11 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
         CurrentPartsRequisitionID = PartsRequisitionsDataGridView.Item("PartsRequisitionID_AutoNumber", CurrentPartsRequisitionsRow).Value
         CurrentPartsRequisitionStatus = NotNull(PartsRequisitionsDataGridView.Item("StatusText_ShortText25", CurrentPartsRequisitionsRow).Value)
         SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
+        DeleteRequisitionToolStripMenuItem.Visible = False
         DisAbleRequisitionItemsMenu()
         Select Case CurrentPartsRequisitionStatus
+            Case "Outstanding Requisition"
+                DeleteRequisitionToolStripMenuItem.Visible = True
             Case "Draft"
                 SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = True
                 EnableRequisitionItemsMenu()
@@ -373,14 +378,6 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
         FillPartsRequisitionsDataGridView()
     End Sub
 
-    Private Sub DeleteRequisitionToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        If MsgBox("DELETE this Requisition?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            MySelection = " DELETE FROM PartsRequisitionsTable WHERE PartsRequisitionID_AutoNumber =  " & CurrentPartsRequisitionID
-            JustExecuteMySelection()
-            FillPartsRequisitionsDataGridView()
-        End If
-
-    End Sub
 
     Private Sub EXITSAVEChangesButton_Click(sender As Object, e As EventArgs) Handles EXITSAVEChangesButton.Click
         SaveChanges()
@@ -522,6 +519,17 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
         PackingTextBox.Text = ""
         RequisitionItemDetailsGroupBox.Visible = True
     End Sub
+    Private Sub DeleteRequisitionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteRequisitionToolStripMenuItem.Click
+        If MsgBox("Are you sure you want to DELETE this Requisition?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            MySelection = " DELETE FROM PartsRequisitionsTable WHERE PartsRequisitionID_AutoNumber =  " & CurrentPartsRequisitionID
+            JustExecuteMySelection()
+            MySelection = " DELETE FROM StoreSuppliesRequisitionsItemsTable WHERE PartsRequisitionID_LongInteger =  " & CurrentPartsRequisitionID
+            JustExecuteMySelection()
+            MySelection = " DELETE FROM PartsRequisitionsItemsTable WHERE PartsRequisitionID_LongInteger =  " & CurrentPartsRequisitionID
+            JustExecuteMySelection()
+            FillPartsRequisitionsDataGridView()
+        End If
+    End Sub
 
     Private Sub SubmitRequisitionsForPurchaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitRequisitionsForPurchaseToolStripMenuItem.Click
         'VALIDATION
@@ -538,7 +546,7 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
 
         Dim FieldsData = Chr(34) & DateString & Chr(34) & ", " &
                                 CurrentUserID.ToString & ", " &
-                                GetStatusIdFor("PartsRequisitionsTable", "Submitted").ToString & ", " &
+                                GetStatusIdFor("PartsRequisitionsTable", "Outstanding Requisition").ToString & ", " &
                                 2.ToString
 
         CurrentPartsRequisitionID = InsertNewRecord("PartsRequisitionsTable", FieldsToUpdate, FieldsData)
@@ -553,7 +561,9 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
             CurrentRequestedProductPartID = StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartID_Autonumber", i).Value
 
             MySelection = " UPDATE StoreSuppliesRequisitionsItemsTable  " &
-                              " SET StoreSuppliesRequisitionsItemStatus_Integer = " & GetStatusIdFor("StoreSuppliesRequisitionsItemsTable", "Submitted") &
+                              " SET " &
+                                " StoreSuppliesRequisitionsItemStatus_Integer = " & GetStatusIdFor("StoreSuppliesRequisitionsItemsTable", "Submitted") &
+                                ", PartsRequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString &
                               " WHERE StoreSuppliesRequisitionsItemID_AutoNumber = " & CurrentStoreSuppliesRequisitionsItemID.ToString
             JustExecuteMySelection()
 
@@ -578,9 +588,6 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
         'check this
 
         FillStoreSuppliesRequisitionsItemsDataGridView()
-        Dim RecordFilter = " WHERE PartsRequisitionID_AutoNumber = " & CurrentPartsRequisitionID.ToString
-        Dim SetCommand = " SET PartsRequisitionStatus_Integer = " & GetStatusIdFor("PartsRequisitionsTable", "Submitted")
-        UpdateTable("PartsRequisitionsTable", SetCommand, RecordFilter)
 
         FillPartsRequisitionsDataGridView()
 

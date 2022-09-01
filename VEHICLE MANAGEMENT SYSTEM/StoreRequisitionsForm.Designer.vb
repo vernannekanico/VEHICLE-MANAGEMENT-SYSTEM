@@ -35,6 +35,7 @@ Partial Class StoreRequisitionsForm
         Me.CompletlyOrderedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllRequisitionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintRequisitionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteRequisitionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubmitRequisitionsForPurchaseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -76,7 +77,7 @@ Partial Class StoreRequisitionsForm
         '
         Me.PartsRequisitionsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PartsRequisitionsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.PartsRequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.RequisitionsMenuToolStripMenus, Me.ViewToolStripMenuItem, Me.SubmitRequisitionsForPurchaseToolStripMenuItem, Me.RequisitionItemsToolStripMenuItem, Me.AddItemToolStripMenuItem, Me.EditItemToolStripMenuItem, Me.DeleteItemToolStripMenuItem})
+        Me.PartsRequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.RequisitionsMenuToolStripMenus, Me.ViewToolStripMenuItem, Me.DeleteRequisitionToolStripMenuItem, Me.SubmitRequisitionsForPurchaseToolStripMenuItem, Me.RequisitionItemsToolStripMenuItem, Me.AddItemToolStripMenuItem, Me.EditItemToolStripMenuItem, Me.DeleteItemToolStripMenuItem})
         Me.PartsRequisitionsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.PartsRequisitionsMenuStrip.Name = "PartsRequisitionsMenuStrip"
         Me.PartsRequisitionsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
@@ -153,6 +154,13 @@ Partial Class StoreRequisitionsForm
         Me.PrintRequisitionToolStripMenuItem.Name = "PrintRequisitionToolStripMenuItem"
         Me.PrintRequisitionToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
         Me.PrintRequisitionToolStripMenuItem.Text = "Print Requisition"
+        '
+        'DeleteRequisitionToolStripMenuItem
+        '
+        Me.DeleteRequisitionToolStripMenuItem.Name = "DeleteRequisitionToolStripMenuItem"
+        Me.DeleteRequisitionToolStripMenuItem.Size = New System.Drawing.Size(66, 25)
+        Me.DeleteRequisitionToolStripMenuItem.Text = "Delete"
+        Me.DeleteRequisitionToolStripMenuItem.Visible = False
         '
         'SubmitRequisitionsForPurchaseToolStripMenuItem
         '
@@ -248,7 +256,7 @@ Partial Class StoreRequisitionsForm
         Me.RequisitionItemDetailsGroupBox.Controls.Add(Me.EXITSAVEChangesButton)
         Me.RequisitionItemDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RequisitionItemDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.RequisitionItemDetailsGroupBox.Location = New System.Drawing.Point(94, 296)
+        Me.RequisitionItemDetailsGroupBox.Location = New System.Drawing.Point(124, 40)
         Me.RequisitionItemDetailsGroupBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.RequisitionItemDetailsGroupBox.Name = "RequisitionItemDetailsGroupBox"
         Me.RequisitionItemDetailsGroupBox.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
@@ -549,4 +557,5 @@ Partial Class StoreRequisitionsForm
     Friend WithEvents Label4 As Label
     Friend WithEvents PartSpecificationTextBox As TextBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents DeleteRequisitionToolStripMenuItem As ToolStripMenuItem
 End Class
