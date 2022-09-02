@@ -530,7 +530,12 @@
         PassedGroupBox.Height = (PassedDataGridView.ColumnHeadersHeight) + TotalRowsHeight + 44
     End Sub
     Public Sub ShowCalledForm(PassedCallingForm As Form, PassedCalledForm As Form)
-        CallingForm = PassedCallingForm
+        If InStr(ActiveFormQueue, PassedCalledForm.Name) > 0 Then
+            MsgBox("Error. Recursive call to a form" & vbCrLf & " Called form is currently active")
+            Exit Sub
+        End If
+        ActiveFormQueue = ActiveFormQueue & PassedCalledForm.Name
+            CallingForm = PassedCallingForm
         CallingForm.Enabled = False
         ShowInTaskbarFlag = True
         CallingForm.ShowInTaskbar = False
@@ -549,6 +554,8 @@
         ResetTunnels() ' INFORMATION IN TUNNELS HAVE BEEN RECEIVED
         CallingForm.Select()
         CallingForm.Show()             'enables the page to be active
+        ActiveFormQueue = Replace(ActiveFormQueue, CalledForm.Name, "")
+
     End Sub
     Public Sub EnableMenu(SystemsDepartmentToolStripMenuItem As ToolStripMenuItem)
         If EnableMenus Then

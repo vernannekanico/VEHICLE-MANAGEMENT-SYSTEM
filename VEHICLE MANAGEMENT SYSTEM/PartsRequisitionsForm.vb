@@ -360,14 +360,14 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
             Exit Sub
         End If
         If xxSelectedRecordsCount <> PartsRequisitionsItemsRecordCount Then
-            If MsgBox("Not all Items were selected, contiue? ", vbYesNo) = vbNo Then Exit Sub
+            If MsgBox("Not all Items were selected, continue? ", vbYesNo) = vbNo Then Exit Sub
         Else
             If MsgBox("Continue create the  Purchase Order ? ", vbYesNo) = vbNo Then Exit Sub
         End If
         If Not AllItemsAreValid(PartsRequisitionsItemsDataGridView, "RequisitionQuantity_Double", xxSelectedRecordsCount,
                                       "ProductsPartsTable.ManufacturerPartNo_ShortText30Fld", "has no quantity") Then
         End If
-        'HERE CREATE A HEADER REQUISITION
+        'HERE CREATE A HEADER Purchase Order
 
         Dim FieldsToUpdate = " PurchaseOrderDate_ShortDate, " &
                               " Purchaser_LongInteger, " &
@@ -375,7 +375,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
 
         Dim FieldsData = DateString & "," &
                          CurrentPersonelID.ToString & "," &
-                         0.ToString
+                         GetStatusIdFor("PurchaseOrdersTable", "Draft")
 
         CurrentPurchaseOrderID = InsertNewRecord("PurchaseOrdersTable", FieldsToUpdate, FieldsData)
         'HERE START PROCESSING EACH ITEM
@@ -402,10 +402,10 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
                                     xxProductPartID & "," &
                                     xxRequisitionQuantity_Double.ToString & "," &
                                     xxPartsRequisitionItemID.ToString & "," &
-                                    0.ToString
+                                    GetStatusIdFor("PurchaseOrdersItemsTable", "Draft").ToString
 
                 Dim CurrentPurchaseOrderItemID = InsertNewRecord("PurchaseOrdersItemsTable", FieldsToUpdate, FieldsData)
-                MsgBox("following update was not yet tested")
+
                 RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString
                 SetCommand = " SET  Selected = True "
                 UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
