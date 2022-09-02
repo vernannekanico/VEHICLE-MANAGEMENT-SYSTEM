@@ -116,12 +116,12 @@
         If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return true
         If PassedVariable1.GetType.Name = "String" Then
             If PassedVariable2.GetType.Name = "Decimal" Then
-                PassedVariable1 = Val(PassedVariable1)
+                PassedVariable1 = CDec(PassedVariable1)
             End If
         Else
             If PassedVariable2.GetType.Name = "String" Then
                 If PassedVariable1.GetType.Name = "Decimal" Then
-                    PassedVariable2 = Val(PassedVariable2)
+                    PassedVariable2 = CDec(PassedVariable2)
                 End If
             End If
         End If

@@ -181,15 +181,7 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
 
         PartsRequisitionsItemsSelectionFilter = " WHERE PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString
         FillPartsRequisitionsItemsDataGridView()
-        SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = False
         WhatToDoToolStripMenuItem.Visible = False
-        If PartsRequisitionsItemsRecordCount > 0 Then
-            If CurrentPurchaseOrderID > 1 Then
-                SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = True
-            Else
-                WhatToDoToolStripMenuItem.Visible = True
-            End If
-        End If
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         DoCommonHouseKeeping(Me, SavedCallingForm)

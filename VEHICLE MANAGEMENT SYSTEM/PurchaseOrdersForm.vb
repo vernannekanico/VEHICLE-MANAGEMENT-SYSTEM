@@ -245,6 +245,7 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
 Select 
 PurchaseOrdersItemsTable.POItem_Integer,
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+ProductsPartsOrderedTable.ProductsPartID_Autonumber, 
 ProductsPartsOrderedTable.ManufacturerDescription_ShortText250, 
 ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld, 
 PurchaseOrdersItemsTable.POQty_Integer, 
@@ -403,7 +404,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         If e.RowIndex < 0 Then Exit Sub
         If PurchaseOrdersItemsRecordCount = 0 Then Exit Sub
         CurrentPurchaseOrdersItemsDataGridViewRow = e.RowIndex
-        CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductPartID_LongInteger", CurrentPurchaseOrdersItemsDataGridViewRow).Value
+        CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
         CurrentPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
         CurrentPurchaseOrdersItemNo = PurchaseOrdersItemsDataGridView.Item("POItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value
         FillField(CurrentPackagePriceID, PurchaseOrdersItemsDataGridView.Item("PackagePriceID_LongInteger", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
@@ -838,12 +839,12 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
                     Dim RecordFilter = " WHERE PurchaseOrdersItemID_AutoNumber = " & CurrentPurchaseOrdersItemID.ToString
                     Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartId.ToString & "," &
                                   "POQty_Integer = " & Val(POItemQuantityTextBox.Text).ToString & "," &
-                                  "Price_Currency = " & Val(POItemPriceTextBox.Text).ToString
+                                  "Price_Currency = " & CDec(POItemPriceTextBox.Text).ToString
                     UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
                     RequisitionDetailsGroupBox.Visible = False
 
                     'UPDATE ProductsPartTable AND MARK FIELD Selected true
-                    UpdateTable("ProductsPartTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartId.ToString)
+                    UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartId.ToString)
                 End If
             End If
         End If
@@ -948,7 +949,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             Dim xxItemQuantity = Val(NotNull(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value))
             Dim xxUnitPrice = Val(NotNull(PurchaseOrdersItemsDataGridView.Item("Price_Currency", CurrentPurchaseOrdersItemsDataGridViewRow).Value))
             Dim xxItemDiscount = Val(NotNull(PurchaseOrdersItemsDataGridView.Item("ItemDiscount_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value))
-            CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductPartID_LongInteger", CurrentPurchaseOrdersItemsDataGridViewRow).Value
+            CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
             xxComputedItemDiscount = (xxItemDiscount * 10 / 100) * (xxItemQuantity * xxUnitPrice)
             ItemTotalCost = (xxItemQuantity * xxUnitPrice) - xxComputedItemDiscount
             POTotalCost = POTotalCost + ItemTotalCost
