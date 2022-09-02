@@ -42,7 +42,12 @@
 
     Private Sub PartsRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
-        If Val(Tunnel1) > 0 Then CurrentPurchaseOrderID = Tunnel1
+        If Val(Tunnel1) > 0 Then
+            CurrentPurchaseOrderID = Tunnel1
+            WhatToDoToolStripMenuItem.Text = "Attach selected items to Purchase Order " & Tunnel1.ToString
+        Else
+            WhatToDoToolStripMenuItem.Text = "Create Purchase Order for Selected Item(s) "
+        End If
         PartsRequisitionsItemsDataGridView.DefaultCellStyle.WrapMode = DataGridViewTriState.True
         CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
         SetRequisitionsSelectionFilter("Outstanding Requisition", 2, Me, "OUTSTANDING REQUISITIONS")
@@ -119,7 +124,7 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
 
             FormatPartsRequisitionsDataGridView()
             SetFormWidthAndGroupBoxLeft(Me,
-                                        WorkOrderPartsMenuStrip,
+                                        PartsRequisitionsMenuStrip,
                                         PartsRequisitionsGroupBox,
                                         PartsRequisitionsItemsGroupBox,
                                         PartsRequisitionsGroupBox,
@@ -177,12 +182,12 @@ FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable
         PartsRequisitionsItemsSelectionFilter = " WHERE PartsRequisitionsItemsTable.PartsRequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString
         FillPartsRequisitionsItemsDataGridView()
         SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = False
-        CreatePurchaseOrderToolStripMenuItem.Visible = False
+        WhatToDoToolStripMenuItem.Visible = False
         If PartsRequisitionsItemsRecordCount > 0 Then
             If CurrentPurchaseOrderID > 1 Then
                 SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = True
             Else
-                CreatePurchaseOrderToolStripMenuItem.Visible = True
+                WhatToDoToolStripMenuItem.Visible = True
             End If
         End If
     End Sub
@@ -332,7 +337,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         End Select
 
     End Sub
-    Private Sub PurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CreatePurchaseOrderToolStripMenuItem.Click
+    Private Sub PurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WhatToDoToolStripMenuItem.Click
         ShowPurchaseOrdersForm()
     End Sub
     Private Function AllItemsAreValid(PassedataGridView As DataGridView, PassedFieldToTest As String, PassedNoOfRecords As Integer,
@@ -367,18 +372,22 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         If Not AllItemsAreValid(PartsRequisitionsItemsDataGridView, "RequisitionQuantity_Double", xxSelectedRecordsCount,
                                       "ProductsPartsTable.ManufacturerPartNo_ShortText30Fld", "has no quantity") Then
         End If
-        'HERE CREATE A HEADER Purchase Order
-
-        Dim FieldsToUpdate = " PurchaseOrderDate_ShortDate, " &
+        'HERE CREATE A HEADER Purchase Order if there is no purchase order number passed
+        Dim FieldsToUpdate = ""
+        Dim FieldsData = ""
+        If CurrentPurchaseOrderID < 1 Then
+            FieldsToUpdate = " PurchaseOrderDate_ShortDate, " &
                               " Purchaser_LongInteger, " &
                               " PurchaseOrderStatusID_LongInteger "
 
-        Dim FieldsData = DateString & "," &
+            FieldsData = DateString & "," &
                          CurrentPersonelID.ToString & "," &
                          GetStatusIdFor("PurchaseOrdersTable", "Draft")
 
-        CurrentPurchaseOrderID = InsertNewRecord("PurchaseOrdersTable", FieldsToUpdate, FieldsData)
-        'HERE START PROCESSING EACH ITEM
+            CurrentPurchaseOrderID = InsertNewRecord("PurchaseOrdersTable", FieldsToUpdate, FieldsData)
+        End If
+
+        'START PROCESSING EACH ITEM
         Dim TableToUpdate As String = ""
         Dim SetCommand As String = ""
         Dim RecordFilter As String = ""
@@ -427,6 +436,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         UpdateTable("PartsRequisitionsTable", SetCommand, RecordFilter)
 
         FillPartsRequisitionsDataGridView()
+        ShowCalledForm(Me, PurchaseOrdersForm)
     End Sub
 
 
@@ -483,7 +493,4 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
 
     End Sub
 
-    Private Sub SubmitForExistingPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitForExistingPurchaseOrderToolStripMenuItem.Click
-
-    End Sub
 End Class

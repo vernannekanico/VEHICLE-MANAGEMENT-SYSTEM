@@ -46,7 +46,7 @@ Partial Class PartsRequisitionsForm
         Me.PartsRequisitionsDataGridView = New System.Windows.Forms.DataGridView()
         Me.PartsRequisitionsItemsGroupBox = New System.Windows.Forms.GroupBox()
         Me.PartsRequisitionsItemsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.WorkOrderPartsMenuStrip = New System.Windows.Forms.MenuStrip()
+        Me.PartsRequisitionsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,8 +56,7 @@ Partial Class PartsRequisitionsForm
         Me.CompletlyOrderedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllRequisitionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintRequisitionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CreatePurchaseOrderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SubmitForExistingPurchaseOrderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WhatToDoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AssignToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionItemDetailsGroupBox.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -65,7 +64,7 @@ Partial Class PartsRequisitionsForm
         CType(Me.PartsRequisitionsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PartsRequisitionsItemsGroupBox.SuspendLayout()
         CType(Me.PartsRequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.WorkOrderPartsMenuStrip.SuspendLayout()
+        Me.PartsRequisitionsMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'RequisitionItemDetailsGroupBox
@@ -320,16 +319,16 @@ Partial Class PartsRequisitionsForm
         Me.PartsRequisitionsItemsDataGridView.Size = New System.Drawing.Size(329, 179)
         Me.PartsRequisitionsItemsDataGridView.TabIndex = 53
         '
-        'WorkOrderPartsMenuStrip
+        'PartsRequisitionsMenuStrip
         '
-        Me.WorkOrderPartsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.WorkOrderPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ViewToolStripMenuItem, Me.CreatePurchaseOrderToolStripMenuItem, Me.SubmitForExistingPurchaseOrderToolStripMenuItem, Me.AssignToolStripMenuItem})
-        Me.WorkOrderPartsMenuStrip.Location = New System.Drawing.Point(0, 0)
-        Me.WorkOrderPartsMenuStrip.Name = "WorkOrderPartsMenuStrip"
-        Me.WorkOrderPartsMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
-        Me.WorkOrderPartsMenuStrip.Size = New System.Drawing.Size(1284, 31)
-        Me.WorkOrderPartsMenuStrip.TabIndex = 120
-        Me.WorkOrderPartsMenuStrip.Text = "MenuStrip1"
+        Me.PartsRequisitionsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartsRequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ViewToolStripMenuItem, Me.WhatToDoToolStripMenuItem, Me.AssignToolStripMenuItem})
+        Me.PartsRequisitionsMenuStrip.Location = New System.Drawing.Point(0, 0)
+        Me.PartsRequisitionsMenuStrip.Name = "PartsRequisitionsMenuStrip"
+        Me.PartsRequisitionsMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
+        Me.PartsRequisitionsMenuStrip.Size = New System.Drawing.Size(1284, 31)
+        Me.PartsRequisitionsMenuStrip.TabIndex = 120
+        Me.PartsRequisitionsMenuStrip.Text = "MenuStrip1"
         '
         'ReturnToolStripMenuItem
         '
@@ -386,19 +385,12 @@ Partial Class PartsRequisitionsForm
         Me.PrintRequisitionToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
         Me.PrintRequisitionToolStripMenuItem.Text = "Print Requisition"
         '
-        'CreatePurchaseOrderToolStripMenuItem
+        'WhatToDoToolStripMenuItem
         '
-        Me.CreatePurchaseOrderToolStripMenuItem.Name = "CreatePurchaseOrderToolStripMenuItem"
-        Me.CreatePurchaseOrderToolStripMenuItem.Size = New System.Drawing.Size(307, 25)
-        Me.CreatePurchaseOrderToolStripMenuItem.Text = "Create Purchase Order for Items Selected"
-        Me.CreatePurchaseOrderToolStripMenuItem.Visible = False
-        '
-        'SubmitForExistingPurchaseOrderToolStripMenuItem
-        '
-        Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Name = "SubmitForExistingPurchaseOrderToolStripMenuItem"
-        Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Size = New System.Drawing.Size(467, 25)
-        Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Text = "Submit Selected Requested Items for an Existing Purchase Order"
-        Me.SubmitForExistingPurchaseOrderToolStripMenuItem.Visible = False
+        Me.WhatToDoToolStripMenuItem.Name = "WhatToDoToolStripMenuItem"
+        Me.WhatToDoToolStripMenuItem.Size = New System.Drawing.Size(307, 25)
+        Me.WhatToDoToolStripMenuItem.Text = "Create Purchase Order for Items Selected"
+        Me.WhatToDoToolStripMenuItem.Visible = False
         '
         'AssignToolStripMenuItem
         '
@@ -415,7 +407,7 @@ Partial Class PartsRequisitionsForm
         Me.Controls.Add(Me.RequisitionItemDetailsGroupBox)
         Me.Controls.Add(Me.PartsRequisitionsGroupBox)
         Me.Controls.Add(Me.PartsRequisitionsItemsGroupBox)
-        Me.Controls.Add(Me.WorkOrderPartsMenuStrip)
+        Me.Controls.Add(Me.PartsRequisitionsMenuStrip)
         Me.Name = "PartsRequisitionsForm"
         Me.Text = "Form1"
         Me.RequisitionItemDetailsGroupBox.ResumeLayout(False)
@@ -425,8 +417,8 @@ Partial Class PartsRequisitionsForm
         CType(Me.PartsRequisitionsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PartsRequisitionsItemsGroupBox.ResumeLayout(False)
         CType(Me.PartsRequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.WorkOrderPartsMenuStrip.ResumeLayout(False)
-        Me.WorkOrderPartsMenuStrip.PerformLayout()
+        Me.PartsRequisitionsMenuStrip.ResumeLayout(False)
+        Me.PartsRequisitionsMenuStrip.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -455,7 +447,7 @@ Partial Class PartsRequisitionsForm
     Friend WithEvents PartsRequisitionsDataGridView As DataGridView
     Friend WithEvents PartsRequisitionsItemsGroupBox As GroupBox
     Friend WithEvents PartsRequisitionsItemsDataGridView As DataGridView
-    Friend WithEvents WorkOrderPartsMenuStrip As MenuStrip
+    Friend WithEvents PartsRequisitionsMenuStrip As MenuStrip
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RequisitionDetailsToolStripMenuItem As ToolStripMenuItem
@@ -465,7 +457,6 @@ Partial Class PartsRequisitionsForm
     Friend WithEvents CompletlyOrderedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AllRequisitionsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PrintRequisitionToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents CreatePurchaseOrderToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SubmitForExistingPurchaseOrderToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WhatToDoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AssignToolStripMenuItem As ToolStripMenuItem
 End Class
