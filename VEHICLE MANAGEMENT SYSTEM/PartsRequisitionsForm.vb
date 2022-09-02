@@ -326,7 +326,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         Dim CurrentPartsRequisitionsItemStatus = PartsRequisitionsItemsDataGridView.Item("StatusText_ShortText25", CurrentPartsRequisitionsItemsDataGridViewRow).Value
         RequisitionDetailsToolStripMenuItem.Visible = False
         Select Case CurrentPartsRequisitionsItemStatus
-            Case "Requisition Submitted"
+            Case "Outstanding Requisition"
                 RequisitionDetailsToolStripMenuItem.Visible = True
             Case "Completely Ordered"
                 PartsRequisitionsItemsDataGridView.Rows(CurrentPartsRequisitionsItemsDataGridViewRow).DefaultCellStyle.ForeColor = Color.Red
