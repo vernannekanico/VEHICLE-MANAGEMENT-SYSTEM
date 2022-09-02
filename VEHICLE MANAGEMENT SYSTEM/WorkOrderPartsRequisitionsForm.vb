@@ -849,7 +849,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                             "
         Dim FieldsData =
                             Chr(34) & DateString & Chr(34) & ", " &
-                            CurrentUserID.ToString & "," &
+                            CurrentPersonelID.ToString & "," &
                             CurrentVehicleID.ToString & "," &
                              GetStatusIdFor("PartsRequisitionsTable").ToString
 

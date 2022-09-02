@@ -545,7 +545,7 @@ FROM (PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.
                                 " PartsRequisitionType_Byte  "
 
         Dim FieldsData = Chr(34) & DateString & Chr(34) & ", " &
-                                CurrentUserID.ToString & ", " &
+                                CurrentPersonelID.ToString & ", " &
                                 GetStatusIdFor("PartsRequisitionsTable", "Outstanding Requisition").ToString & ", " &
                                 2.ToString
 

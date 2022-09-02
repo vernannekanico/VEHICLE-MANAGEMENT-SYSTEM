@@ -100,9 +100,8 @@ StatusesTable.StatusText_ShortText25,
 PartsRequisitionStatus &
  "
 FROM ((PartsRequisitionsTable LEFT JOIN PersonnelTable ON PartsRequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN ((((VehiclesTable LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) ON PartsRequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON PartsRequisitionsTable.PartsRequisitionStatus_Integer = StatusesTable.StatusID_Autonumber"
-        PartsRequisitionsTableLinks = " 
-"
-        MySelection = PartsRequisitionsFieldsToSelect & PartsRequisitionsTableLinks & PartsRequisitionsSelectionFilter & PartsRequisitionsSelectionOrder
+
+        MySelection = PartsRequisitionsFieldsToSelect & PartsRequisitionsSelectionFilter & PartsRequisitionsSelectionOrder
         JustExecuteMySelection()
 
         PartsRequisitionsRecordCount = RecordCount

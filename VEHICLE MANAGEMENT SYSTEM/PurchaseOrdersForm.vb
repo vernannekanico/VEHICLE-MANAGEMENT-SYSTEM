@@ -450,7 +450,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         Dim FieldsData = 0.ToString & ", " &
                                 Chr(34) & DateString & Chr(34) & ", " &
                                 CurrentSupplierID.ToString & ", " &
-                                CurrentUserID.ToString & ", " &
+                                CurrentPersonelID.ToString & ", " &
                                 0.ToString & ", " &
                                 0.ToString & ", " &
                                 0.ToString & ", " &

@@ -865,7 +865,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
         Dim FieldsData = CurrentWorkOrderPartID.ToString & ",  " &
                                   CurrentProductPartID.ToString & ",  " &
-                                  CurrentUserID.ToString & ",  " &
+                                  CurrentPersonelID.ToString & ",  " &
                                   InQuotes(DateString) & ", " &
                                   Val(CustomerSuppliedQuantityTextBox.Text).ToString() & ", " &
                                   GetStatusIdFor("WorkOrderReceivedPartsTable", "Draft from Customer").ToString()
