@@ -266,10 +266,13 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
         CurrentMasterCodeBookID = ProductsPartsDataGridView.Item("MasterCodeBookID_LongInteger", CurrentProductsPartsRow).Value
         FillField(CurrentStocksID, ProductsPartsDataGridView.Item("StockID_Autonumber", CurrentProductsPartsRow).Value)
         CurrentBrandID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
-        If RequestedMasterCodeBook = CurrentMasterCodeBookID Then
-            SelectToolStripMenuItem.Visible = True
-        Else
-            SelectToolStripMenuItem.Visible = False
+        SelectToolStripMenuItem.Visible = True
+        If RequestedMasterCodeBook > -1 Then
+            If RequestedMasterCodeBook = CurrentMasterCodeBookID Then
+                SelectToolStripMenuItem.Visible = True
+            Else
+                SelectToolStripMenuItem.Visible = False
+            End If
         End If
 
     End Sub
