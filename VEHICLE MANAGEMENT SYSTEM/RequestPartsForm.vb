@@ -61,10 +61,10 @@
         FillWorkOrderConcernJobsDataGridView()
         SaveToolStripMenuItem.Visible = False
         RemovePartToolStripMenuItem.Visible = False
+        SubmitRequestForPartsToolStripMenuItem.Visible = False
+        RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
         If Me.Text = "Receive parts from the Customer" Then
             RequisitionDetailsGroupBox.Visible = False
-            SubmitRequestForPartsToolStripMenuItem.Visible = False
-            RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = True
             ProductDetailsGroupBox.Visible = True
             CustomerSuppliedGroupBox.Visible = True
             RequisitionInformationsGroupBox.Visible = False
@@ -73,8 +73,6 @@
         Else
             'note: check if there already exists a requisition header for this workorder (unfinished / on preparation requisition for this Concern
             RequisitionDetailsGroupBox.Visible = True
-            RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
-            SubmitRequestForPartsToolStripMenuItem.Visible = True
             WOPartsRequisitionNumberTextBox.Text = "WOR" & CurrentWorkOrderID.ToString & "-" & CurrentWorkOrderConcernID.ToString
             Dim r As DataRow
             SetParentRecordReference("WorkOrderRequestedPartsHeadersTable", "WorkOrderRequestedPartsHeaderNumber_ShortText12", WOPartsRequisitionNumberTextBox.Text)
@@ -414,8 +412,12 @@ FROM ((WorkOrderRequestedPartsTable LEFT JOIN (ProductsPartsTable LEFT JOIN Prod
         JustExecuteMySelection()
         WorkOrderRequestedPartsRecordCount = RecordCount
         WorkOrderRequestedPartsGroupBox.Visible = True
+        SubmitRequestForPartsToolStripMenuItem.Visible = False
         WorkOrderRequestedPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If WorkOrderRequestedPartsRecordCount < 1 Then WorkOrderRequestedPartsGroupBox.Visible = False
+        If WorkOrderRequestedPartsRecordCount < 1 Then
+            SubmitRequestForPartsToolStripMenuItem.Visible = True
+            WorkOrderRequestedPartsGroupBox.Visible = False
+        End If
         If Not WorkOrderRequestedPartsGridViewAlreadyFormated Then
             WorkOrderRequestedPartsGridViewAlreadyFormated = True
             FormatWorkOrderRequestedPartsDataGridView()
@@ -492,14 +494,18 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         JustExecuteMySelection()
         CustomerSuppliedPartsRecordCount = RecordCount
         CustomerSuppliedPartsGroupBox.Visible = True
+        RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = True
+        If CustomerSuppliedPartsRecordCount < 1 Then
+            CustomerSuppliedPartsGroupBox.Visible = False
+            RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
+        End If
         CustomerSuppliedPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If CustomerSuppliedPartsRecordCount < 1 Then CustomerSuppliedPartsGroupBox.Visible = False
         If Not CustomerSuppliedPartsGridViewAlreadyFormated Then
-                CustomerSuppliedPartsGridViewAlreadyFormated = True
-                FormatCustomerSuppliedPartsDataGridView()
-            End If
+            CustomerSuppliedPartsGridViewAlreadyFormated = True
+            FormatCustomerSuppliedPartsDataGridView()
+        End If
 
-            Dim RecordsToDisplay = 7
+        Dim RecordsToDisplay = 7
         SetGroupBoxHeight(RecordsToDisplay, CustomerSuppliedPartsRecordCount, CustomerSuppliedPartsGroupBox, CustomerSuppliedPartsDataGridView)
         SetTopPositionsOfTheGroupBoxes()
     End Sub
@@ -958,7 +964,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
     Private Sub PrintSubmitRequisitionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitRequestForPartsToolStripMenuItem.Click
         ' CHECK IF THERE ARE AVAILABLE PARTS OUTSTANDING FOR REQUEST FOR PURCHASE
-        If MsgBox("Continue Finalizing registration of received parts from customer ?", MsgBoxStyle.YesNo) = vbNo Then
+        If MsgBox("Continue Submit Requisition for Parts ?", MsgBoxStyle.YesNo) = vbNo Then
             Exit Sub
         End If
         ' VALIDATION
@@ -973,8 +979,8 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
             If IsNotEmpty(DoesNotNeedPartID) Then
                 'THIS JOB IS MARKED AS NO-PART-NEEDed JOB
                 If WorkOrderPartsRecordCount > 0 Then
-                    If MsgBox("This job is marked as NO-PART-NEED-JOB, you attached a part though, " & vbCrLf &
-                              " Want me remove the NO-PART-NEED-JOB indicator ? ") = MsgBoxResult.Yes Then
+                    If MsgBox("This job is marked as NO-PART-NEEDED-JOB, you attached a part though, " & vbCrLf &
+                              " Want me remove the NO-PART-NEEDED-JOB indicator ? ") = MsgBoxResult.Yes Then
                         If MsgBox("About to remove the indicator, continue ? ") = MsgBoxResult.Yes Then
                             MySelection = " DELETE FROM DoesNotNeedPartsTable WHERE DoesNotNeedPartID_AutoNumber =  " & DoesNotNeedPartID.ToString
                             JustExecuteMySelection()

@@ -1153,4 +1153,7 @@ FROM ((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOrder
 
     End Sub
 
+    Private Sub SubcontractJobToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubcontractJobToolStripMenuItem.Click
+
+    End Sub
 End Class

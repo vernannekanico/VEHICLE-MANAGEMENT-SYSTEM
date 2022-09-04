@@ -80,6 +80,7 @@ Partial Class WorkOrderFormASM
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.SubcontractJobToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WorkOrderFormASMMenuStrip.SuspendLayout()
         CType(Me.WorkOrdersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.WorkOrdersGroupBox.SuspendLayout()
@@ -213,7 +214,7 @@ Partial Class WorkOrderFormASM
         '
         'JobMenusToolStripMenuItem
         '
-        Me.JobMenusToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddJobToolStripMenuItem, Me.EditJobToolStripMenuItem, Me.RemoveJobToolStripMenuItem, Me.AssignJobToolStripMenuItem, Me.RequestPartsFromWarehouseToolStripMenuItem, Me.ReceivepartsfromtheCustomerToolStripMenuItem, Me.ProcessJobToolStripMenuItem, Me.JobDoneToolStripMenuItem})
+        Me.JobMenusToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddJobToolStripMenuItem, Me.EditJobToolStripMenuItem, Me.RemoveJobToolStripMenuItem, Me.AssignJobToolStripMenuItem, Me.SubcontractJobToolStripMenuItem, Me.RequestPartsFromWarehouseToolStripMenuItem, Me.ReceivepartsfromtheCustomerToolStripMenuItem, Me.ProcessJobToolStripMenuItem, Me.JobDoneToolStripMenuItem})
         Me.JobMenusToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.JobMenusToolStripMenuItem.Name = "JobMenusToolStripMenuItem"
         Me.JobMenusToolStripMenuItem.Size = New System.Drawing.Size(146, 32)
@@ -584,6 +585,12 @@ Partial Class WorkOrderFormASM
         Me.Label1.TabIndex = 40
         Me.Label1.Text = "Work Order Number"
         '
+        'SubcontractJobToolStripMenuItem
+        '
+        Me.SubcontractJobToolStripMenuItem.Name = "SubcontractJobToolStripMenuItem"
+        Me.SubcontractJobToolStripMenuItem.Size = New System.Drawing.Size(411, 32)
+        Me.SubcontractJobToolStripMenuItem.Text = "Sub-contract Job"
+        '
         'WorkOrderFormASM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
@@ -668,4 +675,5 @@ Partial Class WorkOrderFormASM
     Friend WithEvents ReceivepartsfromtheCustomerToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents JobDoneToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents GetStandardJobForThisConcernToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SubcontractJobToolStripMenuItem As ToolStripMenuItem
 End Class
