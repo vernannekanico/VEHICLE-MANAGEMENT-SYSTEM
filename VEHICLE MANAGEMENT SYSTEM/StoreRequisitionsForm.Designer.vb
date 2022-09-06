@@ -22,8 +22,8 @@ Partial Class StoreRequisitionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.PartsRequisitionsMenuStrip = New System.Windows.Forms.MenuStrip()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.RequisitionsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionsMenuToolStripMenus = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -41,8 +41,8 @@ Partial Class StoreRequisitionsForm
         Me.AddItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PartsRequisitionsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.PartsRequisitionsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.RequisitionsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.RequisitionsDataGridView = New System.Windows.Forms.DataGridView()
         Me.RequisitionItemDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -65,25 +65,25 @@ Partial Class StoreRequisitionsForm
         Me.EXITSAVEChangesButton = New System.Windows.Forms.Button()
         Me.StoreSuppliesRequisitionsItemsGroupBox = New System.Windows.Forms.GroupBox()
         Me.StoreSuppliesRequisitionsItemsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.PartsRequisitionsMenuStrip.SuspendLayout()
-        Me.PartsRequisitionsGroupBox.SuspendLayout()
-        CType(Me.PartsRequisitionsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.RequisitionsMenuStrip.SuspendLayout()
+        Me.RequisitionsGroupBox.SuspendLayout()
+        CType(Me.RequisitionsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.RequisitionItemDetailsGroupBox.SuspendLayout()
         Me.StoreSuppliesRequisitionsItemsGroupBox.SuspendLayout()
         CType(Me.StoreSuppliesRequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'PartsRequisitionsMenuStrip
+        'RequisitionsMenuStrip
         '
-        Me.PartsRequisitionsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PartsRequisitionsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.PartsRequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.RequisitionsMenuToolStripMenus, Me.ViewToolStripMenuItem, Me.DeleteRequisitionToolStripMenuItem, Me.SubmitRequisitionsForPurchaseToolStripMenuItem, Me.RequisitionItemsToolStripMenuItem, Me.AddItemToolStripMenuItem, Me.EditItemToolStripMenuItem, Me.DeleteItemToolStripMenuItem})
-        Me.PartsRequisitionsMenuStrip.Location = New System.Drawing.Point(0, 0)
-        Me.PartsRequisitionsMenuStrip.Name = "PartsRequisitionsMenuStrip"
-        Me.PartsRequisitionsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
-        Me.PartsRequisitionsMenuStrip.Size = New System.Drawing.Size(1284, 35)
-        Me.PartsRequisitionsMenuStrip.TabIndex = 93
-        Me.PartsRequisitionsMenuStrip.Text = "MenuStrip1"
+        Me.RequisitionsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RequisitionsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.RequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.RequisitionsMenuToolStripMenus, Me.ViewToolStripMenuItem, Me.DeleteRequisitionToolStripMenuItem, Me.SubmitRequisitionsForPurchaseToolStripMenuItem, Me.RequisitionItemsToolStripMenuItem, Me.AddItemToolStripMenuItem, Me.EditItemToolStripMenuItem, Me.DeleteItemToolStripMenuItem})
+        Me.RequisitionsMenuStrip.Location = New System.Drawing.Point(0, 0)
+        Me.RequisitionsMenuStrip.Name = "RequisitionsMenuStrip"
+        Me.RequisitionsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
+        Me.RequisitionsMenuStrip.Size = New System.Drawing.Size(1284, 35)
+        Me.RequisitionsMenuStrip.TabIndex = 93
+        Me.RequisitionsMenuStrip.Text = "MenuStrip1"
         '
         'ReturnToolStripMenuItem
         '
@@ -198,38 +198,38 @@ Partial Class StoreRequisitionsForm
         Me.DeleteItemToolStripMenuItem.Text = "Delete"
         Me.DeleteItemToolStripMenuItem.Visible = False
         '
-        'PartsRequisitionsGroupBox
+        'RequisitionsGroupBox
         '
-        Me.PartsRequisitionsGroupBox.Controls.Add(Me.PartsRequisitionsDataGridView)
-        Me.PartsRequisitionsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PartsRequisitionsGroupBox.Location = New System.Drawing.Point(34, 58)
-        Me.PartsRequisitionsGroupBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.PartsRequisitionsGroupBox.Name = "PartsRequisitionsGroupBox"
-        Me.PartsRequisitionsGroupBox.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.PartsRequisitionsGroupBox.Size = New System.Drawing.Size(550, 228)
-        Me.PartsRequisitionsGroupBox.TabIndex = 117
-        Me.PartsRequisitionsGroupBox.TabStop = False
-        Me.PartsRequisitionsGroupBox.Text = "Requisitions"
-        Me.PartsRequisitionsGroupBox.Visible = False
+        Me.RequisitionsGroupBox.Controls.Add(Me.RequisitionsDataGridView)
+        Me.RequisitionsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RequisitionsGroupBox.Location = New System.Drawing.Point(34, 58)
+        Me.RequisitionsGroupBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.RequisitionsGroupBox.Name = "RequisitionsGroupBox"
+        Me.RequisitionsGroupBox.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.RequisitionsGroupBox.Size = New System.Drawing.Size(550, 228)
+        Me.RequisitionsGroupBox.TabIndex = 117
+        Me.RequisitionsGroupBox.TabStop = False
+        Me.RequisitionsGroupBox.Text = "Requisitions"
+        Me.RequisitionsGroupBox.Visible = False
         '
-        'PartsRequisitionsDataGridView
+        'RequisitionsDataGridView
         '
-        Me.PartsRequisitionsDataGridView.AllowUserToAddRows = False
-        Me.PartsRequisitionsDataGridView.AllowUserToDeleteRows = False
-        Me.PartsRequisitionsDataGridView.AllowUserToOrderColumns = True
-        Me.PartsRequisitionsDataGridView.AllowUserToResizeRows = False
-        Me.PartsRequisitionsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.PartsRequisitionsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PartsRequisitionsDataGridView.Location = New System.Drawing.Point(4, 24)
-        Me.PartsRequisitionsDataGridView.Margin = New System.Windows.Forms.Padding(6, 8, 6, 8)
-        Me.PartsRequisitionsDataGridView.MultiSelect = False
-        Me.PartsRequisitionsDataGridView.Name = "PartsRequisitionsDataGridView"
-        Me.PartsRequisitionsDataGridView.ReadOnly = True
-        Me.PartsRequisitionsDataGridView.RowHeadersVisible = False
-        Me.PartsRequisitionsDataGridView.RowHeadersWidth = 51
-        Me.PartsRequisitionsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.PartsRequisitionsDataGridView.Size = New System.Drawing.Size(542, 199)
-        Me.PartsRequisitionsDataGridView.TabIndex = 52
+        Me.RequisitionsDataGridView.AllowUserToAddRows = False
+        Me.RequisitionsDataGridView.AllowUserToDeleteRows = False
+        Me.RequisitionsDataGridView.AllowUserToOrderColumns = True
+        Me.RequisitionsDataGridView.AllowUserToResizeRows = False
+        Me.RequisitionsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.RequisitionsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RequisitionsDataGridView.Location = New System.Drawing.Point(4, 24)
+        Me.RequisitionsDataGridView.Margin = New System.Windows.Forms.Padding(6, 8, 6, 8)
+        Me.RequisitionsDataGridView.MultiSelect = False
+        Me.RequisitionsDataGridView.Name = "RequisitionsDataGridView"
+        Me.RequisitionsDataGridView.ReadOnly = True
+        Me.RequisitionsDataGridView.RowHeadersVisible = False
+        Me.RequisitionsDataGridView.RowHeadersWidth = 51
+        Me.RequisitionsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.RequisitionsDataGridView.Size = New System.Drawing.Size(542, 199)
+        Me.RequisitionsDataGridView.TabIndex = 52
         '
         'RequisitionItemDetailsGroupBox
         '
@@ -485,8 +485,8 @@ Partial Class StoreRequisitionsForm
         Me.StoreSuppliesRequisitionsItemsDataGridView.ReadOnly = True
         Me.StoreSuppliesRequisitionsItemsDataGridView.RowHeadersVisible = False
         Me.StoreSuppliesRequisitionsItemsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.StoreSuppliesRequisitionsItemsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.StoreSuppliesRequisitionsItemsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle2
         Me.StoreSuppliesRequisitionsItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.StoreSuppliesRequisitionsItemsDataGridView.Size = New System.Drawing.Size(494, 183)
         Me.StoreSuppliesRequisitionsItemsDataGridView.TabIndex = 53
@@ -498,16 +498,16 @@ Partial Class StoreRequisitionsForm
         Me.ClientSize = New System.Drawing.Size(1284, 749)
         Me.Controls.Add(Me.RequisitionItemDetailsGroupBox)
         Me.Controls.Add(Me.StoreSuppliesRequisitionsItemsGroupBox)
-        Me.Controls.Add(Me.PartsRequisitionsGroupBox)
-        Me.Controls.Add(Me.PartsRequisitionsMenuStrip)
+        Me.Controls.Add(Me.RequisitionsGroupBox)
+        Me.Controls.Add(Me.RequisitionsMenuStrip)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "StoreRequisitionsForm"
         Me.Text = "RequisitionsForm"
-        Me.PartsRequisitionsMenuStrip.ResumeLayout(False)
-        Me.PartsRequisitionsMenuStrip.PerformLayout()
-        Me.PartsRequisitionsGroupBox.ResumeLayout(False)
-        CType(Me.PartsRequisitionsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.RequisitionsMenuStrip.ResumeLayout(False)
+        Me.RequisitionsMenuStrip.PerformLayout()
+        Me.RequisitionsGroupBox.ResumeLayout(False)
+        CType(Me.RequisitionsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.RequisitionItemDetailsGroupBox.ResumeLayout(False)
         Me.RequisitionItemDetailsGroupBox.PerformLayout()
         Me.StoreSuppliesRequisitionsItemsGroupBox.ResumeLayout(False)
@@ -516,10 +516,10 @@ Partial Class StoreRequisitionsForm
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents PartsRequisitionsMenuStrip As MenuStrip
+    Friend WithEvents RequisitionsMenuStrip As MenuStrip
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PartsRequisitionsGroupBox As GroupBox
-    Friend WithEvents PartsRequisitionsDataGridView As DataGridView
+    Friend WithEvents RequisitionsGroupBox As GroupBox
+    Friend WithEvents RequisitionsDataGridView As DataGridView
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RequisitionDetailsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OutstandingRequisitionsToolStripMenuItem As ToolStripMenuItem

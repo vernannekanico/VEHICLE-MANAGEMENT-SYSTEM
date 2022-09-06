@@ -415,7 +415,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
                                              "WorkOrderRequestedPartsTable",
                                              "StoreSuppliesRequisitionsItemsTable",
                                              "PurchaseOrdersItemsTable",
-                                             "PartsRequisitionsItemsTable",
+                                             "RequisitionsItemsTable",
                                              "DeliveryItemsTable"
                                              }
 
