@@ -116,12 +116,12 @@
         If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return true
         If PassedVariable1.GetType.Name = "String" Then
             If PassedVariable2.GetType.Name = "Decimal" Then
-                PassedVariable1 = Val(PassedVariable1)
+                PassedVariable1 = CDec(PassedVariable1)
             End If
         Else
             If PassedVariable2.GetType.Name = "String" Then
                 If PassedVariable1.GetType.Name = "Decimal" Then
-                    PassedVariable2 = Val(PassedVariable2)
+                    PassedVariable2 = CDec(PassedVariable2)
                 End If
             End If
         End If
@@ -530,6 +530,11 @@
         PassedGroupBox.Height = (PassedDataGridView.ColumnHeadersHeight) + TotalRowsHeight + 44
     End Sub
     Public Sub ShowCalledForm(PassedCallingForm As Form, PassedCalledForm As Form)
+        If InStr(ActiveFormsQueue, PassedCalledForm.Name) > 0 Then
+            MsgBox("Error. Recursive call to a form" & vbCrLf & " Called form is currently active")
+            Exit Sub
+        End If
+        ActiveFormsQueue = ActiveFormsQueue & PassedCalledForm.Name
         CallingForm = PassedCallingForm
         CallingForm.Enabled = False
         ShowInTaskbarFlag = True
@@ -549,6 +554,8 @@
         ResetTunnels() ' INFORMATION IN TUNNELS HAVE BEEN RECEIVED
         CallingForm.Select()
         CallingForm.Show()             'enables the page to be active
+        ActiveFormsQueue = Replace(ActiveFormsQueue, CalledForm.Name, "")
+
     End Sub
     Public Sub EnableMenu(SystemsDepartmentToolStripMenuItem As ToolStripMenuItem)
         If EnableMenus Then

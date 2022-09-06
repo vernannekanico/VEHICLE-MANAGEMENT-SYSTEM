@@ -266,10 +266,13 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
         CurrentMasterCodeBookID = ProductsPartsDataGridView.Item("MasterCodeBookID_LongInteger", CurrentProductsPartsRow).Value
         FillField(CurrentStocksID, ProductsPartsDataGridView.Item("StockID_Autonumber", CurrentProductsPartsRow).Value)
         CurrentBrandID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
-        If RequestedMasterCodeBook = CurrentMasterCodeBookID Then
-            SelectToolStripMenuItem.Visible = True
-        Else
-            SelectToolStripMenuItem.Visible = False
+        SelectToolStripMenuItem.Visible = True
+        If RequestedMasterCodeBook > -1 Then
+            If RequestedMasterCodeBook = CurrentMasterCodeBookID Then
+                SelectToolStripMenuItem.Visible = True
+            Else
+                SelectToolStripMenuItem.Visible = False
+            End If
         End If
 
     End Sub
@@ -293,7 +296,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
                 PurchaseOrdersForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 PurchaseOrdersForm.POItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
                 PurchaseOrdersForm.POItemUnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
-            Case "PartsRequisitionsForm"
+            Case "RequisitionsForm"
                 StoreRequisitionsForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 StoreRequisitionsForm.RequisitionItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
                 StoreRequisitionsForm.RequisitionItemUnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
@@ -412,7 +415,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
                                              "WorkOrderRequestedPartsTable",
                                              "StoreSuppliesRequisitionsItemsTable",
                                              "PurchaseOrdersItemsTable",
-                                             "PartsRequisitionsItemsTable",
+                                             "RequisitionsItemsTable",
                                              "DeliveryItemsTable"
                                              }
 

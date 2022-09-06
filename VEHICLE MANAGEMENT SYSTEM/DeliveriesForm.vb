@@ -515,7 +515,7 @@ FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItem
 "
             Dim FieldsData = " Chr(34) & Trim(DeliveryrDate.Text) & Chr(34) " & ", " &
                                 xxDeliveryNote
-            CurrentUserID.ToString()
+            CurrentPersonelID.ToString()
 
             Dim CurrentDeliveryID = InsertNewRecord("DeliveriesTable", FieldsToUpdate, FieldsData)
         Else

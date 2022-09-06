@@ -33,5 +33,6 @@ Module MyGlobalDeclarations
     Public CallingForm As Form
     Public r As DataRow
     Public ShowInTaskbarFlag = False
+    Public ActiveFormsQueue = ""
 
 End Module

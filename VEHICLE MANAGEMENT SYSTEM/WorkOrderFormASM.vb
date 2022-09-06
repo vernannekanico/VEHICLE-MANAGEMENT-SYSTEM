@@ -302,6 +302,7 @@ WorkOrderConcernsTable.WorkOrderID_LongInteger,
 WorkOrderConcernsTable.ConcernID_LongInteger,
 WorkOrderConcernsTable.ConcernLongTextCodeID_LongInteger,
 WorkOrderConcernsTable.AssignedServiceSpecialist_LongInteger,
+WorkOrderConcernsTable.WorkOrderConcernStatusID_LongInteger,
 ConcernsTable.InformationsHeadersTypeID_LongInteger,
 ConcernsTable.Concern_ShortText255,
 InformationsHeadersTypeTable.ConcernPrefix_ShortText50, " &
@@ -844,13 +845,13 @@ Str(CurrentConcernJobStatusID)
     End Sub
     Private Sub RevertWorkOrderStatsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RevertWorkOrderStatsToolStripMenuItem.Click
 
-        If MsgBox("Are you sure you would like to revert current status? ", 4) = vbNo Then
+        If MsgBox("Are you sure you would like to revert current WORK ORDER status? ", 4) = vbNo Then
             Exit Sub
         End If
 
         RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderStatusSequence, CurrentWorkOrderID)
 
-        Dim CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("WorkOrderConcernStatusID_LongInteger", CurrentWorkOrderConcernsRow).Value
+        Dim CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderConcernsRow).Value
         RevertCurrentStatusOf("WorkOrderConcernsTable", CurrentWorkOrderConcernStatusSequence, CurrentWorkOrderConcernID)
         For i = 0 To WorkOrderConcernJobsRecordCount - 1
             CurrentWorkOrderConcernJobID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", i).Value
@@ -860,6 +861,37 @@ Str(CurrentConcernJobStatusID)
 
         FillWorkOrdersDataGridView()
 
+    End Sub
+    Private Sub RevertConcernToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RevertConcernToolStripMenuItem.Click
+        If MsgBox("Are you sure you would like to revert current CONCERN status? ", 4) = vbNo Then
+            Exit Sub
+        End If
+
+        Dim CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("WorkOrderConcernStatusID_LongInteger", CurrentWorkOrderConcernsRow).Value
+        RevertCurrentStatusOf("WorkOrderConcernsTable", CurrentWorkOrderConcernStatusSequence, CurrentWorkOrderConcernID)
+        For i = 0 To WorkOrderConcernJobsRecordCount - 1
+            CurrentWorkOrderConcernJobID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", i).Value
+            Dim CurrentWorkOrderConcernJobStatusSequence = WorkOrderConcernJobsDataGridView.Item("StatusSequence_LongInteger", i).Value
+            RevertCurrentStatusOf("WorkOrderConcernJobsTable", CurrentWorkOrderConcernJobStatusSequence, CurrentWorkOrderConcernJobID)
+        Next
+
+        FillWorkOrdersDataGridView()
+    End Sub
+    Private Sub RevertJobStatusToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RevertJobStatusToolStripMenuItem.Click
+
+        If MsgBox("Are you sure you would like to revert current JOB status? ", 4) = vbNo Then
+            Exit Sub
+        End If
+
+        CurrentWorkOrderConcernJobID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", CurrentWorkOrderConcernJobsRow).Value
+        Dim CurrentWorkOrderConcernJobStatusSequence = WorkOrderConcernJobsDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderConcernJobsRow).Value
+        If CurrentWorkOrderConcernJobStatusSequence = 0 Then
+            MsgBox("Initial Status of this job has been reached !!! ")
+            Exit Sub
+        End If
+        RevertCurrentStatusOf("WorkOrderConcernJobsTable", CurrentWorkOrderConcernJobStatusSequence, CurrentWorkOrderConcernJobID)
+
+        FillWorkOrderConcernJobsTable()
     End Sub
     Private Sub AssignJobToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles AssignJobToolStripMenuItem.Click
 
@@ -1150,6 +1182,10 @@ FROM ((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOrder
     End Sub
 
     Private Sub AssignJobToolStripMenuItemDeleteMe_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub SubcontractJobToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubcontractJobToolStripMenuItem.Click
 
     End Sub
 

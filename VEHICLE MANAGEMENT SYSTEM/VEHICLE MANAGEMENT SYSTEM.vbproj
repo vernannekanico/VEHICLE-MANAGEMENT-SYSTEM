@@ -171,10 +171,10 @@
     <Compile Include="InventoryForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PartsRequisitionsForm.Designer.vb">
-      <DependentUpon>PartsRequisitionsForm.vb</DependentUpon>
+    <Compile Include="RequisitionsForm.Designer.vb">
+      <DependentUpon>RequisitionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PartsRequisitionsForm.vb">
+    <Compile Include="RequisitionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DeliveriesForm.Designer.vb">
@@ -290,6 +290,9 @@
     </Compile>
     <Compile Include="VehicleRepairClassForm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vehicle_Management_DatabaseDataSet.vb">
+      <DependentUpon>Vehicle_Management_DatabaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="WorkOrderConcernAnalysisForm.Designer.vb">
       <DependentUpon>WorkOrderConcernAnalysisForm.vb</DependentUpon>
@@ -482,8 +485,8 @@
     <EmbeddedResource Include="PrintBillsForm.resx">
       <DependentUpon>PrintBillsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PartsRequisitionsForm.resx">
-      <DependentUpon>PartsRequisitionsForm.vb</DependentUpon>
+    <EmbeddedResource Include="RequisitionsForm.resx">
+      <DependentUpon>RequisitionsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PartsSpecificationsForm.resx">
       <DependentUpon>PartsSpecificationsForm.vb</DependentUpon>
