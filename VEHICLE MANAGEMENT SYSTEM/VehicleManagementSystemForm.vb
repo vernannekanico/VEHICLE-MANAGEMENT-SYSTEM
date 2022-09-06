@@ -196,7 +196,7 @@ FROM (((SecurityAccessesTable LEFT JOIN SystemMenusTable ON SecurityAccessesTabl
     End Sub
 
     Private Sub RToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RToolStripMenuItem.Click
-        ShowCalledForm(Me, PartsRequisitionsForm)
+        ShowCalledForm(Me, RequisitionsForm)
     End Sub
 
     Private Sub StoreSuppliesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StoreSuppliesToolStripMenuItem.Click

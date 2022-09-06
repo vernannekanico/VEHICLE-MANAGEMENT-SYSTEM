@@ -34,7 +34,7 @@
     Private CurrentWorkOrderIssuedPartsRow As Integer = -1
     Private WorkOrderIssuedPartsRecordCount As Integer = -1
     Private CurrentWorkOrderIssuedPartID = -1
-    Private CurrentWorkOrderIssuedPartStatus As String
+    Private CurrentWorkOrderIssuedPartStatus As String = ""
     Private WorkOrderIssuedPartsDataGridViewAlreadyFormated = False
 
     Private PartsRequisitionsItemsFieldsToSelect = ""
@@ -417,7 +417,7 @@ FROM ((((((PartsRequisitionsItemsTable RIGHT JOIN WorkOrderRequestedPartsTable O
         CurrentWorkOrderRequestedPartID = WorkOrderRequestedPartsDataGridView.Item("WorkOrderRequestedPartID_AutoNumber", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
         CurrentWorkOrderPartID = WorkOrderRequestedPartsDataGridView.Item("WorkOrderPartID_Autonumber", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
         CurrentMasterCodeBookId = WorkOrderRequestedPartsDataGridView.Item("MasterCodeBookID_Autonumber", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
-        CurrentCodeVehicleID = WorkOrderRequestedPartsDataGridView.Item("CodeVehicleID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
+        FillField(CurrentCodeVehicleID, WorkOrderRequestedPartsDataGridView.Item("CodeVehicleID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value)
         CurrentPartsSpecificationID = WorkOrderRequestedPartsDataGridView.Item("PartsSpecificationID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
         RequestedQuantityTextBox.Text = WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
 
@@ -482,6 +482,7 @@ PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
+StocksTable.StockID_Autonumber,
 StocksTable.QuantityInStock_Double,
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
@@ -559,13 +560,8 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable LEFT JOIN ProductsPartsT
         If AvailableStocksRecordCount = 0 Then Exit Sub
 
         CurrentAvailableStocksRow = e.RowIndex
-        CurrentAvailableStockID = AvailableStocksDataGridView.Item("AvailableStockID_AutoNumber", CurrentAvailableStocksRow).Value
+        CurrentAvailableStockID = AvailableStocksDataGridView.Item("StockID_Autonumber", CurrentAvailableStocksRow).Value
 
-        FillField(CurrentAvailableStockStatus, AvailableStocksDataGridView.Item("AvailableStockStatus", CurrentAvailableStocksRow).Value)
-
-        Select Case CurrentAvailableStockStatus
-            Case "Assigned"
-        End Select
 
     End Sub
     Private Sub FillPartsRequisitionsItemsDataGridView()
@@ -689,6 +685,7 @@ FROM ((((PartsRequisitionsItemsTable LEFT JOIN ((((WorkOrderRequestedPartsTable 
 SELECT 
 WorkOrderReceivedPartsTable.WorkOrderPartID_LongInteger, 
 WorkOrderReceivedPartsTable.WorkOrderReceivedPartID_AutoNumber, 
+WorkOrderReceivedPartsTable.WorkOrderReceivedPartStatusID_LongInteger, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
@@ -770,9 +767,9 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         If WorkOrderIssuedPartsRecordCount = 0 Then Exit Sub
 
         CurrentWorkOrderIssuedPartsRow = e.RowIndex
-        CurrentWorkOrderIssuedPartID = WorkOrderIssuedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", CurrentWorkOrderIssuedPartsRow).Value
+        CurrentWorkOrderIssuedPartID = WorkOrderIssuedPartsDataGridView.Item("WorkOrderReceivedPartID_AutoNumber", CurrentWorkOrderIssuedPartsRow).Value
 
-        FillField(CurrentWorkOrderIssuedPartStatus, WorkOrderIssuedPartsDataGridView.Item("WorkOrderIssuedPartStatus", CurrentWorkOrderIssuedPartsRow).Value)
+        FillField(CurrentWorkOrderIssuedPartStatus, WorkOrderIssuedPartsDataGridView.Item("WorkOrderReceivedPartStatusID_LongInteger", CurrentWorkOrderIssuedPartsRow).Value)
 
         Select Case CurrentWorkOrderIssuedPartStatus
             Case ""

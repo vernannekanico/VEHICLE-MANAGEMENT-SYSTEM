@@ -29,7 +29,7 @@
     Private SavedCallingForm As Form
     Private PurposeOfEntry = ""
     Private CurrentStoreSuppliesRequisitionsItemStatus = ""
-    Private Sub PartsRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub StoreRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         HorizontalCenter(RequisitionItemDetailsGroupBox, Me)
         VerticalCenter(RequisitionItemDetailsGroupBox, Me)
         SavedCallingForm = CallingForm
@@ -46,7 +46,7 @@
 
     End Sub
 
-    Private Sub PartsRequisitionsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+    Private Sub StoreRequisitionsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
         CallingForm = SavedCallingForm
         ' GET RETURNED DATA HERE

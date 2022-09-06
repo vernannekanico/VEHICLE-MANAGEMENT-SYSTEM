@@ -1,4 +1,4 @@
-﻿Public Class PartsRequisitionsForm
+﻿Public Class RequisitionsForm
 
     '   Private CurrentWorkOrderRequestedPartsDataGridViewRow As Integer = -1
     '    Private WorkOrderRequestedPartsDataGridViewAlreadyFormated = False
@@ -40,7 +40,7 @@
     Private CurrentPurchaseOrderID = -1
     Private CurrentUserFilter = ""
 
-    Private Sub PartsRequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub RequisitionsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
         If Val(Tunnel1) > 0 Then
             CurrentPurchaseOrderID = Tunnel1
@@ -53,7 +53,7 @@
         SetRequisitionsSelectionFilter("Outstanding Requisition", 2, Me, "OUTSTANDING REQUISITIONS")
     End Sub
 
-    Private Sub PartsRequisitionsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+    Private Sub RequisitionsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
         CallingForm = SavedCallingForm
 

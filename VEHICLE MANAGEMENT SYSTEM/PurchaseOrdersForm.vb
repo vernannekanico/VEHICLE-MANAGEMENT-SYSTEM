@@ -711,7 +711,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         DisablePurchaseOrderMenus()
         PurposeOfEntry = "ADD"
 
-        ShowCalledForm(Me, PartsRequisitionsForm)
+        ShowCalledForm(Me, RequisitionsForm)
 
     End Sub
 

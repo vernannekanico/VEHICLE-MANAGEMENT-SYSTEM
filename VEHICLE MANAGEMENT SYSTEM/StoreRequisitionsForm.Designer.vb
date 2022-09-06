@@ -503,7 +503,7 @@ Partial Class StoreRequisitionsForm
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "StoreRequisitionsForm"
-        Me.Text = "PartsRequisitionsForm"
+        Me.Text = "RequisitionsForm"
         Me.PartsRequisitionsMenuStrip.ResumeLayout(False)
         Me.PartsRequisitionsMenuStrip.PerformLayout()
         Me.PartsRequisitionsGroupBox.ResumeLayout(False)
