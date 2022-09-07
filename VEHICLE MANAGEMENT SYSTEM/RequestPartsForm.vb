@@ -1001,7 +1001,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                     MsgBox(WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", j).Value & " is still outstanding ")
                     Exit Sub
                 Else
-                    ' THERE IS A REQUEST, VALIIDATE QUANTITY
+                    ' THERE IS A REQUEST, VALIDATE QUANTITY
                     If NotNull(WorkOrderPartsDataGridView.Item("Quantity_Integer", j).Value) < 1 Then
                         MsgBox("Please put a quantity for " & WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", j).Value)
                         Exit Sub

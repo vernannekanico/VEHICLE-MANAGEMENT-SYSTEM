@@ -93,7 +93,7 @@ PurchaseOrdersTable.Discount_Integer,
 PurchaseOrdersTable.ShippingCost_Double, 
 PurchaseOrdersTable.TaxedAmount_Double, 
 PurchaseOrdersTable.POTotal_Double, 
-PurchaseOrdersTable.Purchaser_LongInteger,
+PurchaseOrdersTable.PurchaserID_LongInteger,
 SuppliersTable.SupplierName_ShortText35, 
 StatusesTable.StatusSequence_LongInteger,
 StatusesTable.StatusText_ShortText25 as PurchaseOrderStatus
@@ -200,7 +200,7 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
 
         CurrentPurchaseOrdersDataGridViewRow = e.RowIndex
         CurrentPurchaseOrderID = PurchaseOrdersDataGridView.Item("PurchaseOrderID_Autonumber", CurrentPurchaseOrdersDataGridViewRow).Value
-        CurrentPurchaseOrderRevision = PurchaseOrdersDataGridView.Item("PurchaseOrderRevision_Integer", CurrentPurchaseOrdersDataGridViewRow).Value
+        FillField(CurrentPurchaseOrderRevision, PurchaseOrdersDataGridView.Item("PurchaseOrderRevision_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)
         CurrentSupplierID = PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value
         CurrentPOStatus = PurchaseOrdersDataGridView.Item("PurchaseOrderStatus", CurrentPurchaseOrdersDataGridViewRow).Value
         SupplierNameTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("SupplierName_ShortText35", CurrentPurchaseOrdersDataGridViewRow).Value)
@@ -223,14 +223,16 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
                         ApproveStripMenuItem.Visible = True
                 End Select
             Case "Purchaser"
-                Select Case CurrentPOStatus
-                    Case "Draft"
-                        EditPurchaseOrderToolStripMenuItem.Visible = True
-                        DeletePurchaseOrderToolStripMenuItem.Visible = True
-                        SubmitForApprovalToolStripMenuItem.Visible = True
-                        EnablePurchaseOrderMenus()
-                        EnablePurchaseOrderItemMenus()
-                End Select
+                If IsNotEmpty(CurrentPOStatus) Then
+                    Select Case CurrentPOStatus
+                        Case "Draft"
+                            EditPurchaseOrderToolStripMenuItem.Visible = True
+                            DeletePurchaseOrderToolStripMenuItem.Visible = True
+                            SubmitForApprovalToolStripMenuItem.Visible = True
+                            EnablePurchaseOrderMenus()
+                            EnablePurchaseOrderItemMenus()
+                    End Select
+                End If
         End Select
         PurchaseOrdersItemsSelectionFilter = " WHERE PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = " & CurrentPurchaseOrderID.ToString
         FillPurchaseOrdersItemsDataGridView()
@@ -441,12 +443,13 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         Dim FieldsToUpdate = " PurchaseOrderRevision_Integer, " &
                                 " PurchaseOrderDate_ShortDate, " &
                                 " SupplierID_LongInteger, " &
-                                " Purchaser_LongInteger, " &
+                                " PurchaserID_LongInteger, " &
                                 " Discount_Integer, " &
                                 " ShippingCost_Double, " &
                                 " TaxedAmount_Double, " &
                                 " POTotal_Double, " &
-                                " PurchaseOrderStatusID_LongInteger "
+                                " PurchaseOrderStatusID_LongInteger, " &
+                                " DepartmentID__LongInteger "
 
         Dim FieldsData = 0.ToString & ", " &
                                 Chr(34) & DateString & Chr(34) & ", " &
@@ -456,7 +459,8 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
                                 0.ToString & ", " &
                                 0.ToString & ", " &
                                 0.ToString & ", " &
-                                GetStatusIdFor("PurchaseOrdersTable", "Draft").ToString
+                                GetStatusIdFor("PurchaseOrdersTable", "Draft").ToString & ", " &
+                                CurrentDepartment
 
         CurrentPurchaseOrderID = InsertNewRecord("PurchaseOrdersTable", FieldsToUpdate, FieldsData)
 
@@ -632,7 +636,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             Case "Procurement Manager"
                 PurchaseOrdersSelectionFilter = ""
             Case "Purchaser"
-                PurchaseOrdersSelectionFilter = " WHERE Purchaser_LongInteger = " & CurrentPersonelID.ToString
+                PurchaseOrdersSelectionFilter = " WHERE PurchaserID_LongInteger = " & CurrentPersonelID.ToString
         End Select
         FillPurchaseOrdersDataGridView()
     End Sub
@@ -644,8 +648,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     Private Sub PrintPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintPurchaseOrderToolStripMenuItem.Click
 
     End Sub
-
-
     Private Sub PODetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PODetailsToolStripMenuItem.Click
         PurposeOfEntry = "VIEW"
         PurchaseOrderDetailsGroupBox.Visible = True
