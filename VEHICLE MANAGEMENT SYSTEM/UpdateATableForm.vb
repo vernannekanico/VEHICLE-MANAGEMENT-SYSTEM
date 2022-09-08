@@ -42,6 +42,24 @@
 
     Private Sub UpdateForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MsgBox("Do PAUSE here")
+        '       MySelection = " select * from RequisitionsTable "
+        '       JustExecuteMySelection()
+        '        ExtractedWordTypeDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+
+        '       For Each R As DataRow In RecordFinderDbControls.MyAccessDbDataTable.Rows
+        '       If R("VehicleID_LongInteger") > 0 Then
+        '       MySelection = " Insert into VehicleReferencesForRequisitionsTable
+        '                                          ( RequisitionsID_LongInteger,
+        '                                            VehicleID_LongInteger ) 
+        '                                           VALUES " & " ( " &
+        '       r("RequisitionID_AutoNumber").ToString & "," &
+        '        r("VehicleID_LongInteger").ToString & " )"
+        '        JustExecuteMySelection()
+        '       End If
+
+        '       Next
+
+
     End Sub
     Private Sub FillExtractedWordTypeDataGridView()
         ExtractedWordsTypeFieldsToSelect = "Select * "
