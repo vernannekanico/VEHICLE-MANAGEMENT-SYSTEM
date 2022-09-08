@@ -858,6 +858,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         If MsgBox("Continue submit requisition for purchase?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
             Exit Sub
         End If
+        MsgBox("Modifications below is not yet test, referenced vehicle is created")
         'CREATE A HEADER HERE
         Dim FieldsToUpdate = "
                             RequisitionDate_ShortDate, 
@@ -873,6 +874,13 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
 
         CurrentPartsRequisitionID = InsertNewRecord("RequisitionsTable", FieldsToUpdate, FieldsData)
 
+        'CREATE vehicle record here
+        FieldsToUpdate = " VehicleReferencesForRequisitionsID_AutoNumber, 
+                           VehicleID_LongInteger "
+        FieldsData = CurrentPartsRequisitionID & ", " &
+                     CurrentVehicleID.ToString
+
+        Dim xxCurrentPartsRequisitionID = InsertNewRecord("VehicleReferencesForRequisitionsTable", FieldsToUpdate, FieldsData)
 
         'ALL TEMPORARY ITEMS IN RequisitionsItemsTable WILL THEN BE MARKED FINAL REPLACING THE RequisitionID_LongInteger
         ' WITH THE NEWLY CREATED PartsRequisitionsHeader

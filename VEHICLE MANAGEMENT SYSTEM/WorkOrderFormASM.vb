@@ -1186,7 +1186,29 @@ FROM ((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOrder
     End Sub
 
     Private Sub SubcontractJobToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubcontractJobToolStripMenuItem.Click
+        If MsgBox("Continue submit requisition to sub-contract the job?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+            Exit Sub
+        End If
+        'CREATE A HEADER HERE
+        Dim FieldsToUpdate = "
+                            RequisitionDate_ShortDate, 
+                            RequestedByID_LongInteger, 
+                            RequisitionStatus_Integer 
+                            "
+        Dim FieldsData =
+                            Chr(34) & DateString & Chr(34) & ", " &
+                            CurrentPersonelID.ToString & "," &
+                             GetStatusIdFor("RequisitionsTable").ToString
 
+        Dim CurrentPartsRequisitionID = InsertNewRecord("RequisitionsTable", FieldsToUpdate, FieldsData)
+
+        'CREATE A job reference here
+        FieldsToUpdate = " RequisitionsID_LongInteger, 
+                           InformationsHeaderID_LongInteger "
+        FieldsData = CurrentPartsRequisitionID & ", " &
+                     CurrentInformationsHeaderID.ToString
+
+        Dim xxCurrentPartsRequisitionID = InsertNewRecord("JobsReferencesForRequisitionsTable", FieldsToUpdate, FieldsData)
     End Sub
 
 End Class
