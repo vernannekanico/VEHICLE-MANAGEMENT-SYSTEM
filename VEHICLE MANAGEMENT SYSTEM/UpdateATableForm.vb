@@ -58,6 +58,8 @@
         '       End If
 
         '       Next
+
+
     End Sub
     Private Sub FillExtractedWordTypeDataGridView()
         ExtractedWordsTypeFieldsToSelect = "Select * "
