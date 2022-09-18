@@ -1,5 +1,5 @@
 ﻿Public Class RequisitionsForm
-
+    'fixed RequisitionsDataGridView of RequisitionsForm
     '   Private CurrentWorkOrderRequestedPartsDataGridViewRow As Integer = -1
     '    Private WorkOrderRequestedPartsDataGridViewAlreadyFormated = False
     Private ProductsPartsDataGridViewAlreadyFormated = False
@@ -48,7 +48,7 @@
             WhatToDoToolStripMenuItem.Text = "Create Purchase Order for Selected Item(s) "
         End If
         RequisitionsItemsDataGridView.DefaultCellStyle.WrapMode = DataGridViewTriState.True
-        CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
+        CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
         SetRequisitionsSelectionFilter("Outstanding Requisition", 2, Me, "OUTSTANDING REQUISITIONS")
     End Sub
 
@@ -70,42 +70,20 @@
     End Sub
     Public Sub FillRequisitionsDataGridView()
         RequisitionsSelectionOrder = " ORDER BY RequisitionID_AutoNumber DESC "
-        Dim xxWorkOrder = " IIf(RequisitionsTable.Requisitionstatus_Integer = 1, " & Chr(34) & "Work Order" & Chr(34) & ","
-        Dim xxStoreOrder = " IIf(RequisitionsTable.Requisitionstatus_Integer = 2, " & Chr(34) & "Store Order" & Chr(34) & ","
+        Dim xxWorkOrder = " IIf(RequisitionsTable.RequisitionType_Byte = 1, " & Chr(34) & "Work Order" & Chr(34) & ","
+        Dim xxStoreOrder = " IIf(RequisitionsTable.RequisitionType_Byte = 2, " & Chr(34) & "Store Order" & Chr(34) & ","
         PartsRequisitionType = xxWorkOrder & xxStoreOrder & " )) AS PartsRequisitionType,  "
-
-        Dim xxOutstanding = " IIf(RequisitionsTable.Requisitionstatus_Integer = 0, " & Chr(34) & "Outstanding" & Chr(34) & ","
-        Dim xxPartiallyOrdered = " IIf(RequisitionsTable.Requisitionstatus_Integer = 1, " & Chr(34) & "Partially Ordered" & Chr(34) & ","
-        Dim xxReordered = " IIf(RequisitionsTable.Requisitionstatus_Integer = 2, " & Chr(34) & "Re-Ordered" & Chr(34) & ","
-        Dim xxCompletelyOrdered = " IIf(RequisitionsTable.Requisitionstatus_Integer = 3, " & Chr(34) & "Completely Ordered" & Chr(34) & ","
-
-        Requisitionstatus = xxOutstanding & xxPartiallyOrdered & xxCompletelyOrdered & xxReordered & Chr(34) & Chr(34) &
-                                " )))) AS Requisitionstatus "
-
         RequisitionsFieldsToSelect =
 " 
-SELECT RequisitionsTable.RequisitionID_AutoNumber,
-RequisitionsTable.RequisitionRevision_Integer,
-RequisitionsTable.RequisitionDate_ShortDate,
-RequisitionsTable.RequestedByID_LongInteger,
-RequisitionsTable.Requisitionstatus_Integer,
-RequisitionsTable.RequisitionType_Byte,
-RequisitionsTable.VehicleID_LongInteger,
-RequisitionsTable.Purchaser_LongInteger,
-VehicleTypeTable.VehicleType_ShortText20,
-VehicleTrimTable.VehicleTrimName_ShortText25,
-VehicleModelsTable.VehicleModel_ShortText20,
-VehiclesTable.YearManufactured_ShortText4,
-VehiclesTable.Engine_ShortText20,
-StatusesTable.StatusSequence_LongInteger,
-StatusesTable.StatusText_ShortText25,
-(VehiclesTable.YearManufactured_ShortText4 & Space(1) & Trim(VehicleTypeTable.VehicleType_ShortText20) & Space(1) & Trim(VehicleModelsTable.VehicleModel_ShortText20) & Space(1) & Trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription, PersonnelTable.LastName_ShortText30, PersonnelTable.FirstName_ShortText30,
-" & PartsRequisitionType &
-Requisitionstatus &
- "
-FROM ((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN ((((VehiclesTable LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.Requisitionstatus_Integer = StatusesTable.StatusID_Autonumber"
+SELECT RequisitionsTable.RequisitionID_AutoNumber, RequisitionsTable.RequisitionRevision_Integer, RequisitionsTable.RequisitionDate_ShortDate, RequisitionsTable.RequestedByID_LongInteger, RequisitionsTable.Requisitionstatus_Integer, RequisitionsTable.RequisitionType_Byte, RequisitionsTable.VehicleID_LongInteger, RequisitionsTable.PurchaserID_LongInteger, DepartmentsTable.DepartmentName_ShortText35, StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, (VehiclesTable.YearManufactured_ShortText4 & Space(1) & Trim(VehicleTypeTable.VehicleType_ShortText20) & Space(1) & Trim(VehicleModelsTable.VehicleModel_ShortText20) & Space(1) & Trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription, 
+        " & PartsRequisitionType &
+        "
+PersonnelTable.LastName_ShortText30, 
+PersonnelTable.FirstName_ShortText30
+FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN VehiclesTable ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.RequisitionStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) LEFT JOIN DepartmentsTable ON RequisitionsTable.DepartmentID_LongInteger = DepartmentsTable.DepartmentID_AutoNumber
+"
 
-        MySelection = RequisitionsFieldsToSelect & RequisitionsSelectionFilter & RequisitionsSelectionOrder
+        MySelection = RequisitionsFieldsToSelect '& RequisitionsSelectionFilter & RequisitionsSelectionOrder
         JustExecuteMySelection()
 
         RequisitionsRecordCount = RecordCount
@@ -149,6 +127,14 @@ FROM ((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.Requested
                 Case "RequisitionDate_ShortDate"
                     RequisitionsDataGridView.Columns.Item(i).HeaderText = "Date"
                     RequisitionsDataGridView.Columns.Item(i).Width = 100
+                    RequisitionsDataGridView.Columns.Item(i).Visible = True
+                Case "DepartmentName_ShortText35"
+                    RequisitionsDataGridView.Columns.Item(i).HeaderText = "Department"
+                    RequisitionsDataGridView.Columns.Item(i).Width = 300
+                    RequisitionsDataGridView.Columns.Item(i).Visible = True
+                Case "PartsRequisitionType"
+                    RequisitionsDataGridView.Columns.Item(i).HeaderText = "Requisition Type"
+                    RequisitionsDataGridView.Columns.Item(i).Width = 300
                     RequisitionsDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleDescription"
                     RequisitionsDataGridView.Columns.Item(i).HeaderText = "For Vehicle"
