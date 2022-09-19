@@ -73,17 +73,21 @@
         Dim xxWorkOrder = " IIf(RequisitionsTable.RequisitionType_Byte = 1, " & Chr(34) & "Work Order" & Chr(34) & ","
         Dim xxStoreOrder = " IIf(RequisitionsTable.RequisitionType_Byte = 2, " & Chr(34) & "Store Order" & Chr(34) & ","
         PartsRequisitionType = xxWorkOrder & xxStoreOrder & " )) AS PartsRequisitionType,  "
+
         RequisitionsFieldsToSelect =
 " 
-SELECT RequisitionsTable.RequisitionID_AutoNumber, RequisitionsTable.RequisitionRevision_Integer, RequisitionsTable.RequisitionDate_ShortDate, RequisitionsTable.RequestedByID_LongInteger, RequisitionsTable.Requisitionstatus_Integer, RequisitionsTable.RequisitionType_Byte, RequisitionsTable.VehicleID_LongInteger, RequisitionsTable.PurchaserID_LongInteger, DepartmentsTable.DepartmentName_ShortText35, StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, (VehiclesTable.YearManufactured_ShortText4 & Space(1) & Trim(VehicleTypeTable.VehicleType_ShortText20) & Space(1) & Trim(VehicleModelsTable.VehicleModel_ShortText20) & Space(1) & Trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription, 
-        " & PartsRequisitionType &
-        "
-PersonnelTable.LastName_ShortText30, 
-PersonnelTable.FirstName_ShortText30
-FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN VehiclesTable ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.RequisitionStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) LEFT JOIN DepartmentsTable ON RequisitionsTable.DepartmentID_LongInteger = DepartmentsTable.DepartmentID_AutoNumber
-"
+SELECT RequisitionsTable.RequisitionID_AutoNumber, 
+RequisitionsTable.RequisitionRevision_Integer, 
+RequisitionsTable.RequisitionDate_ShortDate, 
+RequisitionsTable.RequestedByID_LongInteger, 
+RequisitionsTable.Requisitionstatus_Integer, 
+RequisitionsTable.RequisitionType_Byte, 
+RequisitionsTable.VehicleID_LongInteger, 
+RequisitionsTable.PurchaserID_LongInteger, 
+RequisitionsTable.DepartmentID__LongInteger, StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, (VehiclesTable.YearManufactured_ShortText4 & Space(1) & Trim(VehicleTypeTable.VehicleType_ShortText20) & Space(1) & Trim(VehicleModelsTable.VehicleModel_ShortText20) & Space(1) & Trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription, IIf(RequisitionsTable.RequisitionType_Byte=1,""Work Order"",IIf(RequisitionsTable.RequisitionType_Byte=2,""Store Order"")) AS PartsRequisitionType, PersonnelTable.LastName_ShortText30, PersonnelTable.FirstName_ShortText30, DepartmentsTable.DepartmentName_ShortText35
+FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN VehiclesTable ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.RequisitionStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) LEFT JOIN DepartmentsTable ON RequisitionsTable.DepartmentID__LongInteger = DepartmentsTable.DepartmentID_AutoNumber"
 
-        MySelection = RequisitionsFieldsToSelect '& RequisitionsSelectionFilter & RequisitionsSelectionOrder
+        MySelection = RequisitionsFieldsToSelect & RequisitionsSelectionFilter & RequisitionsSelectionOrder
         JustExecuteMySelection()
 
         RequisitionsRecordCount = RecordCount
