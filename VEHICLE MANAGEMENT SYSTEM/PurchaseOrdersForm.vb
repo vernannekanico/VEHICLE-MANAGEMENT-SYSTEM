@@ -1,6 +1,5 @@
 ﻿Public Class PurchaseOrdersForm
     Private PurchaseOrdersFieldsToSelect = ""
-    Private PurchaseOrdersTableLinks = ""
     Private PurchaseOrdersSelectionFilter = ""
     Private PurchaseOrdersSelectionOrder = ""
     Private PurchaseOrdersRecordCount As Integer = -1
@@ -53,7 +52,7 @@
                     SetPurchaseOrdersSelectionFilter("For Approval")
                 Case "Purchaser"
                     AddPurchaseOrderToolStripMenuItem.Visible = True
-                    CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
+                    CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
                     SetPurchaseOrdersSelectionFilter("Draft")
             End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
@@ -101,7 +100,7 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
 "
         PurchaseOrdersSelectionOrder = " ORDER BY PurchaseOrderID_AutoNumber DESC"
 
-        MySelection = PurchaseOrdersFieldsToSelect & PurchaseOrdersTableLinks & PurchaseOrdersSelectionFilter & PurchaseOrdersSelectionOrder '
+        MySelection = PurchaseOrdersFieldsToSelect & PurchaseOrdersSelectionFilter & PurchaseOrdersSelectionOrder '
 
         JustExecuteMySelection()
         PurchaseOrdersRecordCount = RecordCount

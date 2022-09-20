@@ -358,7 +358,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         Dim FieldsData = ""
         If CurrentPurchaseOrderID < 1 Then
             FieldsToUpdate = " PurchaseOrderDate_ShortDate, " &
-                              " Purchaser_LongInteger, " &
+                              " PurchaserID_LongInteger, " &
                               " PurchaseOrderStatusID_LongInteger "
 
             FieldsData = DateString & "," &
