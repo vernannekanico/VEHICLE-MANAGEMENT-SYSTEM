@@ -1,6 +1,5 @@
 ﻿Public Class PurchaseOrdersForm
     Private PurchaseOrdersFieldsToSelect = ""
-    Private PurchaseOrdersTableLinks = ""
     Private PurchaseOrdersSelectionFilter = ""
     Private PurchaseOrdersSelectionOrder = ""
     Private PurchaseOrdersRecordCount As Integer = -1
@@ -53,7 +52,7 @@
                     SetPurchaseOrdersSelectionFilter("For Approval")
                 Case "Purchaser"
                     AddPurchaseOrderToolStripMenuItem.Visible = True
-                    CurrentUserFilter = "Purchaser_LongInteger = " & CurrentPersonelID.ToString
+                    CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
                     SetPurchaseOrdersSelectionFilter("Draft")
             End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
@@ -101,7 +100,7 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
 "
         PurchaseOrdersSelectionOrder = " ORDER BY PurchaseOrderID_AutoNumber DESC"
 
-        MySelection = PurchaseOrdersFieldsToSelect & PurchaseOrdersTableLinks & PurchaseOrdersSelectionFilter & PurchaseOrdersSelectionOrder '
+        MySelection = PurchaseOrdersFieldsToSelect & PurchaseOrdersSelectionFilter & PurchaseOrdersSelectionOrder '
 
         JustExecuteMySelection()
         PurchaseOrdersRecordCount = RecordCount
@@ -466,6 +465,10 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
 
     End Sub
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPurchaseOrderToolStripMenuItem.Click
+        EnableEdit()
+    End Sub
+
+    Private Sub EnableEdit()
         PODetailsOFFToolStripMenuItem.Visible = False
         PurposeOfEntry = "EDIT"
         PurchaseOrderDetailsGroupBox.Enabled = True
@@ -1028,6 +1031,14 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
 
     Private Sub SubmitForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitForApprovalToolStripMenuItem.Click
         Dim ReadyForApproval = True
+        'PO header validation
+        If IsEmpty(SupplierNameTextBox.Text) Then
+            MsgBox("No Supplier is entered")
+            SupplierNameTextBox.Select()
+            EnableEdit()
+            Exit Sub
+        End If
+        'Items Validation
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
             If IsEmpty(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", i).Value) Then
                 MsgBox(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.ManufacturerPartNo_ShortText30Fld", i).Value & "has no quantity")
@@ -1073,6 +1084,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             RecordFilter = " WHERE PurchaseOrdersItemID_AutoNumber = " & Str(CurrentPurchaseOrdersItemID)
             UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
         Next
+        PurchaseOrdersItemsGroupBox.Visible = False
         FillPurchaseOrdersDataGridView()
     End Sub
 
