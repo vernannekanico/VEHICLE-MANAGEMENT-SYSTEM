@@ -284,6 +284,11 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         MySelection = PurchaseOrdersItemsFieldsToSelect & PurchaseOrdersItemsSelectionFilter & PurchaseOrdersItemsSelectionOrder '
         JustExecuteMySelection()
         PurchaseOrdersItemsRecordCount = RecordCount
+        If PurchaseOrdersItemsRecordCount > 0 Then
+            PurchaseOrdersItemsGroupBox.Visible = True
+        Else
+            PurchaseOrdersItemsGroupBox.Visible = False
+        End If
         PurchaseOrdersItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not PurchaseOrdersItemsDataGridViewAlreadyFormated Then
             FormatPurchaseOrdersItemsDataGridView()
