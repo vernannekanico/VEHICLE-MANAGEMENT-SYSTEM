@@ -34,7 +34,7 @@ Partial Class DeliveriesForm
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DraftPurchaseOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllPurchaseOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -46,6 +46,8 @@ Partial Class DeliveriesForm
         Me.EditDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveryDetailsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.POReferenceTextBox = New System.Windows.Forms.TextBox()
         Me.DeliveryNoteNoTextBox = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.DeliveryrDate = New System.Windows.Forms.TextBox()
@@ -70,8 +72,6 @@ Partial Class DeliveriesForm
         Me.Label7 = New System.Windows.Forms.Label()
         Me.BrandTextBox = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.POReferenceTextBox = New System.Windows.Forms.TextBox()
         Me.DeliveriesMenuStrip.SuspendLayout()
         Me.DeliveryDetailsGroupBox.SuspendLayout()
         Me.DeliveryItemsGroupBox.SuspendLayout()
@@ -85,18 +85,18 @@ Partial Class DeliveriesForm
         '
         Me.DeliveriesMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveriesMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.AddDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveDeliveryToolStripMenuItem, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem})
+        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveDeliveryToolStripMenuItem, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem})
         Me.DeliveriesMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.DeliveriesMenuStrip.Name = "DeliveriesMenuStrip"
-        Me.DeliveriesMenuStrip.Padding = New System.Windows.Forms.Padding(13, 4, 0, 4)
-        Me.DeliveriesMenuStrip.Size = New System.Drawing.Size(1712, 40)
+        Me.DeliveriesMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
+        Me.DeliveriesMenuStrip.Size = New System.Drawing.Size(963, 31)
         Me.DeliveriesMenuStrip.TabIndex = 84
         Me.DeliveriesMenuStrip.Text = "MenuStrip1"
         '
         'ReturnToolStripMenuItem
         '
         Me.ReturnToolStripMenuItem.Name = "ReturnToolStripMenuItem"
-        Me.ReturnToolStripMenuItem.Size = New System.Drawing.Size(48, 32)
+        Me.ReturnToolStripMenuItem.Size = New System.Drawing.Size(40, 25)
         Me.ReturnToolStripMenuItem.Text = "◄ "
         '
         'DeliveryHeaderToolStripMenus
@@ -105,56 +105,56 @@ Partial Class DeliveriesForm
         Me.DeliveryHeaderToolStripMenus.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryHeaderToolStripMenus.ForeColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveryHeaderToolStripMenus.Name = "DeliveryHeaderToolStripMenus"
-        Me.DeliveryHeaderToolStripMenus.Size = New System.Drawing.Size(213, 32)
+        Me.DeliveryHeaderToolStripMenus.Size = New System.Drawing.Size(171, 25)
         Me.DeliveryHeaderToolStripMenus.Text = "DELIVERY HEADER :"
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DraftPurchaseOrdersToolStripMenuItem, Me.AllPurchaseOrdersToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(67, 32)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(56, 25)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'DraftPurchaseOrdersToolStripMenuItem
         '
         Me.DraftPurchaseOrdersToolStripMenuItem.Name = "DraftPurchaseOrdersToolStripMenuItem"
-        Me.DraftPurchaseOrdersToolStripMenuItem.Size = New System.Drawing.Size(281, 32)
+        Me.DraftPurchaseOrdersToolStripMenuItem.Size = New System.Drawing.Size(227, 26)
         Me.DraftPurchaseOrdersToolStripMenuItem.Text = "Draft Delivery Entries"
         '
         'AllPurchaseOrdersToolStripMenuItem
         '
         Me.AllPurchaseOrdersToolStripMenuItem.Name = "AllPurchaseOrdersToolStripMenuItem"
-        Me.AllPurchaseOrdersToolStripMenuItem.Size = New System.Drawing.Size(281, 32)
+        Me.AllPurchaseOrdersToolStripMenuItem.Size = New System.Drawing.Size(227, 26)
         Me.AllPurchaseOrdersToolStripMenuItem.Text = "All Deliveries"
         '
-        'AddDeliveryToolStripMenuItem
+        'NewDeliveryToolStripMenuItem
         '
-        Me.AddDeliveryToolStripMenuItem.Name = "AddDeliveryToolStripMenuItem"
-        Me.AddDeliveryToolStripMenuItem.Size = New System.Drawing.Size(63, 32)
-        Me.AddDeliveryToolStripMenuItem.Text = "Add"
+        Me.NewDeliveryToolStripMenuItem.Name = "NewDeliveryToolStripMenuItem"
+        Me.NewDeliveryToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
+        Me.NewDeliveryToolStripMenuItem.Text = "New"
         '
         'DeleteDeliveryToolStripMenuItem
         '
         Me.DeleteDeliveryToolStripMenuItem.Name = "DeleteDeliveryToolStripMenuItem"
-        Me.DeleteDeliveryToolStripMenuItem.Size = New System.Drawing.Size(82, 32)
+        Me.DeleteDeliveryToolStripMenuItem.Size = New System.Drawing.Size(66, 25)
         Me.DeleteDeliveryToolStripMenuItem.Text = "Delete"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(14, 32)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
         'SaveDeliveryToolStripMenuItem
         '
         Me.SaveDeliveryToolStripMenuItem.Name = "SaveDeliveryToolStripMenuItem"
-        Me.SaveDeliveryToolStripMenuItem.Size = New System.Drawing.Size(67, 32)
+        Me.SaveDeliveryToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveDeliveryToolStripMenuItem.Text = "Save"
         Me.SaveDeliveryToolStripMenuItem.Visible = False
         '
         'FinalizeDeliveryEntryToolStripMenuItem
         '
         Me.FinalizeDeliveryEntryToolStripMenuItem.Name = "FinalizeDeliveryEntryToolStripMenuItem"
-        Me.FinalizeDeliveryEntryToolStripMenuItem.Size = New System.Drawing.Size(217, 32)
+        Me.FinalizeDeliveryEntryToolStripMenuItem.Size = New System.Drawing.Size(175, 25)
         Me.FinalizeDeliveryEntryToolStripMenuItem.Text = "Finalize Delivery Entry"
         '
         'DeliveryItemsToolStripMenus
@@ -163,38 +163,38 @@ Partial Class DeliveriesForm
         Me.DeliveryItemsToolStripMenus.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryItemsToolStripMenus.ForeColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveryItemsToolStripMenus.Name = "DeliveryItemsToolStripMenus"
-        Me.DeliveryItemsToolStripMenus.Size = New System.Drawing.Size(193, 32)
+        Me.DeliveryItemsToolStripMenus.Size = New System.Drawing.Size(155, 25)
         Me.DeliveryItemsToolStripMenus.Text = "DELIVERY ITEMS :"
         '
         'AddDeliveryItemsToolStripMenuItem
         '
         Me.AddDeliveryItemsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FromCustomerToolStripMenuItem, Me.FromPurchaseOrdersToolStripMenuItem})
         Me.AddDeliveryItemsToolStripMenuItem.Name = "AddDeliveryItemsToolStripMenuItem"
-        Me.AddDeliveryItemsToolStripMenuItem.Size = New System.Drawing.Size(63, 32)
+        Me.AddDeliveryItemsToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
         Me.AddDeliveryItemsToolStripMenuItem.Text = "Add"
         '
         'FromCustomerToolStripMenuItem
         '
         Me.FromCustomerToolStripMenuItem.Name = "FromCustomerToolStripMenuItem"
-        Me.FromCustomerToolStripMenuItem.Size = New System.Drawing.Size(290, 32)
+        Me.FromCustomerToolStripMenuItem.Size = New System.Drawing.Size(236, 26)
         Me.FromCustomerToolStripMenuItem.Text = "From Customer"
         '
         'FromPurchaseOrdersToolStripMenuItem
         '
         Me.FromPurchaseOrdersToolStripMenuItem.Name = "FromPurchaseOrdersToolStripMenuItem"
-        Me.FromPurchaseOrdersToolStripMenuItem.Size = New System.Drawing.Size(290, 32)
+        Me.FromPurchaseOrdersToolStripMenuItem.Size = New System.Drawing.Size(236, 26)
         Me.FromPurchaseOrdersToolStripMenuItem.Text = "From Purchase Orders"
         '
         'EditDeliveryItemToolStripMenuItem
         '
         Me.EditDeliveryItemToolStripMenuItem.Name = "EditDeliveryItemToolStripMenuItem"
-        Me.EditDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(60, 32)
+        Me.EditDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
         Me.EditDeliveryItemToolStripMenuItem.Text = "Edit"
         '
         'RemoveDeliveryItemToolStripMenuItem
         '
         Me.RemoveDeliveryItemToolStripMenuItem.Name = "RemoveDeliveryItemToolStripMenuItem"
-        Me.RemoveDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(96, 32)
+        Me.RemoveDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveDeliveryItemToolStripMenuItem.Text = "Remove"
         '
         'DeliveryDetailsGroupBox
@@ -210,68 +210,82 @@ Partial Class DeliveriesForm
         Me.DeliveryDetailsGroupBox.Controls.Add(Me.Label1)
         Me.DeliveryDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DeliveryDetailsGroupBox.Location = New System.Drawing.Point(824, 77)
-        Me.DeliveryDetailsGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeliveryDetailsGroupBox.Location = New System.Drawing.Point(618, 63)
         Me.DeliveryDetailsGroupBox.Name = "DeliveryDetailsGroupBox"
-        Me.DeliveryDetailsGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.DeliveryDetailsGroupBox.Size = New System.Drawing.Size(636, 253)
+        Me.DeliveryDetailsGroupBox.Size = New System.Drawing.Size(477, 206)
         Me.DeliveryDetailsGroupBox.TabIndex = 87
         Me.DeliveryDetailsGroupBox.TabStop = False
         Me.DeliveryDetailsGroupBox.Text = "Details"
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Enabled = False
+        Me.Label3.Location = New System.Drawing.Point(6, 29)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(118, 20)
+        Me.Label3.TabIndex = 83
+        Me.Label3.Text = "P.O. Reference"
+        '
+        'POReferenceTextBox
+        '
+        Me.POReferenceTextBox.Enabled = False
+        Me.POReferenceTextBox.Location = New System.Drawing.Point(122, 27)
+        Me.POReferenceTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.POReferenceTextBox.Name = "POReferenceTextBox"
+        Me.POReferenceTextBox.Size = New System.Drawing.Size(234, 26)
+        Me.POReferenceTextBox.TabIndex = 82
+        '
         'DeliveryNoteNoTextBox
         '
-        Me.DeliveryNoteNoTextBox.Location = New System.Drawing.Point(162, 172)
-        Me.DeliveryNoteNoTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.DeliveryNoteNoTextBox.Location = New System.Drawing.Point(122, 140)
+        Me.DeliveryNoteNoTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.DeliveryNoteNoTextBox.Name = "DeliveryNoteNoTextBox"
-        Me.DeliveryNoteNoTextBox.Size = New System.Drawing.Size(315, 30)
+        Me.DeliveryNoteNoTextBox.Size = New System.Drawing.Size(237, 26)
         Me.DeliveryNoteNoTextBox.TabIndex = 81
         '
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(4, 135)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Location = New System.Drawing.Point(3, 110)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(128, 25)
+        Me.Label13.Size = New System.Drawing.Size(103, 20)
         Me.Label13.TabIndex = 78
         Me.Label13.Text = "Delivery Date"
         '
         'DeliveryrDate
         '
-        Me.DeliveryrDate.Location = New System.Drawing.Point(162, 131)
-        Me.DeliveryrDate.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.DeliveryrDate.Location = New System.Drawing.Point(122, 106)
+        Me.DeliveryrDate.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.DeliveryrDate.Name = "DeliveryrDate"
-        Me.DeliveryrDate.Size = New System.Drawing.Size(311, 30)
+        Me.DeliveryrDate.Size = New System.Drawing.Size(234, 26)
         Me.DeliveryrDate.TabIndex = 76
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Enabled = False
-        Me.Label2.Location = New System.Drawing.Point(8, 91)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Location = New System.Drawing.Point(6, 74)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(112, 25)
+        Me.Label2.Size = New System.Drawing.Size(88, 20)
         Me.Label2.TabIndex = 56
         Me.Label2.Text = "Delivery No"
         '
         'DeliveryNoTextBox
         '
         Me.DeliveryNoTextBox.Enabled = False
-        Me.DeliveryNoTextBox.Location = New System.Drawing.Point(162, 86)
-        Me.DeliveryNoTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.DeliveryNoTextBox.Location = New System.Drawing.Point(122, 70)
+        Me.DeliveryNoTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.DeliveryNoTextBox.Name = "DeliveryNoTextBox"
-        Me.DeliveryNoTextBox.Size = New System.Drawing.Size(311, 30)
+        Me.DeliveryNoTextBox.Size = New System.Drawing.Size(234, 26)
         Me.DeliveryNoTextBox.TabIndex = 55
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(4, 172)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Location = New System.Drawing.Point(3, 140)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(163, 25)
+        Me.Label1.Size = New System.Drawing.Size(130, 20)
         Me.Label1.TabIndex = 54
         Me.Label1.Text = "Delivery Note No."
         '
@@ -279,11 +293,9 @@ Partial Class DeliveriesForm
         '
         Me.DeliveryItemsGroupBox.Controls.Add(Me.DeliveryItemsDataGridView)
         Me.DeliveryItemsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DeliveryItemsGroupBox.Location = New System.Drawing.Point(80, 320)
-        Me.DeliveryItemsGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeliveryItemsGroupBox.Location = New System.Drawing.Point(60, 260)
         Me.DeliveryItemsGroupBox.Name = "DeliveryItemsGroupBox"
-        Me.DeliveryItemsGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.DeliveryItemsGroupBox.Size = New System.Drawing.Size(237, 156)
+        Me.DeliveryItemsGroupBox.Size = New System.Drawing.Size(178, 127)
         Me.DeliveryItemsGroupBox.TabIndex = 109
         Me.DeliveryItemsGroupBox.TabStop = False
         Me.DeliveryItemsGroupBox.Text = "Delivery Items"
@@ -317,26 +329,23 @@ Partial Class DeliveriesForm
         Me.DeliveryItemsDataGridView.DefaultCellStyle = DataGridViewCellStyle3
         Me.DeliveryItemsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DeliveryItemsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
-        Me.DeliveryItemsDataGridView.Location = New System.Drawing.Point(4, 27)
-        Me.DeliveryItemsDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeliveryItemsDataGridView.Location = New System.Drawing.Point(3, 22)
         Me.DeliveryItemsDataGridView.MultiSelect = False
         Me.DeliveryItemsDataGridView.Name = "DeliveryItemsDataGridView"
         Me.DeliveryItemsDataGridView.ReadOnly = True
         Me.DeliveryItemsDataGridView.RowHeadersVisible = False
         Me.DeliveryItemsDataGridView.RowHeadersWidth = 51
         Me.DeliveryItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DeliveryItemsDataGridView.Size = New System.Drawing.Size(229, 125)
+        Me.DeliveryItemsDataGridView.Size = New System.Drawing.Size(172, 102)
         Me.DeliveryItemsDataGridView.TabIndex = 103
         '
         'DeliveriesGroupBox
         '
         Me.DeliveriesGroupBox.Controls.Add(Me.DeliveriesDataGridView)
         Me.DeliveriesGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DeliveriesGroupBox.Location = New System.Drawing.Point(76, 65)
-        Me.DeliveriesGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeliveriesGroupBox.Location = New System.Drawing.Point(57, 53)
         Me.DeliveriesGroupBox.Name = "DeliveriesGroupBox"
-        Me.DeliveriesGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.DeliveriesGroupBox.Size = New System.Drawing.Size(245, 230)
+        Me.DeliveriesGroupBox.Size = New System.Drawing.Size(184, 187)
         Me.DeliveriesGroupBox.TabIndex = 108
         Me.DeliveriesGroupBox.TabStop = False
         Me.DeliveriesGroupBox.Text = "Deliveries"
@@ -370,14 +379,13 @@ Partial Class DeliveriesForm
         Me.DeliveriesDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.DeliveriesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DeliveriesDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
-        Me.DeliveriesDataGridView.Location = New System.Drawing.Point(4, 27)
-        Me.DeliveriesDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeliveriesDataGridView.Location = New System.Drawing.Point(3, 22)
         Me.DeliveriesDataGridView.Name = "DeliveriesDataGridView"
         Me.DeliveriesDataGridView.ReadOnly = True
         Me.DeliveriesDataGridView.RowHeadersVisible = False
         Me.DeliveriesDataGridView.RowHeadersWidth = 51
         Me.DeliveriesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DeliveriesDataGridView.Size = New System.Drawing.Size(237, 199)
+        Me.DeliveriesDataGridView.Size = New System.Drawing.Size(178, 162)
         Me.DeliveriesDataGridView.TabIndex = 109
         '
         'DeliveryItemDetailsGroupBox
@@ -399,11 +407,9 @@ Partial Class DeliveriesForm
         Me.DeliveryItemDetailsGroupBox.Controls.Add(Me.Label16)
         Me.DeliveryItemDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryItemDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(341, 384)
-        Me.DeliveryItemDetailsGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(256, 312)
         Me.DeliveryItemDetailsGroupBox.Name = "DeliveryItemDetailsGroupBox"
-        Me.DeliveryItemDetailsGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.DeliveryItemDetailsGroupBox.Size = New System.Drawing.Size(953, 257)
+        Me.DeliveryItemDetailsGroupBox.Size = New System.Drawing.Size(715, 209)
         Me.DeliveryItemDetailsGroupBox.TabIndex = 110
         Me.DeliveryItemDetailsGroupBox.TabStop = False
         Me.DeliveryItemDetailsGroupBox.Text = "Delivery Details"
@@ -412,20 +418,19 @@ Partial Class DeliveriesForm
         'PcsPerPackTextBox
         '
         Me.PcsPerPackTextBox.Enabled = False
-        Me.PcsPerPackTextBox.Location = New System.Drawing.Point(357, 175)
-        Me.PcsPerPackTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.PcsPerPackTextBox.Location = New System.Drawing.Point(268, 142)
+        Me.PcsPerPackTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.PcsPerPackTextBox.Name = "PcsPerPackTextBox"
-        Me.PcsPerPackTextBox.Size = New System.Drawing.Size(49, 30)
+        Me.PcsPerPackTextBox.Size = New System.Drawing.Size(38, 26)
         Me.PcsPerPackTextBox.TabIndex = 117
         Me.PcsPerPackTextBox.Visible = False
         '
         'PackingLabel
         '
         Me.PackingLabel.AutoSize = True
-        Me.PackingLabel.Location = New System.Drawing.Point(237, 178)
-        Me.PackingLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.PackingLabel.Location = New System.Drawing.Point(178, 145)
         Me.PackingLabel.Name = "PackingLabel"
-        Me.PackingLabel.Size = New System.Drawing.Size(82, 25)
+        Me.PackingLabel.Size = New System.Drawing.Size(65, 20)
         Me.PackingLabel.TabIndex = 116
         Me.PackingLabel.Text = "Packing"
         Me.PackingLabel.Visible = False
@@ -433,37 +438,35 @@ Partial Class DeliveriesForm
         'POItemProductPartNoTextBox
         '
         Me.POItemProductPartNoTextBox.Enabled = False
-        Me.POItemProductPartNoTextBox.Location = New System.Drawing.Point(135, 90)
-        Me.POItemProductPartNoTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.POItemProductPartNoTextBox.Location = New System.Drawing.Point(101, 73)
+        Me.POItemProductPartNoTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemProductPartNoTextBox.Name = "POItemProductPartNoTextBox"
-        Me.POItemProductPartNoTextBox.Size = New System.Drawing.Size(779, 30)
+        Me.POItemProductPartNoTextBox.Size = New System.Drawing.Size(585, 26)
         Me.POItemProductPartNoTextBox.TabIndex = 115
         '
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(27, 94)
-        Me.Label20.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label20.Location = New System.Drawing.Point(20, 76)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(63, 25)
+        Me.Label20.Size = New System.Drawing.Size(51, 20)
         Me.Label20.TabIndex = 114
         Me.Label20.Text = "Part #"
         '
         'POItemProductDescTextBox
         '
-        Me.POItemProductDescTextBox.Location = New System.Drawing.Point(135, 46)
-        Me.POItemProductDescTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.POItemProductDescTextBox.Location = New System.Drawing.Point(101, 37)
+        Me.POItemProductDescTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemProductDescTextBox.Name = "POItemProductDescTextBox"
-        Me.POItemProductDescTextBox.Size = New System.Drawing.Size(779, 30)
+        Me.POItemProductDescTextBox.Size = New System.Drawing.Size(585, 26)
         Me.POItemProductDescTextBox.TabIndex = 113
         '
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(27, 49)
-        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label19.Location = New System.Drawing.Point(20, 40)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(79, 25)
+        Me.Label19.Size = New System.Drawing.Size(64, 20)
         Me.Label19.TabIndex = 112
         Me.Label19.Text = "Product"
         '
@@ -472,100 +475,75 @@ Partial Class DeliveriesForm
         Me.EXITSAVEChangesButton.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.EXITSAVEChangesButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.EXITSAVEChangesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.EXITSAVEChangesButton.Location = New System.Drawing.Point(433, 132)
-        Me.EXITSAVEChangesButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.EXITSAVEChangesButton.Location = New System.Drawing.Point(325, 107)
         Me.EXITSAVEChangesButton.Name = "EXITSAVEChangesButton"
-        Me.EXITSAVEChangesButton.Size = New System.Drawing.Size(481, 113)
+        Me.EXITSAVEChangesButton.Size = New System.Drawing.Size(361, 92)
         Me.EXITSAVEChangesButton.TabIndex = 111
         Me.EXITSAVEChangesButton.Text = "EXIT / SAVE Changes"
         Me.EXITSAVEChangesButton.UseVisualStyleBackColor = False
         '
         'POItemQuantityTextBox
         '
-        Me.POItemQuantityTextBox.Location = New System.Drawing.Point(136, 171)
-        Me.POItemQuantityTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.POItemQuantityTextBox.Location = New System.Drawing.Point(102, 139)
+        Me.POItemQuantityTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemQuantityTextBox.Name = "POItemQuantityTextBox"
-        Me.POItemQuantityTextBox.Size = New System.Drawing.Size(69, 30)
+        Me.POItemQuantityTextBox.Size = New System.Drawing.Size(53, 26)
         Me.POItemQuantityTextBox.TabIndex = 110
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(33, 210)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Location = New System.Drawing.Point(25, 171)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(46, 25)
+        Me.Label6.Size = New System.Drawing.Size(38, 20)
         Me.Label6.TabIndex = 109
         Me.Label6.Text = "Unit"
         '
         'POItemUnitTextBox
         '
         Me.POItemUnitTextBox.Enabled = False
-        Me.POItemUnitTextBox.Location = New System.Drawing.Point(136, 213)
-        Me.POItemUnitTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.POItemUnitTextBox.Location = New System.Drawing.Point(102, 173)
+        Me.POItemUnitTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemUnitTextBox.Name = "POItemUnitTextBox"
-        Me.POItemUnitTextBox.Size = New System.Drawing.Size(69, 30)
+        Me.POItemUnitTextBox.Size = New System.Drawing.Size(53, 26)
         Me.POItemUnitTextBox.TabIndex = 108
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(29, 134)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Location = New System.Drawing.Point(22, 109)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(64, 25)
+        Me.Label7.Size = New System.Drawing.Size(52, 20)
         Me.Label7.TabIndex = 107
         Me.Label7.Text = "Brand"
         '
         'BrandTextBox
         '
-        Me.BrandTextBox.Location = New System.Drawing.Point(135, 134)
-        Me.BrandTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
+        Me.BrandTextBox.Location = New System.Drawing.Point(101, 109)
+        Me.BrandTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.BrandTextBox.Name = "BrandTextBox"
-        Me.BrandTextBox.Size = New System.Drawing.Size(69, 30)
+        Me.BrandTextBox.Size = New System.Drawing.Size(53, 26)
         Me.BrandTextBox.TabIndex = 106
         '
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(28, 175)
-        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label16.Location = New System.Drawing.Point(21, 142)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(85, 25)
+        Me.Label16.Size = New System.Drawing.Size(68, 20)
         Me.Label16.TabIndex = 105
         Me.Label16.Text = "Quantity"
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Enabled = False
-        Me.Label3.Location = New System.Drawing.Point(8, 36)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(145, 25)
-        Me.Label3.TabIndex = 83
-        Me.Label3.Text = "P.O. Reference"
-        '
-        'POReferenceTextBox
-        '
-        Me.POReferenceTextBox.Enabled = False
-        Me.POReferenceTextBox.Location = New System.Drawing.Point(162, 33)
-        Me.POReferenceTextBox.Margin = New System.Windows.Forms.Padding(5, 6, 5, 6)
-        Me.POReferenceTextBox.Name = "POReferenceTextBox"
-        Me.POReferenceTextBox.Size = New System.Drawing.Size(311, 30)
-        Me.POReferenceTextBox.TabIndex = 82
-        '
         'DeliveriesForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1712, 742)
+        Me.ClientSize = New System.Drawing.Size(963, 603)
         Me.Controls.Add(Me.DeliveryItemDetailsGroupBox)
         Me.Controls.Add(Me.DeliveryItemsGroupBox)
         Me.Controls.Add(Me.DeliveriesGroupBox)
         Me.Controls.Add(Me.DeliveryDetailsGroupBox)
         Me.Controls.Add(Me.DeliveriesMenuStrip)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "DeliveriesForm"
         Me.Text = "ReceiveItemsForm"
         Me.DeliveriesMenuStrip.ResumeLayout(False)
@@ -589,7 +567,7 @@ Partial Class DeliveriesForm
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DraftPurchaseOrdersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AllPurchaseOrdersToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddDeliveryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NewDeliveryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteDeliveryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents SaveDeliveryToolStripMenuItem As ToolStripMenuItem

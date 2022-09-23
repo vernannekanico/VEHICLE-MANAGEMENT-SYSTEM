@@ -729,7 +729,6 @@ Partial Class PurchaseOrdersForm
         Me.PurchaseOrdersItemsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PurchaseOrdersItemsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.PurchaseOrdersItemsDataGridView.Location = New System.Drawing.Point(3, 22)
-        Me.PurchaseOrdersItemsDataGridView.MultiSelect = False
         Me.PurchaseOrdersItemsDataGridView.Name = "PurchaseOrdersItemsDataGridView"
         Me.PurchaseOrdersItemsDataGridView.ReadOnly = True
         Me.PurchaseOrdersItemsDataGridView.RowHeadersVisible = False

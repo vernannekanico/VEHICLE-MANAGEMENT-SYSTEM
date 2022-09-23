@@ -1122,20 +1122,19 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         UpdateDeliveredItems()
     End Sub
     Private Sub UpdateDeliveredItems()
-        DoCommonHouseKeeping(Me, SavedCallingForm)
-        Exit Sub
-        If MsgBox("Have you Selected All Delivered Items ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        If MsgBox("Proceed Selecting the Items ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        If MsgBox("Have you Selected All Delivered Items from this Purchase Order ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         Dim xxselected = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
             If Not PurchaseOrdersItemsDataGridView.Rows(i).Selected Then Continue For
-            Dim xxPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
-            Dim FieldsToUpdate = " DeliveryItemID_AutoNumber "
+            Dim xxPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", i).Value
+            Dim FieldsToUpdate = " PurchaseOrderItemID_LongInteger "
             Dim FieldsData = xxPurchaseOrdersItemID.ToString
+            MySelection = " SELECT * FROM DeliveryItemsTable WHERE " & FieldsToUpdate & " = " & xxPurchaseOrdersItemID.ToString
+            JustExecuteMySelection()
+            If RecordCount > 0 Then Continue For
             Dim xxDummyID = InsertNewRecord("DeliveryItemsTable", FieldsToUpdate, FieldsData)
         Next
-
-
+        DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles PackagePriceButton.Click

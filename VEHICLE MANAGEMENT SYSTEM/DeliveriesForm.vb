@@ -1,6 +1,5 @@
 ﻿Public Class DeliveriesForm
     Private DeliveriesFieldsToSelect = ""
-    Private DeliveriesTableLinks = ""
     Private DeliveriesSelectionFilter = ""
     Private DeliveriesSelectionOrder = ""
     Private DeliveriesRecordCount As Integer = -1
@@ -11,7 +10,6 @@
     Private DeliveryStatus = -1
 
     Private DeliveryItemsFieldsToSelect = ""
-    Private DeliveryItemsTableLinks = ""
     Private DeliveryItemsSelectionFilter = ""
     Private DeliveryItemsSelectionOrder = ""
     Private DeliveryItemsRecordCount As Integer = -1
@@ -77,9 +75,6 @@ DeliveriesTable.DeliveryStatusID_LongInteger,
 StatusesTable.StatusSequence_LongInteger, 
 StatusesTable.StatusText_ShortText25
 FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID_LongInteger = StatusesTable.StatusID_Autonumber
-"
-        DeliveriesTableLinks =
-            " 
 "
         DeliveriesSelectionOrder = " ORDER BY DeliveryID_AutoNumber DESC"
 
@@ -164,7 +159,7 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
             DeliveryDetailsGroupBox.Enabled = False
             FinalizeDeliveryEntryToolStripMenuItem.Visible = False
         End If
-        DeliveryItemsSelectionFilter = " WHERE DeliverieID_LongInteger = " & CurrentDeliveryID.ToString
+        DeliveryItemsSelectionFilter = " WHERE DeliveryID_LongInteger = " & CurrentDeliveryID.ToString
         FillDeliveryItemsDataGridView()
 
     End Sub
@@ -183,12 +178,20 @@ ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld, ProductsPartsTableO
 MasterCodeBookTableOrdered.MasterCodeBookID_Autonumber,
 DeliveryItemsTable.ProductPartID_LongInteger,
 DeliveryItemsTable.DeliveryItemID_AutoNumber 
-FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableOrdered ON ProductsPartsTableOrdered.MasterCodeBookID_LongInteger = MasterCodeBookTableOrdered.MasterCodeBookID_Autonumber"
-        DeliveryItemsTableLinks = " 
-"
-        DeliveryItemsSelectionOrder = " ORDER BY DeliveryItemID_AutoNumber DESC"
+FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) 
+LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) 
+LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) 
+LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) 
+LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) 
+LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) 
+LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableOrdered ON ProductsPartsTableOrdered.MasterCodeBookID_LongInteger = MasterCodeBookTableOrdered.MasterCodeBookID_Autonumber"
 
-        MySelection = DeliveryItemsFieldsToSelect & DeliveryItemsTableLinks & DeliveryItemsSelectionFilter & DeliveryItemsSelectionOrder '
+        DeliveryItemsSelectionOrder = " ORDER BY DeliveryItemID_AutoNumber DESC"
+        DeliveryItemsFieldsToSelect = "
+SELECT MasterCodeBookTable.SystemDesc_ShortText100Fld, ProductsPartsTableDelivered.ProductDescription_ShortText250, ProductsPartsTableDelivered.ManufacturerPartNo_ShortText30Fld, DeliveryItemsTable.DeliveredQty_Double, ProductsPartsTableDelivered.Unit_ShortText3, PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger, BrandsTableDelivered.BrandName_ShortText20, ProductsPartsTableOrdered.ProductDescription_ShortText250, ProductsPartsTableOrdered.ProductDescription_ShortText250
+FROM ((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTableDelivered.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber;
+"
+        MySelection = DeliveryItemsFieldsToSelect & DeliveryItemsSelectionFilter & DeliveryItemsSelectionOrder '
 
         JustExecuteMySelection()
         DeliveryItemsRecordCount = RecordCount
@@ -300,7 +303,7 @@ FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItem
         AddDeliveryItemsToolStripMenuItem.Visible = True
         EditDeliveryItemToolStripMenuItem.Visible = True
         RemoveDeliveryItemToolStripMenuItem.Visible = True
-        AddDeliveryToolStripMenuItem.Visible = False
+        NewDeliveryToolStripMenuItem.Visible = False
         SaveDeliveryToolStripMenuItem.Visible = True
         DeleteDeliveryToolStripMenuItem.Visible = False
     End Sub
@@ -309,12 +312,12 @@ FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItem
         AddDeliveryItemsToolStripMenuItem.Visible = False
         EditDeliveryItemToolStripMenuItem.Visible = False
         RemoveDeliveryItemToolStripMenuItem.Visible = False
-        AddDeliveryToolStripMenuItem.Visible = True
+        NewDeliveryToolStripMenuItem.Visible = True
         SaveDeliveryToolStripMenuItem.Visible = False
         DeleteDeliveryToolStripMenuItem.Visible = False
     End Sub
 
-    Private Sub AddDeliveryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddDeliveryToolStripMenuItem.Click
+    Private Sub NewDeliveryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewDeliveryToolStripMenuItem.Click
         EditDeliveryHeader()
     End Sub
 
@@ -329,7 +332,7 @@ FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItem
     End Sub
 
     Private Sub EditDeliveryHeader()
-        AddDeliveryToolStripMenuItem.Visible = False
+        NewDeliveryToolStripMenuItem.Visible = False
         ViewToolStripMenuItem.Visible = False
         DeleteDeliveryToolStripMenuItem.Visible = False
         DeliveryrDate.Text = DateString
@@ -369,7 +372,7 @@ FROM ((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItem
             CurrentDeliveryItemID = DeliveryItemsDataGridView.Item("DeliveryItemID_AutoNumber", CurrentDeliveryItemsDataGridViewRow).Value
 
             MySelection = " UPDATE DeliveryItemsTable  " &
-                              " SET DeliverieID_LongInteger = " & CurrentDeliveryID.ToString &
+                              " SET DeliveryID_LongInteger = " & CurrentDeliveryID.ToString &
                               " WHERE DeliveryItemID_AutoNumber = " & CurrentDeliveryItemID.ToString
             JustExecuteMySelection()
 
