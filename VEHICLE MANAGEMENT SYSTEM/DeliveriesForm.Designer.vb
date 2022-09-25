@@ -45,7 +45,7 @@ Partial Class DeliveriesForm
         Me.FromPurchaseOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeliveryDetailsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.DeliveryHeaderDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.POReferenceTextBox = New System.Windows.Forms.TextBox()
         Me.DeliveryNoteNoTextBox = New System.Windows.Forms.TextBox()
@@ -73,7 +73,7 @@ Partial Class DeliveriesForm
         Me.BrandTextBox = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.DeliveriesMenuStrip.SuspendLayout()
-        Me.DeliveryDetailsGroupBox.SuspendLayout()
+        Me.DeliveryHeaderDetailsGroupBox.SuspendLayout()
         Me.DeliveryItemsGroupBox.SuspendLayout()
         CType(Me.DeliveryItemsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DeliveriesGroupBox.SuspendLayout()
@@ -197,25 +197,25 @@ Partial Class DeliveriesForm
         Me.RemoveDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveDeliveryItemToolStripMenuItem.Text = "Remove"
         '
-        'DeliveryDetailsGroupBox
+        'DeliveryHeaderDetailsGroupBox
         '
-        Me.DeliveryDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.Label3)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.POReferenceTextBox)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.DeliveryNoteNoTextBox)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.Label13)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.DeliveryrDate)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.Label2)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.DeliveryNoTextBox)
-        Me.DeliveryDetailsGroupBox.Controls.Add(Me.Label1)
-        Me.DeliveryDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DeliveryDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DeliveryDetailsGroupBox.Location = New System.Drawing.Point(618, 63)
-        Me.DeliveryDetailsGroupBox.Name = "DeliveryDetailsGroupBox"
-        Me.DeliveryDetailsGroupBox.Size = New System.Drawing.Size(477, 206)
-        Me.DeliveryDetailsGroupBox.TabIndex = 87
-        Me.DeliveryDetailsGroupBox.TabStop = False
-        Me.DeliveryDetailsGroupBox.Text = "Details"
+        Me.DeliveryHeaderDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.Label3)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.POReferenceTextBox)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.DeliveryNoteNoTextBox)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.Label13)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.DeliveryrDate)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.Label2)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.DeliveryNoTextBox)
+        Me.DeliveryHeaderDetailsGroupBox.Controls.Add(Me.Label1)
+        Me.DeliveryHeaderDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DeliveryHeaderDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.DeliveryHeaderDetailsGroupBox.Location = New System.Drawing.Point(618, 63)
+        Me.DeliveryHeaderDetailsGroupBox.Name = "DeliveryHeaderDetailsGroupBox"
+        Me.DeliveryHeaderDetailsGroupBox.Size = New System.Drawing.Size(477, 206)
+        Me.DeliveryHeaderDetailsGroupBox.TabIndex = 87
+        Me.DeliveryHeaderDetailsGroupBox.TabStop = False
+        Me.DeliveryHeaderDetailsGroupBox.Text = "Details"
         '
         'Label3
         '
@@ -542,14 +542,14 @@ Partial Class DeliveriesForm
         Me.Controls.Add(Me.DeliveryItemDetailsGroupBox)
         Me.Controls.Add(Me.DeliveryItemsGroupBox)
         Me.Controls.Add(Me.DeliveriesGroupBox)
-        Me.Controls.Add(Me.DeliveryDetailsGroupBox)
+        Me.Controls.Add(Me.DeliveryHeaderDetailsGroupBox)
         Me.Controls.Add(Me.DeliveriesMenuStrip)
         Me.Name = "DeliveriesForm"
         Me.Text = "ReceiveItemsForm"
         Me.DeliveriesMenuStrip.ResumeLayout(False)
         Me.DeliveriesMenuStrip.PerformLayout()
-        Me.DeliveryDetailsGroupBox.ResumeLayout(False)
-        Me.DeliveryDetailsGroupBox.PerformLayout()
+        Me.DeliveryHeaderDetailsGroupBox.ResumeLayout(False)
+        Me.DeliveryHeaderDetailsGroupBox.PerformLayout()
         Me.DeliveryItemsGroupBox.ResumeLayout(False)
         CType(Me.DeliveryItemsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DeliveriesGroupBox.ResumeLayout(False)
@@ -576,7 +576,7 @@ Partial Class DeliveriesForm
     Friend WithEvents AddDeliveryItemsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditDeliveryItemToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemoveDeliveryItemToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DeliveryDetailsGroupBox As GroupBox
+    Friend WithEvents DeliveryHeaderDetailsGroupBox As GroupBox
     Friend WithEvents DeliveryNoteNoTextBox As TextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents DeliveryrDate As TextBox
