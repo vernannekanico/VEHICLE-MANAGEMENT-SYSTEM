@@ -54,12 +54,11 @@
         Else
             Me.Width = DeliveryItemsGroupBox.Width + 2
         End If
-        Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
-        DeliveryItemsGroupBox.Left = 1 + (Me.Width - DeliveryItemsGroupBox.Width) / 2
 
-
-        Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
         DeliveryHeaderDetailsGroupBox.Left = DeliveriesGroupBox.Left + DeliveriesGroupBox.Width
+        Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
+        DeliveryItemsGroupBox.Left = ((Me.Width - DeliveryItemsGroupBox.Width) / 2) + 1
+
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         DoCommonHouseKeeping(Me, SavedCallingForm)
@@ -115,7 +114,8 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
 
         SetGroupBoxHeight(10, DeliveriesRecordCount, DeliveriesGroupBox, DeliveriesDataGridView)
 
-        DeliveryItemsGroupBox.Top = DeliveriesGroupBox.Top + DeliveriesGroupBox.Height + 5
+
+
     End Sub
     Private Sub FormatDeliveriesDataGridView()
         DeliveriesDataGridViewAlreadyFormated = True
@@ -191,32 +191,31 @@ DeliveryItemsTable.ProductPartID_LongInteger,
 DeliveryItemsTable.DeliveredQty_Double, 
 ProductsPartsTableDelivered.Unit_ShortText3, 
 PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger, 
+PurchaseOrdersItemsTable.POQty_Integer,
 BrandsTableDelivered.BrandName_ShortText20, 
 ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTableOrdered.ManufacturerDescription_ShortText250,
 BrandsTableOrdered.BrandName_ShortText20
-FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTableDelivered.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber
+FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTableOrdered.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber
 "
         DeliveryItemsSelectionOrder = " ORDER BY DeliveryItemID_AutoNumber DESC"
         MySelection = DeliveryItemsFieldsToSelect & DeliveryItemsSelectionFilter & DeliveryItemsSelectionOrder '
 
         JustExecuteMySelection()
         DeliveryItemsRecordCount = RecordCount
+        If DeliveryItemsRecordCount > 0 Then
+            DeliveryItemsGroupBox.Visible = True
+        Else
+            DeliveryItemsGroupBox.Visible = False
+        End If
         DeliveryItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not DeliveryItemsDataGridViewAlreadyFormated Then
             FormatDeliveryItemsDataGridView()
         End If
 
         SetGroupBoxHeight(15, DeliveryItemsRecordCount, DeliveryItemsGroupBox, DeliveryItemsDataGridView)
-        Me.Height = DeliveryItemsGroupBox.Top + DeliveryItemsGroupBox.Height + 2
 
-        Dim MaxBottom = 15 - DeliveryItemsRecordCount
-        SetGroupBoxHeight(MaxBottom, DeliveryItemsRecordCount, DeliveriesGroupBox, DeliveriesDataGridView)
-
-        DeliveryItemsGroupBox.Top = DeliveriesGroupBox.Top + DeliveriesGroupBox.Height + 5
-        If DeliveryItemsGroupBox.Top < DeliveryHeaderDetailsGroupBox.Top + DeliveryHeaderDetailsGroupBox.Height Then
-            DeliveryItemsGroupBox.Top = DeliveryHeaderDetailsGroupBox.Top + DeliveryHeaderDetailsGroupBox.Height + 2
-        End If
+        DeliveryItemsGroupBox.Top = DeliveryHeaderDetailsGroupBox.Top + DeliveryHeaderDetailsGroupBox.Height + 5
     End Sub
 
 
@@ -268,11 +267,7 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 350
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "POQty_Integer"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Qty"
-                    DeliveryItemsDataGridView.Columns.Item(i).Width = 50
-                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTableOrdered.Unit_ShortText3"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Unit"
+                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Ordered Qty"
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 50
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "BrandsTableOrdered.BrandName_ShortText20"
@@ -285,6 +280,8 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
                 DeliveryItemsGroupBox.Width = DeliveryItemsGroupBox.Width + DeliveryItemsDataGridView.Columns.Item(i).Width
             End If
         Next
+
+
 
     End Sub
     Private Sub DeliveryItemsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles DeliveryItemsDataGridView.RowEnter
@@ -338,7 +335,6 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         DeliveryNoTextBox.Text = ""
         DeliveryNoteNoTextBox.Text = ""
         DeliveriesGroupBox.Enabled = False
-        DeliveryItemsGroupBox.Enabled = False
         CurrentDeliveryID = -1
         DeliveryHeaderDetailsGroupBox.Visible = True
         SaveDeliveryToolStripMenuItem.Visible = True
