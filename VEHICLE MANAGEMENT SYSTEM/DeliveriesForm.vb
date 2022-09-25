@@ -183,18 +183,21 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
 
         DeliveryItemsFieldsToSelect = "
 SELECT 
+MasterCodeBookTable.MasterCodeBookID_Autonumber, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 ProductsPartsTableDelivered.ProductsPartID_Autonumber,
 ProductsPartsTableDelivered.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTableDelivered.ManufacturerDescription_ShortText250, 
-DeliveryItemsTable.ProductPartID_LongInteger,
+DeliveryItemsTable.DeliveryItemID_AutoNumber,
 DeliveryItemsTable.DeliveredQty_Double, 
 ProductsPartsTableDelivered.Unit_ShortText3, 
 PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger, 
 PurchaseOrdersItemsTable.POQty_Integer,
 BrandsTableDelivered.BrandName_ShortText20, 
+ProductsPartsTableOrdered.ProductsPartID_Autonumber, 
 ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTableOrdered.ManufacturerDescription_ShortText250,
+ProductsPartsTableOrdered.Unit_ShortText3, 
 BrandsTableOrdered.BrandName_ShortText20
 FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTableOrdered.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber
 "
@@ -291,8 +294,13 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         If e.RowIndex < 0 Then Exit Sub
         If DeliveryItemsRecordCount = 0 Then Exit Sub
         CurrentDeliveryItemsDataGridViewRow = e.RowIndex
-        FillField(CurrentDeliveryItemID, DeliveryItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentDeliveryItemsDataGridViewRow).Value)
-        FillField(CurrentProductPartID, DeliveryItemsDataGridView.Item("ProductPartID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value)
+        FillField(CurrentDeliveryItemID, DeliveryItemsDataGridView.Item("DeliveryItemID_AutoNumber", CurrentDeliveryItemsDataGridViewRow).Value)
+        FillField(CurrentProductPartID, DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ProductsPartID_Autonumber", CurrentDeliveryItemsDataGridViewRow).Value)
+        If CurrentProductPartID = -1 Then
+            EditCurrentItem()
+        End If
+
+
     End Sub
     Private Sub EnableDeliveryItemMenus()
         DeliveryItemsToolStripMenus.Visible = True
@@ -388,15 +396,35 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
 
 
     Private Sub EditDeliveryItemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditDeliveryItemToolStripMenuItem.Click
+        EditCurrentItem()
+    End Sub
 
+
+    Private Sub EditCurrentItem()
         If CurrentDeliveryItemsDataGridViewRow = -1 Then Exit Sub
         DeliveryItemDetailsGroupBox.Visible = True
-        DeliveryItemsGroupBox.Top = DeliveryItemDetailsGroupBox.Top + DeliveryItemDetailsGroupBox.Height
-        POItemProductDescTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value)
-        POItemProductPartNoTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerPartNo_ShortText30Fld", CurrentDeliveryItemsDataGridViewRow).Value)
-        POItemQuantityTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Integer", CurrentDeliveryItemsDataGridViewRow).Value)
-        POItemUnitTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.Unit_ShortText3", CurrentDeliveryItemsDataGridViewRow).Value)
-        BrandTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("BrandsTableDelivered.BrandName_ShortText20", CurrentDeliveryItemsDataGridViewRow).Value)
+        If IsEmpty(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value) Then
+            POItemProductDescTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemProductPartNoTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemQuantityTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("POQty_Integer", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemUnitTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.Unit_ShortText3", CurrentDeliveryItemsDataGridViewRow).Value)
+            BrandTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("BrandsTableOrdered.BrandName_ShortText20", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemUnitTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.Unit_ShortText3", CurrentDeliveryItemsDataGridViewRow).Value)
+            FillField(CurrentProductPartID, DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ProductsPartID_Autonumber", CurrentDeliveryItemsDataGridViewRow).Value)
+            If MsgBox("Confirm suggested ordered/delivered product", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                POItemQuantityTextBox.Select()
+            Else
+                POItemProductDescTextBox.Select()
+                EditDeliveryItem()
+            End If
+        Else
+            POItemProductDescTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemProductPartNoTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerPartNo_ShortText30Fld", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemQuantityTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Double", CurrentDeliveryItemsDataGridViewRow).Value)
+            POItemUnitTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.Unit_ShortText3", CurrentDeliveryItemsDataGridViewRow).Value)
+            BrandTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("BrandsTableDelivered.BrandName_ShortText20", CurrentDeliveryItemsDataGridViewRow).Value)
+        End If
+
         SavedProductPartID = CurrentProductPartID
 
     End Sub
@@ -416,13 +444,17 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
     End Sub
 
     Private Sub POItemProductDescTextBox_Click(sender As Object, e As EventArgs) Handles POItemProductDescTextBox.Click
+        EditDeliveryItem()
+    End Sub
+
+    Private Sub EditDeliveryItem()
         If POItemProductDescTextBox.Text <> "" Then
             If MsgBox("Do you intend to replace the Product?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
                 Exit Sub
             End If
         End If
 
-        ProductsPartsForm.PartNoSearchTextBox.Text = ""
+        ProductsPartsForm.PartNoSearchTextBox.Text = DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld", CurrentDeliveryItemsDataGridViewRow).Value
         Tunnel2 = DeliveryItemsDataGridView.Item("MasterCodeBookID_Autonumber", CurrentDeliveryItemsDataGridViewRow).Value
         ProductsPartsForm.PartDescriptionSearchTextBox.Text = DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value
         ShowCalledForm(Me, ProductsPartsForm)
@@ -462,10 +494,10 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
             End If
             Dim RecordFilter = " WHERE DeliveryItemID_AutoNumber = " & CurrentDeliveryItemID.ToString
             Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString & "," &
-                             " DeliveredQty_Integer = " & Val(POItemQuantityTextBox.Text).ToString
+                             " DeliveredQty_Double = " & Val(POItemQuantityTextBox.Text).ToString
             UpdateTable("DeliveryItemsTable", SetCommand, RecordFilter)
             'UPDATE ProductsPartTable AND MARK FIELD Selected true
-            UpdateTable("ProductsPartTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
+            UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
         End If
 
         DeliveryItemDetailsGroupBox.Visible = False
@@ -489,7 +521,7 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
 
 
 
-            If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
             If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Integer", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
             Return False
         End If
@@ -541,4 +573,6 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
     Private Sub POReferenceTextBox_Click(sender As Object, e As EventArgs) Handles POReferenceTextBox.Click
 
     End Sub
+
+
 End Class
