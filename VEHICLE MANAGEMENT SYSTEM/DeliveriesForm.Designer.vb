@@ -390,7 +390,7 @@ Partial Class DeliveriesForm
         '
         'DeliveryItemDetailsGroupBox
         '
-        Me.DeliveryItemDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DeliveryItemDetailsGroupBox.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.DeliveryItemDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveryItemDetailsGroupBox.Controls.Add(Me.PcsPerPackTextBox)
         Me.DeliveryItemDetailsGroupBox.Controls.Add(Me.PackingLabel)
@@ -407,9 +407,9 @@ Partial Class DeliveriesForm
         Me.DeliveryItemDetailsGroupBox.Controls.Add(Me.Label16)
         Me.DeliveryItemDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryItemDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(256, 312)
+        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(300, 167)
         Me.DeliveryItemDetailsGroupBox.Name = "DeliveryItemDetailsGroupBox"
-        Me.DeliveryItemDetailsGroupBox.Size = New System.Drawing.Size(715, 209)
+        Me.DeliveryItemDetailsGroupBox.Size = New System.Drawing.Size(715, 261)
         Me.DeliveryItemDetailsGroupBox.TabIndex = 110
         Me.DeliveryItemDetailsGroupBox.TabStop = False
         Me.DeliveryItemDetailsGroupBox.Text = "Delivery Details"
@@ -418,7 +418,7 @@ Partial Class DeliveriesForm
         'PcsPerPackTextBox
         '
         Me.PcsPerPackTextBox.Enabled = False
-        Me.PcsPerPackTextBox.Location = New System.Drawing.Point(268, 142)
+        Me.PcsPerPackTextBox.Location = New System.Drawing.Point(268, 191)
         Me.PcsPerPackTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.PcsPerPackTextBox.Name = "PcsPerPackTextBox"
         Me.PcsPerPackTextBox.Size = New System.Drawing.Size(38, 26)
@@ -428,7 +428,7 @@ Partial Class DeliveriesForm
         'PackingLabel
         '
         Me.PackingLabel.AutoSize = True
-        Me.PackingLabel.Location = New System.Drawing.Point(178, 145)
+        Me.PackingLabel.Location = New System.Drawing.Point(178, 194)
         Me.PackingLabel.Name = "PackingLabel"
         Me.PackingLabel.Size = New System.Drawing.Size(65, 20)
         Me.PackingLabel.TabIndex = 116
@@ -438,7 +438,7 @@ Partial Class DeliveriesForm
         'POItemProductPartNoTextBox
         '
         Me.POItemProductPartNoTextBox.Enabled = False
-        Me.POItemProductPartNoTextBox.Location = New System.Drawing.Point(101, 73)
+        Me.POItemProductPartNoTextBox.Location = New System.Drawing.Point(101, 122)
         Me.POItemProductPartNoTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemProductPartNoTextBox.Name = "POItemProductPartNoTextBox"
         Me.POItemProductPartNoTextBox.Size = New System.Drawing.Size(585, 26)
@@ -447,7 +447,7 @@ Partial Class DeliveriesForm
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(20, 76)
+        Me.Label20.Location = New System.Drawing.Point(20, 125)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(51, 20)
         Me.Label20.TabIndex = 114
@@ -457,8 +457,9 @@ Partial Class DeliveriesForm
         '
         Me.POItemProductDescTextBox.Location = New System.Drawing.Point(101, 37)
         Me.POItemProductDescTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.POItemProductDescTextBox.Multiline = True
         Me.POItemProductDescTextBox.Name = "POItemProductDescTextBox"
-        Me.POItemProductDescTextBox.Size = New System.Drawing.Size(585, 26)
+        Me.POItemProductDescTextBox.Size = New System.Drawing.Size(585, 75)
         Me.POItemProductDescTextBox.TabIndex = 113
         '
         'Label19
@@ -475,7 +476,7 @@ Partial Class DeliveriesForm
         Me.EXITSAVEChangesButton.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.EXITSAVEChangesButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.EXITSAVEChangesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.EXITSAVEChangesButton.Location = New System.Drawing.Point(325, 107)
+        Me.EXITSAVEChangesButton.Location = New System.Drawing.Point(325, 156)
         Me.EXITSAVEChangesButton.Name = "EXITSAVEChangesButton"
         Me.EXITSAVEChangesButton.Size = New System.Drawing.Size(361, 92)
         Me.EXITSAVEChangesButton.TabIndex = 111
@@ -484,7 +485,7 @@ Partial Class DeliveriesForm
         '
         'POItemQuantityTextBox
         '
-        Me.POItemQuantityTextBox.Location = New System.Drawing.Point(102, 139)
+        Me.POItemQuantityTextBox.Location = New System.Drawing.Point(102, 188)
         Me.POItemQuantityTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemQuantityTextBox.Name = "POItemQuantityTextBox"
         Me.POItemQuantityTextBox.Size = New System.Drawing.Size(53, 26)
@@ -493,7 +494,7 @@ Partial Class DeliveriesForm
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(25, 171)
+        Me.Label6.Location = New System.Drawing.Point(25, 220)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(38, 20)
         Me.Label6.TabIndex = 109
@@ -502,7 +503,7 @@ Partial Class DeliveriesForm
         'POItemUnitTextBox
         '
         Me.POItemUnitTextBox.Enabled = False
-        Me.POItemUnitTextBox.Location = New System.Drawing.Point(102, 173)
+        Me.POItemUnitTextBox.Location = New System.Drawing.Point(102, 222)
         Me.POItemUnitTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.POItemUnitTextBox.Name = "POItemUnitTextBox"
         Me.POItemUnitTextBox.Size = New System.Drawing.Size(53, 26)
@@ -511,7 +512,7 @@ Partial Class DeliveriesForm
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(22, 109)
+        Me.Label7.Location = New System.Drawing.Point(22, 158)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(52, 20)
         Me.Label7.TabIndex = 107
@@ -519,16 +520,16 @@ Partial Class DeliveriesForm
         '
         'BrandTextBox
         '
-        Me.BrandTextBox.Location = New System.Drawing.Point(101, 109)
+        Me.BrandTextBox.Location = New System.Drawing.Point(101, 158)
         Me.BrandTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.BrandTextBox.Name = "BrandTextBox"
-        Me.BrandTextBox.Size = New System.Drawing.Size(53, 26)
+        Me.BrandTextBox.Size = New System.Drawing.Size(205, 26)
         Me.BrandTextBox.TabIndex = 106
         '
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(21, 142)
+        Me.Label16.Location = New System.Drawing.Point(21, 191)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(68, 20)
         Me.Label16.TabIndex = 105

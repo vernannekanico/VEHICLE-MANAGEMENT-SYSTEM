@@ -58,9 +58,12 @@
         DeliveryHeaderDetailsGroupBox.Left = DeliveriesGroupBox.Left + DeliveriesGroupBox.Width
         Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
         DeliveryItemsGroupBox.Left = ((Me.Width - DeliveryItemsGroupBox.Width) / 2) + 1
+        DeliveryItemDetailsGroupBox.Left = DeliveriesGroupBox.Left
+        DeliveryItemDetailsGroupBox.Top = DeliveriesGroupBox.Top + 50
 
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
+        If DeliveryItemDetailsGroupBox.Visible Then Exit Sub
         DoCommonHouseKeeping(Me, SavedCallingForm)
 
     End Sub
@@ -522,7 +525,7 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
 
 
             If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Integer", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Double", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
             Return False
         End If
     End Function
