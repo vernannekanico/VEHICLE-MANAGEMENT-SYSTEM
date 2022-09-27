@@ -32,7 +32,7 @@
         DeliveriesGroupBox.Left = 1
         DeliveriesGroupBox.Top = DeliveriesMenuStrip.Top + DeliveriesMenuStrip.Height + 5
         DeliveryHeaderDetailsGroupBox.Top = DeliveriesGroupBox.Top
-        DeliveriesSelectionFilter = SetupTableSelectionFilter(GetStatusIdFor("DeliveriesTable", "Partially Delivered", 1), 1, Me, "Outstanding/Partially Delivered")
+        DeliveriesSelectionFilter = SetupTableSelectionFilter(GetStatusIdFor("DeliveriesTable", "Draft Deliveries", 1), 1, Me, "Outstanding/Partially Delivered")
         FillDeliveriesDataGridView()
         If CallingForm.Name = "WorkOrderFormASM" Then
             CurrentWorkOrderConcernID = Tunnel1
@@ -168,8 +168,8 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
         DeliveryNoTextBox.Text = NotNull(DeliveriesDataGridView.Item("DeliveryID_AutoNumber", CurrentDeliveriesDataGridViewRow).Value)
         DeliveryrDate.Text = NotNull(DeliveriesDataGridView.Item("DeliveryDate_ShortDate", CurrentDeliveriesDataGridViewRow).Value)
         DeliveryNoteNoTextBox.Text = NotNull(DeliveriesDataGridView.Item("DeliveryNote_ShortText12", CurrentDeliveriesDataGridViewRow).Value)
-        CurrentDeliveryStatus = NotNull(DeliveriesDataGridView.Item("DeliveryStatus", CurrentDeliveriesDataGridViewRow).Value)
-        If CurrentDeliveryStatus = "Draft" Then
+        CurrentDeliveryStatus = NotNull(DeliveriesDataGridView.Item("StatusText_ShortText25", CurrentDeliveriesDataGridViewRow).Value)
+        If CurrentDeliveryStatus = "Draft Deliveries" Then
             EnableDeliveryItemMenus()
             DeliveryHeaderDetailsGroupBox.Enabled = True
             FinalizeDeliveryEntryToolStripMenuItem.Visible = True
@@ -537,30 +537,35 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         FillDeliveriesDataGridView()
     End Sub
     Private Sub UpdateDeliveryHeader()
-        Dim xxDeliveryNote = ""
-        If IsNotEmpty(DeliveryNoteNoTextBox.Text) Then
-            xxDeliveryNote = " DeliveryNote_ShortText12 = " & Chr(34) & Trim(DeliveryNoteNoTextBox.Text) & Chr(34) & ", "
-        End If
         If CurrentDeliveryID = -1 Then
             Dim FieldsToUpdate = " DeliveryDate_ShortDate, 
-                                ReceivedBy_LongInteger, 
-                                DeliveryNote_ShortText12
-"
-            Dim FieldsData = " Chr(34) & Trim(DeliveryrDate.Text) & Chr(34) " & ", " &
-                                xxDeliveryNote
-            CurrentPersonelID.ToString()
+                                ReceivedBy_LongInteger, DeliveryNote_ShortText12, DeliveryStatusID_LongInteger "
 
-            Dim CurrentDeliveryID = InsertNewRecord("DeliveriesTable", FieldsToUpdate, FieldsData)
+            Dim FieldsData = Chr(34) & Trim(DeliveryrDate.Text) & Chr(34) & ", " &
+                             CurrentPersonelID.ToString &
+                                ", " & Chr(34) & Trim(DeliveryNoteNoTextBox.Text) & Chr(34) & ", " &
+                                GetStatusIdFor("DeliveriesTable", "Draft Deliveries").ToString
+
+            CurrentDeliveryID = InsertNewRecord("DeliveriesTable", FieldsToUpdate, FieldsData)
         Else
 
             MySelection = " UPDATE DeliveriesTable  " &
-                              " SET DeliveryDate_ShortDate = " & Chr(34) & Trim(DeliveryrDate.Text) & Chr(34) & ", " &
-                               xxDeliveryNote &
-                                 " DeliveryStatusID_LongInteger = " & GetStatusIdFor("DeliveriesTable", "Partially Delivered").ToString &
+                              " SET DeliveryDate_ShortDate = " & Chr(34) & Trim(DeliveryrDate.Text) & Chr(34) &
+                              " ReceivedBy_LongInteger = " & CurrentPersonelID.ToString &
+                              ", DeliveryNote_ShortText12 = " & Chr(34) & Trim(DeliveryNoteNoTextBox.Text) & Chr(34) &
+                              ", DeliveryItemsStatusID_LongInteger = " & GetStatusIdFor("DeliveryItemsTable", "Processed").ToString &
                               " WHERE DeliveryID_AutoNumber = " & CurrentDeliveryID.ToString
             JustExecuteMySelection()
 
         End If
+        For i = 0 To DeliveryItemsRecordCount - 1
+            MySelection = " UPDATE DeliveryItemsTable  SET " &
+                              " DeliveryID_LongInteger = " & CurrentDeliveryID.ToString &
+                              ", DeliveryItemsStatusID_LongInteger = " & GetStatusIdFor("DeliveryItemsTable", "Processed").ToString &
+                              " WHERE DeliveryItemID_AutoNumber = " & DeliveryItemsDataGridView.Item("DeliveryItemID_AutoNumber", i).Value.ToString
+            JustExecuteMySelection()
+
+        Next
     End Sub
 
     Private Sub DraftPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DraftPurchaseOrdersToolStripMenuItem.Click
