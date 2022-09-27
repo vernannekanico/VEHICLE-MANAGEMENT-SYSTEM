@@ -39,13 +39,6 @@
             EditDeliveryHeader()
             DeliveryNoteNoTextBox.Text = "Customer Supplied"
         End If
-        'CHECK IF THERE ARE UNFINISHED DELIVERY ITEMS
-        '   -IF THERE EXIST THEN
-        '       -SET TO  ADD ITEMS MODE, CALL EditDeliveryHeader() ELSE
-        '   -DO NORMAL PROCESS OF DISPLAYING OUTSTANDING DELIVERIES
-        DeliveryItemsSelectionFilter = " WHERE DeliveryID_LongInteger < 1 "
-        FillDeliveryItemsDataGridView()
-        If DeliveryItemsRecordCount > 0 Then EditDeliveryHeader()
 
         ' NOTE" SYSTEM AUTOFITS THE GRIDVIEW FIELDS ACCORDING TO THEIR WITDH
         If DeliveryItemsGroupBox.Width > VehicleManagementSystemForm.Width Then
@@ -106,6 +99,7 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
             DeliveryHeaderDetailsGroupBox.Visible = False
             DeliveryItemsGroupBox.Visible = False
         Else
+            EditDeliveryHeader()
             DeliveryHeaderDetailsGroupBox.Visible = True
             DeliveryItemsGroupBox.Visible = True
         End If
