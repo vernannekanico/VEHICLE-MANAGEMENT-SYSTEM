@@ -440,8 +440,8 @@ WorkOrderConcernJobsTable.InformationsHeaderID_LongInteger,
 WorkOrderConcernJobsTable.WorkOrderConcernJobStatus_Byte, 
 WorkOrderConcernJobsTable.WorkOrderConcernID_LongInteger, 
 WorkOrderConcernJobsTable.WorkOrderConcernJobStatusID_LongInteger, 
+WorkOrderConcernJobsTable.AssignedServiceSpecialist_LongInteger, 
 WorkOrderConcernsTable.WorkOrderID_LongInteger, 
-WorkOrderConcernsTable.AssignedServiceSpecialist_LongInteger, 
 WorkOrderConcernsTable.ConcernID_LongInteger, 
 InformationsHeadersTypeTable.Prefix & Space(1) & MasterCodeBookTable.SystemDesc_ShortText100Fld AS Job, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
@@ -574,11 +574,13 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
                 JobDoneToolStripMenuItem.Visible = True
             ElseIf XXCurrentJobStatus = "All Parts Received" Then
                 ProcessJobToolStripMenuItem.Visible = True
-            ElseIf InStr("No Part Needed/Draft Requisition/Parts From Customer", XXCurrentJobStatus) Then
+            ElseIf InStr("No Part Needed/Draft Requisition/Parts From Customer/Assigned", XXCurrentJobStatus) Then
                 RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                 EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                RequestPartsFromWarehouseToolStripMenuItem.Visible = True
-                ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
+                If CurrentUserGroup = "Automotive Service Specialist" Then
+                    RequestPartsFromWarehouseToolStripMenuItem.Visible = True
+                    ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
+                End If
             End If
         End If
         WorkOrderPartsPerJobSelectionFilter = " WHERE WorkOrderConcernJobID_AutoNumber = " & CurrentWorkOrderConcernJobID

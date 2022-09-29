@@ -32,6 +32,9 @@
         DeliveriesGroupBox.Left = 1
         DeliveriesGroupBox.Top = DeliveriesMenuStrip.Top + DeliveriesMenuStrip.Height + 5
         DeliveryHeaderDetailsGroupBox.Top = DeliveriesGroupBox.Top
+        'Initiate formatting of Deliveries view
+        DeliveryItemsSelectionFilter = " Where DeliveryItemID_AutoNumber = -1"
+        FillDeliveryItemsDataGridView()
         DeliveriesSelectionFilter = SetupTableSelectionFilter(GetStatusIdFor("DeliveriesTable", "Draft Deliveries", 1), 1, Me, "Outstanding/Partially Delivered")
         FillDeliveriesDataGridView()
         If CallingForm.Name = "WorkOrderFormASM" Then

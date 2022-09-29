@@ -111,6 +111,7 @@ ProductsPartsTable.VehicleRepairClassID_LongInteger,
 VehicleDescription.VehicleDescription, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3
 FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber"
 
@@ -147,6 +148,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
                 ProductsPartsDataGridView.Height = RowsHeight + ProductsPartsDataGridView.ColumnHeadersHeight
             End If
         End If
+        ProductsPartsDataGridView.Height += RowsHeight
         If ProductsPartsDataGridView.Height > MyMaximumHeight Then
             Me.Height = ProductsPartsDataGridView.Height + 20
         Else

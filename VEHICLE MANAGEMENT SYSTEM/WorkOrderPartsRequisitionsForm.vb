@@ -486,6 +486,7 @@ StocksTable.QuantityInStock_Double,
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
 StocksTable.Location_ShortText10
 FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
 "
@@ -536,6 +537,10 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable LEFT JOIN ProductsPartsT
                     AvailableStocksDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfTheQuantity_ShortText3"
                     AvailableStocksDataGridView.Columns.Item(i).HeaderText = "Quantity Unit"
+                    AvailableStocksDataGridView.Columns.Item(i).Width = 80
+                    AvailableStocksDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfThePacking_ShortText3"
+                    AvailableStocksDataGridView.Columns.Item(i).HeaderText = "Packing Unit"
                     AvailableStocksDataGridView.Columns.Item(i).Width = 80
                     AvailableStocksDataGridView.Columns.Item(i).Visible = True
                 Case "Location_ShortText10"

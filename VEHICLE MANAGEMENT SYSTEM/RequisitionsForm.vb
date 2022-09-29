@@ -201,6 +201,7 @@ RequisitionsItemsTable.RequisitionQuantity_Double,
 ProductsPartsTable.Unit_ShortText3,
 ProductPartsPackingsTable.QuantityPerPack_Double, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
 BrandsTable.BrandName_ShortText20,
 PurchaseOrdersTable.PurchaseOrderID_AutoNumber,
 PurchaseOrdersTable.PurchaseOrderRevision_Integer,
@@ -259,6 +260,10 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
                     RequisitionsItemsDataGridView.Columns.Item(i).Width = 50
                     RequisitionsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfTheQuantity_ShortText3"
+                    RequisitionsItemsDataGridView.Columns.Item(i).HeaderText = ""
+                    RequisitionsItemsDataGridView.Columns.Item(i).Width = 50
+                    RequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfThePacking_ShortText3"
                     RequisitionsItemsDataGridView.Columns.Item(i).HeaderText = ""
                     RequisitionsItemsDataGridView.Columns.Item(i).Width = 50
                     RequisitionsItemsDataGridView.Columns.Item(i).Visible = True
