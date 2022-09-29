@@ -665,7 +665,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
     Private Function AChangeInWorkOrderRequestPartsOccured()
 
         '*******************************************************
-        If WorkOrderPartsRecordCount < 0 And IsNotEmpty(ProductTextBox.Text) Then Return True
+        If WorkOrderRequestedPartsRecordCount < 1 And IsNotEmpty(ProductTextBox.Text) Then Return True ' NO REQUESTED PART YET
         If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
         If TheseAreNotEqual(RequestedUnitTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedUnit_ShortText3", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
         If TheseAreNotEqual(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
@@ -1008,7 +1008,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                     Exit Sub
                 Else
                     ' THERE IS A REQUEST, VALIDATE QUANTITY
-                    If NotNull(WorkOrderPartsDataGridView.Item("Quantity_Integer", j).Value) < 1 Then
+                    If NotNull(WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", j).Value) < 1 Then
                         MsgBox("Please put a quantity for " & WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", j).Value)
                         Exit Sub
                     End If
@@ -1192,8 +1192,10 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
 
         FillField(CurrentPartsSpecificationID, WorkOrderPartsDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentWorkOrderPartsRow).Value)
         FillField(PartDescriptionTextBox.Text, WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentWorkOrderPartsRow).Value)
-        FillField(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value)
-        FillField(PartNumberTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderRequestedPartsRow).Value)
+        If CurrentWorkOrderRequestedPartsRow > -1 Then ' there are parts already selected
+            FillField(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value)
+            FillField(PartNumberTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderRequestedPartsRow).Value)
+        End If
         If CurrentWorkOrderRequestedPartsRow > -1 Then
             FillField(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsRow).Value)
             FillField(RequestedUnitTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedUnit_ShortText3", CurrentWorkOrderRequestedPartsRow).Value)

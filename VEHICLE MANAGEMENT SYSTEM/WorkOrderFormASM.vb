@@ -35,6 +35,7 @@
     Private WorkOrderConcernsDataGridViewAlreadyFormatted = False
     Private SavedCustomer = ""
     Private PurposeOfEntry As String
+    Private CurrentConcernAssignedServiceSpecialistID = -1
 
     Private WorkOrderConcernJobsFieldsToSelect = " "
     Private WorkOrderConcernJobsTablesLinks = "   "
@@ -396,7 +397,7 @@ ConcernAssignedServiceSpecialist &
         CurrentWorkOrderConcernID = WorkOrderConcernsDataGridView.Item("WorkOrderConcernID_AutoNumber", CurrentWorkOrderConcernsRow).Value
         CurrentConcernID = WorkOrderConcernsDataGridView.Item("ConcernID_LongInteger", CurrentWorkOrderConcernsRow).Value
         CurrentLongTextConcernID = WorkOrderConcernsDataGridView.Item("ConcernLongTextCodeID_LongInteger", CurrentWorkOrderConcernsRow).Value
-        Dim CurrentAssignedServiceSpecialistID = WorkOrderConcernsDataGridView.Item("AssignedServiceSpecialist_LongInteger", CurrentWorkOrderConcernsRow).Value
+        CurrentConcernAssignedServiceSpecialistID = WorkOrderConcernsDataGridView.Item("AssignedServiceSpecialist_LongInteger", CurrentWorkOrderConcernsRow).Value
         CurrentConcernStatus = ""
         FillField(CurrentConcernStatus, WorkOrderConcernsDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderConcernsRow).Value)
         ConcernMenusToolStripMenuItem.Visible = False
@@ -574,13 +575,14 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
                 JobDoneToolStripMenuItem.Visible = True
             ElseIf XXCurrentJobStatus = "All Parts Received" Then
                 ProcessJobToolStripMenuItem.Visible = True
-            ElseIf InStr("No Part Needed/Draft Requisition/Parts From Customer/Assigned", XXCurrentJobStatus) Then
+            ElseIf InStr("No Part Needed/Parts From Customer/Assigned", XXCurrentJobStatus) Then
                 RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                 EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                If CurrentUserGroup = "Automotive Service Specialist" Then
-                    RequestPartsFromWarehouseToolStripMenuItem.Visible = True
-                    ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
-                End If
+            ElseIf InStr("No Action Yet/Draft Requisition//Assigned", XXCurrentJobStatus) Then
+                RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                RequestPartsFromWarehouseToolStripMenuItem.Visible = True
+                ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
             End If
         End If
         WorkOrderPartsPerJobSelectionFilter = " WHERE WorkOrderConcernJobID_AutoNumber = " & CurrentWorkOrderConcernJobID
@@ -765,9 +767,9 @@ WorkOrderConcernJobStatusID_LongInteger
         Dim FieldsData =
 Str(CurrentWorkOrderID) & ",  " &
 Str(CurrentWorkOrderConcernID) & ",  " &
-Str(CurrentPersonelID) & ",  " &
+Str(CurrentConcernAssignedServiceSpecialistID) & ",  " &
 Str(CurrentJobID) & ",  " &
-Str(CurrentConcernJobStatusID)
+GetStatusIdFor("WorkOrderConcernJobsTable")
 
 
         CurrentWorkOrderConcernJobID = InsertNewRecord("WorkOrderConcernJobsTable", FieldsToUpdate, FieldsData)
