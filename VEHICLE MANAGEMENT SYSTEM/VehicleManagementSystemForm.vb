@@ -236,9 +236,7 @@ FROM (((SecurityAccessesTable LEFT JOIN SystemMenusTable ON SecurityAccessesTabl
     Private Sub UpdateStatusTablesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateStatusTablesToolStripMenuItem.Click
         ShowCalledForm(Me, StatusForm)
     End Sub
-
-    Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
-        Tunnel3 = 2
+    Private Sub ProductsToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem1.Click
         ShowCalledForm(Me, ProductsPartsForm)
     End Sub
 End Class
