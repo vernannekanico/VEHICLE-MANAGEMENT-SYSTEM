@@ -50,8 +50,8 @@ SystemMenusTable.MenuLevel2_LongInteger,
 SystemMenusTable.MenuLevel3_LongInteger, 
 DepartmentsTable.DepartmentName_ShortText35, 
 JobPositionsTable.JobPositionName_ShortText40, 
-SecurityAccessesTable.SecurityAccessID_Autonumber
-FROM (((SecurityAccessesTable LEFT JOIN SystemMenusTable ON SecurityAccessesTable.SystemMenuID_LongInteger = SystemMenusTable.SystemMenuID_Autonumber) LEFT JOIN JobPositionsTable ON SecurityAccessesTable.JobPositionID_LongInteger = JobPositionsTable.JobPositionID_AutoNumber) LEFT JOIN FormNamesTable ON SystemMenusTable.FormNameID_LongInteger = FormNamesTable.FormNameID_AutoNumber) LEFT JOIN DepartmentsTable ON JobPositionsTable.DepartmentID_LongInteger = DepartmentsTable.DepartmentID_AutoNumber
+PermissionsTable.PermissionID_Autonumber
+FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMenuID_LongInteger = SystemMenusTable.SystemMenuID_Autonumber) LEFT JOIN JobPositionsTable ON PermissionsTable.JobPositionID_LongInteger = JobPositionsTable.JobPositionID_AutoNumber) LEFT JOIN FormNamesTable ON SystemMenusTable.FormNameID_LongInteger = FormNamesTable.FormNameID_AutoNumber) LEFT JOIN DepartmentsTable ON JobPositionsTable.DepartmentID_LongInteger = DepartmentsTable.DepartmentID_AutoNumber
 " & " WHERE FormName_ShortText30 = " & InQuotes(Me.Name) &
 " AND JobPositionName_ShortText40 = " & InQuotes(CurrentUserGroup)
         JustExecuteMySelection()
