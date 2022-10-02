@@ -558,10 +558,13 @@
 
     End Sub
     Public Sub EnableMenu(SystemsDepartmentToolStripMenuItem As ToolStripMenuItem)
+
         If EnableMenus Then
             SystemsDepartmentToolStripMenuItem.Visible = True
+            SystemsDepartmentToolStripMenuItem.Enabled = True
         Else
             SystemsDepartmentToolStripMenuItem.Visible = False
+            SystemsDepartmentToolStripMenuItem.Enabled = False
         End If
 
     End Sub

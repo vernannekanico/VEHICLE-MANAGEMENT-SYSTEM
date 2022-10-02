@@ -160,10 +160,8 @@ FROM (((SecurityAccessesTable LEFT JOIN SystemMenusTable ON SecurityAccessesTabl
                 ShowCalledForm(Me, WorkOrderFormASM)
         End Select
     End Sub
-    Private Sub PartsRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartsRequisitionsToolStripMenuItem.Click
-        Me.Enabled = False
-        ServiceTechnicianForm.ActivatedBy.Text = Me.Name
-        ServiceTechnicianForm.Show()
+    Private Sub PartsRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllServicedVehiclesOfServicesToolStripMenuItem.Click
+        ShowCalledForm(Me, VehiclesServicedForm)
     End Sub
 
 

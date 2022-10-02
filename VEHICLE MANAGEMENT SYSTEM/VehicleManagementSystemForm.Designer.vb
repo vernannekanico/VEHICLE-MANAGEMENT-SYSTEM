@@ -22,9 +22,9 @@ Partial Class VehicleManagementSystemForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.CurrentPersonnelNameLabel = New System.Windows.Forms.Label()
         Me.VehicleManagementMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SystemsDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -45,7 +45,7 @@ Partial Class VehicleManagementSystemForm
         Me.WorkOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CustomerInfoSysToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehicleInformationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PartsRequisitionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehiclesModelsRelationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MasterCodeBookToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FinanceDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,6 +56,7 @@ Partial Class VehicleManagementSystemForm
         Me.RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseOrderToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.SuyppliersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProductsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.LogisticsDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WarehouseDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InventoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -68,7 +69,6 @@ Partial Class VehicleManagementSystemForm
         Me.LOGINToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EXITSYSTEMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UsersDataGridView = New System.Windows.Forms.DataGridView()
-        Me.ProductsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehicleManagementMenuStrip.SuspendLayout()
         CType(Me.UsersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -208,18 +208,16 @@ Partial Class VehicleManagementSystemForm
         '
         'VehicleInformationsToolStripMenuItem
         '
-        Me.VehicleInformationsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartsRequisitionsToolStripMenuItem, Me.VehiclesModelsRelationsToolStripMenuItem})
-        Me.VehicleInformationsToolStripMenuItem.Enabled = False
+        Me.VehicleInformationsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllServicedVehiclesOfServicesToolStripMenuItem, Me.VehiclesModelsRelationsToolStripMenuItem})
         Me.VehicleInformationsToolStripMenuItem.Name = "VehicleInformationsToolStripMenuItem"
         Me.VehicleInformationsToolStripMenuItem.Size = New System.Drawing.Size(287, 26)
         Me.VehicleInformationsToolStripMenuItem.Text = "Vehicle Informations"
         '
-        'PartsRequisitionsToolStripMenuItem
+        'AllServicedVehiclesOfServicesToolStripMenuItem
         '
-        Me.PartsRequisitionsToolStripMenuItem.Enabled = False
-        Me.PartsRequisitionsToolStripMenuItem.Name = "PartsRequisitionsToolStripMenuItem"
-        Me.PartsRequisitionsToolStripMenuItem.Size = New System.Drawing.Size(256, 26)
-        Me.PartsRequisitionsToolStripMenuItem.Text = "All Serviced Vehicles"
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem.Name = "AllServicedVehiclesOfServicesToolStripMenuItem"
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem.Size = New System.Drawing.Size(256, 26)
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem.Text = "All Serviced Vehicles"
         '
         'VehiclesModelsRelationsToolStripMenuItem
         '
@@ -288,6 +286,12 @@ Partial Class VehicleManagementSystemForm
         Me.SuyppliersToolStripMenuItem.Name = "SuyppliersToolStripMenuItem"
         Me.SuyppliersToolStripMenuItem.Size = New System.Drawing.Size(194, 26)
         Me.SuyppliersToolStripMenuItem.Text = "Suppliers"
+        '
+        'ProductsToolStripMenuItem1
+        '
+        Me.ProductsToolStripMenuItem1.Name = "ProductsToolStripMenuItem1"
+        Me.ProductsToolStripMenuItem1.Size = New System.Drawing.Size(194, 26)
+        Me.ProductsToolStripMenuItem1.Text = "Products"
         '
         'LogisticsDepartmentToolStripMenuItem
         '
@@ -371,28 +375,28 @@ Partial Class VehicleManagementSystemForm
         Me.UsersDataGridView.AllowUserToDeleteRows = False
         Me.UsersDataGridView.AllowUserToOrderColumns = True
         Me.UsersDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.UsersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.UsersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.UsersDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.UsersDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.UsersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.UsersDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UsersDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.UsersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.UsersDataGridView.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UsersDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.UsersDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.UsersDataGridView.Location = New System.Drawing.Point(384, 34)
         Me.UsersDataGridView.Name = "UsersDataGridView"
@@ -402,12 +406,6 @@ Partial Class VehicleManagementSystemForm
         Me.UsersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.UsersDataGridView.Size = New System.Drawing.Size(263, 297)
         Me.UsersDataGridView.TabIndex = 58
-        '
-        'ProductsToolStripMenuItem1
-        '
-        Me.ProductsToolStripMenuItem1.Name = "ProductsToolStripMenuItem1"
-        Me.ProductsToolStripMenuItem1.Size = New System.Drawing.Size(194, 26)
-        Me.ProductsToolStripMenuItem1.Text = "Products"
         '
         'VehicleManagementSystemForm
         '
@@ -459,7 +457,7 @@ Partial Class VehicleManagementSystemForm
     Friend WithEvents WorkOrdersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CustomerInfoSysToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VehicleInformationsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PartsRequisitionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AllServicedVehiclesOfServicesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WarehouseDepartmentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InventoryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeliveriesStripMenuItem As ToolStripMenuItem
