@@ -1,7 +1,7 @@
 ﻿Public Class RequisitionsForm
     'fixed RequisitionsDataGridView of RequisitionsForm
-    '   Private CurrentWorkOrderRequestedPartsDataGridViewRow As Integer = -1
-    '    Private WorkOrderRequestedPartsDataGridViewAlreadyFormated = False
+    '   Private CurrentWorkOrderRequestedPartsItemsDataGridViewRow As Integer = -1
+    '    Private WorkOrderRequestedPartsItemsDataGridViewAlreadyFormated = False
     Private ProductsPartsDataGridViewAlreadyFormated = False
     '   Private CurrentQuantity = -1
 

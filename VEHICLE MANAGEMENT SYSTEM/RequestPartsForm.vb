@@ -54,15 +54,15 @@
         Me.Text = Tunnel3
         VerticalCenter(PartDetailsGroupBox, Me)
         HorizontalCenter(PartDetailsGroupBox, Me)
+        SubmitRequestForPartsToolStripMenuItem.Visible = False
+        RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
+        SaveToolStripMenuItem.Visible = False
         WorkOrderConcernJobsGroupBox.Top = WorkOrderConcernButton.Top + WorkOrderConcernButton.Height
         CurrentWorkOrderConcernID = Tunnel1
         CurrentVehicleString = VehicleNameButton.Text
         WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernID_AutoNumber = " & CurrentWorkOrderConcernID.ToString
         FillWorkOrderConcernJobsDataGridView()
-        SaveToolStripMenuItem.Visible = False
         RemovePartToolStripMenuItem.Visible = False
-        SubmitRequestForPartsToolStripMenuItem.Visible = False
-        RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
         If Me.Text = "Receive parts from the Customer" Then
             RequisitionDetailsGroupBox.Visible = False
             ProductDetailsGroupBox.Visible = True
@@ -111,6 +111,8 @@
             WorkOrderConcernJobTextBox.Text = "All JOBS"
         End If
         RequisitionDetailsGroupBox.Left = WorkOrderConcernJobsGroupBox.Left + WorkOrderConcernJobsGroupBox.Width
+        WorkOrderRequestedPartsGroupBox.Top = WorkOrderPartsGroupBox.Top + WorkOrderPartsGroupBox.Height
+        HorizontalCenter(WorkOrderRequestedPartsGroupBox, Me)
     End Sub
     Private Sub FillWorkOrderConcernJobsDataGridView()
         WorkOrderConcernJobsFieldsToSelect =
@@ -371,7 +373,6 @@ FROM ((((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderParts
         Dim RecordsToDisplay = 7
         SetGroupBoxHeight(RecordsToDisplay, CustomerSuppliedPartsRecordCount, CustomerSuppliedPartsGroupBox, CustomerSuppliedPartsDataGridView)
         SetTopPositionsOfTheGroupBoxes()
-        WorkOrderRequestedPartsGroupBox.Top = WorkOrderPartsGroupBox.Top + WorkOrderPartsGroupBox.Height
         WorkOrderRequestedPartsGroupBox.Left = 10
         WorkOrderRequestedPartsGroupBox.Visible = True
 
