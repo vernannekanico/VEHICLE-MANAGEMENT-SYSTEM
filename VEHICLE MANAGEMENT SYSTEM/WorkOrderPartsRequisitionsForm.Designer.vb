@@ -57,7 +57,7 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.RequisitionsItemsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.WorkOrderPartsRequisitionsItemsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.WorkOrderRequestedPartsItemsDataGridView = New System.Windows.Forms.DataGridView()
         Me.WorkOrderPartsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -77,7 +77,7 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.ReleasePartsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubmitRequisitionsForPurchaseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintReleaseNotesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView = New System.Windows.Forms.DataGridView()
+        Me.WorkOrderRequestedPartsHeadersDataGridView = New System.Windows.Forms.DataGridView()
         Me.PartsReleaseInfoGroupBox = New System.Windows.Forms.GroupBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.ReceivedByTextBox = New System.Windows.Forms.TextBox()
@@ -96,9 +96,9 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.QuantityGroupBox.SuspendLayout()
         Me.RequestForPurchaseGroupBox.SuspendLayout()
         CType(Me.RequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.WorkOrderPartsRequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.WorkOrderRequestedPartsItemsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.WorkOrderPartsMenuStrip.SuspendLayout()
-        CType(Me.WorkOrderPartsRequisitionsHeadersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.WorkOrderRequestedPartsHeadersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PartsReleaseInfoGroupBox.SuspendLayout()
         Me.AvailableStocksGroupBox.SuspendLayout()
         CType(Me.AvailableStocksDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -301,6 +301,7 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.RequestForPurchaseGroupBox.TabIndex = 118
         Me.RequestForPurchaseGroupBox.TabStop = False
         Me.RequestForPurchaseGroupBox.Text = "Requisition for Purchase"
+        Me.RequestForPurchaseGroupBox.Visible = False
         '
         'VehicleModelTextBox
         '
@@ -407,17 +408,17 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.RequisitionsItemsDataGridView.Size = New System.Drawing.Size(711, 75)
         Me.RequisitionsItemsDataGridView.TabIndex = 114
         '
-        'WorkOrderPartsRequisitionsItemsDataGridView
+        'WorkOrderRequestedPartsItemsDataGridView
         '
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.AllowUserToAddRows = False
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.AllowUserToDeleteRows = False
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.AllowUserToOrderColumns = True
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.AllowUserToResizeRows = False
+        Me.WorkOrderRequestedPartsItemsDataGridView.AllowUserToAddRows = False
+        Me.WorkOrderRequestedPartsItemsDataGridView.AllowUserToDeleteRows = False
+        Me.WorkOrderRequestedPartsItemsDataGridView.AllowUserToOrderColumns = True
+        Me.WorkOrderRequestedPartsItemsDataGridView.AllowUserToResizeRows = False
         DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.WorkOrderRequestedPartsItemsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.WorkOrderRequestedPartsItemsDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.WorkOrderRequestedPartsItemsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
+        Me.WorkOrderRequestedPartsItemsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -425,8 +426,8 @@ Partial Class WorkOrderPartsRequisitionsForm
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.WorkOrderRequestedPartsItemsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.WorkOrderRequestedPartsItemsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -434,15 +435,15 @@ Partial Class WorkOrderPartsRequisitionsForm
         DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.DefaultCellStyle = DataGridViewCellStyle5
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.Location = New System.Drawing.Point(782, 110)
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.Name = "WorkOrderPartsRequisitionsItemsDataGridView"
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.ReadOnly = True
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.RowHeadersVisible = False
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.Size = New System.Drawing.Size(313, 51)
-        Me.WorkOrderPartsRequisitionsItemsDataGridView.TabIndex = 116
+        Me.WorkOrderRequestedPartsItemsDataGridView.DefaultCellStyle = DataGridViewCellStyle5
+        Me.WorkOrderRequestedPartsItemsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
+        Me.WorkOrderRequestedPartsItemsDataGridView.Location = New System.Drawing.Point(782, 110)
+        Me.WorkOrderRequestedPartsItemsDataGridView.Name = "WorkOrderRequestedPartsItemsDataGridView"
+        Me.WorkOrderRequestedPartsItemsDataGridView.ReadOnly = True
+        Me.WorkOrderRequestedPartsItemsDataGridView.RowHeadersVisible = False
+        Me.WorkOrderRequestedPartsItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.WorkOrderRequestedPartsItemsDataGridView.Size = New System.Drawing.Size(313, 51)
+        Me.WorkOrderRequestedPartsItemsDataGridView.TabIndex = 116
         '
         'WorkOrderPartsMenuStrip
         '
@@ -565,30 +566,30 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.PrintReleaseNotesToolStripMenuItem.Text = "Print Release Notes"
         Me.PrintReleaseNotesToolStripMenuItem.Visible = False
         '
-        'WorkOrderPartsRequisitionsHeadersDataGridView
+        'WorkOrderRequestedPartsHeadersDataGridView
         '
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.AllowUserToAddRows = False
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.AllowUserToDeleteRows = False
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.AllowUserToResizeRows = False
+        Me.WorkOrderRequestedPartsHeadersDataGridView.AllowUserToAddRows = False
+        Me.WorkOrderRequestedPartsHeadersDataGridView.AllowUserToDeleteRows = False
+        Me.WorkOrderRequestedPartsHeadersDataGridView.AllowUserToResizeRows = False
         DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Navy
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.White
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.Location = New System.Drawing.Point(782, 39)
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.Name = "WorkOrderPartsRequisitionsHeadersDataGridView"
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.ReadOnly = True
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.RowHeadersVisible = False
+        Me.WorkOrderRequestedPartsHeadersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
+        Me.WorkOrderRequestedPartsHeadersDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.WorkOrderRequestedPartsHeadersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.WorkOrderRequestedPartsHeadersDataGridView.Location = New System.Drawing.Point(782, 39)
+        Me.WorkOrderRequestedPartsHeadersDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.WorkOrderRequestedPartsHeadersDataGridView.Name = "WorkOrderRequestedPartsHeadersDataGridView"
+        Me.WorkOrderRequestedPartsHeadersDataGridView.ReadOnly = True
+        Me.WorkOrderRequestedPartsHeadersDataGridView.RowHeadersVisible = False
         DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle7
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.Size = New System.Drawing.Size(311, 51)
-        Me.WorkOrderPartsRequisitionsHeadersDataGridView.TabIndex = 113
+        Me.WorkOrderRequestedPartsHeadersDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle7
+        Me.WorkOrderRequestedPartsHeadersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.WorkOrderRequestedPartsHeadersDataGridView.Size = New System.Drawing.Size(311, 51)
+        Me.WorkOrderRequestedPartsHeadersDataGridView.TabIndex = 113
         '
         'PartsReleaseInfoGroupBox
         '
@@ -770,8 +771,8 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.Controls.Add(Me.QuantityGroupBox)
         Me.Controls.Add(Me.RequestForPurchaseGroupBox)
         Me.Controls.Add(Me.WorkOrderPartsMenuStrip)
-        Me.Controls.Add(Me.WorkOrderPartsRequisitionsHeadersDataGridView)
-        Me.Controls.Add(Me.WorkOrderPartsRequisitionsItemsDataGridView)
+        Me.Controls.Add(Me.WorkOrderRequestedPartsHeadersDataGridView)
+        Me.Controls.Add(Me.WorkOrderRequestedPartsItemsDataGridView)
         Me.Name = "WorkOrderPartsRequisitionsForm"
         Me.Text = "WorkOrderPartsRequisitionsForm"
         Me.QuantityGroupBox.ResumeLayout(False)
@@ -779,10 +780,10 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.RequestForPurchaseGroupBox.ResumeLayout(False)
         Me.RequestForPurchaseGroupBox.PerformLayout()
         CType(Me.RequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.WorkOrderPartsRequisitionsItemsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.WorkOrderRequestedPartsItemsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.WorkOrderPartsMenuStrip.ResumeLayout(False)
         Me.WorkOrderPartsMenuStrip.PerformLayout()
-        CType(Me.WorkOrderPartsRequisitionsHeadersDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.WorkOrderRequestedPartsHeadersDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PartsReleaseInfoGroupBox.ResumeLayout(False)
         Me.PartsReleaseInfoGroupBox.PerformLayout()
         Me.AvailableStocksGroupBox.ResumeLayout(False)
@@ -822,7 +823,7 @@ Partial Class WorkOrderPartsRequisitionsForm
     Friend WithEvents TextBox6 As TextBox
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
-    Friend WithEvents WorkOrderPartsRequisitionsItemsDataGridView As DataGridView
+    Friend WithEvents WorkOrderRequestedPartsItemsDataGridView As DataGridView
     Friend WithEvents WorkOrderPartsMenuStrip As MenuStrip
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CheckStockAvailabilityToolStripMenuItem As ToolStripMenuItem
@@ -830,7 +831,7 @@ Partial Class WorkOrderPartsRequisitionsForm
     Friend WithEvents DeleteProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReleasePartsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SubmitRequisitionsForPurchaseToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents WorkOrderPartsRequisitionsHeadersDataGridView As DataGridView
+    Friend WithEvents WorkOrderRequestedPartsHeadersDataGridView As DataGridView
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PartsReqDetailsToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents OutstandingRequisitionsToolStripMenuItem As ToolStripMenuItem

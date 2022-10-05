@@ -1,13 +1,13 @@
 ﻿Public Class WorkOrderPartsRequisitionsForm
-    Private WorkOrderPartsRequisitionsHeadersFieldsToSelect = ""
-    Private WorkOrderPartsRequisitionsHeadersSelectionFilter = ""
-    Private WorkOrderPartsRequisitionsHeadersSelectionOrder = ""
-    Private WorkOrderPartsRequisitionsHeadersRecordCount As Integer = -1
-    Private WorkOrderPartsRequisitionsHeadersDataGridViewAlreadyFormated = False
-    Private CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow As Integer = -1
+    Private WorkOrderRequestedPartsHeadersFieldsToSelect = ""
+    Private WorkOrderRequestedPartsHeadersSelectionFilter = ""
+    Private WorkOrderRequestedPartsHeadersSelectionOrder = ""
+    Private WorkOrderRequestedPartsHeadersRecordCount As Integer = -1
+    Private WorkOrderRequestedPartsHeadersDataGridViewAlreadyFormated = False
+    Private CurrentWorkOrderRequestedPartsHeadersDataGridViewRow As Integer = -1
     Private CurrentWorkOrderPartsRequisitionsHeaderID As Integer = -1
-    Private CurrentWorkOrderPartsRequisitionsHeadersStatusSelection = -1
-    Private WorkOrderPartsRequisitionsHeaderStatus = ""
+    Private CurrentWorkOrderRequestedPartsHeadersStatusSelection = -1
+    Private WorkOrderRequestedPartsHeaderStatus = ""
 
     Private WorkOrderPartsRequisitionsItemsFieldsToSelect = ""
     Private WorkOrderPartsRequisitionsItemsSelectionFilter = ""
@@ -55,17 +55,17 @@
     Private CurrentQtyToOrder = -1
     Private CurrentMasterCodeBookId = -1
     Private SavedCallingForm As Form
-    Private Sub WorkOrderPartsRequisitionsHeadersForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub WorkOrderRequestedPartsHeadersForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
         Me.Text = "Parts for Issuance"
-        CurrentWorkOrderPartsRequisitionsHeadersStatusSelection = 0
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable", "Warehouse Outstanding", 1), 1, Me, "Warehouse Outstanding")
+        CurrentWorkOrderRequestedPartsHeadersStatusSelection = 0
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable", "Warehouse Outstanding", 1), 1, Me, "Warehouse Outstanding")
         SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = True
         QuantityGroupBox.Top = (Me.Height - QuantityGroupBox.Height) / 2
         QuantityGroupBox.Left = (Me.Width - QuantityGroupBox.Width) / 2
     End Sub
 
-    Private Sub WorkOrderPartsRequisitionsHeadersForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+    Private Sub WorkOrderRequestedPartsHeadersForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
         CallingForm = SavedCallingForm
 
@@ -103,90 +103,75 @@
 
     End Sub
 
-    Private Sub FillWorkOrderPartsRequisitionsHeadersDataGridView()
+    Private Sub FillWorkOrderRequestedPartsHeadersDataGridView()
 
 
-        WorkOrderPartsRequisitionsHeadersFieldsToSelect = "
-Select
-WorkOrdersTable.WorkOrderNumber_ShortText12,
-WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderNumber_ShortText12,
-WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderRevision_Integer,
-WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate,
-WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger,
-(VehiclesTable.YearManufactured_ShortText4 & Space(1) & 
-Trim(VehicleTypeTable.VehicleType_ShortText20) & Space(1) & 
-Trim(VehicleModelsTable.VehicleModel_ShortText20) & Space(1) & 
-Trim(VehicleTrimTable.VehicleTrimName_ShortText25) & Space(1) & 
-Trim(VehiclesTable.Engine_ShortText20)) As VehicleName,
-(PersonnelTable.LastName_ShortText30 & space(1) & mid(PersonnelTable.FirstName_ShortText30,1,1)) As RequestedBy,
-WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger,
-WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber,
-StatusesTable.StatusSequence_LongInteger,
-StatusesTable.StatusText_ShortText25
-FROM ((((((((WorkOrderRequestedPartsHeadersTable 
-LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) 
-LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) 
-LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) 
-LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) 
-LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) 
-LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) 
-LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) 
-LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) 
-LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber
+        WorkOrderRequestedPartsHeadersFieldsToSelect = "
+SELECT 
+WorkOrdersTable.WorkOrderNumber_ShortText12, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderNumber_ShortText12, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderRevision_Integer, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate, 
+WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber, 
+VehicleDescription.VehicleDescription,
+StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25
+FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleDescription ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber
 "
-        WorkOrderPartsRequisitionsHeadersSelectionOrder = " ORDER BY WorkOrderRequestedPartsHeaderID_AutoNumber DESC "
+        WorkOrderRequestedPartsHeadersSelectionOrder = " ORDER BY WorkOrderRequestedPartsHeaderID_AutoNumber DESC "
 
-        MySelection = WorkOrderPartsRequisitionsHeadersFieldsToSelect & WorkOrderPartsRequisitionsHeadersSelectionFilter & WorkOrderPartsRequisitionsHeadersSelectionOrder
+        MySelection = WorkOrderRequestedPartsHeadersFieldsToSelect & WorkOrderRequestedPartsHeadersSelectionFilter & WorkOrderRequestedPartsHeadersSelectionOrder
 
         JustExecuteMySelection()
-        WorkOrderPartsRequisitionsHeadersRecordCount = RecordCount
-        WorkOrderPartsRequisitionsHeadersDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        WorkOrderRequestedPartsHeadersRecordCount = RecordCount
+        WorkOrderRequestedPartsHeadersDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
 
         Dim RecordsToDisplay = 8
-        If WorkOrderPartsRequisitionsHeadersRecordCount < RecordsToDisplay Then RecordsToDisplay = WorkOrderPartsRequisitionsHeadersRecordCount
-        WorkOrderPartsRequisitionsHeadersDataGridView.Height = WorkOrderPartsRequisitionsHeadersDataGridView.ColumnHeadersHeight + (DataGridViewRowHeight * (RecordsToDisplay + 1))
+        If WorkOrderRequestedPartsHeadersRecordCount < RecordsToDisplay Then RecordsToDisplay = WorkOrderRequestedPartsHeadersRecordCount
+        WorkOrderRequestedPartsHeadersDataGridView.Height = WorkOrderRequestedPartsHeadersDataGridView.ColumnHeadersHeight + (DataGridViewRowHeight * (RecordsToDisplay + 1))
 
-        If Not WorkOrderPartsRequisitionsHeadersDataGridViewAlreadyFormated Then
-            FormatWorkOrderPartsRequisitionsHeadersDataGridView()
+        If Not WorkOrderRequestedPartsHeadersDataGridViewAlreadyFormated Then
+            FormatWorkOrderRequestedPartsHeadersDataGridView()
         End If
 
     End Sub
-    Private Sub FormatWorkOrderPartsRequisitionsHeadersDataGridView()
-        WorkOrderPartsRequisitionsHeadersDataGridViewAlreadyFormated = True
-        WorkOrderPartsRequisitionsHeadersDataGridView.Width = 0
-        For i = 0 To WorkOrderPartsRequisitionsHeadersDataGridView.Columns.GetColumnCount(0) - 1
+    Private Sub FormatWorkOrderRequestedPartsHeadersDataGridView()
+        WorkOrderRequestedPartsHeadersDataGridViewAlreadyFormated = True
+        WorkOrderRequestedPartsHeadersDataGridView.Width = 0
+        For i = 0 To WorkOrderRequestedPartsHeadersDataGridView.Columns.GetColumnCount(0) - 1
 
-            WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = False
+            WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = False
 
-            Select Case WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText
+            Select Case WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText
 
-                Case "VehicleName"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText = "Model"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width = 300
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True
+                Case "VehicleDescription"
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Model"
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 300
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "WorkOrderNumber_ShortText12"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText = "Work Order #"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width = 170
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Work Order #"
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 170
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "WorkOrderPartsRequisitionNumber_ShortText12"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText = "Requitition No. "
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width = 100
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Requitition No. "
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 100
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "WorkOrderPartsRequisitionRevision_Integer"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText = "Rev"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width = 30
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Rev"
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 30
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "WorkOrderPartsRequisitionDate_ShortDate"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText = "Date"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width = 120
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Date"
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 120
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "StatusText_ShortText25"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).HeaderText = "Status"
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width = 250
-                    WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Status"
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 250
+                    WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
             End Select
-            If WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Visible = True Then
-                WorkOrderPartsRequisitionsHeadersDataGridView.Width = WorkOrderPartsRequisitionsHeadersDataGridView.Width + WorkOrderPartsRequisitionsHeadersDataGridView.Columns.Item(i).Width
+            If WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True Then
+                WorkOrderRequestedPartsHeadersDataGridView.Width = WorkOrderRequestedPartsHeadersDataGridView.Width + WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width
             End If
         Next
         ' NOTE" SYSTEM AUTOFITS THE GRIDVIEW FIELDS ACCORDING To THEIR WITDH
@@ -196,38 +181,38 @@ LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequeste
         Me.Location = New Point(Me.Location.X, 55)
         Me.Left = VehicleManagementSystemForm.Left
 
-        If WorkOrderPartsRequisitionsHeadersDataGridView.Width > Me.Width Then
-            WorkOrderPartsRequisitionsHeadersDataGridView.Width = Me.Width - 8
+        If WorkOrderRequestedPartsHeadersDataGridView.Width > Me.Width Then
+            WorkOrderRequestedPartsHeadersDataGridView.Width = Me.Width - 8
         End If
 
-        WorkOrderPartsRequisitionsHeadersDataGridView.Left = 5
-        WorkOrderPartsRequisitionsHeadersDataGridView.Top = WorkOrderPartsMenuStrip.Top + WorkOrderPartsMenuStrip.Height
+        WorkOrderRequestedPartsHeadersDataGridView.Left = 5
+        WorkOrderRequestedPartsHeadersDataGridView.Top = WorkOrderPartsMenuStrip.Top + WorkOrderPartsMenuStrip.Height
 
-        WorkOrderPartsRequisitionsItemsDataGridView.Top = WorkOrderPartsRequisitionsHeadersDataGridView.Top + WorkOrderPartsRequisitionsHeadersDataGridView.Height
-        WorkOrderPartsRequisitionsItemsDataGridView.Left = (Me.Width - WorkOrderPartsRequisitionsItemsDataGridView.Width) / 2
+        WorkOrderRequestedPartsItemsDataGridView.Top = WorkOrderRequestedPartsHeadersDataGridView.Top + WorkOrderRequestedPartsHeadersDataGridView.Height
+        WorkOrderRequestedPartsItemsDataGridView.Left = (Me.Width - WorkOrderRequestedPartsItemsDataGridView.Width) / 2
 
-        RequestForPurchaseGroupBox.Top = WorkOrderPartsRequisitionsItemsDataGridView.Top + WorkOrderPartsRequisitionsItemsDataGridView.Height
+        RequestForPurchaseGroupBox.Top = WorkOrderRequestedPartsItemsDataGridView.Top + WorkOrderRequestedPartsItemsDataGridView.Height
         RequestForPurchaseGroupBox.Width = Me.Width - 6
         RequestForPurchaseGroupBox.Left = (Me.Width - RequestForPurchaseGroupBox.Width) / 2
         RequisitionsItemsDataGridView.Left = 5
     End Sub
-    Private Sub WorkOrderPartsRequisitionsHeadersDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles WorkOrderPartsRequisitionsHeadersDataGridView.RowEnter
+    Private Sub WorkOrderRequestedPartsHeadersDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles WorkOrderRequestedPartsHeadersDataGridView.RowEnter
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
-        If WorkOrderPartsRequisitionsHeadersRecordCount = 0 Then Exit Sub
-        CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow = e.RowIndex
+        If WorkOrderRequestedPartsHeadersRecordCount = 0 Then Exit Sub
+        CurrentWorkOrderRequestedPartsHeadersDataGridViewRow = e.RowIndex
 
-        CurrentWorkOrderPartsRequisitionsHeaderID = WorkOrderPartsRequisitionsHeadersDataGridView.Item("WorkOrderRequestedPartsHeaderID_AutoNumber", CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow).Value
-        Dim CurrentWorkOrderPartsRequisitionsHeaderStatusSequence = WorkOrderPartsRequisitionsHeadersDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow).Value
-        WorkOrderPartsRequisitionsHeaderStatus = WorkOrderPartsRequisitionsHeadersDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow).Value
-        CurrentWorkOrderID = WorkOrderPartsRequisitionsHeadersDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow).Value
-        VehicleModelTextBox.Text = WorkOrderPartsRequisitionsHeadersDataGridView.Item("VehicleName", CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow).Value
+        CurrentWorkOrderPartsRequisitionsHeaderID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderRequestedPartsHeaderID_AutoNumber", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        Dim CurrentWorkOrderRequestedPartsHeaderstatusSequence = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        WorkOrderRequestedPartsHeaderStatus = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        CurrentWorkOrderID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        VehicleModelTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("VehicleDescription", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         EditPartDetailsToolStripMenuItem.Visible = False
         DeleteProductToolStripMenuItem.Visible = False
         SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
 
 
-        Select Case WorkOrderPartsRequisitionsHeaderStatus
+        Select Case WorkOrderRequestedPartsHeaderStatus
             Case "Draft Requisition"
                 SubmitRequisitionsForPurchaseToolStripMenuItem.Text = "Submit Requisitions for Purchase"
                 SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
@@ -240,8 +225,8 @@ LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequeste
 
         WorkOrderPartsRequisitionsItemsSelectionFilter = " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderPartsRequisitionsHeaderID.ToString
         FillWorkOrderPartsRequisitionsDataGridView()
-        RequisitionsItemsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & CurrentWorkOrderID
-        FillRequisitionsItemsDataGridView()
+        '       RequisitionsItemsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & CurrentWorkOrderID
+        '       FillRequisitionsItemsDataGridView()
 
     End Sub
 
@@ -252,8 +237,8 @@ LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequeste
         EditPartDetailsToolStripMenuItem.Visible = False
         DeleteProductToolStripMenuItem.Visible = False
         ViewToolStripMenuItem.Visible = False
-        WorkOrderPartsRequisitionsHeadersDataGridView.Enabled = False
-        WorkOrderPartsRequisitionsItemsDataGridView.Enabled = False
+        WorkOrderRequestedPartsHeadersDataGridView.Enabled = False
+        WorkOrderRequestedPartsItemsDataGridView.Enabled = False
         WorkOrderPartsRequisitionsItemsSelectionFilter = " WHERE WorkOrderPartsRequisitionsID_LongInteger = " & CurrentWorkOrderPartsRequisitionsHeaderID &
                                                             " and QuantityInStock_Double > 0"
         FillWorkOrderPartsRequisitionsDataGridView()
@@ -261,7 +246,7 @@ LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequeste
 
 
     Private Sub FillWorkOrderPartsRequisitionsDataGridView()
-        WorkOrderPartsRequisitionsItemsDataGridView.Visible = True
+        WorkOrderRequestedPartsItemsDataGridView.Visible = True
 
         WorkOrderPartsRequisitionsItemsFieldsToSelect =
 "
@@ -295,11 +280,11 @@ FROM ((((((RequisitionsItemsTable RIGHT JOIN WorkOrderRequestedPartsTable ON Req
         JustExecuteMySelection()
 
         WorkOrderPartsRequisitionsItemsRecordCount = RecordCount
-        WorkOrderPartsRequisitionsItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        WorkOrderRequestedPartsItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
 
         Dim xxQuantityInStock = 0
         For i = 0 To WorkOrderPartsRequisitionsItemsRecordCount - 1
-            If IsNotEmpty(WorkOrderPartsRequisitionsItemsDataGridView.Item("QuantityInStock_Double", i).Value) Then
+            If IsNotEmpty(WorkOrderRequestedPartsItemsDataGridView.Item("QuantityInStock_Double", i).Value) Then
                 xxQuantityInStock = xxQuantityInStock + 1
             End If
         Next
@@ -326,97 +311,97 @@ FROM ((((((RequisitionsItemsTable RIGHT JOIN WorkOrderRequestedPartsTable ON Req
         End If
 
 
-        WorkOrderPartsRequisitionsItemsDataGridView.Height = (WorkOrderPartsRequisitionsItemsDataGridView.ColumnHeadersHeight * NoOfHeaderLines) + (DataGridViewRowHeight * (RecordsDisplyed + 1))
+        WorkOrderRequestedPartsItemsDataGridView.Height = (WorkOrderRequestedPartsItemsDataGridView.ColumnHeadersHeight * NoOfHeaderLines) + (DataGridViewRowHeight * (RecordsDisplyed + 1))
 
     End Sub
     Private Sub FormatWorkOrderPartsRequisitionsDataGridView()
         WorkOrderPartsRequisitionsItemsDataGridViewAlreadyFormated = True
 
-        WorkOrderPartsRequisitionsItemsDataGridView.Width = 0
+        WorkOrderRequestedPartsItemsDataGridView.Width = 0
 
-        For i = 0 To WorkOrderPartsRequisitionsItemsDataGridView.Columns.GetColumnCount(0) - 1
+        For i = 0 To WorkOrderRequestedPartsItemsDataGridView.Columns.GetColumnCount(0) - 1
 
-            WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = False
+            WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = False
 
-            Select Case WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Name
+            Select Case WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Name
                 Case "SystemDesc_ShortText100Fld"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Part"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 300
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Part"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 300
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "PartSpecifications_ShortText255"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Specifications"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 250
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Specifications"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 250
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerPartNo_ShortText30Fld"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Manuf Part #"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 150
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Manuf Part #"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 150
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerDescription_ShortText250"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Manuf Desc."
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 300
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Manuf Desc."
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 300
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "Quantity_Integer"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Request"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 70
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Request"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 70
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "QuantityInStock_Double"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Available"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 70
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Available"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 70
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "RequestedQuantity_Double"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "to Issue"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 70
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "to Issue"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 70
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "RequisitionQuantity_Double"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "to order"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 70
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "to order"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 70
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "BrandName_ShortText20"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Brand"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 200
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Brand"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 200
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "WorkOrderPartsTable.Unit_ShortText3"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "WO UNIT"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 70
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "WO UNIT"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 70
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ProductDescription_ShortText250"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Orig excel Desc."
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 400
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Orig excel Desc."
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 400
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "Location_ShortText10"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Location"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 80
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Location"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 80
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
                 Case "StatusText_ShortText25"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "Requisition Status"
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width = 100
-                    WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).HeaderText = "Requisition Status"
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width = 100
+                    WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True
             End Select
-            If WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Visible = True Then
-                WorkOrderPartsRequisitionsItemsDataGridView.Width = WorkOrderPartsRequisitionsItemsDataGridView.Width + WorkOrderPartsRequisitionsItemsDataGridView.Columns.Item(i).Width
+            If WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Visible = True Then
+                WorkOrderRequestedPartsItemsDataGridView.Width = WorkOrderRequestedPartsItemsDataGridView.Width + WorkOrderRequestedPartsItemsDataGridView.Columns.Item(i).Width
             End If
         Next
-        If WorkOrderPartsRequisitionsItemsDataGridView.Width > Me.Width Then
-            WorkOrderPartsRequisitionsItemsDataGridView.Width = Me.Width - 20
+        If WorkOrderRequestedPartsItemsDataGridView.Width > Me.Width Then
+            WorkOrderRequestedPartsItemsDataGridView.Width = Me.Width - 20
         End If
-        WorkOrderPartsRequisitionsItemsDataGridView.Left = (Me.Width - WorkOrderPartsRequisitionsItemsDataGridView.Width) / 2
+        WorkOrderRequestedPartsItemsDataGridView.Left = (Me.Width - WorkOrderRequestedPartsItemsDataGridView.Width) / 2
 
     End Sub
 
-    Private Sub WorkOrderPartsRequisitionsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles WorkOrderPartsRequisitionsItemsDataGridView.RowEnter
+    Private Sub WorkOrderPartsRequisitionsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles WorkOrderRequestedPartsItemsDataGridView.RowEnter
         CurrentWorkOrderPartID = -1
         If e.RowIndex < 0 Then Exit Sub
         If WorkOrderPartsRequisitionsItemsRecordCount = 0 Then Exit Sub
         CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow = e.RowIndex
-        CurrentRequisitionsItemID = WorkOrderPartsRequisitionsItemsDataGridView.Item("RequisitionsItemID_AutoNumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
-        Dim CurrentPartStatus = WorkOrderPartsRequisitionsItemsDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        CurrentRequisitionsItemID = WorkOrderRequestedPartsItemsDataGridView.Item("RequisitionsItemID_AutoNumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        Dim CurrentPartStatus = WorkOrderRequestedPartsItemsDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
 
-        CurrentWorkOrderPartsRequisitionsItemsID = WorkOrderPartsRequisitionsItemsDataGridView.Item("WorkOrderRequestedPartID_AutoNumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
-        CurrentWorkOrderPartID = WorkOrderPartsRequisitionsItemsDataGridView.Item("WorkOrderPartID_Autonumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
-        CurrentMasterCodeBookId = WorkOrderPartsRequisitionsItemsDataGridView.Item("MasterCodeBookID_Autonumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
-        FillField(CurrentCodeVehicleID, WorkOrderPartsRequisitionsItemsDataGridView.Item("CodeVehicleID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value)
-        CurrentPartsSpecificationID = WorkOrderPartsRequisitionsItemsDataGridView.Item("PartsSpecificationID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
-        RequestedQuantityTextBox.Text = WorkOrderPartsRequisitionsItemsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        CurrentWorkOrderPartsRequisitionsItemsID = WorkOrderRequestedPartsItemsDataGridView.Item("WorkOrderRequestedPartID_AutoNumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        CurrentWorkOrderPartID = WorkOrderRequestedPartsItemsDataGridView.Item("WorkOrderPartID_Autonumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        CurrentMasterCodeBookId = WorkOrderRequestedPartsItemsDataGridView.Item("MasterCodeBookID_Autonumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        FillField(CurrentCodeVehicleID, WorkOrderRequestedPartsItemsDataGridView.Item("CodeVehicleID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value)
+        CurrentPartsSpecificationID = WorkOrderRequestedPartsItemsDataGridView.Item("PartsSpecificationID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        RequestedQuantityTextBox.Text = WorkOrderRequestedPartsItemsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
 
         If Not (PrintReleaseNotesToolStripMenuItem.Visible Or PartsReleaseInfoGroupBox.Visible) Then
             DeleteProductToolStripMenuItem.Visible = True
@@ -431,11 +416,11 @@ FROM ((((((RequisitionsItemsTable RIGHT JOIN WorkOrderRequestedPartsTable ON Req
             Case "Warehouse Outstanding"
                 CheckStockAvailabilityToolStripMenuItem.Visible = True
                 EditPartDetailsToolStripMenuItem.Visible = True
-                If IsNotEmpty(WorkOrderPartsRequisitionsItemsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
+                If IsNotEmpty(WorkOrderRequestedPartsItemsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
                     DeleteProductToolStripMenuItem.Visible = True
                 End If
         End Select
-        CurrentWorkOrderPartID = WorkOrderPartsRequisitionsItemsDataGridView.Item("WorkOrderPartID_AutoNumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        CurrentWorkOrderPartID = WorkOrderRequestedPartsItemsDataGridView.Item("WorkOrderPartID_AutoNumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
 
         WorkOrderIssuedPartsSelectionFilter = " WHERE WorkOrderPartID_LongInteger = " & CurrentWorkOrderPartID.ToString
         FillWorkOrderIssuedPartsDataGridView()
@@ -451,18 +436,18 @@ FROM ((((((RequisitionsItemsTable RIGHT JOIN WorkOrderRequestedPartsTable ON Req
         End If
 
 
-        If IsNotEmpty(WorkOrderPartsRequisitionsItemsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
-            ToIssueQuantityTextBox.Text = WorkOrderPartsRequisitionsItemsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        If IsNotEmpty(WorkOrderRequestedPartsItemsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
+            ToIssueQuantityTextBox.Text = WorkOrderRequestedPartsItemsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
         End If
-        If IsNotEmpty(WorkOrderPartsRequisitionsItemsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
-            CurrentProductsPartID = WorkOrderPartsRequisitionsItemsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        If IsNotEmpty(WorkOrderRequestedPartsItemsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
+            CurrentProductsPartID = WorkOrderRequestedPartsItemsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
             CheckStockAvailabilityToolStripMenuItem.Visible = False
         Else
             CurrentProductsPartID = -1
             CheckStockAvailabilityToolStripMenuItem.Visible = True
         End If
-        If IsNotEmpty(WorkOrderPartsRequisitionsItemsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
-            ToOrderQuantityTextBox.Text = WorkOrderPartsRequisitionsItemsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        If IsNotEmpty(WorkOrderRequestedPartsItemsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
+            ToOrderQuantityTextBox.Text = WorkOrderRequestedPartsItemsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
         Else
             ToOrderQuantityTextBox.Text = "0"
         End If
@@ -496,7 +481,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable LEFT JOIN ProductsPartsT
 
         If AvailableStocksRecordCount > 0 Then
             AvailableStocksGroupBox.Visible = True
-            AvailableStocksGroupBox.Top = WorkOrderPartsRequisitionsItemsDataGridView.Top + WorkOrderPartsRequisitionsItemsDataGridView.Height
+            AvailableStocksGroupBox.Top = WorkOrderRequestedPartsItemsDataGridView.Top + WorkOrderRequestedPartsItemsDataGridView.Height
         Else
             CurrentAvailableStockID = -1
             AvailableStocksGroupBox.Visible = False
@@ -602,7 +587,7 @@ FROM ((((RequisitionsItemsTable LEFT JOIN ((((WorkOrderRequestedPartsTable LEFT 
         RequisitionsItemsRecordCount = RecordCount
         RequisitionsItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If RequisitionsItemsRecordCount > 0 Then
-            RequestForPurchaseGroupBox.Visible = True
+            '    RequestForPurchaseGroupBox.Visible = True
             SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = True
         Else
             RequestForPurchaseGroupBox.Visible = False
@@ -807,7 +792,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
 
 
     Private Sub CheckAndIssueThisPartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckStockAvailabilityToolStripMenuItem.Click
-        ProductsPartsForm.PartDescriptionSearchTextBox.Text = WorkOrderPartsRequisitionsItemsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+        ProductsPartsForm.PartDescriptionSearchTextBox.Text = WorkOrderRequestedPartsItemsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
         ProductsPartsForm.VehicleModelSearchTextBox.Text = VehicleModelTextBox.Text
         ProductsPartsForm.CurrentVehicleID = CurrentVehicleID
 
@@ -833,7 +818,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                     FillWorkOrderPartsRequisitionsDataGridView()
                 End If
             End If
-            WorkOrderPartsRequisitionsItemsDataGridView.Refresh()
+            WorkOrderRequestedPartsItemsDataGridView.Refresh()
         End If
     End Sub
 
@@ -911,7 +896,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         JustExecuteMySelection()
 
         QuantityGroupBox.Visible = False
-        FillWorkOrderPartsRequisitionsHeadersDataGridView()
+        FillWorkOrderRequestedPartsHeadersDataGridView()
 
     End Sub
 
@@ -919,13 +904,13 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         If QuantityGroupBox.Visible = True Then
             If IsEmpty(ToOrderQuantityTextBox.Text) Then ToOrderQuantityTextBox.Text = ToIssueQuantityTextBox.Text
             EditPartDetailsToolStripMenuItem.Visible = False
-            WorkOrderPartsRequisitionsHeadersDataGridView.Enabled = False
-            WorkOrderPartsRequisitionsItemsDataGridView.Enabled = False
+            WorkOrderRequestedPartsHeadersDataGridView.Enabled = False
+            WorkOrderRequestedPartsItemsDataGridView.Enabled = False
             RequestForPurchaseGroupBox.Enabled = False
         Else
             EditPartDetailsToolStripMenuItem.Visible = True
-            WorkOrderPartsRequisitionsHeadersDataGridView.Enabled = True
-            WorkOrderPartsRequisitionsItemsDataGridView.Enabled = True
+            WorkOrderRequestedPartsHeadersDataGridView.Enabled = True
+            WorkOrderRequestedPartsItemsDataGridView.Enabled = True
             RequestForPurchaseGroupBox.Enabled = True
         End If
     End Sub
@@ -937,7 +922,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                 UpdateWorkOrderPartsRequisitionsTable()
             End If
         End If
-        If Val(ToOrderQuantityTextBox.Text) <> NotNull(WorkOrderPartsRequisitionsItemsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
+        If Val(ToOrderQuantityTextBox.Text) <> NotNull(WorkOrderRequestedPartsItemsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value) Then
             If Val(ToOrderQuantityTextBox.Text) > 0 Then
                 UpdateRequisitionsItemsTable()
             Else
@@ -951,13 +936,13 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                                     " WHERE WorkOrderRequestedPartID_AutoNumber = " & CurrentWorkOrderPartsRequisitionsItemsID.ToString
 
                         JustExecuteMySelection()
-                        WorkOrderPartsRequisitionsItemsDataGridView.RefreshEdit()
+                        WorkOrderRequestedPartsItemsDataGridView.RefreshEdit()
                         If WorkOrderPartsRequisitionsItemsRecordCount = 1 Then
                             MySelection = " UPDATE WorkOrderRequestedPartsHeadersTable " &
                                     " SET WorkOrderPartsRequisitionStatusID_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsHeadersTable").ToString &
                                     " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderPartsRequisitionsHeaderID.ToString
                             JustExecuteMySelection()
-                            WorkOrderPartsRequisitionsItemsDataGridView.RefreshEdit()
+                            WorkOrderRequestedPartsItemsDataGridView.RefreshEdit()
                         End If
                     End If
                 End If
@@ -1108,48 +1093,48 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
     End Sub
     Private Sub OutstandingRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OutstandingRequisitionsToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Procurement Outstanding"), 1, Me, "Outstanding Requisitions")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Procurement Outstanding"), 1, Me, "Outstanding Requisitions")
     End Sub
 
     Private Sub DraftRequisitiosForPurchaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DraftRequisitiosForPurchaseToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Draft Requisition"), 2, Me, "Draft Requisition")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Draft Requisition"), 2, Me, "Draft Requisition")
     End Sub
     Private Sub AllPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmittedRequisitionsToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Procurement Outstanding"), 3, Me, "Submitted Requisitions")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Procurement Outstanding"), 3, Me, "Submitted Requisitions")
     End Sub
 
     Private Sub PrintPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReOrderedToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Re-ordered"), 2, Me, "Re-ordered")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Re-ordered"), 2, Me, "Re-ordered")
     End Sub
 
     Private Sub ReorderedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartiallyDeliveredToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Partially Delivered"), 2, Me, "Partially Delivered")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Partially Delivered"), 2, Me, "Partially Delivered")
     End Sub
 
     Private Sub CompletelyReceivedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompletelyDeliveredToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Completely Delivered"), 2, Me, "Completely Delivered")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Completely Delivered"), 2, Me, "Completely Delivered")
     End Sub
 
     Private Sub FinalizedPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartiallyIssuedToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Partially Issued"), 2, Me, "Partially Issued")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Partially Issued"), 2, Me, "Partially Issued")
     End Sub
 
     Private Sub CompletelyIssuedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompletelyIssuedToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Completely Issued"), 2, Me, "Completely Issued")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Completely Issued"), 2, Me, "Completely Issued")
     End Sub
 
     Private Sub AllPartsRequisitionsForIssuanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllPartsRequisitionsForIssuanceToolStripMenuItem.Click
-        SetWorkOrderPartsRequisitionsHeadersSelectionFilter(GetStatusIdFor("Used"), 3, Me, "ALL REQUISITIONS")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Used"), 3, Me, "ALL REQUISITIONS")
     End Sub
-    Private Sub SetWorkOrderPartsRequisitionsHeadersSelectionFilter(PassedStatusSequence As Integer, PassedStatusSequenceCondition As Integer, PassedForm As Form, FormHeaderText As String)
-        WorkOrderPartsRequisitionsHeadersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, PassedStatusSequenceCondition, PassedForm, FormHeaderText)
-        FillWorkOrderPartsRequisitionsHeadersDataGridView()
+    Private Sub SetWorkOrderRequestedPartsHeadersSelectionFilter(PassedStatusSequence As Integer, PassedStatusSequenceCondition As Integer, PassedForm As Form, FormHeaderText As String)
+        WorkOrderRequestedPartsHeadersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, PassedStatusSequenceCondition, PassedForm, FormHeaderText)
+        FillWorkOrderRequestedPartsHeadersDataGridView()
     End Sub
 
     Private Sub PrintReleaseNotesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintReleaseNotesToolStripMenuItem.Click
         PrintReleaseNotesToolStripMenuItem.Visible = False
         PartsReleaseInfoGroupBox.Visible = True
-        ReceivedByTextBox.Text = WorkOrderPartsRequisitionsHeadersDataGridView.Item("RequestedBy", CurrentWorkOrderPartsRequisitionsHeadersDataGridViewRow).Value
+        ReceivedByTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("RequestedBy", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
     End Sub
 
     Private Sub ReceivedByTextBox_Click(sender As Object, e As EventArgs) Handles ReceivedByTextBox.Click
@@ -1167,14 +1152,14 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
             'WorkOrderRequestedPartStatus_Integer   if issued quantity  - requested quantity "Partially Issued" else 
             '                                                                                        "Completely Issued"
             xxStatus = "Completely Issued"
-            Dim xxOrdered = WorkOrderPartsRequisitionsItemsDataGridView.Item("RequestedQuantity_Double", i).Value
-            Dim xxQuantityInStock_Double = WorkOrderPartsRequisitionsItemsDataGridView.Item("QuantityInStock_Double", i).Value
+            Dim xxOrdered = WorkOrderRequestedPartsItemsDataGridView.Item("RequestedQuantity_Double", i).Value
+            Dim xxQuantityInStock_Double = WorkOrderRequestedPartsItemsDataGridView.Item("QuantityInStock_Double", i).Value
             Dim xxToIssue = xxOrdered
             If xxQuantityInStock_Double - xxOrdered Then
                 xxToIssue = xxQuantityInStock_Double
                 xxStatus = "Partially Issued"
             End If
-            CurrentWorkOrderPartsRequisitionsItemsID = WorkOrderPartsRequisitionsItemsDataGridView.Item("WorkOrderRequestedPartID_AutoNumber", i).Value
+            CurrentWorkOrderPartsRequisitionsItemsID = WorkOrderRequestedPartsItemsDataGridView.Item("WorkOrderRequestedPartID_AutoNumber", i).Value
 
             MySelection = " UPDATE WorkOrderRequestedPartsTable  " &
                               " SET WorkOrderRequestedPartStatus_Integer = " &
@@ -1192,7 +1177,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
             Dim xxAvailableStockBalance = xxQuantityInStock_Double - xxToIssue
 
 
-            Dim xxStockID = WorkOrderPartsRequisitionsItemsDataGridView.Item("StockID_Autonumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
+            Dim xxStockID = WorkOrderRequestedPartsItemsDataGridView.Item("StockID_Autonumber", CurrentWorkOrderPartsRequisitionsItemsDataGridViewRow).Value
             Dim xxFilter = " WHERE StockID_Autonumber = " & xxStockID.ToString
             MySelection = " UPDATE StocksTable " &
                                " SET QuantityInStock_Double = " & xxAvailableStockBalance.ToString
@@ -1213,7 +1198,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
         xxStatus = "Completely Issued"
         'Determine if all items in these requisition are all Issued
         For i = 0 To WorkOrderPartsRequisitionsItemsRecordCount - 1
-            Dim xxStatusText_ShortText25 = WorkOrderPartsRequisitionsItemsDataGridView.Item("StatusText_ShortText25", i).Value
+            Dim xxStatusText_ShortText25 = WorkOrderRequestedPartsItemsDataGridView.Item("StatusText_ShortText25", i).Value
             If Not xxStatusText_ShortText25 = "Completely Issued" Then
                 xxStatus = "Partially Issued"
             End If
@@ -1223,6 +1208,6 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
                               " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderPartsRequisitionsHeaderID.ToString
 
         JustExecuteMySelection()
-        FillWorkOrderPartsRequisitionsHeadersDataGridView()
+        FillWorkOrderRequestedPartsHeadersDataGridView()
     End Sub
 End Class
