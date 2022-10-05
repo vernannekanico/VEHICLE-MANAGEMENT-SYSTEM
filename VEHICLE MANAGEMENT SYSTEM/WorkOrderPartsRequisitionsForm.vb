@@ -407,7 +407,7 @@ FROM ((((((WorkOrderRequestedPartsTable LEFT JOIN WorkOrderRequestedPartsHeaders
             If IsNotEmpty(CurrentPartsSpecificationID) Then
                 AvailableStocksSelectionFilter = " WHERE PartsSpecificationID_AutoNumber = " & CurrentPartsSpecificationID.ToString
             Else
-                AvailableStocksSelectionFilter = " WHERE MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookId.ToString
+                AvailableStocksSelectionFilter = " WHERE ProductsPartsTable.MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookId.ToString
             End If
             FillAvailableStocksDataGridView()
         End If
@@ -437,7 +437,6 @@ FROM ((((((WorkOrderRequestedPartsTable LEFT JOIN WorkOrderRequestedPartsHeaders
         AvailableStocksFieldsToSelect =
 " 
 SELECT 
-PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 

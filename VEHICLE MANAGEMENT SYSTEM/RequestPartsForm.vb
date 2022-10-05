@@ -36,7 +36,7 @@
     Private CurrentWorkOrderConcernID = -1
     Private CurrentWorkOrderRequestedPartsHeaderID = -1
     Private CurrentProductPartID = -1
-    Private WorkOrderPartsRequisitionStatusID = -1
+    Private WorkOrderRequestedPartsHeaderStatusID = -1
     Private PurposeOfEntry = ""
     Private SavedCallingForm As Form
     Private ChangesOccured = False
@@ -78,12 +78,12 @@
             SetParentRecordReference("WorkOrderRequestedPartsHeadersTable", "WorkOrderRequestedPartsHeaderNumber_ShortText12", WOPartsRequisitionNumberTextBox.Text)
             If RecordCount > 0 Then
                 r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-                WOPartsRequisitionDateTimeTextBox.Text = r("WorkOrderPartsRequisitionDate_ShortDate")
+                WOPartsRequisitionDateTimeTextBox.Text = r("WorkOrderRequestedPartsHeaderDate_ShortDate")
                 CurrentWorkOrderRequestedPartsHeaderID = r("WorkOrderRequestedPartsHeaderID_AutoNumber")
-                WOPartsRequisitionNumberTextBox.Text = r("WorkOrderPartsRequisitionNumber_ShortText12")
-                WOPartsRequisionRevisionTextBox.Text = r("WorkOrderPartsRequisitionRevision_Integer")
-                WorkOrderPartsRequisitionStatusID = r("WorkOrderPartsRequisitionStatusID_Integer")
-                SetParentRecordReference("StatusesTable", "StatusID_Autonumber", WorkOrderPartsRequisitionStatusID)
+                WOPartsRequisitionNumberTextBox.Text = r("WorkOrderRequestedPartsHeaderNumber_ShortText12")
+                WOPartsRequisionRevisionTextBox.Text = r("WorkOrderRequestedPartsHeaderRevision_Integer")
+                WorkOrderRequestedPartsHeaderStatusID = r("WorkOrderRequestedPartsHeaderStatusID_Integer")
+                SetParentRecordReference("StatusesTable", "StatusID_Autonumber", WorkOrderRequestedPartsHeaderStatusID)
                 If RecordCount > 0 Then
                     r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
                     RequisitionStatusTextBox.Text = r("StatusText_ShortText25")
@@ -105,7 +105,7 @@
                 WOPartsRequisitionDateTimeTextBox.Text = Now.ToString
                 WOPartsRequisionRevisionTextBox.Text = "0"
                 CurrentWorkOrderRequestedPartsHeaderID = -1
-                WorkOrderPartsRequisitionStatusID = GetStatusIdFor("WorkOrderRequestedPartsHeadersTable")
+                WorkOrderRequestedPartsHeaderStatusID = GetStatusIdFor("WorkOrderRequestedPartsHeadersTable")
                 RequisitionStatusTextBox.Text = Tunnel1
             End If
             WorkOrderConcernJobTextBox.Text = "All JOBS"
@@ -1022,6 +1022,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         Dim xxFilter = ""
 
         'STARTING WITH JOBS
+        InsertNewWorkOrderRequestedPartsHeader()
         For i = 0 To WorkOrderConcernJobsRecordCount - 1
             WorkOrderConcernJobTextBox.Text = WorkOrderConcernJobsDataGridView.Item("JobDescription", i).Value
             CurrentWorkOrderConcernJobID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", i).Value
@@ -1032,6 +1033,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
             FillWorkOrderPartsDataGridView()
             If WorkOrderPartsRecordCount > 0 Then
+                ' Create WorkOrderRequestedPartsHeader record
                 Dim xxWorkOrderPartID_LongInteger = -1
                 Dim xxProductPartID_LongInteger = -1
                 Dim xxRequestedQuantity_Double = -1
@@ -1047,7 +1049,8 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
 
                     SetCommand = " SET " &
-                       "  WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Requisition Submitted").ToString
+                        " WorkOrderRequestedPartsHeaderID_LongInteger = " & CurrentWorkOrderRequestedPartsHeaderID.ToString &
+                       ",  WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Requisition Submitted").ToString
 
                     RecordFilter = " WHERE WorkOrderPartID_LongInteger = " & xxWorkOrderPartID_LongInteger.ToString
 
@@ -1069,13 +1072,13 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         DoCommonHouseKeeping(Me, SavedCallingForm)
 
     End Sub
-    Private Sub InsertNewWorkOrderPartsRequisition()
+    Private Sub InsertNewWorkOrderRequestedPartsHeader()
         Dim FieldsToUpdate = " WorkOrderID_LongInteger, " &
-                             " WorkOrderPartsRequisitionNumber_ShortText12, " &
-                             " WorkOrderPartsRequisitionRevision_Integer, " &
+                             " WorkOrderRequestedPartsHeaderNumber_ShortText12, " &
+                             " WorkOrderRequestedPartsHeaderRevision_Integer, " &
                              " RequestedByID_LongInteger, " &
-                             " WorkOrderPartsRequisitionDate_ShortDate, " &
-                             " WorkOrderPartsRequisitionStatusID_Integer "
+                             " WorkOrderRequestedPartsHeaderDate_ShortDate, " &
+                             " WorkOrderRequestedPartsHeaderStatusID_Integer "
 
         Dim FieldsData = CurrentWorkOrderID.ToString & ",  " &
                          InQuotes(WOPartsRequisitionNumberTextBox.Text) & ",  " &
@@ -1086,9 +1089,9 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
         CurrentWorkOrderRequestedPartsHeaderID = InsertNewRecord("WorkOrderRequestedPartsHeadersTable", FieldsToUpdate, FieldsData)
     End Sub
-    Private Sub UpdateWorkOrderPartsRequisition()
+    Private Sub UpdateWorkOrderRequestedPartsHeader()
         Dim RecordFilter = " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderRequestedPartsHeaderID.ToString
-        Dim SetCommand = " SET WorkOrderPartsRequisitionStatusID_Integer = " & WorkOrderPartsRequisitionStatusID.ToString()
+        Dim SetCommand = " SET WorkOrderRequestedPartsHeaderStatusID_Integer = " & WorkOrderRequestedPartsHeaderStatusID.ToString()
         UpdateTable("WorkOrderRequestedPartsHeadersTable", SetCommand, RecordFilter)
     End Sub
     Private Sub GetStandarPartsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GetStandarPartsToolStripMenuItem.Click
