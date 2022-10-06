@@ -1050,7 +1050,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
                     SetCommand = " SET " &
                         " WorkOrderRequestedPartsHeaderID_LongInteger = " & CurrentWorkOrderRequestedPartsHeaderID.ToString &
-                       ",  WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Requisition Submitted").ToString
+                       ",  WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Procurement Outstanding").ToString
 
                     RecordFilter = " WHERE WorkOrderPartID_LongInteger = " & xxWorkOrderPartID_LongInteger.ToString
 

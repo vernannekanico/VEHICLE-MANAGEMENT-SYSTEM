@@ -416,13 +416,15 @@ FROM ((((((WorkOrderRequestedPartsTable LEFT JOIN WorkOrderRequestedPartsHeaders
         If IsNotEmpty(WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsDataGridViewRow).Value) Then
             ToIssueQuantityTextBox.Text = WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
         End If
-        If IsNotEmpty(WorkOrderRequestedPartsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value) Then
-            CurrentProductsPartID = WorkOrderRequestedPartsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
-            CheckStockAvailabilityToolStripMenuItem.Visible = False
-        Else
-            CurrentProductsPartID = -1
-            CheckStockAvailabilityToolStripMenuItem.Visible = True
-        End If
+        ' FOLLOWING DOES NOT ALLOW A RECORD TO BE UPDATED FOR ANY AVAILABLE PRODUCT
+        ' IM NOT SURE WHY I PUT THIS
+        '        If IsNotEmpty(WorkOrderRequestedPartsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value) Then
+        '        CurrentProductsPartID = WorkOrderRequestedPartsDataGridView.Item("ProductPartID_LongInteger", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
+        '        CheckStockAvailabilityToolStripMenuItem.Visible = False
+        '        Else
+        '        CurrentProductsPartID = -1
+        '        CheckStockAvailabilityToolStripMenuItem.Visible = True
+        '        End If
         If IsNotEmpty(WorkOrderRequestedPartsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderRequestedPartsDataGridViewRow).Value) Then
             ToOrderQuantityTextBox.Text = WorkOrderRequestedPartsDataGridView.Item("RequisitionQuantity_Double", CurrentWorkOrderRequestedPartsDataGridViewRow).Value
         Else
@@ -854,13 +856,13 @@ FROM ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN (WorkOrderRece
 
             MySelection = " UPDATE RequisitionsItemsTable  " &
                               " SET RequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString & ", " &
-                              " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Requisition Submitted").ToString &
+                              " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Draft Requisition").ToString &
                               " WHERE RequisitionsItemID_AutoNumber = " & CurrentRequisitionsItemID.ToString
             JustExecuteMySelection()
 
             CurrentWorkOrderRequestedPartID = RequisitionsItemsDataGridView.Item("WorkOrderRequestedPartID_LongInteger", i).Value
             MySelection = " UPDATE WorkOrderRequestedPartsTable  " &
-                              " SET WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Requisition Submitted").ToString &
+                              " SET WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Procurement Outstanding").ToString &
                               " WHERE WorkOrderRequestedPartID_AutoNumber = " & CurrentWorkOrderRequestedPartID.ToString
             JustExecuteMySelection()
 
