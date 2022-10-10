@@ -36,7 +36,7 @@
     Private CurrentWorkOrderConcernID = -1
     Private CurrentWorkOrderRequestedPartsHeaderID = -1
     Private CurrentProductPartID = -1
-    Private WorkOrderPartsRequisitionStatusID = -1
+    Private WorkOrderRequestedPartsHeaderStatusID = -1
     Private PurposeOfEntry = ""
     Private SavedCallingForm As Form
     Private ChangesOccured = False
@@ -54,15 +54,15 @@
         Me.Text = Tunnel3
         VerticalCenter(PartDetailsGroupBox, Me)
         HorizontalCenter(PartDetailsGroupBox, Me)
+        SubmitRequestForPartsToolStripMenuItem.Visible = False
+        RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
+        SaveToolStripMenuItem.Visible = False
         WorkOrderConcernJobsGroupBox.Top = WorkOrderConcernButton.Top + WorkOrderConcernButton.Height
         CurrentWorkOrderConcernID = Tunnel1
         CurrentVehicleString = VehicleNameButton.Text
         WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernID_AutoNumber = " & CurrentWorkOrderConcernID.ToString
         FillWorkOrderConcernJobsDataGridView()
-        SaveToolStripMenuItem.Visible = False
         RemovePartToolStripMenuItem.Visible = False
-        SubmitRequestForPartsToolStripMenuItem.Visible = False
-        RegisterReceivedPartFromCustomerToolStripMenuItem.Visible = False
         If Me.Text = "Receive parts from the Customer" Then
             RequisitionDetailsGroupBox.Visible = False
             ProductDetailsGroupBox.Visible = True
@@ -78,12 +78,12 @@
             SetParentRecordReference("WorkOrderRequestedPartsHeadersTable", "WorkOrderRequestedPartsHeaderNumber_ShortText12", WOPartsRequisitionNumberTextBox.Text)
             If RecordCount > 0 Then
                 r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-                WOPartsRequisitionDateTimeTextBox.Text = r("WorkOrderPartsRequisitionDate_ShortDate")
+                WOPartsRequisitionDateTimeTextBox.Text = r("WorkOrderRequestedPartsHeaderDate_ShortDate")
                 CurrentWorkOrderRequestedPartsHeaderID = r("WorkOrderRequestedPartsHeaderID_AutoNumber")
-                WOPartsRequisitionNumberTextBox.Text = r("WorkOrderPartsRequisitionNumber_ShortText12")
-                WOPartsRequisionRevisionTextBox.Text = r("WorkOrderPartsRequisitionRevision_Integer")
-                WorkOrderPartsRequisitionStatusID = r("WorkOrderPartsRequisitionStatusID_Integer")
-                SetParentRecordReference("StatusesTable", "StatusID_Autonumber", WorkOrderPartsRequisitionStatusID)
+                WOPartsRequisitionNumberTextBox.Text = r("WorkOrderRequestedPartsHeaderNumber_ShortText12")
+                WOPartsRequisionRevisionTextBox.Text = r("WorkOrderRequestedPartsHeaderRevision_Integer")
+                WorkOrderRequestedPartsHeaderStatusID = r("WorkOrderRequestedPartsHeaderStatusID_Integer")
+                SetParentRecordReference("StatusesTable", "StatusID_Autonumber", WorkOrderRequestedPartsHeaderStatusID)
                 If RecordCount > 0 Then
                     r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
                     RequisitionStatusTextBox.Text = r("StatusText_ShortText25")
@@ -105,12 +105,14 @@
                 WOPartsRequisitionDateTimeTextBox.Text = Now.ToString
                 WOPartsRequisionRevisionTextBox.Text = "0"
                 CurrentWorkOrderRequestedPartsHeaderID = -1
-                WorkOrderPartsRequisitionStatusID = GetStatusIdFor("WorkOrderRequestedPartsHeadersTable")
+                WorkOrderRequestedPartsHeaderStatusID = GetStatusIdFor("WorkOrderRequestedPartsHeadersTable")
                 RequisitionStatusTextBox.Text = Tunnel1
             End If
             WorkOrderConcernJobTextBox.Text = "All JOBS"
         End If
         RequisitionDetailsGroupBox.Left = WorkOrderConcernJobsGroupBox.Left + WorkOrderConcernJobsGroupBox.Width
+        WorkOrderRequestedPartsGroupBox.Top = WorkOrderPartsGroupBox.Top + WorkOrderPartsGroupBox.Height
+        HorizontalCenter(WorkOrderRequestedPartsGroupBox, Me)
     End Sub
     Private Sub FillWorkOrderConcernJobsDataGridView()
         WorkOrderConcernJobsFieldsToSelect =
@@ -249,7 +251,6 @@ FROM ((((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderParts
         WorkOrderPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If WorkOrderPartsRecordCount < 1 Then WorkOrderPartsGroupBox.Visible = False
         CustomerSuppliedPartsGroupBox.Visible = False
-        WorkOrderRequestedPartsGroupBox.Visible = False
 
         If Not WorkOrderPartsGridViewAlreadyFormated Then
             FormatWorkOrderPartsDataGridView()
@@ -372,12 +373,15 @@ FROM ((((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderParts
         Dim RecordsToDisplay = 7
         SetGroupBoxHeight(RecordsToDisplay, CustomerSuppliedPartsRecordCount, CustomerSuppliedPartsGroupBox, CustomerSuppliedPartsDataGridView)
         SetTopPositionsOfTheGroupBoxes()
+        WorkOrderRequestedPartsGroupBox.Left = 10
+        WorkOrderRequestedPartsGroupBox.Visible = True
 
     End Sub
     Private Sub SetTopPositionsOfTheGroupBoxes()
         If WorkOrderRequestedPartsGroupBox.Visible Then
             WorkOrderRequestedPartsGroupBox.Top = WorkOrderPartsGroupBox.Top + WorkOrderPartsGroupBox.Height
             CustomerSuppliedPartsGroupBox.Top = WorkOrderRequestedPartsGroupBox.Top + WorkOrderRequestedPartsGroupBox.Height
+
         Else
             CustomerSuppliedPartsGroupBox.Top = WorkOrderPartsGroupBox.Top + WorkOrderPartsGroupBox.Height
         End If
@@ -392,6 +396,7 @@ ProductsPartsTable.ProductsPartID_Autonumber,
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartPackingsQuery.QuantityPerPack_Double, 
 ProductPartPackingsQuery.UnitOfTheQuantity_ShortText3, 
+ProductPartPackingsQuery.UnitOfThePacking_ShortText3, 
 WorkOrderRequestedPartsTable.WorkOrderRequestedPartsHeaderID_LongInteger, 
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber, 
@@ -411,11 +416,12 @@ FROM ((WorkOrderRequestedPartsTable LEFT JOIN (ProductsPartsTable LEFT JOIN Prod
         MySelection = WorkOrderRequestedPartsFieldsToSelect & WorkOrderRequestedPartsSelectionFilter
         JustExecuteMySelection()
         WorkOrderRequestedPartsRecordCount = RecordCount
-        WorkOrderRequestedPartsGroupBox.Visible = True
         SubmitRequestForPartsToolStripMenuItem.Visible = False
         WorkOrderRequestedPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If WorkOrderRequestedPartsRecordCount < 1 Then
+        If WorkOrderRequestedPartsRecordCount > 0 Then
+            WorkOrderRequestedPartsGroupBox.Visible = True
             SubmitRequestForPartsToolStripMenuItem.Visible = True
+        Else
             WorkOrderRequestedPartsGroupBox.Visible = False
         End If
         If Not WorkOrderRequestedPartsGridViewAlreadyFormated Then
@@ -487,7 +493,8 @@ ProductsPartsTable.ManufacturerDescription_ShortText250,
 WorkOrderReceivedPartsTable.ReceivedQuantity_Double, 
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartPackingsQuery.QuantityPerPack_Double, 
-ProductPartPackingsQuery.UnitOfTheQuantity_ShortText3
+ProductPartPackingsQuery.UnitOfTheQuantity_ShortText3,
+ProductPartPackingsQuery.UnitOfThePacking_ShortText3
 FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderReceivedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN ProductPartPackingsQuery ON ProductsPartsTable.ProductsPartID_Autonumber = ProductPartPackingsQuery.ProductPartID_LongInteger
 "
         MySelection = CustomerSuppliedPartsFieldsToSelect & CustomerSuppliedPartsSelectionFilter
@@ -659,11 +666,11 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
     Private Function AChangeInWorkOrderRequestPartsOccured()
 
         '*******************************************************
-        If WorkOrderPartsRecordCount > -1 Then
-            If WorkOrderRequestedPartsRecordCount > 0 Then
-                If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderPartsRow).Value, PurposeOfEntry) Then Return True
-            End If
-        End If
+        If WorkOrderRequestedPartsRecordCount < 1 And IsNotEmpty(ProductTextBox.Text) Then Return True ' NO REQUESTED PART YET
+        If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(RequestedUnitTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedUnit_ShortText3", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(PartNumberTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
         Return False
     End Function
     Private Function AChangeInWorkOrderPartsOccured()
@@ -800,7 +807,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
     End Sub
     Private Sub RegisterWorkOrderRequestedPartChanges()
 
-        If CurrentWorkOrderRequestedPartsHeaderID = -1 Then
+        If CurrentWorkOrderRequestedPartID = -1 Then
             InsertNewWorkOrderWorkOrderRequestedPart()
         Else
             UpdateWorkOrderWorkOrderRequestedPart()
@@ -827,7 +834,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                                 CurrentProductPartID.ToString & ", " &
                                 GetStatusIdFor("WorkOrderRequestedPartsTable").ToString
 
-        Dim xxWorkOrderRequestedPart = InsertNewRecord("WorkOrderRequestedPartsTable", FieldsToUpdate, FieldsData)
+        Dim CurrentWorkOrderRequestedPartID = InsertNewRecord("WorkOrderRequestedPartsTable", FieldsToUpdate, FieldsData)
     End Sub
     Private Sub UpdateWorkOrderWorkOrderRequestedPart()
         Dim RecordFilter = " WHERE WorkOrderRequestedPartID_AutoNumber = " & CurrentWorkOrderRequestedPartsHeaderID.ToString
@@ -1002,7 +1009,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                     Exit Sub
                 Else
                     ' THERE IS A REQUEST, VALIDATE QUANTITY
-                    If NotNull(WorkOrderPartsDataGridView.Item("Quantity_Integer", j).Value) < 1 Then
+                    If NotNull(WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", j).Value) < 1 Then
                         MsgBox("Please put a quantity for " & WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", j).Value)
                         Exit Sub
                     End If
@@ -1015,6 +1022,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         Dim xxFilter = ""
 
         'STARTING WITH JOBS
+        InsertNewWorkOrderRequestedPartsHeader()
         For i = 0 To WorkOrderConcernJobsRecordCount - 1
             WorkOrderConcernJobTextBox.Text = WorkOrderConcernJobsDataGridView.Item("JobDescription", i).Value
             CurrentWorkOrderConcernJobID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", i).Value
@@ -1025,6 +1033,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
             FillWorkOrderPartsDataGridView()
             If WorkOrderPartsRecordCount > 0 Then
+                ' Create WorkOrderRequestedPartsHeader record
                 Dim xxWorkOrderPartID_LongInteger = -1
                 Dim xxProductPartID_LongInteger = -1
                 Dim xxRequestedQuantity_Double = -1
@@ -1040,7 +1049,8 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
 
                     SetCommand = " SET " &
-                       "  WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Requisition Submitted").ToString
+                        " WorkOrderRequestedPartsHeaderID_LongInteger = " & CurrentWorkOrderRequestedPartsHeaderID.ToString &
+                       ",  WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Procurement Outstanding").ToString
 
                     RecordFilter = " WHERE WorkOrderPartID_LongInteger = " & xxWorkOrderPartID_LongInteger.ToString
 
@@ -1062,13 +1072,13 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         DoCommonHouseKeeping(Me, SavedCallingForm)
 
     End Sub
-    Private Sub InsertNewWorkOrderPartsRequisition()
+    Private Sub InsertNewWorkOrderRequestedPartsHeader()
         Dim FieldsToUpdate = " WorkOrderID_LongInteger, " &
-                             " WorkOrderPartsRequisitionNumber_ShortText12, " &
-                             " WorkOrderPartsRequisitionRevision_Integer, " &
+                             " WorkOrderRequestedPartsHeaderNumber_ShortText12, " &
+                             " WorkOrderRequestedPartsHeaderRevision_Integer, " &
                              " RequestedByID_LongInteger, " &
-                             " WorkOrderPartsRequisitionDate_ShortDate, " &
-                             " WorkOrderPartsRequisitionStatusID_Integer "
+                             " WorkOrderRequestedPartsHeaderDate_ShortDate, " &
+                             " WorkOrderRequestedPartsHeaderStatusID_Integer "
 
         Dim FieldsData = CurrentWorkOrderID.ToString & ",  " &
                          InQuotes(WOPartsRequisitionNumberTextBox.Text) & ",  " &
@@ -1079,9 +1089,9 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
         CurrentWorkOrderRequestedPartsHeaderID = InsertNewRecord("WorkOrderRequestedPartsHeadersTable", FieldsToUpdate, FieldsData)
     End Sub
-    Private Sub UpdateWorkOrderPartsRequisition()
+    Private Sub UpdateWorkOrderRequestedPartsHeader()
         Dim RecordFilter = " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderRequestedPartsHeaderID.ToString
-        Dim SetCommand = " SET WorkOrderPartsRequisitionStatusID_Integer = " & WorkOrderPartsRequisitionStatusID.ToString()
+        Dim SetCommand = " SET WorkOrderRequestedPartsHeaderStatusID_Integer = " & WorkOrderRequestedPartsHeaderStatusID.ToString()
         UpdateTable("WorkOrderRequestedPartsHeadersTable", SetCommand, RecordFilter)
     End Sub
     Private Sub GetStandarPartsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GetStandarPartsToolStripMenuItem.Click
@@ -1186,9 +1196,11 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
 
         FillField(CurrentPartsSpecificationID, WorkOrderPartsDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentWorkOrderPartsRow).Value)
         FillField(PartDescriptionTextBox.Text, WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentWorkOrderPartsRow).Value)
-        FillField(ProductTextBox.Text, WorkOrderPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderPartsRow).Value)
-        FillField(PartNumberTextBox.Text, WorkOrderPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderPartsRow).Value)
-        If CurrentWorkOrderRequestedPartsRow > 0 Then
+        If CurrentWorkOrderRequestedPartsRow > -1 Then ' there are parts already selected
+            FillField(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value)
+            FillField(PartNumberTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderRequestedPartsRow).Value)
+        End If
+        If CurrentWorkOrderRequestedPartsRow > -1 Then
             FillField(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsRow).Value)
             FillField(RequestedUnitTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedUnit_ShortText3", CurrentWorkOrderRequestedPartsRow).Value)
         End If
@@ -1214,7 +1226,7 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
                 PackingTextBox.Text = CustomerSuppliedPartsDataGridView.Item("QuantityPerPack_Double", CurrentCustomerSuppliedPartsRow).Value.ToString & Space(1) &
                                       CustomerSuppliedPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentCustomerSuppliedPartsRow).Value.ToString &
                                         " / " &
-                                      CustomerSuppliedPartsDataGridView.Item("Unit_ShortText3", CurrentCustomerSuppliedPartsRow).Value.ToString
+                                      CustomerSuppliedPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentCustomerSuppliedPartsRow).Value.ToString
             End If
         End If
     End Sub

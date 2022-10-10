@@ -23,10 +23,10 @@ Partial Class ProductPartsPackingsForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.ProductPartsPackingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ProductPartsPackingsDataGridView = New System.Windows.Forms.DataGridView()
         Me.PackingDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.UnitOfTheQuantityTextBox = New System.Windows.Forms.TextBox()
         Me.QuantityPerPackTextBox = New System.Windows.Forms.TextBox()
-        Me.ProductPartsPackingsDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsPartsPackingMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -34,9 +34,11 @@ Partial Class ProductPartsPackingsForm
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UnitOfThePackingTextBox = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.ProductPartsPackingsGroupBox.SuspendLayout()
-        Me.PackingDetailsGroupBox.SuspendLayout()
         CType(Me.ProductPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PackingDetailsGroupBox.SuspendLayout()
         Me.ProductsPartsPackingMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -50,31 +52,6 @@ Partial Class ProductPartsPackingsForm
         Me.ProductPartsPackingsGroupBox.Size = New System.Drawing.Size(290, 234)
         Me.ProductPartsPackingsGroupBox.TabIndex = 60
         Me.ProductPartsPackingsGroupBox.TabStop = False
-        '
-        'PackingDetailsGroupBox
-        '
-        Me.PackingDetailsGroupBox.Controls.Add(Me.UnitOfTheQuantityTextBox)
-        Me.PackingDetailsGroupBox.Controls.Add(Me.QuantityPerPackTextBox)
-        Me.PackingDetailsGroupBox.Location = New System.Drawing.Point(335, 212)
-        Me.PackingDetailsGroupBox.Name = "PackingDetailsGroupBox"
-        Me.PackingDetailsGroupBox.Size = New System.Drawing.Size(269, 44)
-        Me.PackingDetailsGroupBox.TabIndex = 92
-        Me.PackingDetailsGroupBox.TabStop = False
-        Me.PackingDetailsGroupBox.Visible = False
-        '
-        'UnitOfTheQuantityTextBox
-        '
-        Me.UnitOfTheQuantityTextBox.Location = New System.Drawing.Point(154, 12)
-        Me.UnitOfTheQuantityTextBox.Name = "UnitOfTheQuantityTextBox"
-        Me.UnitOfTheQuantityTextBox.Size = New System.Drawing.Size(58, 26)
-        Me.UnitOfTheQuantityTextBox.TabIndex = 1
-        '
-        'QuantityPerPackTextBox
-        '
-        Me.QuantityPerPackTextBox.Location = New System.Drawing.Point(60, 12)
-        Me.QuantityPerPackTextBox.Name = "QuantityPerPackTextBox"
-        Me.QuantityPerPackTextBox.Size = New System.Drawing.Size(58, 26)
-        Me.QuantityPerPackTextBox.TabIndex = 0
         '
         'ProductPartsPackingsDataGridView
         '
@@ -93,6 +70,34 @@ Partial Class ProductPartsPackingsForm
         Me.ProductPartsPackingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.ProductPartsPackingsDataGridView.Size = New System.Drawing.Size(282, 205)
         Me.ProductPartsPackingsDataGridView.TabIndex = 52
+        '
+        'PackingDetailsGroupBox
+        '
+        Me.PackingDetailsGroupBox.Controls.Add(Me.Label1)
+        Me.PackingDetailsGroupBox.Controls.Add(Me.UnitOfThePackingTextBox)
+        Me.PackingDetailsGroupBox.Controls.Add(Me.UnitOfTheQuantityTextBox)
+        Me.PackingDetailsGroupBox.Controls.Add(Me.QuantityPerPackTextBox)
+        Me.PackingDetailsGroupBox.Location = New System.Drawing.Point(327, 212)
+        Me.PackingDetailsGroupBox.Name = "PackingDetailsGroupBox"
+        Me.PackingDetailsGroupBox.Size = New System.Drawing.Size(191, 44)
+        Me.PackingDetailsGroupBox.TabIndex = 92
+        Me.PackingDetailsGroupBox.TabStop = False
+        Me.PackingDetailsGroupBox.Visible = False
+        '
+        'UnitOfTheQuantityTextBox
+        '
+        Me.UnitOfTheQuantityTextBox.Location = New System.Drawing.Point(63, 12)
+        Me.UnitOfTheQuantityTextBox.Name = "UnitOfTheQuantityTextBox"
+        Me.UnitOfTheQuantityTextBox.Size = New System.Drawing.Size(43, 26)
+        Me.UnitOfTheQuantityTextBox.TabIndex = 1
+        Me.UnitOfTheQuantityTextBox.Text = "BOX"
+        '
+        'QuantityPerPackTextBox
+        '
+        Me.QuantityPerPackTextBox.Location = New System.Drawing.Point(15, 12)
+        Me.QuantityPerPackTextBox.Name = "QuantityPerPackTextBox"
+        Me.QuantityPerPackTextBox.Size = New System.Drawing.Size(42, 26)
+        Me.QuantityPerPackTextBox.TabIndex = 0
         '
         'ProductsPartsPackingMenuStrip
         '
@@ -141,6 +146,22 @@ Partial Class ProductPartsPackingsForm
         Me.SaveToolStripMenuItem.Text = "Save"
         Me.SaveToolStripMenuItem.Visible = False
         '
+        'UnitOfThePackingTextBox
+        '
+        Me.UnitOfThePackingTextBox.Location = New System.Drawing.Point(131, 12)
+        Me.UnitOfThePackingTextBox.Name = "UnitOfThePackingTextBox"
+        Me.UnitOfThePackingTextBox.Size = New System.Drawing.Size(41, 26)
+        Me.UnitOfThePackingTextBox.TabIndex = 2
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(112, 15)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(13, 20)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "/"
+        '
         'ProductPartsPackingsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -154,9 +175,9 @@ Partial Class ProductPartsPackingsForm
         Me.Name = "ProductPartsPackingsForm"
         Me.Text = "UPDATE DIFFERENT PACKINGS for "
         Me.ProductPartsPackingsGroupBox.ResumeLayout(False)
+        CType(Me.ProductPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PackingDetailsGroupBox.ResumeLayout(False)
         Me.PackingDetailsGroupBox.PerformLayout()
-        CType(Me.ProductPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ProductsPartsPackingMenuStrip.ResumeLayout(False)
         Me.ProductsPartsPackingMenuStrip.PerformLayout()
         Me.ResumeLayout(False)
@@ -176,4 +197,6 @@ Partial Class ProductPartsPackingsForm
     Friend WithEvents PackingDetailsGroupBox As GroupBox
     Friend WithEvents UnitOfTheQuantityTextBox As TextBox
     Friend WithEvents QuantityPerPackTextBox As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents UnitOfThePackingTextBox As TextBox
 End Class

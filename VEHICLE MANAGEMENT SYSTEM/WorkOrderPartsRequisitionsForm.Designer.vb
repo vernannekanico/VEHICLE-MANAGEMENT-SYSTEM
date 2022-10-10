@@ -301,6 +301,7 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.RequestForPurchaseGroupBox.TabIndex = 118
         Me.RequestForPurchaseGroupBox.TabStop = False
         Me.RequestForPurchaseGroupBox.Text = "Requisition for Purchase"
+        Me.RequestForPurchaseGroupBox.Visible = False
         '
         'VehicleModelTextBox
         '
@@ -764,10 +765,10 @@ Partial Class WorkOrderPartsRequisitionsForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1284, 525)
+        Me.Controls.Add(Me.QuantityGroupBox)
         Me.Controls.Add(Me.WorkOrderIssuedPartsGroupBox)
         Me.Controls.Add(Me.AvailableStocksGroupBox)
         Me.Controls.Add(Me.PartsReleaseInfoGroupBox)
-        Me.Controls.Add(Me.QuantityGroupBox)
         Me.Controls.Add(Me.RequestForPurchaseGroupBox)
         Me.Controls.Add(Me.WorkOrderPartsMenuStrip)
         Me.Controls.Add(Me.WorkOrderRequestedPartsHeadersDataGridView)

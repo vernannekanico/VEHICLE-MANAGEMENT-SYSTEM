@@ -20,6 +20,7 @@
     Private CurrentProductSpecificationID = -1
     Private RequestedMasterCodeBook = -1
     Public CurrentVehicleID = -1
+    Private NoOfRecordsToSelect = ""
 
     Private Sub ProductsPartsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
@@ -35,11 +36,19 @@
                 VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         If IsEmpty(Tunnel3) Then
-            ProductsMode = True
+            ProductsMode = True         ' not inventory mode
+            ProductsPartsSelectionFilter = " WHERE StocksTable.MinimumQuantity_Double > 0 "
+            FillProductsPartsDataGridView()
+            CurrentMasterCodeBookID = Tunnel2
+
+            If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Then
+                SetSearchParameters()
+            Else
+                ProductsPartsSelectionFilter = ""
+            End If
+        Else    ' inventory mode
         End If
-        CurrentMasterCodeBookID = Tunnel2
-        If IsNotEmpty(Tunnel2) Then RequestedMasterCodeBook = Tunnel2
-        ExecuteSearchParameters()
+        FillProductsPartsDataGridView()
     End Sub
     Private Sub ProductsPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -72,27 +81,21 @@
     End Sub
 
     Private Sub SetToProductsViewMode()
-        FormatProductsPartsDataGridView()
-        SelectToolStripMenuItem.Visible = True
+        SelectToolStripMenuItem.Visible = False
         ProductsPartsMenuStrip.Visible = True
         ProductsPartsMenuStrip.Left = CancelToolStripMenuItem.Width + 2
         ProductsPartsMenuStrip.Top = 0
-
-        If IsNotEmpty(Tunnel3) Then
-            CurrentMasterCodeBookID = Tunnel1
-            CurrentPartDescription = Tunnel2
-            PartDescriptionSearchTextBox.Text = Tunnel2
-            SetSearchParameters()
-        End If
-
     End Sub
 
 
     Private Sub FillProductsPartsDataGridView()
-
-        ProductsPartsFieldsToSelect =
+        If IsEmpty(ProductsPartsSelectionFilter) Then
+            NoOfRecordsToSelect = " TOP 1 "
+        Else
+            NoOfRecordsToSelect = ""
+        End If
+        ProductsPartsFieldsToSelect = " SELECT " & NoOfRecordsToSelect &
 "
-SELECT 
 ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
@@ -111,6 +114,7 @@ ProductsPartsTable.VehicleRepairClassID_LongInteger,
 VehicleDescription.VehicleDescription, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3
 FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber"
 
@@ -123,11 +127,12 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
 
         ProductsPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not ProductsPartsDataGridViewAlreadyFormated Then
-            If ProductsMode Then
-                SetToProductsViewMode()
-            Else
-                SetToStocksViewMode()
-            End If
+            FormatProductsPartsDataGridView()
+        End If
+        If ProductsMode Then
+            SetToProductsViewMode()
+        Else
+            SetToStocksViewMode()
         End If
         Dim RowsHeight = 0
         Dim AvailableHeightSpace = VehicleManagementSystemForm.Height -
@@ -147,6 +152,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
                 ProductsPartsDataGridView.Height = RowsHeight + ProductsPartsDataGridView.ColumnHeadersHeight
             End If
         End If
+        ProductsPartsDataGridView.Height += RowsHeight
         If ProductsPartsDataGridView.Height > MyMaximumHeight Then
             Me.Height = ProductsPartsDataGridView.Height + 20
         Else
@@ -332,23 +338,11 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
     Private Sub ExecuteSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExecuteSearchToolStripMenuItem.Click
         FiltersGroupBox.Visible = False
         If PartDescriptionSearchTextBox.Text = "" And PartNoSearchTextBox.Text = "" Then Exit Sub
-        ExecuteSearchParameters()
+        SetSearchParameters()
+        FillProductsPartsDataGridView()
         If ProductsPartsRecordCount > 0 Then
             ProductsPartsDataGridView.Rows(0).Selected = False
         End If
-
-    End Sub
-    Private Sub ExecuteSearchParameters()
-        If PartDescriptionSearchTextBox.Text = "" And
-            PartNoSearchTextBox.Text = "" And
-            CurrentMasterCodeBookID = -1 Then
-            ProductsPartsSelectionFilter = " WHERE StocksTable.MinimumQuantity_Double > 0 "
-            FillProductsPartsDataGridView()
-            Exit Sub
-
-        End If
-        SetSearchParameters()
-        FillProductsPartsDataGridView()
     End Sub
     Private Sub SetSearchParameters()
         ProductsPartsSelectionFilter = " WHERE "

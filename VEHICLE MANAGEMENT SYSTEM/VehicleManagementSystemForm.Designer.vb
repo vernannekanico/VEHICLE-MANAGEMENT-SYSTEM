@@ -22,9 +22,9 @@ Partial Class VehicleManagementSystemForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.CurrentPersonnelNameLabel = New System.Windows.Forms.Label()
         Me.VehicleManagementMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SystemsDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -45,7 +45,7 @@ Partial Class VehicleManagementSystemForm
         Me.WorkOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CustomerInfoSysToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehicleInformationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PartsRequisitionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehiclesModelsRelationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MasterCodeBookToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FinanceDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,6 +56,7 @@ Partial Class VehicleManagementSystemForm
         Me.RToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseOrderToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.SuyppliersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProductsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.LogisticsDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WarehouseDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InventoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -77,7 +78,7 @@ Partial Class VehicleManagementSystemForm
         Me.CurrentPersonnelNameLabel.AutoSize = True
         Me.CurrentPersonnelNameLabel.Location = New System.Drawing.Point(646, 9)
         Me.CurrentPersonnelNameLabel.Name = "CurrentPersonnelNameLabel"
-        Me.CurrentPersonnelNameLabel.Size = New System.Drawing.Size(0, 25)
+        Me.CurrentPersonnelNameLabel.Size = New System.Drawing.Size(0, 20)
         Me.CurrentPersonnelNameLabel.TabIndex = 2
         '
         'VehicleManagementMenuStrip
@@ -88,14 +89,14 @@ Partial Class VehicleManagementSystemForm
         Me.VehicleManagementMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.VehicleManagementMenuStrip.Name = "VehicleManagementMenuStrip"
         Me.VehicleManagementMenuStrip.Padding = New System.Windows.Forms.Padding(9, 3, 0, 3)
-        Me.VehicleManagementMenuStrip.Size = New System.Drawing.Size(1284, 38)
+        Me.VehicleManagementMenuStrip.Size = New System.Drawing.Size(1284, 31)
         Me.VehicleManagementMenuStrip.TabIndex = 0
         '
         'SystemsDepartmentToolStripMenuItem
         '
         Me.SystemsDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UtilitiesToolStripMenuItem, Me.UpdateStatusTablesToolStripMenuItem, Me.ProductsToolStripMenuItem})
         Me.SystemsDepartmentToolStripMenuItem.Name = "SystemsDepartmentToolStripMenuItem"
-        Me.SystemsDepartmentToolStripMenuItem.Size = New System.Drawing.Size(95, 32)
+        Me.SystemsDepartmentToolStripMenuItem.Size = New System.Drawing.Size(77, 25)
         Me.SystemsDepartmentToolStripMenuItem.Text = "Systems"
         Me.SystemsDepartmentToolStripMenuItem.Visible = False
         '
@@ -103,44 +104,44 @@ Partial Class VehicleManagementSystemForm
         '
         Me.UtilitiesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DirectlyUpdateTableToolStripMenuItem, Me.GenerateWorkOrderRecordFromTheToolStripMenuItem, Me.TestTemporaryFormToolStripMenuItem})
         Me.UtilitiesToolStripMenuItem.Name = "UtilitiesToolStripMenuItem"
-        Me.UtilitiesToolStripMenuItem.Size = New System.Drawing.Size(281, 32)
+        Me.UtilitiesToolStripMenuItem.Size = New System.Drawing.Size(225, 26)
         Me.UtilitiesToolStripMenuItem.Text = "Utilities"
         Me.UtilitiesToolStripMenuItem.Visible = False
         '
         'DirectlyUpdateTableToolStripMenuItem
         '
         Me.DirectlyUpdateTableToolStripMenuItem.Name = "DirectlyUpdateTableToolStripMenuItem"
-        Me.DirectlyUpdateTableToolStripMenuItem.Size = New System.Drawing.Size(809, 32)
+        Me.DirectlyUpdateTableToolStripMenuItem.Size = New System.Drawing.Size(642, 26)
         Me.DirectlyUpdateTableToolStripMenuItem.Text = "Directly Update Table"
         '
         'GenerateWorkOrderRecordFromTheToolStripMenuItem
         '
         Me.GenerateWorkOrderRecordFromTheToolStripMenuItem.Name = "GenerateWorkOrderRecordFromTheToolStripMenuItem"
-        Me.GenerateWorkOrderRecordFromTheToolStripMenuItem.Size = New System.Drawing.Size(809, 32)
+        Me.GenerateWorkOrderRecordFromTheToolStripMenuItem.Size = New System.Drawing.Size(642, 26)
         Me.GenerateWorkOrderRecordFromTheToolStripMenuItem.Text = "Generate WorkOrder Record From The My Vehicles Info -Maint, Milage, Parts, Etc "
         '
         'TestTemporaryFormToolStripMenuItem
         '
         Me.TestTemporaryFormToolStripMenuItem.Name = "TestTemporaryFormToolStripMenuItem"
-        Me.TestTemporaryFormToolStripMenuItem.Size = New System.Drawing.Size(809, 32)
+        Me.TestTemporaryFormToolStripMenuItem.Size = New System.Drawing.Size(642, 26)
         Me.TestTemporaryFormToolStripMenuItem.Text = "TestTemporaryForm"
         '
         'UpdateStatusTablesToolStripMenuItem
         '
         Me.UpdateStatusTablesToolStripMenuItem.Name = "UpdateStatusTablesToolStripMenuItem"
-        Me.UpdateStatusTablesToolStripMenuItem.Size = New System.Drawing.Size(281, 32)
+        Me.UpdateStatusTablesToolStripMenuItem.Size = New System.Drawing.Size(225, 26)
         Me.UpdateStatusTablesToolStripMenuItem.Text = "Update Status Tables"
         '
         'ProductsToolStripMenuItem
         '
         Me.ProductsToolStripMenuItem.Name = "ProductsToolStripMenuItem"
-        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(281, 32)
+        Me.ProductsToolStripMenuItem.Size = New System.Drawing.Size(225, 26)
         Me.ProductsToolStripMenuItem.Text = "Products"
         '
         'ManagementDepartmentToolStripMenuItem
         '
         Me.ManagementDepartmentToolStripMenuItem.Name = "ManagementDepartmentToolStripMenuItem"
-        Me.ManagementDepartmentToolStripMenuItem.Size = New System.Drawing.Size(140, 32)
+        Me.ManagementDepartmentToolStripMenuItem.Size = New System.Drawing.Size(115, 25)
         Me.ManagementDepartmentToolStripMenuItem.Text = "Management"
         Me.ManagementDepartmentToolStripMenuItem.Visible = False
         '
@@ -148,7 +149,7 @@ Partial Class VehicleManagementSystemForm
         '
         Me.ServicesDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CustomerServiceToolStripMenuItem, Me.VehicleRepairToolStripMenuItem, Me.CustomerInfoSysToolStripMenuItem, Me.VehicleInformationsToolStripMenuItem, Me.MasterCodeBookToolStripMenuItem})
         Me.ServicesDepartmentToolStripMenuItem.Name = "ServicesDepartmentToolStripMenuItem"
-        Me.ServicesDepartmentToolStripMenuItem.Size = New System.Drawing.Size(94, 32)
+        Me.ServicesDepartmentToolStripMenuItem.Size = New System.Drawing.Size(77, 25)
         Me.ServicesDepartmentToolStripMenuItem.Text = "Services"
         Me.ServicesDepartmentToolStripMenuItem.Visible = False
         '
@@ -156,87 +157,85 @@ Partial Class VehicleManagementSystemForm
         '
         Me.CustomerServiceToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WorkOrderRegistrationToolStripMenuItem, Me.VehicleReleaseToolStripMenuItem, Me.ServiceAppointmentToolStripMenuItem, Me.JobReturnToolStripMenuItem})
         Me.CustomerServiceToolStripMenuItem.Name = "CustomerServiceToolStripMenuItem"
-        Me.CustomerServiceToolStripMenuItem.Size = New System.Drawing.Size(355, 32)
+        Me.CustomerServiceToolStripMenuItem.Size = New System.Drawing.Size(287, 26)
         Me.CustomerServiceToolStripMenuItem.Text = "Customer Service"
         Me.CustomerServiceToolStripMenuItem.Visible = False
         '
         'WorkOrderRegistrationToolStripMenuItem
         '
         Me.WorkOrderRegistrationToolStripMenuItem.Name = "WorkOrderRegistrationToolStripMenuItem"
-        Me.WorkOrderRegistrationToolStripMenuItem.Size = New System.Drawing.Size(310, 32)
+        Me.WorkOrderRegistrationToolStripMenuItem.Size = New System.Drawing.Size(250, 26)
         Me.WorkOrderRegistrationToolStripMenuItem.Text = "Work Order Registration"
         '
         'VehicleReleaseToolStripMenuItem
         '
         Me.VehicleReleaseToolStripMenuItem.Name = "VehicleReleaseToolStripMenuItem"
-        Me.VehicleReleaseToolStripMenuItem.Size = New System.Drawing.Size(310, 32)
+        Me.VehicleReleaseToolStripMenuItem.Size = New System.Drawing.Size(250, 26)
         Me.VehicleReleaseToolStripMenuItem.Text = "Vehicle Release"
         '
         'ServiceAppointmentToolStripMenuItem
         '
         Me.ServiceAppointmentToolStripMenuItem.Name = "ServiceAppointmentToolStripMenuItem"
-        Me.ServiceAppointmentToolStripMenuItem.Size = New System.Drawing.Size(310, 32)
+        Me.ServiceAppointmentToolStripMenuItem.Size = New System.Drawing.Size(250, 26)
         Me.ServiceAppointmentToolStripMenuItem.Text = "Service Appointment"
         '
         'JobReturnToolStripMenuItem
         '
         Me.JobReturnToolStripMenuItem.Name = "JobReturnToolStripMenuItem"
-        Me.JobReturnToolStripMenuItem.Size = New System.Drawing.Size(310, 32)
+        Me.JobReturnToolStripMenuItem.Size = New System.Drawing.Size(250, 26)
         Me.JobReturnToolStripMenuItem.Text = "Job Return"
         '
         'VehicleRepairToolStripMenuItem
         '
         Me.VehicleRepairToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WorkOrdersToolStripMenuItem})
         Me.VehicleRepairToolStripMenuItem.Name = "VehicleRepairToolStripMenuItem"
-        Me.VehicleRepairToolStripMenuItem.Size = New System.Drawing.Size(355, 32)
+        Me.VehicleRepairToolStripMenuItem.Size = New System.Drawing.Size(287, 26)
         Me.VehicleRepairToolStripMenuItem.Text = "Vehicle Repair"
         Me.VehicleRepairToolStripMenuItem.Visible = False
         '
         'WorkOrdersToolStripMenuItem
         '
         Me.WorkOrdersToolStripMenuItem.Name = "WorkOrdersToolStripMenuItem"
-        Me.WorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(209, 32)
+        Me.WorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
         Me.WorkOrdersToolStripMenuItem.Text = "Work Orders"
         '
         'CustomerInfoSysToolStripMenuItem
         '
         Me.CustomerInfoSysToolStripMenuItem.Name = "CustomerInfoSysToolStripMenuItem"
-        Me.CustomerInfoSysToolStripMenuItem.Size = New System.Drawing.Size(355, 32)
+        Me.CustomerInfoSysToolStripMenuItem.Size = New System.Drawing.Size(287, 26)
         Me.CustomerInfoSysToolStripMenuItem.Text = "Customer Information System"
         Me.CustomerInfoSysToolStripMenuItem.Visible = False
         '
         'VehicleInformationsToolStripMenuItem
         '
-        Me.VehicleInformationsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartsRequisitionsToolStripMenuItem, Me.VehiclesModelsRelationsToolStripMenuItem})
-        Me.VehicleInformationsToolStripMenuItem.Enabled = False
+        Me.VehicleInformationsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AllServicedVehiclesOfServicesToolStripMenuItem, Me.VehiclesModelsRelationsToolStripMenuItem})
         Me.VehicleInformationsToolStripMenuItem.Name = "VehicleInformationsToolStripMenuItem"
-        Me.VehicleInformationsToolStripMenuItem.Size = New System.Drawing.Size(355, 32)
+        Me.VehicleInformationsToolStripMenuItem.Size = New System.Drawing.Size(287, 26)
         Me.VehicleInformationsToolStripMenuItem.Text = "Vehicle Informations"
         '
-        'PartsRequisitionsToolStripMenuItem
+        'AllServicedVehiclesOfServicesToolStripMenuItem
         '
-        Me.PartsRequisitionsToolStripMenuItem.Enabled = False
-        Me.PartsRequisitionsToolStripMenuItem.Name = "PartsRequisitionsToolStripMenuItem"
-        Me.PartsRequisitionsToolStripMenuItem.Size = New System.Drawing.Size(321, 32)
-        Me.PartsRequisitionsToolStripMenuItem.Text = "All Serviced Vehicles"
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem.Name = "AllServicedVehiclesOfServicesToolStripMenuItem"
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem.Size = New System.Drawing.Size(256, 26)
+        Me.AllServicedVehiclesOfServicesToolStripMenuItem.Text = "All Serviced Vehicles"
         '
         'VehiclesModelsRelationsToolStripMenuItem
         '
         Me.VehiclesModelsRelationsToolStripMenuItem.Name = "VehiclesModelsRelationsToolStripMenuItem"
-        Me.VehiclesModelsRelationsToolStripMenuItem.Size = New System.Drawing.Size(321, 32)
+        Me.VehiclesModelsRelationsToolStripMenuItem.Size = New System.Drawing.Size(256, 26)
         Me.VehiclesModelsRelationsToolStripMenuItem.Text = "Vehicles Models Relations"
         '
         'MasterCodeBookToolStripMenuItem
         '
         Me.MasterCodeBookToolStripMenuItem.Name = "MasterCodeBookToolStripMenuItem"
-        Me.MasterCodeBookToolStripMenuItem.Size = New System.Drawing.Size(355, 32)
+        Me.MasterCodeBookToolStripMenuItem.Size = New System.Drawing.Size(287, 26)
         Me.MasterCodeBookToolStripMenuItem.Text = "Master Code Book"
         '
         'FinanceDepartmentToolStripMenuItem
         '
         Me.FinanceDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WorkOrderBillingToolStripMenuItem1})
         Me.FinanceDepartmentToolStripMenuItem.Name = "FinanceDepartmentToolStripMenuItem"
-        Me.FinanceDepartmentToolStripMenuItem.Size = New System.Drawing.Size(93, 32)
+        Me.FinanceDepartmentToolStripMenuItem.Size = New System.Drawing.Size(76, 25)
         Me.FinanceDepartmentToolStripMenuItem.Text = "Finance"
         Me.FinanceDepartmentToolStripMenuItem.Visible = False
         '
@@ -244,14 +243,14 @@ Partial Class VehicleManagementSystemForm
         '
         Me.WorkOrderBillingToolStripMenuItem1.Enabled = False
         Me.WorkOrderBillingToolStripMenuItem1.Name = "WorkOrderBillingToolStripMenuItem1"
-        Me.WorkOrderBillingToolStripMenuItem1.Size = New System.Drawing.Size(260, 32)
+        Me.WorkOrderBillingToolStripMenuItem1.Size = New System.Drawing.Size(210, 26)
         Me.WorkOrderBillingToolStripMenuItem1.Text = "Work Order Billing"
         '
         'PersonnelDepartmentToolStripMenuItem
         '
         Me.PersonnelDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonnelsInformationFilesToolStripMenuItem})
         Me.PersonnelDepartmentToolStripMenuItem.Name = "PersonnelDepartmentToolStripMenuItem"
-        Me.PersonnelDepartmentToolStripMenuItem.Size = New System.Drawing.Size(111, 32)
+        Me.PersonnelDepartmentToolStripMenuItem.Size = New System.Drawing.Size(90, 25)
         Me.PersonnelDepartmentToolStripMenuItem.Text = "Personnel"
         Me.PersonnelDepartmentToolStripMenuItem.Visible = False
         '
@@ -259,39 +258,45 @@ Partial Class VehicleManagementSystemForm
         '
         Me.PersonnelsInformationFilesToolStripMenuItem.Enabled = False
         Me.PersonnelsInformationFilesToolStripMenuItem.Name = "PersonnelsInformationFilesToolStripMenuItem"
-        Me.PersonnelsInformationFilesToolStripMenuItem.Size = New System.Drawing.Size(342, 32)
+        Me.PersonnelsInformationFilesToolStripMenuItem.Size = New System.Drawing.Size(275, 26)
         Me.PersonnelsInformationFilesToolStripMenuItem.Text = "Personnels Information Files"
         '
         'ProcurementDepartmentToolStripMenuItem
         '
-        Me.ProcurementDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RToolStripMenuItem, Me.PurchaseOrderToolStripMenuItem1, Me.SuyppliersToolStripMenuItem})
+        Me.ProcurementDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RToolStripMenuItem, Me.PurchaseOrderToolStripMenuItem1, Me.SuyppliersToolStripMenuItem, Me.ProductsToolStripMenuItem1})
         Me.ProcurementDepartmentToolStripMenuItem.Name = "ProcurementDepartmentToolStripMenuItem"
-        Me.ProcurementDepartmentToolStripMenuItem.Size = New System.Drawing.Size(137, 32)
+        Me.ProcurementDepartmentToolStripMenuItem.Size = New System.Drawing.Size(112, 25)
         Me.ProcurementDepartmentToolStripMenuItem.Text = "Procurement"
         Me.ProcurementDepartmentToolStripMenuItem.Visible = False
         '
         'RToolStripMenuItem
         '
         Me.RToolStripMenuItem.Name = "RToolStripMenuItem"
-        Me.RToolStripMenuItem.Size = New System.Drawing.Size(241, 32)
+        Me.RToolStripMenuItem.Size = New System.Drawing.Size(194, 26)
         Me.RToolStripMenuItem.Text = "Requisitions"
         '
         'PurchaseOrderToolStripMenuItem1
         '
         Me.PurchaseOrderToolStripMenuItem1.Name = "PurchaseOrderToolStripMenuItem1"
-        Me.PurchaseOrderToolStripMenuItem1.Size = New System.Drawing.Size(241, 32)
+        Me.PurchaseOrderToolStripMenuItem1.Size = New System.Drawing.Size(194, 26)
         Me.PurchaseOrderToolStripMenuItem1.Text = "Purchase Orders"
         '
         'SuyppliersToolStripMenuItem
         '
         Me.SuyppliersToolStripMenuItem.Name = "SuyppliersToolStripMenuItem"
-        Me.SuyppliersToolStripMenuItem.Size = New System.Drawing.Size(241, 32)
+        Me.SuyppliersToolStripMenuItem.Size = New System.Drawing.Size(194, 26)
         Me.SuyppliersToolStripMenuItem.Text = "Suppliers"
+        '
+        'ProductsToolStripMenuItem1
+        '
+        Me.ProductsToolStripMenuItem1.Name = "ProductsToolStripMenuItem1"
+        Me.ProductsToolStripMenuItem1.Size = New System.Drawing.Size(194, 26)
+        Me.ProductsToolStripMenuItem1.Text = "Products"
         '
         'LogisticsDepartmentToolStripMenuItem
         '
         Me.LogisticsDepartmentToolStripMenuItem.Name = "LogisticsDepartmentToolStripMenuItem"
-        Me.LogisticsDepartmentToolStripMenuItem.Size = New System.Drawing.Size(98, 32)
+        Me.LogisticsDepartmentToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.LogisticsDepartmentToolStripMenuItem.Text = "Logistics"
         Me.LogisticsDepartmentToolStripMenuItem.Visible = False
         '
@@ -299,28 +304,28 @@ Partial Class VehicleManagementSystemForm
         '
         Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InventoryToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem})
         Me.WarehouseDepartmentToolStripMenuItem.Name = "WarehouseDepartmentToolStripMenuItem"
-        Me.WarehouseDepartmentToolStripMenuItem.Size = New System.Drawing.Size(124, 32)
+        Me.WarehouseDepartmentToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
         Me.WarehouseDepartmentToolStripMenuItem.Text = "Warehouse"
         Me.WarehouseDepartmentToolStripMenuItem.Visible = False
         '
         'InventoryToolStripMenuItem
         '
         Me.InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
-        Me.InventoryToolStripMenuItem.Size = New System.Drawing.Size(316, 32)
+        Me.InventoryToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
         Me.InventoryToolStripMenuItem.Text = "Inventory"
         Me.InventoryToolStripMenuItem.Visible = False
         '
         'DeliveriesStripMenuItem
         '
         Me.DeliveriesStripMenuItem.Name = "DeliveriesStripMenuItem"
-        Me.DeliveriesStripMenuItem.Size = New System.Drawing.Size(316, 32)
+        Me.DeliveriesStripMenuItem.Size = New System.Drawing.Size(253, 26)
         Me.DeliveriesStripMenuItem.Text = "Deliveries"
         Me.DeliveriesStripMenuItem.Visible = False
         '
         'ReleasePartsStripMenuItem
         '
         Me.ReleasePartsStripMenuItem.Name = "ReleasePartsStripMenuItem"
-        Me.ReleasePartsStripMenuItem.Size = New System.Drawing.Size(316, 32)
+        Me.ReleasePartsStripMenuItem.Size = New System.Drawing.Size(253, 26)
         Me.ReleasePartsStripMenuItem.Text = "Release Parts"
         Me.ReleasePartsStripMenuItem.Visible = False
         '
@@ -328,40 +333,40 @@ Partial Class VehicleManagementSystemForm
         '
         Me.RequisitionsforPurchaseToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StoreSuppliesToolStripMenuItem, Me.DepartmentSuppliesToolStripMenuItem})
         Me.RequisitionsforPurchaseToolStripMenuItem.Name = "RequisitionsforPurchaseToolStripMenuItem"
-        Me.RequisitionsforPurchaseToolStripMenuItem.Size = New System.Drawing.Size(316, 32)
+        Me.RequisitionsforPurchaseToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
         Me.RequisitionsforPurchaseToolStripMenuItem.Text = "Requisitions for Purchase"
         Me.RequisitionsforPurchaseToolStripMenuItem.Visible = False
         '
         'StoreSuppliesToolStripMenuItem
         '
         Me.StoreSuppliesToolStripMenuItem.Name = "StoreSuppliesToolStripMenuItem"
-        Me.StoreSuppliesToolStripMenuItem.Size = New System.Drawing.Size(278, 32)
+        Me.StoreSuppliesToolStripMenuItem.Size = New System.Drawing.Size(225, 26)
         Me.StoreSuppliesToolStripMenuItem.Text = "Store Supplies"
         '
         'DepartmentSuppliesToolStripMenuItem
         '
         Me.DepartmentSuppliesToolStripMenuItem.Name = "DepartmentSuppliesToolStripMenuItem"
-        Me.DepartmentSuppliesToolStripMenuItem.Size = New System.Drawing.Size(278, 32)
+        Me.DepartmentSuppliesToolStripMenuItem.Size = New System.Drawing.Size(225, 26)
         Me.DepartmentSuppliesToolStripMenuItem.Text = "Department Supplies"
         '
         'LOGOFFToolStripMenuItem
         '
         Me.LOGOFFToolStripMenuItem.Name = "LOGOFFToolStripMenuItem"
-        Me.LOGOFFToolStripMenuItem.Size = New System.Drawing.Size(105, 32)
+        Me.LOGOFFToolStripMenuItem.Size = New System.Drawing.Size(84, 25)
         Me.LOGOFFToolStripMenuItem.Text = "LOG OFF"
         Me.LOGOFFToolStripMenuItem.Visible = False
         '
         'LOGINToolStripMenuItem
         '
         Me.LOGINToolStripMenuItem.Name = "LOGINToolStripMenuItem"
-        Me.LOGINToolStripMenuItem.Size = New System.Drawing.Size(84, 32)
+        Me.LOGINToolStripMenuItem.Size = New System.Drawing.Size(68, 25)
         Me.LOGINToolStripMenuItem.Text = "LOGIN"
         Me.LOGINToolStripMenuItem.Visible = False
         '
         'EXITSYSTEMToolStripMenuItem
         '
         Me.EXITSYSTEMToolStripMenuItem.Name = "EXITSYSTEMToolStripMenuItem"
-        Me.EXITSYSTEMToolStripMenuItem.Size = New System.Drawing.Size(138, 32)
+        Me.EXITSYSTEMToolStripMenuItem.Size = New System.Drawing.Size(109, 25)
         Me.EXITSYSTEMToolStripMenuItem.Text = "EXIT SYSTEM"
         '
         'UsersDataGridView
@@ -370,28 +375,28 @@ Partial Class VehicleManagementSystemForm
         Me.UsersDataGridView.AllowUserToDeleteRows = False
         Me.UsersDataGridView.AllowUserToOrderColumns = True
         Me.UsersDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.UsersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.UsersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.UsersDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.UsersDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.UsersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.UsersDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UsersDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.UsersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.UsersDataGridView.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UsersDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.UsersDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.UsersDataGridView.Location = New System.Drawing.Point(384, 34)
         Me.UsersDataGridView.Name = "UsersDataGridView"
@@ -404,7 +409,7 @@ Partial Class VehicleManagementSystemForm
         '
         'VehicleManagementSystemForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = Global.WindowsApp3.My.Resources.Resources.christmas
         Me.ClientSize = New System.Drawing.Size(1284, 497)
@@ -452,7 +457,7 @@ Partial Class VehicleManagementSystemForm
     Friend WithEvents WorkOrdersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CustomerInfoSysToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VehicleInformationsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PartsRequisitionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AllServicedVehiclesOfServicesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WarehouseDepartmentToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InventoryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeliveriesStripMenuItem As ToolStripMenuItem
@@ -471,4 +476,5 @@ Partial Class VehicleManagementSystemForm
     Friend WithEvents MasterCodeBookToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents UpdateStatusTablesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ProductsToolStripMenuItem1 As ToolStripMenuItem
 End Class

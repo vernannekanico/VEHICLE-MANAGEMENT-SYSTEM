@@ -27,7 +27,7 @@
         Tunnel3 = ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value.ToString & Space(1) &
                                       ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value.ToString &
                                         " / " &
-                                      ProductsPartsForm.UnitTextBox.Text
+                                      ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value.ToString
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub FillProductPartsPackingsDataGridView()
@@ -39,7 +39,8 @@ SELECT
 ProductPartsPackingsTable.ProductPartsPackingID_Autonumber, 
 ProductPartsPackingsTable.ProductPartID_LongInteger, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3
 FROM ProductPartsPackingsTable
 "
 
@@ -83,6 +84,10 @@ FROM ProductPartsPackingsTable
                     ProductPartsPackingsDataGridView.Columns.Item(i).HeaderText = "Quantity Unit"
                     ProductPartsPackingsDataGridView.Columns.Item(i).Width = 80
                     ProductPartsPackingsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfThePacking_ShortText3"
+                    ProductPartsPackingsDataGridView.Columns.Item(i).HeaderText = "Packing Unit"
+                    ProductPartsPackingsDataGridView.Columns.Item(i).Width = 80
+                    ProductPartsPackingsDataGridView.Columns.Item(i).Visible = True
             End Select
 
             If ProductPartsPackingsDataGridView.Columns.Item(i).Visible = True Then
@@ -124,6 +129,7 @@ FROM ProductPartsPackingsTable
         PackingDetailsGroupBox.Visible = True
         QuantityPerPackTextBox.Text = NotNull(ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value)
         UnitOfTheQuantityTextBox.Text = NotNull(ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value)
+        UnitOfThePackingTextBox.Text = NotNull(ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value)
     End Sub
     Private Sub PackingDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles PackingDetailsGroupBox.VisibleChanged
         If PackingDetailsGroupBox.Visible = True Then
@@ -178,6 +184,7 @@ FROM ProductPartsPackingsTable
         End If
         If TheseAreNotEqual(QuantityPerPackTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value), PurposeOfEntry) Then Return True
         If TheseAreNotEqual(UnitOfTheQuantityTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(UnitOfThePackingTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value), PurposeOfEntry) Then Return True
         Return False
     End Function
     Private Sub RegisterProductPartsPackingsChanges()
@@ -193,7 +200,8 @@ FROM ProductPartsPackingsTable
     Private Sub InsertProductPartsPacking()
         MySelection = " Select * from ProductPartsPackingsTable WHERE ProductPartID_LongInteger = " & CurrentProductPartID.ToString &
                                                                     "  AND UnitOfTheQuantity_ShortText3 = " & InQuotes(UnitOfTheQuantityTextBox.Text) &
-                                                                    "  AND QuantityPerPack_Double = " & QuantityPerPackTextBox.Text
+                                                                    "  AND UnitOfThePacking_ShortText3 = " & InQuotes(UnitOfThePackingTextBox.Text) &
+                                                                   "  AND QuantityPerPack_Double = " & QuantityPerPackTextBox.Text
         JustExecuteMySelection()
         If RecordCount > 0 Then
             MsgBox("This packing of this product already exist")
@@ -201,11 +209,13 @@ FROM ProductPartsPackingsTable
         End If
         Dim FieldsToUpdate = "  ProductPartID_LongInteger, " &
                        "  UnitOfTheQuantity_ShortText3, " &
+                       "  UnitOfThePacking_ShortText3, " &
                        "  QuantityPerPack_Double "
 
         Dim FieldsData = CurrentProductPartID.ToString & ",  " &
                          InQuotes(UnitOfTheQuantityTextBox.Text) & ",  " &
-                         QuantityPerPackTextBox.Text
+                         InQuotes(UnitOfThePackingTextBox.Text) & ",  " &
+                        QuantityPerPackTextBox.Text
 
 
         CurrentProductPartsPackingID = InsertNewRecord("ProductPartsPackingsTable", FieldsToUpdate, FieldsData)
@@ -218,7 +228,9 @@ FROM ProductPartsPackingsTable
         Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductPartsPackingID.ToString
         Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString & "," &
                                       "QuantityPerPack_Double = " & Val(QuantityPerPackTextBox.Text) &
-                                      "UnitOfTheQuantity_ShortText3 = " & InQuotes(LTrim(Trim(UnitOfTheQuantityTextBox.Text)))
+                                      "UnitOfTheQuantity_ShortText3 = " & InQuotes(UnitOfTheQuantityTextBox.Text) &
+                                      "UnitOfThePacking_ShortText3 = " & InQuotes(UnitOfThePackingTextBox.Text)
+
         UpdateTable("ProductPartsPackingsTable", SetCommand, RecordFilter)
 
         'UPDATE ProductsPartTable AND MARK FIELD Selected true
