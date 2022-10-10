@@ -37,9 +37,9 @@
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         If IsEmpty(Tunnel3) Then
             ProductsMode = True         ' not inventory mode
-            CurrentMasterCodeBookID = Tunnel2
             ProductsPartsSelectionFilter = " WHERE StocksTable.MinimumQuantity_Double > 0 "
             FillProductsPartsDataGridView()
+            CurrentMasterCodeBookID = Tunnel2
 
             If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Then
                 SetSearchParameters()
