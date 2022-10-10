@@ -542,6 +542,7 @@ MasterCodeBookTable.SystemDesc_ShortText100Fld,
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 RequisitionsItemsTable.RequisitionsItemID_AutoNumber, 
+RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger,
 RequisitionsItemsTable.RequisitionQuantity_Double, 
 RequisitionsItemsTable.ProductPartID_LongInteger, 
 RequisitionsItemsTable.RequisitionItemStatusID_LongInteger, 
@@ -810,19 +811,19 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
                             RequisitionDate_ShortDate, 
                             RequestedByID_LongInteger, 
                             VehicleID_LongInteger, 
-                            PartsRequisitionStatus_Integer 
+                            RequisitionStatus_Integer 
                             "
         Dim FieldsData =
                             Chr(34) & DateString & Chr(34) & ", " &
                             CurrentPersonelID.ToString & "," &
                             CurrentVehicleID.ToString & "," &
-                             GetStatusIdFor("RequisitionsTable").ToString
+                            GetStatusIdFor("RequisitionsTable").ToString
 
         CurrentPartsRequisitionID = InsertNewRecord("RequisitionsTable", FieldsToUpdate, FieldsData)
 
         MsgBox("Modifications below is not yet testED, referenced vehicle is created")
         'CREATE vehicle record here
-        FieldsToUpdate = " VehicleReferencesForRequisitionsID_AutoNumber, 
+        FieldsToUpdate = " RequisitionsID_LongInteger, 
                            VehicleID_LongInteger "
         FieldsData = CurrentPartsRequisitionID & ", " &
                      CurrentVehicleID.ToString
@@ -840,17 +841,14 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
                               " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Draft Requisition").ToString &
                               " WHERE RequisitionsItemID_AutoNumber = " & CurrentRequisitionsItemID.ToString
             JustExecuteMySelection()
-
             CurrentWorkOrderRequestedPartID = RequisitionsItemsDataGridView.Item("WorkOrderRequestedPartID_LongInteger", i).Value
             MySelection = " UPDATE WorkOrderRequestedPartsTable  " &
-                              " SET WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Procurement Outstanding").ToString &
-                              " WHERE WorkOrderRequestedPartID_AutoNumber = " & CurrentWorkOrderRequestedPartID.ToString
+                                          " SET WorkOrderRequestedPartStatus_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsTable", "Procurement Outstanding").ToString &
+                                          " WHERE WorkOrderRequestedPartID_AutoNumber = " & CurrentWorkOrderRequestedPartID.ToString
             JustExecuteMySelection()
-
-            CurrentWorkOrderRequestedPartID = RequisitionsItemsDataGridView.Item("WorkOrderRequestedPartID_LongInteger", i).Value
         Next
         MySelection = " UPDATE WorkOrderRequestedPartsHeadersTable  " &
-                              " SET WorkOrderPartsRequisitionStatusID_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsHeadersTable", "Procurement Outstanding").ToString &
+                              " SET WorkOrderRequestedPartsHeaderStatusID_Integer = " & GetStatusIdFor("WorkOrderRequestedPartsHeadersTable", "Procurement Outstanding").ToString &
                               " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderRequestedPartsHeaderID.ToString
         JustExecuteMySelection()
 
