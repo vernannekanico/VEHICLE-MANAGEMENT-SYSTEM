@@ -22,7 +22,7 @@ Partial Class RequisitionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RequisitionItemDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -50,15 +50,15 @@ Partial Class RequisitionsForm
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OurstandingForAssignmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OutstandingRequisitionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartiallyOrderedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReorderedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CompletlyOrderedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AllRequisitionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintRequisitionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WhatToDoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CreatePurchaseOrderforItemsSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AssignToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OurstandingForAssignmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionItemDetailsGroupBox.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.RequisitionsGroupBox.SuspendLayout()
@@ -314,8 +314,8 @@ Partial Class RequisitionsForm
         Me.RequisitionsItemsDataGridView.Name = "RequisitionsItemsDataGridView"
         Me.RequisitionsItemsDataGridView.ReadOnly = True
         Me.RequisitionsItemsDataGridView.RowHeadersVisible = False
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.RequisitionsItemsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.RequisitionsItemsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle1
         Me.RequisitionsItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.RequisitionsItemsDataGridView.Size = New System.Drawing.Size(329, 179)
         Me.RequisitionsItemsDataGridView.TabIndex = 53
@@ -323,7 +323,7 @@ Partial Class RequisitionsForm
         'RequisitionsMenuStrip
         '
         Me.RequisitionsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ViewToolStripMenuItem, Me.WhatToDoToolStripMenuItem, Me.AssignToolStripMenuItem})
+        Me.RequisitionsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ViewToolStripMenuItem, Me.CreatePurchaseOrderforItemsSelectedToolStripMenuItem, Me.AssignToolStripMenuItem})
         Me.RequisitionsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.RequisitionsMenuStrip.Name = "RequisitionsMenuStrip"
         Me.RequisitionsMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -347,58 +347,8 @@ Partial Class RequisitionsForm
         'RequisitionDetailsToolStripMenuItem
         '
         Me.RequisitionDetailsToolStripMenuItem.Name = "RequisitionDetailsToolStripMenuItem"
-        Me.RequisitionDetailsToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
+        Me.RequisitionDetailsToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.RequisitionDetailsToolStripMenuItem.Text = "Requisition Details"
-        '
-        'OutstandingRequisitionsToolStripMenuItem
-        '
-        Me.OutstandingRequisitionsToolStripMenuItem.Name = "OutstandingRequisitionsToolStripMenuItem"
-        Me.OutstandingRequisitionsToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
-        Me.OutstandingRequisitionsToolStripMenuItem.Text = "Outstanding Requisitions"
-        '
-        'PartiallyOrderedToolStripMenuItem
-        '
-        Me.PartiallyOrderedToolStripMenuItem.Name = "PartiallyOrderedToolStripMenuItem"
-        Me.PartiallyOrderedToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
-        Me.PartiallyOrderedToolStripMenuItem.Text = "Partially Ordered"
-        '
-        'ReorderedToolStripMenuItem
-        '
-        Me.ReorderedToolStripMenuItem.Name = "ReorderedToolStripMenuItem"
-        Me.ReorderedToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
-        Me.ReorderedToolStripMenuItem.Text = "Re-ordered"
-        '
-        'CompletlyOrderedToolStripMenuItem
-        '
-        Me.CompletlyOrderedToolStripMenuItem.Name = "CompletlyOrderedToolStripMenuItem"
-        Me.CompletlyOrderedToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
-        Me.CompletlyOrderedToolStripMenuItem.Text = "Completely Ordered"
-        '
-        'AllRequisitionsToolStripMenuItem
-        '
-        Me.AllRequisitionsToolStripMenuItem.Name = "AllRequisitionsToolStripMenuItem"
-        Me.AllRequisitionsToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
-        Me.AllRequisitionsToolStripMenuItem.Text = "All Requisitions"
-        '
-        'PrintRequisitionToolStripMenuItem
-        '
-        Me.PrintRequisitionToolStripMenuItem.Name = "PrintRequisitionToolStripMenuItem"
-        Me.PrintRequisitionToolStripMenuItem.Size = New System.Drawing.Size(255, 26)
-        Me.PrintRequisitionToolStripMenuItem.Text = "Print Requisition"
-        '
-        'WhatToDoToolStripMenuItem
-        '
-        Me.WhatToDoToolStripMenuItem.Name = "WhatToDoToolStripMenuItem"
-        Me.WhatToDoToolStripMenuItem.Size = New System.Drawing.Size(307, 25)
-        Me.WhatToDoToolStripMenuItem.Text = "Create Purchase Order for Items Selected"
-        Me.WhatToDoToolStripMenuItem.Visible = False
-        '
-        'AssignToolStripMenuItem
-        '
-        Me.AssignToolStripMenuItem.Name = "AssignToolStripMenuItem"
-        Me.AssignToolStripMenuItem.Size = New System.Drawing.Size(68, 25)
-        Me.AssignToolStripMenuItem.Text = "Assign"
-        Me.AssignToolStripMenuItem.Visible = False
         '
         'OurstandingForAssignmentToolStripMenuItem
         '
@@ -406,6 +356,56 @@ Partial Class RequisitionsForm
         Me.OurstandingForAssignmentToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
         Me.OurstandingForAssignmentToolStripMenuItem.Text = "Ourstanding for Assignment"
         Me.OurstandingForAssignmentToolStripMenuItem.Visible = False
+        '
+        'OutstandingRequisitionsToolStripMenuItem
+        '
+        Me.OutstandingRequisitionsToolStripMenuItem.Name = "OutstandingRequisitionsToolStripMenuItem"
+        Me.OutstandingRequisitionsToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.OutstandingRequisitionsToolStripMenuItem.Text = "Outstanding Requisitions"
+        '
+        'PartiallyOrderedToolStripMenuItem
+        '
+        Me.PartiallyOrderedToolStripMenuItem.Name = "PartiallyOrderedToolStripMenuItem"
+        Me.PartiallyOrderedToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.PartiallyOrderedToolStripMenuItem.Text = "Partially Ordered"
+        '
+        'ReorderedToolStripMenuItem
+        '
+        Me.ReorderedToolStripMenuItem.Name = "ReorderedToolStripMenuItem"
+        Me.ReorderedToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.ReorderedToolStripMenuItem.Text = "Re-ordered"
+        '
+        'CompletlyOrderedToolStripMenuItem
+        '
+        Me.CompletlyOrderedToolStripMenuItem.Name = "CompletlyOrderedToolStripMenuItem"
+        Me.CompletlyOrderedToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.CompletlyOrderedToolStripMenuItem.Text = "Completely Ordered"
+        '
+        'AllRequisitionsToolStripMenuItem
+        '
+        Me.AllRequisitionsToolStripMenuItem.Name = "AllRequisitionsToolStripMenuItem"
+        Me.AllRequisitionsToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.AllRequisitionsToolStripMenuItem.Text = "All Requisitions"
+        '
+        'PrintRequisitionToolStripMenuItem
+        '
+        Me.PrintRequisitionToolStripMenuItem.Name = "PrintRequisitionToolStripMenuItem"
+        Me.PrintRequisitionToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.PrintRequisitionToolStripMenuItem.Text = "Print Requisition"
+        '
+        'CreatePurchaseOrderforItemsSelectedToolStripMenuItem
+        '
+        Me.CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Name = "CreatePurchaseOrderforItemsSelectedToolStripMenuItem"
+        Me.CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Size = New System.Drawing.Size(307, 25)
+        Me.CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Text = "Create Purchase Order for Items Selected"
+        Me.CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Visible = False
+        '
+        'AssignToolStripMenuItem
+        '
+        Me.AssignToolStripMenuItem.Name = "AssignToolStripMenuItem"
+        Me.AssignToolStripMenuItem.Size = New System.Drawing.Size(68, 25)
+        Me.AssignToolStripMenuItem.Text = "Assign"
+        Me.AssignToolStripMenuItem.Visible = False
         '
         'RequisitionsForm
         '
@@ -465,7 +465,7 @@ Partial Class RequisitionsForm
     Friend WithEvents CompletlyOrderedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AllRequisitionsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PrintRequisitionToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents WhatToDoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CreatePurchaseOrderforItemsSelectedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AssignToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OurstandingForAssignmentToolStripMenuItem As ToolStripMenuItem
 End Class

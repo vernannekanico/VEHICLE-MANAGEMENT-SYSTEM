@@ -200,7 +200,6 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         CurrentPurchaseOrdersDataGridViewRow = e.RowIndex
         CurrentPurchaseOrderID = PurchaseOrdersDataGridView.Item("PurchaseOrderID_Autonumber", CurrentPurchaseOrdersDataGridViewRow).Value
         FillField(CurrentPurchaseOrderRevision, PurchaseOrdersDataGridView.Item("PurchaseOrderRevision_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)
-        CurrentSupplierID = PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value
         CurrentPOStatus = PurchaseOrdersDataGridView.Item("PurchaseOrderStatus", CurrentPurchaseOrdersDataGridViewRow).Value
         SupplierNameTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("SupplierName_ShortText35", CurrentPurchaseOrdersDataGridViewRow).Value)
         PurchaseOrderRevisionNoTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderRevision_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)
@@ -210,7 +209,12 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         POTaxAmountTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value)
         POTotalTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value)
         PurchaseOrderIDTextBox.Text = NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderID_AutoNumber", CurrentPurchaseOrdersDataGridViewRow).Value)
-        EditPurchaseOrderToolStripMenuItem.Visible = False
+        CurrentSupplierID = PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value
+        If CurrentSupplierID < 1 Then
+            EnableEdit()
+            SupplierNameTextBox.Select()
+        End If
+        PurchaseOrderDetailsGroupBox.Visible = False
         DeletePurchaseOrderToolStripMenuItem.Visible = False
         SubmitForApprovalToolStripMenuItem.Visible = False
         ApproveStripMenuItem.Visible = False
@@ -1064,6 +1068,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         UpdatePOStatus(1)
         ApproveStripMenuItem.Visible = True
         SubmitForApprovalToolStripMenuItem.Visible = False
+        PurchaseOrderDetailsGroupBox.Visible = False
     End Sub
     Private Sub ApproveStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApproveStripMenuItem.Click
         If MsgBox("Shall we proceed for Approval and execution of this Purchase Order ?", MsgBoxStyle.YesNo) = vbNo Then

@@ -43,9 +43,9 @@
         SavedCallingForm = CallingForm
         If Val(Tunnel1) > 0 Then
             CurrentPurchaseOrderID = Tunnel1
-            WhatToDoToolStripMenuItem.Text = "Attach selected items to Purchase Order " & Tunnel1.ToString
+            CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Text = "Attach selected items to Purchase Order " & Tunnel1.ToString
         Else
-            WhatToDoToolStripMenuItem.Text = "Create Purchase Order for Selected Item(s) "
+            CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Text = "Create Purchase Order for Selected Item(s) "
         End If
         RequisitionsItemsDataGridView.DefaultCellStyle.WrapMode = DataGridViewTriState.True
         If CurrentUserGroup = "Procurement Manager" Then
@@ -192,11 +192,11 @@ FROM (((((RequisitionsTable LEFT JOIN VehiclesTable ON RequisitionsTable.Vehicle
         CurrentPartsRequisitionID = RequisitionsDataGridView.Item("RequisitionID_AutoNumber", CurrentRequisitionsRow).Value
         CurrentVehicleID = RequisitionsDataGridView.Item("VehicleID_LongInteger", CurrentRequisitionsRow).Value
         CurrentRequisitionstatus = NotNull(RequisitionsDataGridView.Item("StatusText_ShortText25", CurrentRequisitionsRow).Value)
-        WhatToDoToolStripMenuItem.Visible = False
+        CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Visible = False
         AssignToolStripMenuItem.Visible = False
         If CurrentRequisitionstatus = "Outstanding Requisition" Then
             If CurrentUserGroup = "Purchaser" Then
-                WhatToDoToolStripMenuItem.Visible = True
+                CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Visible = True
             Else
                 AssignToolStripMenuItem.Visible = True
             End If
@@ -354,7 +354,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         End Select
 
     End Sub
-    Private Sub PurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WhatToDoToolStripMenuItem.Click
+    Private Sub PurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CreatePurchaseOrderforItemsSelectedToolStripMenuItem.Click
         ShowPurchaseOrdersForm()
     End Sub
     Private Function AllItemsAreValid(PassedataGridView As DataGridView, PassedFieldToTest As String, PassedNoOfRecords As Integer,
