@@ -48,8 +48,17 @@
             WhatToDoToolStripMenuItem.Text = "Create Purchase Order for Selected Item(s) "
         End If
         RequisitionsItemsDataGridView.DefaultCellStyle.WrapMode = DataGridViewTriState.True
-        CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
-        SetRequisitionsSelectionFilter("Outstanding Requisition", 2, Me, "OUTSTANDING REQUISITIONS")
+        If CurrentUserGroup = "Procurement Manager" Then
+            CurrentUserFilter = "PurchaserID_LongInteger < 1 "
+            OurstandingForAssignmentToolStripMenuItem.Visible = True
+            SetRequisitionsSelectionFilter("Outstanding Requisition",
+                                           2,
+                                           Me,
+                                           "FOR ASSIGNMENT REQUISITIONS")
+        Else
+            CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
+            SetRequisitionsSelectionFilter("Outstanding Requisition", 2, Me, "OUTSTANDING REQUISITIONS")
+        End If
     End Sub
 
     Private Sub RequisitionsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
@@ -59,7 +68,13 @@
         ' GET RETURNED DATA HERE
         'show
         Select Case Tunnel1
-
+            Case "Tunnel2IsPersonnelID"
+                If MsgBox("Confirm assignment ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    MySelection = " UPDATE RequisitionsTable  SET " &
+                   " PurchaserID_LongInteger = " & Str(Tunnel2) &
+                   " WHERE RequisitionID_AutoNumber = " & CurrentRequisitionsID.ToString
+                    JustExecuteMySelection()
+                End If
             Case Else
                 MsgBox("setup this routine")
         End Select
@@ -84,9 +99,17 @@ RequisitionsTable.Requisitionstatus_Integer,
 RequisitionsTable.RequisitionType_Byte, 
 RequisitionsTable.VehicleID_LongInteger, 
 RequisitionsTable.PurchaserID_LongInteger, 
-RequisitionsTable.DepartmentID__LongInteger, StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, (VehiclesTable.YearManufactured_ShortText4 & Space(1) & Trim(VehicleTypeTable.VehicleType_ShortText20) & Space(1) & Trim(VehicleModelsTable.VehicleModel_ShortText20) & Space(1) & Trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription, IIf(RequisitionsTable.RequisitionType_Byte=1,""Work Order"",IIf(RequisitionsTable.RequisitionType_Byte=2,""Store Order"")) AS PartsRequisitionType, PersonnelTable.LastName_ShortText30, PersonnelTable.FirstName_ShortText30, DepartmentsTable.DepartmentName_ShortText35
-FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN VehiclesTable ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.RequisitionStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModelsRelationsTable ON VehiclesTable.VehicleModelsRelationID_LongInteger = VehicleModelsRelationsTable.VehicleModelsRelationID_Autonumber) LEFT JOIN VehicleTypeTable ON VehicleModelsRelationsTable.VehicleTypeID_LongInteger = VehicleTypeTable.VehicleTypeID_AutoNumber) LEFT JOIN VehicleTrimTable ON VehicleModelsRelationsTable.VehicleTrimID_LongInteger = VehicleTrimTable.VehicleTrimID_Autonumber) LEFT JOIN VehicleModelsTable ON VehicleModelsRelationsTable.VehicleModelID_LongInteger = VehicleModelsTable.VehicleModelID_Autonumber) LEFT JOIN DepartmentsTable ON RequisitionsTable.DepartmentID__LongInteger = DepartmentsTable.DepartmentID_AutoNumber"
-
+RequisitionsTable.DepartmentID__LongInteger, 
+StatusesTable.StatusSequence_LongInteger, 
+StatusesTable.StatusText_ShortText25, 
+DepartmentsTable.DepartmentName_ShortText35, 
+VehicleDescription.VehicleDescription, 
+" & PartsRequisitionType &
+"
+AssignedTo.PersonnelFullName AS AssignedTo, 
+RequestedBy.PersonnelFullName AS RequestedBy
+FROM (((((RequisitionsTable LEFT JOIN VehiclesTable ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.RequisitionStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN DepartmentsTable ON RequisitionsTable.DepartmentID__LongInteger = DepartmentsTable.DepartmentID_AutoNumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) LEFT JOIN PersonnelFullName AS AssignedTo ON RequisitionsTable.PurchaserID_LongInteger = AssignedTo.PersonnelID_AutoNumber) LEFT JOIN PersonnelFullName AS RequestedBy ON RequisitionsTable.RequestedByID_LongInteger = RequestedBy.PersonnelID_AutoNumber
+"
         MySelection = RequisitionsFieldsToSelect & RequisitionsSelectionFilter & RequisitionsSelectionOrder
         JustExecuteMySelection()
 
@@ -100,7 +123,7 @@ FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.Requ
 
         Dim RecordsToDisplay = 10
         SetGroupBoxHeight(RecordsToDisplay, RequisitionsRecordCount, RequisitionsGroupBox, RequisitionsDataGridView)
-
+        RequisitionsGroupBox.Height = RequisitionsGroupBox.Height + DataGridViewRowHeight
         If RequisitionsItemsDataGridViewAlreadyFormated Then
 
             FormatRequisitionsDataGridView()
@@ -144,12 +167,14 @@ FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.Requ
                     RequisitionsDataGridView.Columns.Item(i).HeaderText = "For Vehicle"
                     RequisitionsDataGridView.Columns.Item(i).Width = 300
                     RequisitionsDataGridView.Columns.Item(i).Visible = True
-                Case "RequestedBy"
-                    RequisitionsDataGridView.Columns.Item(i).HeaderText = "Requested By"
-                    RequisitionsDataGridView.Columns.Item(i).Width = 250
-                    RequisitionsDataGridView.Columns.Item(i).Visible = True
+                Case "AssignedTo"
+                    If Not CurrentUserGroup = "Purchaser" Then
+                        RequisitionsDataGridView.Columns.Item(i).HeaderText = "Assigned to"
+                        RequisitionsDataGridView.Columns.Item(i).Width = 200
+                        RequisitionsDataGridView.Columns.Item(i).Visible = True
+                    End If
                 Case "StatusText_ShortText25"
-                    RequisitionsDataGridView.Columns.Item(i).HeaderText = "RequisitStatus"
+                    RequisitionsDataGridView.Columns.Item(i).HeaderText = "Requisition Status"
                     RequisitionsDataGridView.Columns.Item(i).Width = 150
                     RequisitionsDataGridView.Columns.Item(i).Visible = True
             End Select
@@ -166,11 +191,18 @@ FROM (((((((RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.Requ
         CurrentRequisitionsRow = e.RowIndex
         CurrentPartsRequisitionID = RequisitionsDataGridView.Item("RequisitionID_AutoNumber", CurrentRequisitionsRow).Value
         CurrentVehicleID = RequisitionsDataGridView.Item("VehicleID_LongInteger", CurrentRequisitionsRow).Value
-        CurrentRequisitionstatus = NotNull(RequisitionsDataGridView.Item("RequisitionType_Byte", CurrentRequisitionsRow).Value)
-
+        CurrentRequisitionstatus = NotNull(RequisitionsDataGridView.Item("StatusText_ShortText25", CurrentRequisitionsRow).Value)
+        WhatToDoToolStripMenuItem.Visible = False
+        AssignToolStripMenuItem.Visible = False
+        If CurrentRequisitionstatus = "Outstanding Requisition" Then
+            If CurrentUserGroup = "Purchaser" Then
+                WhatToDoToolStripMenuItem.Visible = True
+            Else
+                AssignToolStripMenuItem.Visible = True
+            End If
+        End If
         RequisitionsItemsSelectionFilter = " WHERE RequisitionsItemsTable.RequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString
         FillRequisitionsItemsDataGridView()
-        WhatToDoToolStripMenuItem.Visible = False
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         DoCommonHouseKeeping(Me, SavedCallingForm)
@@ -221,7 +253,6 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
         RequisitionsItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         Dim RecordsToDisplay = 28
         SetGroupBoxHeight(RecordsToDisplay, RequisitionsItemsRecordCount, RequisitionsItemsGroupBox, RequisitionsItemsDataGridView)
-
         If Not RequisitionsItemsDataGridViewAlreadyFormated Then
             FormatRequisitionsItemsDataGridView()
         End If
@@ -479,4 +510,7 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable
 
     End Sub
 
+    Private Sub AssignToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AssignToolStripMenuItem.Click
+        ShowCalledForm(Me, PersonnelsForm)
+    End Sub
 End Class

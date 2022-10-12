@@ -838,7 +838,7 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
 
             MySelection = " UPDATE RequisitionsItemsTable  " &
                               " SET RequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString & ", " &
-                              " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Draft Requisition").ToString &
+                              " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Procurement Outstanding").ToString &
                               " WHERE RequisitionsItemID_AutoNumber = " & CurrentRequisitionsItemID.ToString
             JustExecuteMySelection()
             CurrentWorkOrderRequestedPartID = RequisitionsItemsDataGridView.Item("WorkOrderRequestedPartID_LongInteger", i).Value
@@ -965,7 +965,7 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
                     MySelection = " UPDATE RequisitionsItemsTable " &
                                     " SET RequisitionID_LongInteger = " & CurrentPartsRequisitionID.ToString & ", " &
                                     " ProductPartID_LongInteger = " & CurrentProductsPartID.ToString & ", " &
-                                    " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Draft Requisition").ToString & ", " &
+                                    " RequisitionItemStatusID_LongInteger = " & GetStatusIdFor("RequisitionsItemsTable", "Procurement Outstanding").ToString & ", " &
                                     " RequisitionQuantity_Double = " & ToOrderQuantityTextBox.Text & xxFilter
                     JustExecuteMySelection()
                     Dim RecordFilter = " WHERE ProductsPartID_Autonumber =  " & CurrentProductsPartID.ToString

@@ -22,7 +22,7 @@ Partial Class RequisitionsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RequisitionItemDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -58,6 +58,7 @@ Partial Class RequisitionsForm
         Me.PrintRequisitionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WhatToDoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AssignToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OurstandingForAssignmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionItemDetailsGroupBox.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.RequisitionsGroupBox.SuspendLayout()
@@ -313,8 +314,8 @@ Partial Class RequisitionsForm
         Me.RequisitionsItemsDataGridView.Name = "RequisitionsItemsDataGridView"
         Me.RequisitionsItemsDataGridView.ReadOnly = True
         Me.RequisitionsItemsDataGridView.RowHeadersVisible = False
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.RequisitionsItemsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.RequisitionsItemsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle2
         Me.RequisitionsItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.RequisitionsItemsDataGridView.Size = New System.Drawing.Size(329, 179)
         Me.RequisitionsItemsDataGridView.TabIndex = 53
@@ -338,7 +339,7 @@ Partial Class RequisitionsForm
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RequisitionDetailsToolStripMenuItem, Me.OutstandingRequisitionsToolStripMenuItem, Me.PartiallyOrderedToolStripMenuItem, Me.ReorderedToolStripMenuItem, Me.CompletlyOrderedToolStripMenuItem, Me.AllRequisitionsToolStripMenuItem, Me.PrintRequisitionToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RequisitionDetailsToolStripMenuItem, Me.OurstandingForAssignmentToolStripMenuItem, Me.OutstandingRequisitionsToolStripMenuItem, Me.PartiallyOrderedToolStripMenuItem, Me.ReorderedToolStripMenuItem, Me.CompletlyOrderedToolStripMenuItem, Me.AllRequisitionsToolStripMenuItem, Me.PrintRequisitionToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
         Me.ViewToolStripMenuItem.Text = "Views"
@@ -398,6 +399,13 @@ Partial Class RequisitionsForm
         Me.AssignToolStripMenuItem.Size = New System.Drawing.Size(68, 25)
         Me.AssignToolStripMenuItem.Text = "Assign"
         Me.AssignToolStripMenuItem.Visible = False
+        '
+        'OurstandingForAssignmentToolStripMenuItem
+        '
+        Me.OurstandingForAssignmentToolStripMenuItem.Name = "OurstandingForAssignmentToolStripMenuItem"
+        Me.OurstandingForAssignmentToolStripMenuItem.Size = New System.Drawing.Size(277, 26)
+        Me.OurstandingForAssignmentToolStripMenuItem.Text = "Ourstanding for Assignment"
+        Me.OurstandingForAssignmentToolStripMenuItem.Visible = False
         '
         'RequisitionsForm
         '
@@ -459,4 +467,5 @@ Partial Class RequisitionsForm
     Friend WithEvents PrintRequisitionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WhatToDoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AssignToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OurstandingForAssignmentToolStripMenuItem As ToolStripMenuItem
 End Class

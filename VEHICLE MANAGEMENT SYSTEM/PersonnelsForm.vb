@@ -78,6 +78,8 @@
             Case "Store Keeper"
                 PersonnelSelectionFilter = "   WHERE JobPositionName_ShortText40 = " & InQuotes("Lead Service Specialist") &
                                             "   OR JobPositionName_ShortText40 = " & InQuotes("Automotive Service Specialist")
+            Case "Procurement Manager"
+                PersonnelSelectionFilter = "   WHERE JobPositionName_ShortText40 = " & InQuotes("Purchaser")
             Case Else
                 MsgBox("BREAK,  UNKOWN CALLING FORM")
         End Select
