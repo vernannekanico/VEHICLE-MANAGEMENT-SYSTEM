@@ -99,15 +99,7 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
         CurrentDeliveryID = -1
         DisableDeliveryItemMenus()
         DeliveriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If DeliveriesRecordCount = 0 Then
-            DeliveryHeaderDetailsGroupBox.Visible = False
-            DeliveryItemsGroupBox.Visible = False
-            FinalizeDeliveryEntryToolStripMenuItem.Visible = False
-        Else
-            EditDeliveryHeader()
-            DeliveryHeaderDetailsGroupBox.Visible = True
-            DeliveryItemsGroupBox.Visible = True
-        End If
+        DeliveryHeaderDetailsGroupBox.Visible = False
         If DeliveryItemsRecordCount > 0 Then
             OrderDetailsToolStripMenuItem.Visible = True
         Else
@@ -172,15 +164,19 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
         DeliveryrDate.Text = NotNull(DeliveriesDataGridView.Item("DeliveryDate_ShortDate", CurrentDeliveriesDataGridViewRow).Value)
         DeliveryNoteNoTextBox.Text = NotNull(DeliveriesDataGridView.Item("DeliveryNote_ShortText12", CurrentDeliveriesDataGridViewRow).Value)
         CurrentDeliveryStatus = NotNull(DeliveriesDataGridView.Item("StatusText_ShortText25", CurrentDeliveriesDataGridViewRow).Value)
-        If CurrentDeliveryStatus = "Draft Deliveries" Then
-            EnableDeliveryItemMenus()
-            DeliveryHeaderDetailsGroupBox.Enabled = True
-            FinalizeDeliveryEntryToolStripMenuItem.Visible = True
-        Else
-            DisableDeliveryItemMenus()
-            DeliveryHeaderDetailsGroupBox.Enabled = False
-            FinalizeDeliveryEntryToolStripMenuItem.Visible = False
-        End If
+        DisableDeliveryItemMenus()
+        DeliveryHeaderDetailsGroupBox.Enabled = False
+        FinalizeDeliveryEntryToolStripMenuItem.Visible = False
+        Select Case CurrentDeliveryStatus
+            Case "Draft Deliveries"
+                EnableDeliveryItemMenus()
+                DeliveryHeaderDetailsGroupBox.Visible = True
+                FinalizeDeliveryEntryToolStripMenuItem.Visible = True
+            Case "Processed"
+                DisableDeliveryItemMenus()
+                DeliveryHeaderDetailsGroupBox.Visible = False
+                FinalizeDeliveryEntryToolStripMenuItem.Visible = False
+        End Select
         DeliveryItemsSelectionFilter = " WHERE DeliveryID_LongInteger = " & CurrentDeliveryID.ToString
         FillDeliveryItemsDataGridView()
 
@@ -553,12 +549,12 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
     End Sub
 
     Private Sub DraftPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DraftPurchaseOrdersToolStripMenuItem.Click
-        SetDeliveriesSelectionFilter(GetStatusIdFor("Draft Deliveries"), 2, Me, "Draft Deliveries")
+        SetDeliveriesSelectionFilter(GetStatusIdFor("DeliveriesTable"), 2, Me, "Draft Deliveries")
         FillDeliveriesDataGridView()
     End Sub
 
     Private Sub AllPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllPurchaseOrdersToolStripMenuItem.Click
-        SetDeliveriesSelectionFilter(GetStatusIdFor("Completely Delivered"), 1, Me, "All Deliveries")
+        SetDeliveriesSelectionFilter(GetStatusIdFor("DeliveriesTable"), 1, Me, "All Deliveries")
         FillDeliveriesDataGridView()
     End Sub
 
