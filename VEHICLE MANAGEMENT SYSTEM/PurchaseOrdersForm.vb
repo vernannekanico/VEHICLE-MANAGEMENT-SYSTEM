@@ -33,7 +33,9 @@
     Private SavedPurchaseOrderTotal = 0
     Private SavedSupplierName = ""
     Private SavedCallingForm As Form
+    Private CurrentDeliveryID = -1
     Private CurrentUserFilter = ""
+
 
     Private Sub PurchaseOrdersForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
@@ -44,6 +46,7 @@
             Me.Text = "SELECT ITEMS DELIVERED"
             SetToDeliveryMode()
             SetPurchaseOrdersSelectionFilter("Approved and Finalized")
+            CurrentDeliveryID = Tunnel2
         Else
             Select Case CurrentUserGroup
                 Case "Procurement Manager"
@@ -1132,9 +1135,24 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
             If Not PurchaseOrdersItemsDataGridView.Rows(i).Selected Then Continue For
             Dim xxPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", i).Value
-            Dim FieldsToUpdate = " PurchaseOrderItemID_LongInteger "
-            Dim FieldsData = xxPurchaseOrdersItemID.ToString
-            MySelection = " SELECT * FROM DeliveryItemsTable WHERE " & FieldsToUpdate & " = " & xxPurchaseOrdersItemID.ToString
+            Dim xxProductPartID_LongInteger = PurchaseOrdersItemsDataGridView.Item("ProductsPartID_Autonumber", i).Value
+            Dim xxDeliveredQty_Double = PurchaseOrdersItemsDataGridView.Item("POQty_Integer", i).Value
+
+
+            Dim FieldsToUpdate = " DeliveryID_LongInteger, " &
+                                " PurchaseOrderItemID_LongInteger, " &
+                                " ProductPartID_LongInteger, " &
+                                " DeliveredQty_Double, " &
+                                " DeliveryItemsStatusID_LongInteger "
+
+            Dim FieldsData = CurrentDeliveryID.ToString & ", " &
+                         xxPurchaseOrdersItemID.ToString & ", " &
+                         xxProductPartID_LongInteger.ToString & ", " &
+                         xxDeliveredQty_Double.ToString & ", " &
+            GetStatusIdFor("DeliveryItemsTable").ToString()
+
+
+            MySelection = " SELECT * FROM DeliveryItemsTable WHERE DeliveryID_LongInteger = " & xxPurchaseOrdersItemID.ToString
             JustExecuteMySelection()
             If RecordCount > 0 Then Continue For
             Dim xxDummyID = InsertNewRecord("DeliveryItemsTable", FieldsToUpdate, FieldsData)

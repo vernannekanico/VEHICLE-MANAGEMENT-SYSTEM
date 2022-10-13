@@ -72,6 +72,7 @@ Partial Class DeliveriesForm
         Me.Label7 = New System.Windows.Forms.Label()
         Me.BrandTextBox = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
+        Me.OrderDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveriesMenuStrip.SuspendLayout()
         Me.DeliveryHeaderDetailsGroupBox.SuspendLayout()
         Me.DeliveryItemsGroupBox.SuspendLayout()
@@ -85,11 +86,11 @@ Partial Class DeliveriesForm
         '
         Me.DeliveriesMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveriesMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveDeliveryToolStripMenuItem, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem})
+        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveDeliveryToolStripMenuItem, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem, Me.OrderDetailsToolStripMenuItem})
         Me.DeliveriesMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.DeliveriesMenuStrip.Name = "DeliveriesMenuStrip"
         Me.DeliveriesMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
-        Me.DeliveriesMenuStrip.Size = New System.Drawing.Size(963, 31)
+        Me.DeliveriesMenuStrip.Size = New System.Drawing.Size(1171, 31)
         Me.DeliveriesMenuStrip.TabIndex = 84
         Me.DeliveriesMenuStrip.Text = "MenuStrip1"
         '
@@ -407,7 +408,7 @@ Partial Class DeliveriesForm
         Me.DeliveryItemDetailsGroupBox.Controls.Add(Me.Label16)
         Me.DeliveryItemDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryItemDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(300, 167)
+        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(404, 167)
         Me.DeliveryItemDetailsGroupBox.Name = "DeliveryItemDetailsGroupBox"
         Me.DeliveryItemDetailsGroupBox.Size = New System.Drawing.Size(715, 261)
         Me.DeliveryItemDetailsGroupBox.TabIndex = 110
@@ -535,11 +536,17 @@ Partial Class DeliveriesForm
         Me.Label16.TabIndex = 105
         Me.Label16.Text = "Quantity"
         '
+        'OrderDetailsToolStripMenuItem
+        '
+        Me.OrderDetailsToolStripMenuItem.Name = "OrderDetailsToolStripMenuItem"
+        Me.OrderDetailsToolStripMenuItem.Size = New System.Drawing.Size(114, 25)
+        Me.OrderDetailsToolStripMenuItem.Text = "Order Details"
+        '
         'DeliveriesForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(963, 603)
+        Me.ClientSize = New System.Drawing.Size(1171, 603)
         Me.Controls.Add(Me.DeliveryItemDetailsGroupBox)
         Me.Controls.Add(Me.DeliveryItemsGroupBox)
         Me.Controls.Add(Me.DeliveriesGroupBox)
@@ -606,4 +613,5 @@ Partial Class DeliveriesForm
     Friend WithEvents FromPurchaseOrdersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label3 As Label
     Friend WithEvents POReferenceTextBox As TextBox
+    Friend WithEvents OrderDetailsToolStripMenuItem As ToolStripMenuItem
 End Class

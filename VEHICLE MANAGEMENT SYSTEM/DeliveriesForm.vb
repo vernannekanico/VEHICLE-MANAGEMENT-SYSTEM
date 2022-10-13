@@ -44,22 +44,20 @@
         End If
 
         ' NOTE" SYSTEM AUTOFITS THE GRIDVIEW FIELDS ACCORDING TO THEIR WITDH
-        If DeliveryItemsGroupBox.Width > VehicleManagementSystemForm.Width Then
-            Me.Width = VehicleManagementSystemForm.Width - 2
-            DeliveryItemsGroupBox.Width = Me.Width - 2
-        Else
-            Me.Width = DeliveryItemsGroupBox.Width + 2
-        End If
 
         DeliveryHeaderDetailsGroupBox.Left = DeliveriesGroupBox.Left + DeliveriesGroupBox.Width
         Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
         DeliveryItemsGroupBox.Left = ((Me.Width - DeliveryItemsGroupBox.Width) / 2) + 1
         DeliveryItemDetailsGroupBox.Left = DeliveriesGroupBox.Left
         DeliveryItemDetailsGroupBox.Top = DeliveriesGroupBox.Top + 50
+        Me.Width = DeliveryItemsGroupBox.Width + DeliveryHeaderDetailsGroupBox.Width + 2
 
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
-        If DeliveryItemDetailsGroupBox.Visible Then Exit Sub
+        If DeliveryItemDetailsGroupBox.Visible Then
+            DeliveryItemDetailsGroupBox.Visible = False
+            Exit Sub
+        End If
         DoCommonHouseKeeping(Me, SavedCallingForm)
 
     End Sub
@@ -98,15 +96,23 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
 
         JustExecuteMySelection()
         DeliveriesRecordCount = RecordCount
+        CurrentDeliveryID = -1
+        DisableDeliveryItemMenus()
+        DeliveriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If DeliveriesRecordCount = 0 Then
             DeliveryHeaderDetailsGroupBox.Visible = False
             DeliveryItemsGroupBox.Visible = False
+            FinalizeDeliveryEntryToolStripMenuItem.Visible = False
         Else
             EditDeliveryHeader()
             DeliveryHeaderDetailsGroupBox.Visible = True
             DeliveryItemsGroupBox.Visible = True
         End If
-        DeliveriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        If DeliveryItemsRecordCount > 0 Then
+            OrderDetailsToolStripMenuItem.Visible = True
+        Else
+            OrderDetailsToolStripMenuItem.Visible = False
+        End If
 
         If Not DeliveriesDataGridViewAlreadyFormated Then
             FormatDeliveriesDataGridView()
@@ -188,12 +194,12 @@ MasterCodeBookTable.SystemDesc_ShortText100Fld,
 ProductsPartsTableDelivered.ProductsPartID_Autonumber,
 ProductsPartsTableDelivered.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTableDelivered.ManufacturerDescription_ShortText250, 
+BrandsTableDelivered.BrandName_ShortText20, 
 DeliveryItemsTable.DeliveryItemID_AutoNumber,
 DeliveryItemsTable.DeliveredQty_Double, 
 ProductsPartsTableDelivered.Unit_ShortText3, 
 PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger, 
 PurchaseOrdersItemsTable.POQty_Integer,
-BrandsTableDelivered.BrandName_ShortText20, 
 ProductsPartsTableOrdered.ProductsPartID_Autonumber, 
 ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTableOrdered.ManufacturerDescription_ShortText250,
@@ -208,8 +214,10 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         DeliveryItemsRecordCount = RecordCount
         If DeliveryItemsRecordCount > 0 Then
             DeliveryItemsGroupBox.Visible = True
+            FinalizeDeliveryEntryToolStripMenuItem.Visible = True
         Else
             DeliveryItemsGroupBox.Visible = False
+            FinalizeDeliveryEntryToolStripMenuItem.Visible = False
         End If
         DeliveryItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not DeliveryItemsDataGridViewAlreadyFormated Then
@@ -234,7 +242,7 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ProductsPartsTableDelivered.ManufacturerPartNo_ShortText30Fld"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Manufac Description Delivered"
+                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Part #"
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 130
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ProductsPartsTableDelivered.ManufacturerDescription_ShortText250"
@@ -245,7 +253,7 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
                     DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Qty"
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 50
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "Unit_ShortText3"
+                Case "ProductsPartsTableDelivered.Unit_ShortText3"
                     DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Unit"
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 50
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
@@ -254,30 +262,13 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 150
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "PurchaseOrderID_LongInteger"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "PO Ref. No."
-                    DeliveryItemsDataGridView.Columns.Item(i).Width = 60
+                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "PO #"
+                    DeliveryItemsDataGridView.Columns.Item(i).Width = 80
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "PurchaseOrderRevision_Integer"
                     DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "PO Rev."
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 50
                     DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Part # "
-                    DeliveryItemsDataGridView.Columns.Item(i).Width = 130
-                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductsPartsTableOrdered.ManufacturerDescription_ShortText250"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Manufac Description Ordered"
-                    DeliveryItemsDataGridView.Columns.Item(i).Width = 350
-                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "POQty_Integer"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Ordered Qty"
-                    DeliveryItemsDataGridView.Columns.Item(i).Width = 50
-                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "BrandsTableOrdered.BrandName_ShortText20"
-                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Brand ordered"
-                    DeliveryItemsDataGridView.Columns.Item(i).Width = 150
-                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "PurchaseOrderID_AutoNumber"
             End Select
             If DeliveryItemsDataGridView.Columns.Item(i).Visible = True Then
                 DeliveryItemsGroupBox.Width = DeliveryItemsGroupBox.Width + DeliveryItemsDataGridView.Columns.Item(i).Width
@@ -299,7 +290,6 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         If CurrentProductPartID = -1 Then
             EditCurrentItem()
         End If
-
 
     End Sub
     Private Sub EnableDeliveryItemMenus()
@@ -343,7 +333,6 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         DeliveryNoTextBox.Text = ""
         DeliveryNoteNoTextBox.Text = ""
         DeliveriesGroupBox.Enabled = False
-        CurrentDeliveryID = -1
         DeliveryHeaderDetailsGroupBox.Visible = True
         SaveDeliveryToolStripMenuItem.Visible = True
 
@@ -404,10 +393,9 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
     Private Sub EditDeliveryItemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditDeliveryItemToolStripMenuItem.Click
         EditCurrentItem()
     End Sub
-
-
     Private Sub EditCurrentItem()
         If CurrentDeliveryItemsDataGridViewRow = -1 Then Exit Sub
+        DeliveryItemDetailsGroupBox.Text = "Delivery Details"
         DeliveryItemDetailsGroupBox.Visible = True
         If IsEmpty(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value) Then
             POItemProductDescTextBox.Text = NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value)
@@ -446,6 +434,7 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
 
     Private Sub FromPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FromPurchaseOrdersToolStripMenuItem.Click
         Tunnel1 = "Delivery Update"
+        Tunnel2 = CurrentDeliveryID
         ShowCalledForm(Me, PurchaseOrdersForm)
     End Sub
 
@@ -573,9 +562,24 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         FillDeliveriesDataGridView()
     End Sub
 
-    Private Sub POReferenceTextBox_Click(sender As Object, e As EventArgs) Handles POReferenceTextBox.Click
-
+    Private Sub OrderDetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrderDetailsToolStripMenuItem.Click
+        'NOTE DeliveryItemDetailsGroupBox IS USED ALSO TO DISPLAY THE PURCHASE ORDER ITEM DETAILS
+        If CurrentDeliveryItemsDataGridViewRow < 0 Then Exit Sub
+        DeliveryItemDetailsGroupBox.Text = "Order Details"
+        DeliveryItemDetailsGroupBox.Visible = True
+        FillField(POItemProductDescTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value))
+        FillField(POItemProductPartNoTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld", CurrentDeliveryItemsDataGridViewRow).Value))
+        FillField(POItemQuantityTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("POQty_Integer", CurrentDeliveryItemsDataGridViewRow).Value))
+        FillField(POItemUnitTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.Unit_ShortText3", CurrentDeliveryItemsDataGridViewRow).Value))
+        FillField(BrandTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("BrandsTableOrdered.BrandName_ShortText20", CurrentDeliveryItemsDataGridViewRow).Value))
+        FillField(POItemUnitTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableOrdered.Unit_ShortText3", CurrentDeliveryItemsDataGridViewRow).Value))
     End Sub
 
-
+    Private Sub DeliveryItemDetailsGroupBox_TextChanged(sender As Object, e As EventArgs) Handles DeliveryItemDetailsGroupBox.TextChanged
+        If DeliveryItemDetailsGroupBox.Text = "Order Details" Then
+            DeliveryItemDetailsGroupBox.Enabled = False
+        Else
+            DeliveryItemDetailsGroupBox.Enabled = True
+        End If
+    End Sub
 End Class
