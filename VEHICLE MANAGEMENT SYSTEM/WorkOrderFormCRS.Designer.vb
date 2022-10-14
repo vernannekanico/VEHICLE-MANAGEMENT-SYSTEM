@@ -91,15 +91,14 @@ Partial Class WorkOrderFormCRS
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.WorkOrdersDataGridView.DefaultCellStyle = DataGridViewCellStyle1
-        Me.WorkOrdersDataGridView.Location = New System.Drawing.Point(1152, 358)
-        Me.WorkOrdersDataGridView.Margin = New System.Windows.Forms.Padding(4)
+        Me.WorkOrdersDataGridView.Location = New System.Drawing.Point(864, 291)
         Me.WorkOrdersDataGridView.MultiSelect = False
         Me.WorkOrdersDataGridView.Name = "WorkOrdersDataGridView"
         Me.WorkOrdersDataGridView.ReadOnly = True
         Me.WorkOrdersDataGridView.RowHeadersVisible = False
         Me.WorkOrdersDataGridView.RowHeadersWidth = 51
         Me.WorkOrdersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.WorkOrdersDataGridView.Size = New System.Drawing.Size(392, 170)
+        Me.WorkOrdersDataGridView.Size = New System.Drawing.Size(294, 138)
         Me.WorkOrdersDataGridView.TabIndex = 5
         '
         'MenuStrip1
@@ -109,14 +108,15 @@ Partial Class WorkOrderFormCRS
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.WorkOrderToolStripMenuItem, Me.AddWorkOrderToolStripMenuItem, Me.EditWorkOrderToolStripMenuItem, Me.DeleteWorkOrderToolStripMenuItem, Me.PrintWorkOrderToolStripMenuItem, Me.SubmitForServiceToolStripMenuItem, Me.PrintBillToolStripMenu, Me.SaveWorkOrderToolStripMenuItem, Me.ViewToolStripMenuItem, Me.ConcernOrJobToolStripMenuItem, Me.AddWorkOrderConcernToolStripMenuItem, Me.EditConcernToolStripMenuItem, Me.RemoveConcernOrJobToolStripMenuItem, Me.ToolStripMenuItem1, Me.ToolStripMenuItem2})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1712, 36)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
+        Me.MenuStrip1.Size = New System.Drawing.Size(963, 29)
         Me.MenuStrip1.TabIndex = 44
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'CancelToolStripMenuItem
         '
         Me.CancelToolStripMenuItem.Name = "CancelToolStripMenuItem"
-        Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(48, 32)
+        Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(40, 25)
         Me.CancelToolStripMenuItem.Text = "◄ "
         '
         'WorkOrderToolStripMenuItem
@@ -124,86 +124,86 @@ Partial Class WorkOrderFormCRS
         Me.WorkOrderToolStripMenuItem.Enabled = False
         Me.WorkOrderToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.WorkOrderToolStripMenuItem.Name = "WorkOrderToolStripMenuItem"
-        Me.WorkOrderToolStripMenuItem.Size = New System.Drawing.Size(188, 32)
+        Me.WorkOrderToolStripMenuItem.Size = New System.Drawing.Size(148, 25)
         Me.WorkOrderToolStripMenuItem.Text = " WORK ORDERS :"
         '
         'AddWorkOrderToolStripMenuItem
         '
         Me.AddWorkOrderToolStripMenuItem.Name = "AddWorkOrderToolStripMenuItem"
-        Me.AddWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(63, 32)
+        Me.AddWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
         Me.AddWorkOrderToolStripMenuItem.Text = "Add"
         '
         'EditWorkOrderToolStripMenuItem
         '
         Me.EditWorkOrderToolStripMenuItem.Name = "EditWorkOrderToolStripMenuItem"
-        Me.EditWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(60, 32)
+        Me.EditWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
         Me.EditWorkOrderToolStripMenuItem.Text = "Edit"
         '
         'DeleteWorkOrderToolStripMenuItem
         '
         Me.DeleteWorkOrderToolStripMenuItem.Name = "DeleteWorkOrderToolStripMenuItem"
-        Me.DeleteWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(82, 32)
+        Me.DeleteWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(66, 25)
         Me.DeleteWorkOrderToolStripMenuItem.Text = "Delete"
         '
         'PrintWorkOrderToolStripMenuItem
         '
         Me.PrintWorkOrderToolStripMenuItem.Name = "PrintWorkOrderToolStripMenuItem"
-        Me.PrintWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(67, 32)
+        Me.PrintWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.PrintWorkOrderToolStripMenuItem.Text = "Print"
         '
         'SubmitForServiceToolStripMenuItem
         '
         Me.SubmitForServiceToolStripMenuItem.Name = "SubmitForServiceToolStripMenuItem"
-        Me.SubmitForServiceToolStripMenuItem.Size = New System.Drawing.Size(186, 32)
+        Me.SubmitForServiceToolStripMenuItem.Size = New System.Drawing.Size(150, 25)
         Me.SubmitForServiceToolStripMenuItem.Text = "Submit for Service"
         '
         'PrintBillToolStripMenu
         '
         Me.PrintBillToolStripMenu.Name = "PrintBillToolStripMenu"
-        Me.PrintBillToolStripMenu.Size = New System.Drawing.Size(98, 32)
+        Me.PrintBillToolStripMenu.Size = New System.Drawing.Size(80, 25)
         Me.PrintBillToolStripMenu.Text = "Print Bill"
         '
         'SaveWorkOrderToolStripMenuItem
         '
         Me.SaveWorkOrderToolStripMenuItem.Name = "SaveWorkOrderToolStripMenuItem"
-        Me.SaveWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(67, 32)
+        Me.SaveWorkOrderToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveWorkOrderToolStripMenuItem.Text = "Save"
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WorkOrderDetailsToolStripMenuItem, Me.OutstandingWorkOrdersToolStripMenuItem, Me.ForFinalizationBillingToolStripMenuItem, Me.CompletedWorkOrdersToolStripMenuItem, Me.AllWorkOrdersToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(67, 32)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(56, 25)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'WorkOrderDetailsToolStripMenuItem
         '
         Me.WorkOrderDetailsToolStripMenuItem.Name = "WorkOrderDetailsToolStripMenuItem"
-        Me.WorkOrderDetailsToolStripMenuItem.Size = New System.Drawing.Size(405, 32)
+        Me.WorkOrderDetailsToolStripMenuItem.Size = New System.Drawing.Size(325, 26)
         Me.WorkOrderDetailsToolStripMenuItem.Text = "Work Order Details"
         '
         'OutstandingWorkOrdersToolStripMenuItem
         '
         Me.OutstandingWorkOrdersToolStripMenuItem.Name = "OutstandingWorkOrdersToolStripMenuItem"
-        Me.OutstandingWorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(405, 32)
+        Me.OutstandingWorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(325, 26)
         Me.OutstandingWorkOrdersToolStripMenuItem.Text = "Outstanding Work Orders"
         '
         'ForFinalizationBillingToolStripMenuItem
         '
         Me.ForFinalizationBillingToolStripMenuItem.Name = "ForFinalizationBillingToolStripMenuItem"
-        Me.ForFinalizationBillingToolStripMenuItem.Size = New System.Drawing.Size(405, 32)
+        Me.ForFinalizationBillingToolStripMenuItem.Size = New System.Drawing.Size(325, 26)
         Me.ForFinalizationBillingToolStripMenuItem.Text = "For Finalization / Billing"
         '
         'CompletedWorkOrdersToolStripMenuItem
         '
         Me.CompletedWorkOrdersToolStripMenuItem.Name = "CompletedWorkOrdersToolStripMenuItem"
-        Me.CompletedWorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(405, 32)
+        Me.CompletedWorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(325, 26)
         Me.CompletedWorkOrdersToolStripMenuItem.Text = "Completed Work Orders / Released"
         '
         'AllWorkOrdersToolStripMenuItem
         '
         Me.AllWorkOrdersToolStripMenuItem.Name = "AllWorkOrdersToolStripMenuItem"
-        Me.AllWorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(405, 32)
+        Me.AllWorkOrdersToolStripMenuItem.Size = New System.Drawing.Size(325, 26)
         Me.AllWorkOrdersToolStripMenuItem.Text = "All Work Orders"
         '
         'ConcernOrJobToolStripMenuItem
@@ -211,36 +211,36 @@ Partial Class WorkOrderFormCRS
         Me.ConcernOrJobToolStripMenuItem.Enabled = False
         Me.ConcernOrJobToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ConcernOrJobToolStripMenuItem.Name = "ConcernOrJobToolStripMenuItem"
-        Me.ConcernOrJobToolStripMenuItem.Size = New System.Drawing.Size(208, 32)
+        Me.ConcernOrJobToolStripMenuItem.Size = New System.Drawing.Size(160, 25)
         Me.ConcernOrJobToolStripMenuItem.Text = ":          CONCERNS :"
         '
         'AddWorkOrderConcernToolStripMenuItem
         '
         Me.AddWorkOrderConcernToolStripMenuItem.Name = "AddWorkOrderConcernToolStripMenuItem"
-        Me.AddWorkOrderConcernToolStripMenuItem.Size = New System.Drawing.Size(63, 32)
+        Me.AddWorkOrderConcernToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
         Me.AddWorkOrderConcernToolStripMenuItem.Text = "Add"
         '
         'EditConcernToolStripMenuItem
         '
         Me.EditConcernToolStripMenuItem.Name = "EditConcernToolStripMenuItem"
-        Me.EditConcernToolStripMenuItem.Size = New System.Drawing.Size(60, 32)
+        Me.EditConcernToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
         Me.EditConcernToolStripMenuItem.Text = "Edit"
         '
         'RemoveConcernOrJobToolStripMenuItem
         '
         Me.RemoveConcernOrJobToolStripMenuItem.Name = "RemoveConcernOrJobToolStripMenuItem"
-        Me.RemoveConcernOrJobToolStripMenuItem.Size = New System.Drawing.Size(96, 32)
+        Me.RemoveConcernOrJobToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveConcernOrJobToolStripMenuItem.Text = "Remove"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(14, 32)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(14, 32)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(12, 25)
         '
         'WorkOrderDetailsGroup
         '
@@ -262,139 +262,130 @@ Partial Class WorkOrderFormCRS
         Me.WorkOrderDetailsGroup.Controls.Add(Me.Label1)
         Me.WorkOrderDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.WorkOrderDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.WorkOrderDetailsGroup.Location = New System.Drawing.Point(45, 58)
-        Me.WorkOrderDetailsGroup.Margin = New System.Windows.Forms.Padding(4)
+        Me.WorkOrderDetailsGroup.Location = New System.Drawing.Point(34, 47)
         Me.WorkOrderDetailsGroup.Name = "WorkOrderDetailsGroup"
-        Me.WorkOrderDetailsGroup.Padding = New System.Windows.Forms.Padding(4)
-        Me.WorkOrderDetailsGroup.Size = New System.Drawing.Size(739, 314)
+        Me.WorkOrderDetailsGroup.Size = New System.Drawing.Size(554, 255)
         Me.WorkOrderDetailsGroup.TabIndex = 45
         Me.WorkOrderDetailsGroup.TabStop = False
         Me.WorkOrderDetailsGroup.Visible = False
         '
         'MilageMaskedTextBox
         '
-        Me.MilageMaskedTextBox.Location = New System.Drawing.Point(232, 139)
-        Me.MilageMaskedTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.MilageMaskedTextBox.Location = New System.Drawing.Point(174, 113)
         Me.MilageMaskedTextBox.Name = "MilageMaskedTextBox"
-        Me.MilageMaskedTextBox.Size = New System.Drawing.Size(85, 30)
+        Me.MilageMaskedTextBox.Size = New System.Drawing.Size(65, 26)
         Me.MilageMaskedTextBox.TabIndex = 53
         '
         'VINTextBox
         '
-        Me.VINTextBox.Location = New System.Drawing.Point(232, 224)
-        Me.VINTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.VINTextBox.Location = New System.Drawing.Point(174, 182)
         Me.VINTextBox.Name = "VINTextBox"
-        Me.VINTextBox.Size = New System.Drawing.Size(331, 30)
+        Me.VINTextBox.Size = New System.Drawing.Size(249, 26)
         Me.VINTextBox.TabIndex = 52
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(9, 229)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label7.Location = New System.Drawing.Point(7, 186)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(45, 25)
+        Me.Label7.Size = New System.Drawing.Size(36, 20)
         Me.Label7.TabIndex = 51
         Me.Label7.Text = "VIN"
         '
         'VehicleDetailsTextBox
         '
-        Me.VehicleDetailsTextBox.Location = New System.Drawing.Point(232, 263)
-        Me.VehicleDetailsTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.VehicleDetailsTextBox.Location = New System.Drawing.Point(174, 214)
         Me.VehicleDetailsTextBox.Name = "VehicleDetailsTextBox"
-        Me.VehicleDetailsTextBox.Size = New System.Drawing.Size(475, 30)
+        Me.VehicleDetailsTextBox.Size = New System.Drawing.Size(357, 26)
         Me.VehicleDetailsTextBox.TabIndex = 50
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(9, 271)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label6.Location = New System.Drawing.Point(7, 220)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(141, 25)
+        Me.Label6.Size = New System.Drawing.Size(114, 20)
         Me.Label6.TabIndex = 49
         Me.Label6.Text = "Vehicle Details"
         '
         'CustomerTextBox
         '
-        Me.CustomerTextBox.Location = New System.Drawing.Point(232, 181)
-        Me.CustomerTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.CustomerTextBox.Location = New System.Drawing.Point(174, 147)
         Me.CustomerTextBox.Name = "CustomerTextBox"
-        Me.CustomerTextBox.Size = New System.Drawing.Size(475, 30)
+        Me.CustomerTextBox.Size = New System.Drawing.Size(357, 26)
         Me.CustomerTextBox.TabIndex = 48
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(9, 188)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label5.Location = New System.Drawing.Point(7, 153)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(97, 25)
+        Me.Label5.Size = New System.Drawing.Size(78, 20)
         Me.Label5.TabIndex = 47
         Me.Label5.Text = "Customer"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(9, 146)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label4.Location = New System.Drawing.Point(7, 119)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(70, 25)
+        Me.Label4.Size = New System.Drawing.Size(55, 20)
         Me.Label4.TabIndex = 46
         Me.Label4.Text = "Milage"
         '
         'DateTimeOutTextBox
         '
-        Me.DateTimeOutTextBox.Location = New System.Drawing.Point(232, 97)
-        Me.DateTimeOutTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.DateTimeOutTextBox.Location = New System.Drawing.Point(174, 79)
         Me.DateTimeOutTextBox.Name = "DateTimeOutTextBox"
-        Me.DateTimeOutTextBox.Size = New System.Drawing.Size(188, 30)
+        Me.DateTimeOutTextBox.Size = New System.Drawing.Size(142, 26)
         Me.DateTimeOutTextBox.TabIndex = 45
         '
         'ServiceDate_DateTimeTextBox
         '
-        Me.ServiceDate_DateTimeTextBox.Location = New System.Drawing.Point(232, 58)
-        Me.ServiceDate_DateTimeTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.ServiceDate_DateTimeTextBox.Location = New System.Drawing.Point(174, 47)
         Me.ServiceDate_DateTimeTextBox.Name = "ServiceDate_DateTimeTextBox"
-        Me.ServiceDate_DateTimeTextBox.Size = New System.Drawing.Size(331, 30)
+        Me.ServiceDate_DateTimeTextBox.Size = New System.Drawing.Size(249, 26)
         Me.ServiceDate_DateTimeTextBox.TabIndex = 44
         '
         'WorkOrderNumberTextBox
         '
         Me.WorkOrderNumberTextBox.Enabled = False
-        Me.WorkOrderNumberTextBox.Location = New System.Drawing.Point(232, 18)
-        Me.WorkOrderNumberTextBox.Margin = New System.Windows.Forms.Padding(4)
+        Me.WorkOrderNumberTextBox.Location = New System.Drawing.Point(174, 15)
         Me.WorkOrderNumberTextBox.Name = "WorkOrderNumberTextBox"
-        Me.WorkOrderNumberTextBox.Size = New System.Drawing.Size(132, 30)
+        Me.WorkOrderNumberTextBox.Size = New System.Drawing.Size(100, 26)
         Me.WorkOrderNumberTextBox.TabIndex = 43
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(9, 105)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label3.Location = New System.Drawing.Point(7, 85)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(150, 25)
+        Me.Label3.Size = New System.Drawing.Size(120, 20)
         Me.Label3.TabIndex = 42
         Me.Label3.Text = "Date / Time Out"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(9, 64)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label2.Location = New System.Drawing.Point(7, 52)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(134, 25)
+        Me.Label2.Size = New System.Drawing.Size(108, 20)
         Me.Label2.TabIndex = 41
         Me.Label2.Text = "Date / Time In"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 26)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
+        Me.Label1.Location = New System.Drawing.Point(7, 21)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(188, 25)
+        Me.Label1.Size = New System.Drawing.Size(150, 20)
         Me.Label1.TabIndex = 40
         Me.Label1.Text = "Work Order Number"
         '
@@ -427,14 +418,13 @@ Partial Class WorkOrderFormCRS
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.WorkOrderConcernsDataGridView.DefaultCellStyle = DataGridViewCellStyle4
         Me.WorkOrderConcernsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderConcernsDataGridView.Location = New System.Drawing.Point(832, 165)
-        Me.WorkOrderConcernsDataGridView.Margin = New System.Windows.Forms.Padding(4)
+        Me.WorkOrderConcernsDataGridView.Location = New System.Drawing.Point(624, 134)
         Me.WorkOrderConcernsDataGridView.Name = "WorkOrderConcernsDataGridView"
         Me.WorkOrderConcernsDataGridView.ReadOnly = True
         Me.WorkOrderConcernsDataGridView.RowHeadersVisible = False
         Me.WorkOrderConcernsDataGridView.RowHeadersWidth = 51
         Me.WorkOrderConcernsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.WorkOrderConcernsDataGridView.Size = New System.Drawing.Size(491, 149)
+        Me.WorkOrderConcernsDataGridView.Size = New System.Drawing.Size(368, 121)
         Me.WorkOrderConcernsDataGridView.TabIndex = 24
         Me.WorkOrderConcernsDataGridView.Visible = False
         '
@@ -446,8 +436,7 @@ Partial Class WorkOrderFormCRS
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AllWorkOrderPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.AllWorkOrderPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.AllWorkOrderPartsDataGridView.Location = New System.Drawing.Point(45, 394)
-        Me.AllWorkOrderPartsDataGridView.Margin = New System.Windows.Forms.Padding(4)
+        Me.AllWorkOrderPartsDataGridView.Location = New System.Drawing.Point(34, 320)
         Me.AllWorkOrderPartsDataGridView.MultiSelect = False
         Me.AllWorkOrderPartsDataGridView.Name = "AllWorkOrderPartsDataGridView"
         Me.AllWorkOrderPartsDataGridView.ReadOnly = True
@@ -461,23 +450,22 @@ Partial Class WorkOrderFormCRS
         Me.AllWorkOrderPartsDataGridView.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.AllWorkOrderPartsDataGridView.RowHeadersWidth = 51
         Me.AllWorkOrderPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.AllWorkOrderPartsDataGridView.Size = New System.Drawing.Size(835, 185)
+        Me.AllWorkOrderPartsDataGridView.Size = New System.Drawing.Size(626, 150)
         Me.AllWorkOrderPartsDataGridView.TabIndex = 58
         Me.AllWorkOrderPartsDataGridView.Visible = False
         '
         'WorkOrderFormCRS
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(1712, 854)
+        Me.ClientSize = New System.Drawing.Size(963, 609)
         Me.ControlBox = False
         Me.Controls.Add(Me.WorkOrderDetailsGroup)
         Me.Controls.Add(Me.AllWorkOrderPartsDataGridView)
-        Me.Controls.Add(Me.WorkOrderConcernsDataGridView)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.WorkOrdersDataGridView)
-        Me.Margin = New System.Windows.Forms.Padding(4)
+        Me.Controls.Add(Me.WorkOrderConcernsDataGridView)
         Me.Name = "WorkOrderFormCRS"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "WORK ORDERS"

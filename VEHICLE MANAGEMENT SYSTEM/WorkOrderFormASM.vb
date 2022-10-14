@@ -44,6 +44,7 @@
     Private WorkOrderConcernJobsRecordCount = 0
     Private CurrentWorkOrderConcernJobID As Integer = -1
     Private CurrentWorkOrderConcernJobsRow = -1
+    Private CurrentWorkOrderConcernStatusSequence = -1
     Private WorkOrderConcernJobsDataGridViewFormatted = False
 
     Private WorkOrderStatus = ""
@@ -314,6 +315,7 @@ LongTextConcern_LongText, " &
 ConcernAssignedServiceSpecialist &
 " 
     StatusesTable.StatusText_ShortText25,
+    StatusesTable.StatusText_ShortText25,
     OriginalExcelRecordTable.description
     FROM ((((((WorkOrderConcernsTable LEFT JOIN ConcernsTable ON WorkOrderConcernsTable.ConcernID_LongInteger = ConcernsTable.ConcernID_AutoNumber) LEFT JOIN InformationsHeadersTypeTable ON ConcernsTable.InformationsHeadersTypeID_LongInteger = InformationsHeadersTypeTable.InformationsHeadersTypeID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ConcernsTable.MasterCodeBookId_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ConcernAsIsByClientTable ON WorkOrderConcernsTable.ConcernLongTextCodeID_LongInteger = ConcernAsIsByClientTable.LongTextConcernID_Autonumber) LEFT JOIN OriginalExcelRecordTable ON WorkOrderConcernsTable.OriginalID_LongInteger = OriginalExcelRecordTable.OriginalID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderConcernsTable.AssignedServiceSpecialist_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderConcernsTable.WorkOrderConcernStatusID_LongInteger = StatusesTable.StatusID_Autonumber
     "
@@ -370,8 +372,8 @@ ConcernAssignedServiceSpecialist &
                     WorkOrderConcernsDataGridView.Columns.Item(i).Width = 400
                     WorkOrderConcernsDataGridView.Columns.Item(i).Visible = True
                 Case "ConcernAssignedServiceSpecialist"
-                    WorkOrderConcernsDataGridView.Columns.Item(i).HeaderText = "Service Specialist"
-                    WorkOrderConcernsDataGridView.Columns.Item(i).Width = 200
+                    WorkOrderConcernsDataGridView.Columns.Item(i).HeaderText = "Assigned Service Specialist"
+                    WorkOrderConcernsDataGridView.Columns.Item(i).Width = 300
                     WorkOrderConcernsDataGridView.Columns.Item(i).Visible = True
                 Case "StatusText_ShortText25"
                     WorkOrderConcernsDataGridView.Columns.Item(i).HeaderText = "Status"
@@ -855,8 +857,8 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
 
         RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderStatusSequence, CurrentWorkOrderID)
 
-        Dim CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderConcernsRow).Value
-        RevertCurrentStatusOf("WorkOrderConcernsTable", CurrentWorkOrderConcernStatusSequence, CurrentWorkOrderConcernID)
+        CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderConcernsRow).Value
+        RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderConcernStatusSequence, CurrentWorkOrderConcernID)
         For i = 0 To WorkOrderConcernJobsRecordCount - 1
             CurrentWorkOrderConcernJobID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", i).Value
             Dim CurrentWorkOrderConcernJobStatusSequence = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobStatusID_LongInteger", i).Value

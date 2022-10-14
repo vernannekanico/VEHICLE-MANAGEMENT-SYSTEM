@@ -122,15 +122,15 @@ ConcernAsIsByClientTable.LongTextConcern_LongText FROM ConcernAsIsByClientTable 
                     ConcernsDataGridView.Columns.Item(i).Visible = False
                 End If
 
-                Select Case ConcernsDataGridView.Columns.Item(i).HeaderText
-                    Case "ConcernTypePrefix_ShortText50"
-                        ConcernsDataGridView.Columns.Item(i).HeaderText = " "
-                        ConcernsDataGridView.Columns.Item(i).Width = 105
-                    Case "InformationsHeaderDescription_ShortText255"
-                        ConcernsDataGridView.Columns.Item(i).HeaderText = "CONCERNS : in HeadersInfo"
-                        ConcernsDataGridView.Columns.Item(i).Width = 500
+                Select Case ConcernsDataGridView.Columns.Item(i).Name
+                    Case "SystemDesc_ShortText100Fld"
+                        ConcernsDataGridView.Columns.Item(i).HeaderText = "Part "
+                        ConcernsDataGridView.Columns.Item(i).Width = 200
                     Case "Concern_ShortText255"
                         ConcernsDataGridView.Columns.Item(i).HeaderText = "CONCERNS : in ConcernsTable old description"
+                        ConcernsDataGridView.Columns.Item(i).Width = 500
+                    Case "InformationsHeaderDescription_ShortText255"
+                        ConcernsDataGridView.Columns.Item(i).HeaderText = "CONCERNS : in HeadersInfo"
                         ConcernsDataGridView.Columns.Item(i).Width = 500
 
                 End Select

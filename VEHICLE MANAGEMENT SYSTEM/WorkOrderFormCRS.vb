@@ -616,7 +616,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
 
         CurrentWorkOrderConcernID = InsertNewRecord("WorkOrderConcernsTable", FieldsToUpdate, FieldsData)
 
-        FillWorkOrderConcernsDataGridView()
+        FillWorkOrdersDataGridView()
 
     End Sub
     Private Sub AssignThisWorkOrder()

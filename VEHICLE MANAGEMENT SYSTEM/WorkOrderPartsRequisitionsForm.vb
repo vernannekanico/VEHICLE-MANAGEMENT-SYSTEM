@@ -1048,38 +1048,38 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
     End Sub
     Private Sub OutstandingRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OutstandingRequisitionsToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Procurement Outstanding"), 1, Me, "Outstanding Requisitions")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 1, Me, "Outstanding Requisitions")
     End Sub
 
     Private Sub DraftRequisitiosForPurchaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DraftRequisitiosForPurchaseToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Draft Requisition"), 2, Me, "Draft Requisition")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 2, Me, "Draft Requisition")
     End Sub
     Private Sub AllPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmittedRequisitionsToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Procurement Outstanding"), 3, Me, "Submitted Requisitions")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 3, Me, "Procurement Outstanding")
     End Sub
 
     Private Sub PrintPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReOrderedToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Re-ordered"), 2, Me, "Re-ordered")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 2, Me, "Re-ordered")
     End Sub
 
     Private Sub ReorderedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartiallyDeliveredToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Partially Delivered"), 2, Me, "Partially Delivered")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 2, Me, "Partially Delivered")
     End Sub
 
     Private Sub CompletelyReceivedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompletelyDeliveredToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Completely Delivered"), 2, Me, "Completely Delivered")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 2, Me, "Completely Delivered")
     End Sub
 
     Private Sub FinalizedPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartiallyIssuedToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Partially Issued"), 2, Me, "Partially Issued")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 2, Me, "Partially Issued")
     End Sub
 
     Private Sub CompletelyIssuedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompletelyIssuedToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Completely Issued"), 2, Me, "Completely Issued")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 2, Me, "Completely Issued")
     End Sub
 
     Private Sub AllPartsRequisitionsForIssuanceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllPartsRequisitionsForIssuanceToolStripMenuItem.Click
-        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("Used"), 3, Me, "ALL REQUISITIONS")
+        SetWorkOrderRequestedPartsHeadersSelectionFilter(GetStatusIdFor("WorkOrderRequestedPartsHeadersTable"), 1, Me, "ALL REQUISITIONS")
     End Sub
     Private Sub SetWorkOrderRequestedPartsHeadersSelectionFilter(PassedStatusSequence As Integer, PassedStatusSequenceCondition As Integer, PassedForm As Form, FormHeaderText As String)
         WorkOrderRequestedPartsHeadersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, PassedStatusSequenceCondition, PassedForm, FormHeaderText)
