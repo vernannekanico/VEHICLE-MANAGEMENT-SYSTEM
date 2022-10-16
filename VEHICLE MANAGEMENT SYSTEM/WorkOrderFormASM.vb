@@ -1030,6 +1030,10 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
         ShowPersonnelForm()
     End Sub
     Private Sub AssignConcernToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles AssignConcernToolStripMenuItem.Click
+        If WorkOrderConcernJobsRecordCount = 0 Then
+            MsgBox("Not Job(s) attached yet")
+            Exit Sub
+        End If
         AssignmentIsFor = "CONCERN"
         ShowPersonnelForm()
     End Sub

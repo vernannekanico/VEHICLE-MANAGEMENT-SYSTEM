@@ -35,7 +35,7 @@
         'Initiate formatting of Deliveries view
         DeliveryItemsSelectionFilter = " Where DeliveryItemID_AutoNumber = -1"
         FillDeliveryItemsDataGridView()
-        DeliveriesSelectionFilter = SetupTableSelectionFilter(GetStatusIdFor("DeliveriesTable", "Draft Deliveries", 1), 1, Me, "Outstanding/Partially Delivered")
+        DeliveriesSelectionFilter = SetupTableSelectionFilter(GetStatusIdFor("DeliveriesTable", "Draft Deliveries", 1), 1, Me, "Draft Deliveries")
         FillDeliveriesDataGridView()
         If CallingForm.Name = "WorkOrderFormASM" Then
             CurrentWorkOrderConcernID = Tunnel1

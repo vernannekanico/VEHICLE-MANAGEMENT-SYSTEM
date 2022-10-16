@@ -1292,14 +1292,14 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
             WorkOrderPartsSelectionFilter = " WHERE WorkOrderConcernJobID_AutoNumber = " & CurrentWorkOrderConcernJobID.ToString
 
             FillWorkOrderPartsDataGridView()
-            Dim DoesNotNeedPartID = WorkOrderConcernJobsDataGridView.Item("DoesNotNeedPartID_AutoNumber", i).Value
-            If IsNotEmpty(DoesNotNeedPartID) Then
+            Dim TheJobDoesNotNeedPartID = WorkOrderConcernJobsDataGridView.Item("DoesNotNeedPartID_AutoNumber", i).Value
+            If IsNotEmpty(TheJobDoesNotNeedPartID) Then
                 'THIS JOB IS MARKED AS NO PART NEED JOB
                 If WorkOrderPartsRecordCount > 0 Then
                     If MsgBox("This job is marked as NO-PART-NEED-JOB, you attached a part though, " & vbCrLf &
                               " Want me remove the NO-PART-NEED-JOB indicator ? ") = MsgBoxResult.Yes Then
                         If MsgBox("About to remove the indicator, continue ? ") = MsgBoxResult.Yes Then
-                            MySelection = " DELETE FROM DoesNotNeedPartsTable WHERE DoesNotNeedPartID_AutoNumber =  " & DoesNotNeedPartID.ToString
+                            MySelection = " DELETE FROM DoesNotNeedPartsTable WHERE DoesNotNeedPartID_AutoNumber =  " & TheJobDoesNotNeedPartID.ToString
                             JustExecuteMySelection()
                         End If
                     End If
