@@ -56,7 +56,7 @@
                 Case "Purchaser"
                     AddPurchaseOrderToolStripMenuItem.Visible = True
                     CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
-                    SetPurchaseOrdersSelectionFilter("Draft")
+                    SetPurchaseOrdersSelectionFilter("Outstanding")
             End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
             DeliveredToolStripMenuItem.Visible = False
@@ -221,6 +221,9 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         DeletePurchaseOrderToolStripMenuItem.Visible = False
         SubmitForApprovalToolStripMenuItem.Visible = False
         ApproveStripMenuItem.Visible = False
+        SentToSupplierToolStripMenu.Visible = False
+        EditPurchaseOrderToolStripMenuItem.Visible = False
+        ItemPurchseHistoryToolStripMenuItem.Visible = False
         DisablePurchaseOrderItemMenus()
         Select Case CurrentUserGroup
             Case "Procurement Manager"
@@ -237,6 +240,8 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
                             SubmitForApprovalToolStripMenuItem.Visible = True
                             EnablePurchaseOrderMenus()
                             EnablePurchaseOrderItemMenus()
+                        Case "Approved and Finalized"
+                            SentToSupplierToolStripMenu.Visible = True
                     End Select
                 End If
         End Select
@@ -656,8 +661,13 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         FillPurchaseOrdersDataGridView()
     End Sub
     Private Sub SetPurchaseOrdersSelectionFilter(Passed As String)
-        Dim PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", Passed, 1)
-        PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 2, Me, Passed, CurrentUserFilter)
+        Dim PassedStatusSequence = ""
+        If Passed = "Outstanding" Then
+            PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", "Approved and Finalized", 1)
+        Else
+            PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", Passed, 1)
+        End If
+        PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 1, Me, "Outstanding for Action", CurrentUserFilter)
         FillPurchaseOrdersDataGridView()
     End Sub
     Private Sub PrintPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintPurchaseOrderToolStripMenuItem.Click
@@ -1162,6 +1172,17 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles PackagePriceButton.Click
 
+    End Sub
+
+    Private Sub SendToSupplierToolStripMenu_Click(sender As Object, e As EventArgs) Handles SentToSupplierToolStripMenu.Click
+        If MsgBox("Are you sure the purchase Order is already transmitted to the supplier?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        Dim RecordFilter = " WHERE PurchaseOrderID_AutoNumber = " & Str(CurrentPurchaseOrderID)
+        Dim SetCommand = " SET PurchaseOrderStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersTable", "For Delivery"))
+        UpdateTable("PurchaseOrdersTable", SetCommand, RecordFilter)
+        RecordFilter = " WHERE PurchaseOrderID_LongInteger = " & Str(CurrentPurchaseOrderID)
+        SetCommand = " SET PurchaseOrdersItemStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersItemsTable", "For Delivery"))
+        UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
+        FillPurchaseOrdersDataGridView()
     End Sub
 
 End Class

@@ -135,6 +135,7 @@ Partial Class PurchaseOrdersForm
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
+        Me.SentToSupplierToolStripMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseOrderDetailsGroupBox.SuspendLayout()
         Me.PurchaseOrdersSearchToolStrip.SuspendLayout()
         Me.PurchaseOrdersMenuStrip.SuspendLayout()
@@ -452,7 +453,7 @@ Partial Class PurchaseOrdersForm
         '
         Me.PurchaseOrdersMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PurchaseOrdersMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.PurchaseOrdersMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.PurchaseOrdersToolStripMenus, Me.ViewToolStripMenuItem, Me.AddPurchaseOrderToolStripMenuItem, Me.EditPurchaseOrderToolStripMenuItem, Me.DeletePurchaseOrderToolStripMenuItem, Me.SavePurchaseOrderToolStripMenuItem, Me.SubmitForApprovalToolStripMenuItem, Me.ApproveStripMenuItem, Me.PODetailsOFFToolStripMenuItem, Me.PurchaseOrderItemsToolStripMenus, Me.DeliveredToolStripMenuItem, Me.AddPOItemsToolStripMenuItem, Me.EditPOItemToolStripMenuItem, Me.DeletePOItem, Me.ItemPurchseHistoryToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.RevisePOToolStripMenuItem, Me.CancelOrderToolStripMenuItemToolStripMenuItem})
+        Me.PurchaseOrdersMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.PurchaseOrdersToolStripMenus, Me.ViewToolStripMenuItem, Me.AddPurchaseOrderToolStripMenuItem, Me.EditPurchaseOrderToolStripMenuItem, Me.DeletePurchaseOrderToolStripMenuItem, Me.SavePurchaseOrderToolStripMenuItem, Me.SubmitForApprovalToolStripMenuItem, Me.ApproveStripMenuItem, Me.SentToSupplierToolStripMenu, Me.PODetailsOFFToolStripMenuItem, Me.PurchaseOrderItemsToolStripMenus, Me.DeliveredToolStripMenuItem, Me.AddPOItemsToolStripMenuItem, Me.EditPOItemToolStripMenuItem, Me.DeletePOItem, Me.ItemPurchseHistoryToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.RevisePOToolStripMenuItem, Me.CancelOrderToolStripMenuItemToolStripMenuItem})
         Me.PurchaseOrdersMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.PurchaseOrdersMenuStrip.Name = "PurchaseOrdersMenuStrip"
         Me.PurchaseOrdersMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -1182,6 +1183,13 @@ Partial Class PurchaseOrdersForm
         Me.Label22.TabIndex = 85
         Me.Label22.Text = "Quantity"
         '
+        'SentToSupplierToolStripMenu
+        '
+        Me.SentToSupplierToolStripMenu.Name = "SentToSupplierToolStripMenu"
+        Me.SentToSupplierToolStripMenu.Size = New System.Drawing.Size(133, 25)
+        Me.SentToSupplierToolStripMenu.Text = "Sent to Supplier"
+        Me.SentToSupplierToolStripMenu.Visible = False
+        '
         'PurchaseOrdersForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1324,4 +1332,5 @@ Partial Class PurchaseOrdersForm
     Friend WithEvents AdditionalItemNotFromRequisitionToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PackagePriceButton As Button
     Friend WithEvents PackagePriceLastItemTextBox As TextBox
+    Friend WithEvents SentToSupplierToolStripMenu As ToolStripMenuItem
 End Class
