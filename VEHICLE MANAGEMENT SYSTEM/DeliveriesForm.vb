@@ -185,6 +185,8 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
 
         DeliveryItemsFieldsToSelect = "
 SELECT 
+WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger,
+RequisitionsItemsTable.RequisitionID_LongInteger,
 MasterCodeBookTable.MasterCodeBookID_Autonumber, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 ProductsPartsTableDelivered.ProductsPartID_Autonumber,
@@ -201,9 +203,8 @@ ProductsPartsTableOrdered.ManufacturerPartNo_ShortText30Fld,
 ProductsPartsTableOrdered.ManufacturerDescription_ShortText250,
 ProductsPartsTableOrdered.Unit_ShortText3, 
 BrandsTableOrdered.BrandName_ShortText20
-FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTableOrdered.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber
-"
-        DeliveryItemsSelectionOrder = " ORDER BY DeliveryItemID_AutoNumber DESC"
+FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItemsTable.PurchaseOrderItemID_LongInteger = PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableDelivered ON DeliveryItemsTable.ProductPartID_LongInteger = ProductsPartsTableDelivered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableDelivered ON ProductsPartsTableDelivered.BrandID_LongInteger = BrandsTableDelivered.BrandID_Autonumber) LEFT JOIN ProductsPartsTable AS ProductsPartsTableOrdered ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsTableOrdered.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsTableOrdered ON ProductsPartsTableOrdered.BrandID_LongInteger = BrandsTableOrdered.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTableOrdered.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN RequisitionsItemsTable ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionsItemID_AutoNumber) LEFT JOIN WorkOrderRequestedPartsTable ON RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger = WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber"
+        DeliveryItemsSelectionOrder = " ORDER BY WorkOrderPartID_LongInteger, RequisitionID_LongInteger, DeliveryItemID_AutoNumber DESC"
         MySelection = DeliveryItemsFieldsToSelect & DeliveryItemsSelectionFilter & DeliveryItemsSelectionOrder '
 
         JustExecuteMySelection()
@@ -232,6 +233,17 @@ FROM (((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryItems
         For i = 0 To DeliveryItemsDataGridView.Columns.GetColumnCount(0) - 1
             DeliveryItemsDataGridView.Columns.Item(i).Visible = False
             Select Case DeliveryItemsDataGridView.Columns.Item(i).Name
+                Case "RequisitionID_LongInteger"
+                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "REQ #"
+                    DeliveryItemsDataGridView.Columns.Item(i).Width = 80
+                DeliveryItemsDataGridView.Columns.Item(i).Visible = True
+                DeliveryItemsDataGridView.Columns.Item(i).Visible = True
+
+                Case "WorkOrderPartID_LongInteger"
+                    DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "WO #"
+                    DeliveryItemsDataGridView.Columns.Item(i).Width = 80
+                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
+                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
                     DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "Part "
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 250

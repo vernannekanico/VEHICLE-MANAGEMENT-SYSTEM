@@ -45,7 +45,7 @@
         If Tunnel1 = "Delivery Update" Then
             Me.Text = "SELECT ITEMS DELIVERED"
             SetToDeliveryMode()
-            SetPurchaseOrdersSelectionFilter("Approved and Finalized")
+            SetPurchaseOrdersSelectionFilter("For Delivery")
             CurrentDeliveryID = Tunnel2
         Else
             Select Case CurrentUserGroup
@@ -256,6 +256,11 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         PurchaseOrdersItemsFieldsToSelect =
 "
 Select 
+PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber, 
+RequisitionsItemsTable.RequisitionsItemID_AutoNumber, 
+WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber,
+WorkOrderPartsTable.WorkOrderPartID_AutoNumber,
+WorkOrderPartsTable.WorkOrderID_LongInteger,
 PurchaseOrdersItemsTable.POItem_Integer,
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 ProductsPartsOrderedTable.ProductsPartID_Autonumber, 
@@ -277,10 +282,8 @@ BrandsRequestedTable.BrandName_ShortText20,
 PurchaseOrdersTable.PurchaseOrderRevision_Integer, 
 PurchaseOrdersTable.PurchaseOrderID_AutoNumber, 
 PurchaseOrdersTable.PurchaseOrderDate_ShortDate, 
-RequisitionsItemsTable.RequisitionsItemID_AutoNumber, 
 RequisitionsItemsTable.RequisitionID_LongInteger, 
 RequisitionsItemsTable.ProductPartID_LongInteger, 
-PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber, 
 VehicleDescription.VehicleDescription, 
 PackagePricesTable.LastItem_Integer, 
 PackagePricesTable.PackagePrice_Double, 
@@ -289,7 +292,7 @@ PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger,
 PackagePricesTable.LastItem_Integer, 
 PackagePricesTable.PackagePrice_Double,
 StatusesTable.StatusText_ShortText25
-FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsOrderedTable ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsOrderedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsOrderedTable ON ProductsPartsOrderedTable.BrandID_LongInteger = BrandsOrderedTable.BrandID_Autonumber) LEFT JOIN ((((((RequisitionsItemsTable LEFT JOIN ProductsPartsTable AS ProductsPartsRequestedTable ON RequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsRequestedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsRequestedTable ON ProductsPartsRequestedTable.BrandID_LongInteger = BrandsRequestedTable.BrandID_Autonumber) LEFT JOIN WorkOrderRequestedPartsTable ON RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger = WorkOrderRequestedPartsTable.[WorkOrderRequestedPartID_AutoNumber]) LEFT JOIN WorkOrderPartsTable ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN RequisitionsTable ON RequisitionsItemsTable.RequisitionID_LongInteger = RequisitionsTable.RequisitionID_AutoNumber) LEFT JOIN VehicleDescription ON RequisitionsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionID_LongInteger) LEFT JOIN PackagePricesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber = PackagePricesTable.PackagePriceID_LongInteger) LEFT JOIN MasterCodeBookTable ON ProductsPartsOrderedTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN StatusesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber
+FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsOrderedTable ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsOrderedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsOrderedTable ON ProductsPartsOrderedTable.BrandID_LongInteger = BrandsOrderedTable.BrandID_Autonumber) LEFT JOIN PackagePricesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber = PackagePricesTable.PackagePriceID_LongInteger) LEFT JOIN MasterCodeBookTable ON ProductsPartsOrderedTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN StatusesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber) LEFT JOIN ((((((RequisitionsItemsTable LEFT JOIN ProductsPartsTable AS ProductsPartsRequestedTable ON RequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsRequestedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsRequestedTable ON ProductsPartsRequestedTable.BrandID_LongInteger = BrandsRequestedTable.BrandID_Autonumber) LEFT JOIN WorkOrderRequestedPartsTable ON RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger = WorkOrderRequestedPartsTable.[WorkOrderRequestedPartID_AutoNumber]) LEFT JOIN WorkOrderPartsTable ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN RequisitionsTable ON RequisitionsItemsTable.RequisitionID_LongInteger = RequisitionsTable.RequisitionID_AutoNumber) LEFT JOIN VehicleDescription ON RequisitionsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionsItemID_AutoNumber
 "
         PurchaseOrdersItemsSelectionOrder = " ORDER BY PurchaseOrderID_LongInteger, POItem_Integer"
 
@@ -321,6 +324,28 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         For i = 0 To PurchaseOrdersItemsDataGridView.Columns.GetColumnCount(0) - 1
             PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = False
             Select Case PurchaseOrdersItemsDataGridView.Columns.Item(i).Name
+
+                Case "PurchaseOrdersItemID_AutoNumber"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "PO ItmID "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 80
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "RequisitionsItemID_AutoNumber"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "req ID "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 80
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "WorkOrderRequestedPartID_AutoNumber"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "WO Req ID "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 80
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+
+                Case "WorkOrderPartID_AutoNumber"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "WO Part ID "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 80
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
+                Case "WorkOrderID_LongInteger"
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "WO ID "
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 80
+                    PurchaseOrdersItemsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).HeaderText = "Part "
                     PurchaseOrdersItemsDataGridView.Columns.Item(i).Width = 200
@@ -664,10 +689,11 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         Dim PassedStatusSequence = ""
         If Passed = "Outstanding" Then
             PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", "Approved and Finalized", 1)
+            PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 1, Me, "Outstanding for Action", CurrentUserFilter)
         Else
             PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", Passed, 1)
+            PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 2, Me, "Outstanding for Action", CurrentUserFilter)
         End If
-        PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 1, Me, "Outstanding for Action", CurrentUserFilter)
         FillPurchaseOrdersDataGridView()
     End Sub
     Private Sub PrintPurchaseOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrintPurchaseOrderToolStripMenuItem.Click
@@ -1140,6 +1166,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         UpdateDeliveredItems()
     End Sub
     Private Sub UpdateDeliveredItems()
+        MsgBox("This routine has been tested")
         If MsgBox("Have you Selected All Delivered Items from this Purchase Order ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         Dim xxselected = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
@@ -1147,6 +1174,10 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             Dim xxPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", i).Value
             Dim xxProductPartID_LongInteger = PurchaseOrdersItemsDataGridView.Item("ProductsPartID_Autonumber", i).Value
             Dim xxDeliveredQty_Double = PurchaseOrdersItemsDataGridView.Item("POQty_Integer", i).Value
+            '         ' CHECK IF ITEM IS ALREADY IN THE "DeliveryItemsTable"
+            MySelection = " SELECT * FROM DeliveryItemsTable WHERE DeliveryID_LongInteger = " & xxPurchaseOrdersItemID.ToString
+            JustExecuteMySelection()
+            If RecordCount > 0 Then Continue For
 
 
             Dim FieldsToUpdate = " DeliveryID_LongInteger, " &
@@ -1162,9 +1193,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             GetStatusIdFor("DeliveryItemsTable").ToString()
 
 
-            MySelection = " SELECT * FROM DeliveryItemsTable WHERE DeliveryID_LongInteger = " & xxPurchaseOrdersItemID.ToString
-            JustExecuteMySelection()
-            If RecordCount > 0 Then Continue For
             Dim xxDummyID = InsertNewRecord("DeliveryItemsTable", FieldsToUpdate, FieldsData)
         Next
         DoCommonHouseKeeping(Me, SavedCallingForm)
