@@ -7,4 +7,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="StoreLocationsForm.cs" />
+    <Compile Remove="StoreLocationsForm.Designer.cs" />
+    <Compile Remove="Test.cs" />
+    <Compile Remove="Test.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="StoreLocationsForm.resx" />
+    <EmbeddedResource Remove="Test.resx" />
+  </ItemGroup>
+
 </Project>

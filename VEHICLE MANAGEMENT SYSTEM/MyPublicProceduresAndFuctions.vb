@@ -523,9 +523,12 @@
         If PassedRecordCount > RecordsToDisplay Then
             RecordsToDisplay = RecordsToDisplay
         Else
+            If PassedRecordCount = 0 Then
+                PassedRecordCount = 1
+            End If
             RecordsToDisplay = PassedRecordCount
-        End If
-        Dim TotalRowsHeight = 0
+            End If
+            Dim TotalRowsHeight = 0
         TotalRowsHeight = RecordsToDisplay * DataGridViewRowHeight
         PassedGroupBox.Height = (PassedDataGridView.ColumnHeadersHeight) + TotalRowsHeight + 44
     End Sub

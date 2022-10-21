@@ -355,6 +355,12 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
                 Exit Sub
             End If
         End If
+        If IsNotEmpty(
+            DeliveryItemsDataGridView.Item("WorkOrderPartID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value
+            ) Then
+            ShowCalledForm(Me, StockLocationsForm)
+
+        End If
         For i = 0 To DeliveryItemsRecordCount - 1
             If IsEmpty(DeliveryItemsDataGridView.Item("DeliveredQty_Double", i).Value) Then
                 xxEmptyField = "Quantity"
