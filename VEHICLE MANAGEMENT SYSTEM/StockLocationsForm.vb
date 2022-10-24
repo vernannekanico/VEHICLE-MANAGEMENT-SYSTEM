@@ -25,8 +25,11 @@
         StocksLocationsSelectionFilter = ""
         FillStocksLocationsDataGridView()
         FillStorageLocationsDataGridView()
+        HorizontalCenter(InputBoxGroupBox, Me)
+        VerticalCenter(InputBoxGroupBox, Me)
         StorageLocationsGroupBox.Top = StocksLocationsGroupBox.Top
         StorageLocationsGroupBox.Left = StocksLocationsGroupBox.Left
+        SaveToolStripMenuItem.Visible = False
     End Sub
     Private Sub FillStocksLocationsDataGridView()
 
@@ -35,12 +38,11 @@
 SELECT 
 StocksLocationsTable.StocksLocationID_AutoNumber, 
 StocksLocationsTable.LocationCode_ShortText10, 
-StocksLocationsTable.LocationDescription, 
-StorageLocationsTable.StorageLocation_ShortText80,  
-MainStorageTypesTable.StorageTypeDescription_ShortText50, 
-SubStorageTypesTable.StorageTypeDescription_ShortText50, 
+StorageLocationsTable.StorageLocation_ShortText200,  
+MainStorageTypesTable.StorageTypeDescription_ShortText150, 
+SubStorageTypesTable.StorageTypeDescription_ShortText150, 
 StocksLocationsTable.Bay_ShortText1, 
-StocksLocationsTable.Level
+StocksLocationsTable.Level_Byte
 FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTable.StorageLocationID_LongInteger = StorageLocationsTable.StorageLocationID_Autonumber) LEFT JOIN StorageTypesTable AS MainStorageTypesTable ON StocksLocationsTable.[MainStorageType_LongInteger] = MainStorageTypesTable.StorageTypeID_Autonumber) LEFT JOIN StorageTypesTable AS SubStorageTypesTable ON StocksLocationsTable.[SubStorageType_LongInteger] = SubStorageTypesTable.StorageTypeID_Autonumber
 "
 
@@ -75,14 +77,6 @@ FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTa
     Private Sub FormatStocksLocationsDataGridView()
         StocksLocationsDataGridViewAlreadyFormated = True
         StocksLocationsGroupBox.Width = 0
-        StocksLocationsFieldsToSelect = " 
-SELECT 
-StorageLocationsTable.StorageLocation_ShortText80,  
-, 
-, 
-StocksLocationsTable.Bay, 
-StocksLocationsTable.Level
-"
         For i = 0 To StocksLocationsDataGridView.Columns.GetColumnCount(0) - 1
 
             StocksLocationsDataGridView.Columns.Item(i).Visible = False
@@ -91,15 +85,15 @@ StocksLocationsTable.Level
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Location Code"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 120
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "StorageLocation_ShortText80"
+                Case "StorageLocation_ShortText200"
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Storage Location"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 300
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "MainStorageTypesTable.StorageTypeDescription_ShortText50"
+                Case "MainStorageTypesTable.StorageTypeDescription_ShortText150"
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Main Storage Type"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 200
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "SubStorageTypesTable.StorageTypeDescription_ShortText50"
+                Case "SubStorageTypesTable.StorageTypeDescription_ShortText150"
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Sub Storage Type"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 200
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
@@ -107,7 +101,7 @@ StocksLocationsTable.Level
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Bay"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 70
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "Level"
+                Case "Level_Byte"
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Level (1 is the lowest)"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 120
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
@@ -131,7 +125,14 @@ StocksLocationsTable.Level
         CurrentStorageLocationID = StocksLocationsDataGridView.Item("StocksLocationID_AutoNumber", CurrentStocksLocationsRow).Value
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
-        DoCommonHouseKeeping(Me, SavedCallingForm)
+        Select Case ActiveDGViewToolStripTextBox.Text
+            Case "Storage location"
+                StorageLocationsGroupBox.Visible = False
+                StockLocationDetailsGroupBox.Enabled = True
+            Case "Stocks location"
+                DoCommonHouseKeeping(Me, SavedCallingForm)
+            Case ""
+        End Select
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         If StocksLocationsGroupBox.Enabled = True Then
@@ -141,7 +142,7 @@ StocksLocationsTable.Level
         End If
     End Sub
 
-    Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
+    Private Sub NewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewToolStripMenuItem.Click
         If StocksLocationsGroupBox.Enabled = True Then
             StocksLocationsGroupBox.Enabled = False
             StockLocationDetailsGroupBox.Visible = True
@@ -150,6 +151,7 @@ StocksLocationsTable.Level
             SubStorageTypeTextBox.Text = ""
             BayTextBox.Text = ""
             LevelTextBox.Text = ""
+            ActiveDGViewToolStripTextBox.Text = ""
             StorageLocationTextBox.Select()
         ElseIf StorageLocationsGroupBox.Visible = True Then
             Dim xx = 1
@@ -169,12 +171,12 @@ StocksLocationsTable.Level
     End Sub
     Private Sub FillStorageLocationsDataGridView()
 
-        StorageLocationsSelectionOrder = " ORDER BY StorageLocationCode_ShortText2 DESC "
+        StorageLocationsSelectionOrder = " ORDER BY StorageLocationCode_ShortText1 DESC "
         StorageLocationsFieldsToSelect = " 
 SELECT 
 StorageLocationID_AutoNumber,
-StorageLocationCode_ShortText2,
-StorageLocation_ShortText80
+StorageLocationCode_ShortText1,
+StorageLocation_ShortText200
 FROM StorageLocationsTable
 "
 
@@ -213,9 +215,9 @@ FROM StorageLocationsTable
 
             StorageLocationsDataGridView.Columns.Item(i).Visible = False
             Select Case StorageLocationsDataGridView.Columns.Item(i).Name
-                Case "StorageLocation_ShortText80"
+                Case "StorageLocation_ShortText200"
                     StorageLocationsDataGridView.Columns.Item(i).HeaderText = "Storage Location"
-                    StorageLocationsDataGridView.Columns.Item(i).Width = 250
+                    StorageLocationsDataGridView.Columns.Item(i).Width = 300
                     StorageLocationsDataGridView.Columns.Item(i).Visible = True
             End Select
 
@@ -236,7 +238,7 @@ FROM StorageLocationsTable
 
         CurrentStorageLocationsRow = e.RowIndex
         CurrentStorageLocationID = StorageLocationsDataGridView.Item("StorageLocationID_Autonumber", CurrentStorageLocationsRow).Value
-        CurrentStorageCode = StorageLocationsDataGridView.Item("StorageLocationCode_ShortText2", CurrentStorageLocationsRow).Value
+        CurrentStorageCode = StorageLocationsDataGridView.Item("StorageLocationCode_ShortText1", CurrentStorageLocationsRow).Value
     End Sub
 
     Private Sub StorageLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles StorageLocationTextBox.TextChanged
@@ -246,9 +248,54 @@ FROM StorageLocationsTable
     Private Sub StorageLocationTextBox_Click(sender As Object, e As EventArgs) Handles StorageLocationTextBox.Click
         If IsEmpty(StorageLocationTextBox.Text) Then
             StorageLocationsGroupBox.Visible = True
-            StorageLocationsGroupBox.Select()
-
+            ActiveDGViewToolStripTextBox.Text = "Storage location"
         End If
     End Sub
+    Private Sub ActiveDGViewToolStripTextBox_TextChanged(sender As Object, e As EventArgs) Handles ActiveDGViewToolStripTextBox.TextChanged
+        SelectToolStripMenuItem.Visible = True
+        StockLocationDetailsGroupBox.Enabled = False
+        Select Case ActiveDGViewToolStripTextBox.Text
+            Case "Storage location"
 
+            Case "Stocks location"
+            Case ""
+                SelectToolStripMenuItem.Visible = False
+                StockLocationDetailsGroupBox.Enabled = True
+        End Select
+    End Sub
+    Private Sub StockLocationDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles StockLocationDetailsGroupBox.VisibleChanged
+        If StockLocationDetailsGroupBox.Visible Then
+            StockLocationDetailsGroupBox.Enabled = True
+            DisableAllOtherEditingOptions()
+        Else
+            SaveToolStripMenuItem.Visible = False
+            EnableAllOtherEditingOptions()
+        End If
+    End Sub
+    Private Sub StockLocationDetailsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles StockLocationDetailsGroupBox.EnabledChanged
+        If StockLocationDetailsGroupBox.Visible Then
+            SaveToolStripMenuItem.Visible = True
+        Else
+            SaveToolStripMenuItem.Visible = False
+        End If
+    End Sub
+    Private Sub DisableAllOtherEditingOptions()
+        SelectToolStripMenuItem.Visible = False
+        NewToolStripMenuItem.Visible = False
+        EditToolStripMenuItem.Visible = False
+        RemoveToolStripMenuItem.Visible = False
+    End Sub
+    Private Sub EnableAllOtherEditingOptions()
+        SelectToolStripMenuItem.Visible = True
+        NewToolStripMenuItem.Visible = True
+        EditToolStripMenuItem.Visible = True
+        RemoveToolStripMenuItem.Visible = True
+    End Sub
+
+    Private Sub SelectToolStripMenuItem_VisibleChanged(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.VisibleChanged
+        If SelectToolStripMenuItem.Visible Then
+            SaveToolStripMenuItem.Visible = False
+        End If
+
+    End Sub
 End Class

@@ -41,15 +41,16 @@ Partial Class StockLocationsForm
         Me.StocksLocationsMainMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EmployeeDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StorageLocationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.StorageLocationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.InputBoxGroupBox = New System.Windows.Forms.GroupBox()
+        Me.InputTextBox = New System.Windows.Forms.TextBox()
+        Me.ActiveDGViewToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.StocksLocationsGroupBox.SuspendLayout()
         CType(Me.StocksLocationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StockLocationDetailsGroupBox.SuspendLayout()
@@ -57,6 +58,7 @@ Partial Class StockLocationsForm
         Me.StocksLocationsMainMenuStrip.SuspendLayout()
         Me.StorageLocationsGroupBox.SuspendLayout()
         CType(Me.StorageLocationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.InputBoxGroupBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'StocksLocationsGroupBox
@@ -225,7 +227,7 @@ Partial Class StockLocationsForm
         'StocksLocationsMainMenuStrip
         '
         Me.StocksLocationsMainMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StocksLocationsMainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.SelectToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripMenuItem1, Me.ViewToolStripMenuItem, Me.SaveToolStripMenuItem})
+        Me.StocksLocationsMainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ActiveDGViewToolStripTextBox, Me.SelectToolStripMenuItem, Me.NewToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveToolStripMenuItem})
         Me.StocksLocationsMainMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.StocksLocationsMainMenuStrip.Name = "StocksLocationsMainMenuStrip"
         Me.StocksLocationsMainMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -245,11 +247,11 @@ Partial Class StockLocationsForm
         Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
         Me.SelectToolStripMenuItem.Text = "Select"
         '
-        'AddToolStripMenuItem
+        'NewToolStripMenuItem
         '
-        Me.AddToolStripMenuItem.Name = "AddToolStripMenuItem"
-        Me.AddToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
-        Me.AddToolStripMenuItem.Text = "Add"
+        Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
+        Me.NewToolStripMenuItem.Text = "New"
         '
         'EditToolStripMenuItem
         '
@@ -267,19 +269,6 @@ Partial Class StockLocationsForm
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
-        '
-        'ViewToolStripMenuItem
-        '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EmployeeDetailsToolStripMenuItem})
-        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(56, 25)
-        Me.ViewToolStripMenuItem.Text = "View"
-        '
-        'EmployeeDetailsToolStripMenuItem
-        '
-        Me.EmployeeDetailsToolStripMenuItem.Name = "EmployeeDetailsToolStripMenuItem"
-        Me.EmployeeDetailsToolStripMenuItem.Size = New System.Drawing.Size(197, 26)
-        Me.EmployeeDetailsToolStripMenuItem.Text = "Employee details"
         '
         'SaveToolStripMenuItem
         '
@@ -316,11 +305,37 @@ Partial Class StockLocationsForm
         Me.StorageLocationsDataGridView.Size = New System.Drawing.Size(261, 148)
         Me.StorageLocationsDataGridView.TabIndex = 52
         '
+        'InputBoxGroupBox
+        '
+        Me.InputBoxGroupBox.Controls.Add(Me.InputTextBox)
+        Me.InputBoxGroupBox.Location = New System.Drawing.Point(638, 111)
+        Me.InputBoxGroupBox.Name = "InputBoxGroupBox"
+        Me.InputBoxGroupBox.Size = New System.Drawing.Size(401, 66)
+        Me.InputBoxGroupBox.TabIndex = 90
+        Me.InputBoxGroupBox.TabStop = False
+        Me.InputBoxGroupBox.Text = "Input Box"
+        Me.InputBoxGroupBox.Visible = False
+        '
+        'InputTextBox
+        '
+        Me.InputTextBox.Location = New System.Drawing.Point(3, 22)
+        Me.InputTextBox.Name = "InputTextBox"
+        Me.InputTextBox.Size = New System.Drawing.Size(392, 26)
+        Me.InputTextBox.TabIndex = 0
+        '
+        'ActiveDGViewToolStripTextBox
+        '
+        Me.ActiveDGViewToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ActiveDGViewToolStripTextBox.Name = "ActiveDGViewToolStripTextBox"
+        Me.ActiveDGViewToolStripTextBox.Size = New System.Drawing.Size(100, 25)
+        Me.ActiveDGViewToolStripTextBox.Text = "Stocks location"
+        '
         'StockLocationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1051, 624)
+        Me.Controls.Add(Me.InputBoxGroupBox)
         Me.Controls.Add(Me.StorageLocationsGroupBox)
         Me.Controls.Add(Me.StocksLocationsGroupBox)
         Me.Controls.Add(Me.StockLocationDetailsGroupBox)
@@ -340,6 +355,8 @@ Partial Class StockLocationsForm
         Me.StocksLocationsMainMenuStrip.PerformLayout()
         Me.StorageLocationsGroupBox.ResumeLayout(False)
         CType(Me.StorageLocationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.InputBoxGroupBox.ResumeLayout(False)
+        Me.InputBoxGroupBox.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -364,13 +381,14 @@ Partial Class StockLocationsForm
     Friend WithEvents StocksLocationsMainMenuStrip As MenuStrip
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SelectToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemoveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EmployeeDetailsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StorageLocationsGroupBox As GroupBox
     Friend WithEvents StorageLocationsDataGridView As DataGridView
+    Friend WithEvents InputBoxGroupBox As GroupBox
+    Friend WithEvents InputTextBox As TextBox
+    Friend WithEvents ActiveDGViewToolStripTextBox As ToolStripTextBox
 End Class
