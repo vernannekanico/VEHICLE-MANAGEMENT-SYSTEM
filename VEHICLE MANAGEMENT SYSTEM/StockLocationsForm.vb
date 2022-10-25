@@ -1,4 +1,6 @@
-﻿Public Class StockLocationsForm
+﻿Imports System.Reflection
+
+Public Class StockLocationsForm
     Private StocksLocationsFieldsToSelect = ""
     Private StocksLocationsSelectionFilter = ""
     Private StocksLocationsSelectionOrder = ""
@@ -7,15 +9,16 @@
     Private CurrentStocksLocationID = -1
     Private StocksLocationsDataGridViewAlreadyFormated = False
 
-    Private StorageLocationsFieldsToSelect = ""
-    Private StorageLocationsSelectionFilter = ""
-    Private StorageLocationsSelectionOrder = ""
-    Private CurrentStorageLocationsRow As Integer = -1
-    Private StorageLocationsRecordCount As Integer = -1
-    Private CurrentStorageLocationID = -1
-    Private StorageLocationsDataGridViewAlreadyFormated = False
+    Private StoragesLocationsFieldsToSelect = ""
+    Private StoragesLocationsSelectionFilter = ""
+    Private StoragesLocationsSelectionOrder = ""
+    Private CurrentStoragesLocationsRow As Integer = -1
+    Private StoragesLocationsRecordCount As Integer = -1
+    Private CurrentStoragesLocationID = -1
+    Private StoragesLocationsDataGridViewAlreadyFormated = False
     Private CurrentStorageCode = ""
 
+    Private EditMode = ""
     Private SavedCallingForm As Form
 
     Private Sub StocksLocationForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -24,12 +27,12 @@
         VerticalCenter(StockLocationDetailsGroupBox, Me)
         StocksLocationsSelectionFilter = ""
         FillStocksLocationsDataGridView()
-        FillStorageLocationsDataGridView()
+        FillStoragesLocationsDataGridView()
         HorizontalCenter(InputBoxGroupBox, Me)
         VerticalCenter(InputBoxGroupBox, Me)
-        StorageLocationsGroupBox.Top = StocksLocationsGroupBox.Top
-        StorageLocationsGroupBox.Left = StocksLocationsGroupBox.Left
-        SaveToolStripMenuItem.Visible = False
+        StoragesLocationsGroupBox.Top = StocksLocationsGroupBox.Top
+        StoragesLocationsGroupBox.Left = StocksLocationsGroupBox.Left
+        StocksLocationsGroupBox.Enabled = True
     End Sub
     Private Sub FillStocksLocationsDataGridView()
 
@@ -38,12 +41,12 @@
 SELECT 
 StocksLocationsTable.StocksLocationID_AutoNumber, 
 StocksLocationsTable.LocationCode_ShortText10, 
-StorageLocationsTable.StorageLocation_ShortText200,  
+StoragesLocationsTable.StoragesLocation_ShortText200,  
 MainStorageTypesTable.StorageTypeDescription_ShortText150, 
 SubStorageTypesTable.StorageTypeDescription_ShortText150, 
 StocksLocationsTable.Bay_ShortText1, 
 StocksLocationsTable.Level_Byte
-FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTable.StorageLocationID_LongInteger = StorageLocationsTable.StorageLocationID_Autonumber) LEFT JOIN StorageTypesTable AS MainStorageTypesTable ON StocksLocationsTable.[MainStorageType_LongInteger] = MainStorageTypesTable.StorageTypeID_Autonumber) LEFT JOIN StorageTypesTable AS SubStorageTypesTable ON StocksLocationsTable.[SubStorageType_LongInteger] = SubStorageTypesTable.StorageTypeID_Autonumber
+FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsTable.StoragesLocationID_LongInteger = StoragesLocationsTable.StoragesLocationID_Autonumber) LEFT JOIN StorageTypesTable AS MainStorageTypesTable ON StocksLocationsTable.[MainStorageType_LongInteger] = MainStorageTypesTable.StorageTypeID_Autonumber) LEFT JOIN StorageTypesTable AS SubStorageTypesTable ON StocksLocationsTable.[SubStorageType_LongInteger] = SubStorageTypesTable.StorageTypeID_Autonumber
 "
 
         MySelection = StocksLocationsFieldsToSelect & StocksLocationsSelectionFilter & StocksLocationsSelectionOrder
@@ -63,7 +66,7 @@ FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTa
             SetFormWidthAndGroupBoxLeft(Me,
                                         StocksLocationsMainMenuStrip,
                                         StocksLocationsGroupBox,
-                                        StorageLocationsGroupBox,
+                                        StoragesLocationsGroupBox,
                                         StocksLocationsGroupBox,
                                         StocksLocationsGroupBox)
         End If
@@ -85,7 +88,7 @@ FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTa
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Location Code"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 120
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "StorageLocation_ShortText200"
+                Case "StoragesLocation_ShortText200"
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Storage Location"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 300
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
@@ -122,30 +125,76 @@ FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTa
 
         CurrentStocksLocationsRow = e.RowIndex
         CurrentStocksLocationID = StocksLocationsDataGridView.Item("StocksLocationID_AutoNumber", CurrentStocksLocationsRow).Value
-        CurrentStorageLocationID = StocksLocationsDataGridView.Item("StocksLocationID_AutoNumber", CurrentStocksLocationsRow).Value
+        CurrentStoragesLocationID = StocksLocationsDataGridView.Item("StocksLocationID_AutoNumber", CurrentStocksLocationsRow).Value
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
+        If Not StockLocationDetailsGroupBox.Visible Then
+            DoCommonHouseKeeping(Me, SavedCallingForm)
+            Exit Sub
+        End If
+        CheckChanges()
+
+    End Sub
+    Private Sub CheckChanges()
+        If NoChangesWereMade() Then
+            Select Case ActiveDGViewToolStripTextBox.Text
+                Case "Storage location"
+                    InputBoxGroupBox.Visible = False
+                    StoragesLocationsGroupBox.Enabled = True
+                Case Else
+                    StockLocationDetailsGroupBox.Visible = False
+
+            End Select
+        Else
+            If MsgBox("Would you like to disregard the changes", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                DoCommonHouseKeeping(Me, SavedCallingForm)
+                Exit Sub
+            End If
+            Select Case ActiveDGViewToolStripTextBox.Text
+                Case "Storage location"
+                    StoragesLocationsGroupBox.Visible = False
+                    StockLocationDetailsGroupBox.Enabled = True
+                Case "Stocks location"
+                    StockLocationDetailsGroupBox.Enabled = False
+                    StockLocationDetailsGroupBox.Visible = False
+                    StocksLocationsGroupBox.Enabled = True
+                Case ""
+                Case Else
+
+
+            End Select
+        End If
+        EditMode = ""
+    End Sub
+    Private Function NoChangesWereMade()
+        Select Case EditMode
+            Case "New"
+            Case "Edit"
+                Select Case ActiveDGViewToolStripTextBox.Text
+                    Case "Storage location"
+                        If InputTextBox.Text = StoragesLocationsDataGridView.Item("StoragesLocation_ShortText200", CurrentStoragesLocationsRow).Value Then Return False
+                        If MsgBox("Would you like to disregard the changes", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Return False
+
+                End Select
+            Case ""         'StockLocationDetailsGroupBox.Visible = true
+                StockLocationDetailsGroupBox.Visible = False
+                StocksLocationsDataGridView.Enabled = True
+        End Select
+        Return True
+    End Function
+    Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Select Case ActiveDGViewToolStripTextBox.Text
             Case "Storage location"
-                StorageLocationsGroupBox.Visible = False
+                FillField(StorageLocationTextBox.Text, StoragesLocationsDataGridView.Item("StoragesLocation_ShortText200", CurrentStoragesLocationsRow).Value)
                 StockLocationDetailsGroupBox.Enabled = True
-            Case "Stocks location"
-                DoCommonHouseKeeping(Me, SavedCallingForm)
-            Case ""
         End Select
-    End Sub
-    Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
-        If StocksLocationsGroupBox.Enabled = True Then
-            Dim cc = 1
-        ElseIf StorageLocationsGroupBox.Visible = True Then
-            StorageLocationTextBox.Text = StorageLocationsDataGridView.Item("StorageLocation_ShortText80", CurrentStorageLocationsRow).Value
-        End If
     End Sub
 
     Private Sub NewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewToolStripMenuItem.Click
+        EditMode = "New"
         If StocksLocationsGroupBox.Enabled = True Then
-            StocksLocationsGroupBox.Enabled = False
             StockLocationDetailsGroupBox.Visible = True
+            StockLocationDetailsGroupBox.Enabled = True
             StorageLocationTextBox.Text = ""
             MainStorageTypeTextBox.Text = ""
             SubStorageTypeTextBox.Text = ""
@@ -153,149 +202,172 @@ FROM ((StocksLocationsTable LEFT JOIN StorageLocationsTable ON StocksLocationsTa
             LevelTextBox.Text = ""
             ActiveDGViewToolStripTextBox.Text = ""
             StorageLocationTextBox.Select()
-        ElseIf StorageLocationsGroupBox.Visible = True Then
+        ElseIf StoragesLocationsGroupBox.Visible = True Then
             Dim xx = 1
         End If
     End Sub
 
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem.Click
-
+        EditMode = "Edit"
+        InputBoxGroupBox.Visible = True
+        FillField(InputTextBox.Text, StoragesLocationsDataGridView.Item("StoragesLocation_ShortText200", CurrentStoragesLocationsRow).Value)
+        StoragesLocationsGroupBox.Enabled = False
     End Sub
 
     Private Sub RemoveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveToolStripMenuItem.Click
+        EditMode = ""
 
     End Sub
 
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
-
+        CheckChanges()
     End Sub
-    Private Sub FillStorageLocationsDataGridView()
+    Private Sub FillStoragesLocationsDataGridView()
 
-        StorageLocationsSelectionOrder = " ORDER BY StorageLocationCode_ShortText1 DESC "
-        StorageLocationsFieldsToSelect = " 
+        StoragesLocationsSelectionOrder = " ORDER BY StoragesLocationCode_ShortText1 DESC "
+        StoragesLocationsFieldsToSelect = " 
 SELECT 
-StorageLocationID_AutoNumber,
-StorageLocationCode_ShortText1,
-StorageLocation_ShortText200
-FROM StorageLocationsTable
+StoragesLocationID_AutoNumber,
+StoragesLocationCode_ShortText1,
+StoragesLocation_ShortText200
+FROM StoragesLocationsTable
 "
 
-        MySelection = StorageLocationsFieldsToSelect & StorageLocationsSelectionFilter & StorageLocationsSelectionOrder
+        MySelection = StoragesLocationsFieldsToSelect & StoragesLocationsSelectionFilter & StoragesLocationsSelectionOrder
 
         JustExecuteMySelection()
-        StorageLocationsRecordCount = RecordCount
+        StoragesLocationsRecordCount = RecordCount
 
-        StorageLocationsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If StorageLocationsRecordCount = 0 Then
-            CurrentStorageLocationID = -1
+        StoragesLocationsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        If StoragesLocationsRecordCount = 0 Then
+            CurrentStoragesLocationID = -1
         End If
 
 
-        ' HERE AT ROW_ENTER, FillStorageLocationConcernsDataGridView is called and StorageLocationConcernsbOX IS ALREADY FORMATTED
-        If Not StorageLocationsDataGridViewAlreadyFormated Then
-            FormatStorageLocationsDataGridView()
+        ' HERE AT ROW_ENTER, FillStoragesLocationConcernsDataGridView is called and StoragesLocationConcernsbOX IS ALREADY FORMATTED
+        If Not StoragesLocationsDataGridViewAlreadyFormated Then
+            FormatStoragesLocationsDataGridView()
             SetFormWidthAndGroupBoxLeft(Me,
                                         StocksLocationsMainMenuStrip,
                                         StocksLocationsGroupBox,
-                                        StorageLocationsGroupBox,
-                                        StorageLocationsGroupBox,
-                                        StorageLocationsGroupBox)
+                                        StoragesLocationsGroupBox,
+                                        StoragesLocationsGroupBox,
+                                        StoragesLocationsGroupBox)
         End If
 
-        SetGroupBoxHeight(5, StorageLocationsRecordCount, StorageLocationsGroupBox, StorageLocationsDataGridView)
+        SetGroupBoxHeight(5, StoragesLocationsRecordCount, StoragesLocationsGroupBox, StoragesLocationsDataGridView)
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
 
     End Sub
-    Private Sub FormatStorageLocationsDataGridView()
-        StorageLocationsDataGridViewAlreadyFormated = True
-        StorageLocationsGroupBox.Width = 0
-        For i = 0 To StorageLocationsDataGridView.Columns.GetColumnCount(0) - 1
+    Private Sub FormatStoragesLocationsDataGridView()
+        StoragesLocationsDataGridViewAlreadyFormated = True
+        StoragesLocationsGroupBox.Width = 0
+        For i = 0 To StoragesLocationsDataGridView.Columns.GetColumnCount(0) - 1
 
-            StorageLocationsDataGridView.Columns.Item(i).Visible = False
-            Select Case StorageLocationsDataGridView.Columns.Item(i).Name
-                Case "StorageLocation_ShortText200"
-                    StorageLocationsDataGridView.Columns.Item(i).HeaderText = "Storage Location"
-                    StorageLocationsDataGridView.Columns.Item(i).Width = 300
-                    StorageLocationsDataGridView.Columns.Item(i).Visible = True
+            StoragesLocationsDataGridView.Columns.Item(i).Visible = False
+            Select Case StoragesLocationsDataGridView.Columns.Item(i).Name
+                Case "StoragesLocation_ShortText200"
+                    StoragesLocationsDataGridView.Columns.Item(i).HeaderText = "Storage Location"
+                    StoragesLocationsDataGridView.Columns.Item(i).Width = 300
+                    StoragesLocationsDataGridView.Columns.Item(i).Visible = True
             End Select
 
-            If StorageLocationsDataGridView.Columns.Item(i).Visible = True Then
-                StorageLocationsGroupBox.Width = StorageLocationsGroupBox.Width + StorageLocationsDataGridView.Columns.Item(i).Width
+            If StoragesLocationsDataGridView.Columns.Item(i).Visible = True Then
+                StoragesLocationsGroupBox.Width = StoragesLocationsGroupBox.Width + StoragesLocationsDataGridView.Columns.Item(i).Width
             End If
         Next
-        If StorageLocationsGroupBox.Width > VehicleManagementSystemForm.Width Then
-            StorageLocationsGroupBox.Width = VehicleManagementSystemForm.Width - 4
+        If StoragesLocationsGroupBox.Width > VehicleManagementSystemForm.Width Then
+            StoragesLocationsGroupBox.Width = VehicleManagementSystemForm.Width - 4
         Else
-            HorizontalCenter(StorageLocationsGroupBox, Me)
+            HorizontalCenter(StoragesLocationsGroupBox, Me)
         End If
     End Sub
-    Private Sub StorageLocationsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles StorageLocationsDataGridView.RowEnter
+    Private Sub StoragesLocationsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles StoragesLocationsDataGridView.RowEnter
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
-        If StorageLocationsRecordCount = 0 Then Exit Sub
+        If StoragesLocationsRecordCount = 0 Then Exit Sub
 
-        CurrentStorageLocationsRow = e.RowIndex
-        CurrentStorageLocationID = StorageLocationsDataGridView.Item("StorageLocationID_Autonumber", CurrentStorageLocationsRow).Value
-        CurrentStorageCode = StorageLocationsDataGridView.Item("StorageLocationCode_ShortText1", CurrentStorageLocationsRow).Value
+        CurrentStoragesLocationsRow = e.RowIndex
+        CurrentStoragesLocationID = StoragesLocationsDataGridView.Item("StoragesLocationID_Autonumber", CurrentStoragesLocationsRow).Value
+        CurrentStorageCode = StoragesLocationsDataGridView.Item("StoragesLocationCode_ShortText1", CurrentStoragesLocationsRow).Value
     End Sub
 
-    Private Sub StorageLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles StorageLocationTextBox.TextChanged
+    Private Sub StoragesLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles StorageLocationTextBox.TextChanged
 
     End Sub
 
-    Private Sub StorageLocationTextBox_Click(sender As Object, e As EventArgs) Handles StorageLocationTextBox.Click
+    Private Sub StoragesLocationTextBox_Click(sender As Object, e As EventArgs) Handles StorageLocationTextBox.Click
         If IsEmpty(StorageLocationTextBox.Text) Then
-            StorageLocationsGroupBox.Visible = True
+            StockLocationDetailsGroupBox.Enabled = False
+            StoragesLocationsGroupBox.Visible = True
+            ActiveDGViewToolStripTextBox.Text = "Storage location"
+        End If
+        If MsgBox("Would you like to change the storage location ? ", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            StockLocationDetailsGroupBox.Enabled = False
+            StoragesLocationsGroupBox.Visible = True
             ActiveDGViewToolStripTextBox.Text = "Storage location"
         End If
     End Sub
-    Private Sub ActiveDGViewToolStripTextBox_TextChanged(sender As Object, e As EventArgs) Handles ActiveDGViewToolStripTextBox.TextChanged
-        SelectToolStripMenuItem.Visible = True
-        StockLocationDetailsGroupBox.Enabled = False
-        Select Case ActiveDGViewToolStripTextBox.Text
-            Case "Storage location"
-
-            Case "Stocks location"
-            Case ""
-                SelectToolStripMenuItem.Visible = False
-                StockLocationDetailsGroupBox.Enabled = True
-        End Select
-    End Sub
     Private Sub StockLocationDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles StockLocationDetailsGroupBox.VisibleChanged
         If StockLocationDetailsGroupBox.Visible Then
-            StockLocationDetailsGroupBox.Enabled = True
-            DisableAllOtherEditingOptions()
+            DisableAllDataGridViews()
         Else
-            SaveToolStripMenuItem.Visible = False
-            EnableAllOtherEditingOptions()
+            StockLocationDetailsGroupBox.Enabled = False
+            StocksLocationsGroupBox.Enabled = True
         End If
     End Sub
     Private Sub StockLocationDetailsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles StockLocationDetailsGroupBox.EnabledChanged
-        If StockLocationDetailsGroupBox.Visible Then
+        If StockLocationDetailsGroupBox.Enabled Then
+            DisableAllOtherEditingOptions()
             SaveToolStripMenuItem.Visible = True
+            DisableAllDataGridViews()
         Else
+            DisableAllDataGridViews()
+            EnableAllOtherEditingOptions()
             SaveToolStripMenuItem.Visible = False
         End If
     End Sub
+
     Private Sub DisableAllOtherEditingOptions()
         SelectToolStripMenuItem.Visible = False
-        NewToolStripMenuItem.Visible = False
         EditToolStripMenuItem.Visible = False
         RemoveToolStripMenuItem.Visible = False
     End Sub
     Private Sub EnableAllOtherEditingOptions()
         SelectToolStripMenuItem.Visible = True
-        NewToolStripMenuItem.Visible = True
         EditToolStripMenuItem.Visible = True
         RemoveToolStripMenuItem.Visible = True
     End Sub
+    Private Sub DisableAllDataGridViews()
+        NewToolStripMenuItem.Visible = False
+        StocksLocationsGroupBox.Enabled = False
+        StoragesLocationsGroupBox.Visible = False
+        DisableAllOtherEditingOptions()
+    End Sub
 
-    Private Sub SelectToolStripMenuItem_VisibleChanged(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.VisibleChanged
-        If SelectToolStripMenuItem.Visible Then
+    Private Sub StoragesLocationsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles StoragesLocationsGroupBox.VisibleChanged
+        If StoragesLocationsGroupBox.Visible Then NewToolStripMenuItem.Visible = True
+    End Sub
+
+    Private Sub StocksLocationsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles StocksLocationsGroupBox.EnabledChanged
+        If StocksLocationsGroupBox.Enabled Then NewToolStripMenuItem.Visible = True
+    End Sub
+
+    Private Sub StoragesLocationsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles StoragesLocationsGroupBox.EnabledChanged
+        If StoragesLocationsGroupBox.Enabled Then NewToolStripMenuItem.Visible = True
+    End Sub
+
+    Private Sub InputBoxGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles InputBoxGroupBox.VisibleChanged
+        If InputBoxGroupBox.Visible Then
+            DisableAllOtherEditingOptions()
+            SaveToolStripMenuItem.Visible = True
+            DisableAllDataGridViews()
+        Else
+            DisableAllDataGridViews()
+            EnableAllOtherEditingOptions()
             SaveToolStripMenuItem.Visible = False
         End If
-
     End Sub
 End Class
