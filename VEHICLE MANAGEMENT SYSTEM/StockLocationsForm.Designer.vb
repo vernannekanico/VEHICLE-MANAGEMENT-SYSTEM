@@ -25,6 +25,9 @@ Partial Class StockLocationsForm
         Me.StocksLocationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.StocksLocationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.StockLocationDetailsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.SubStorageTypeCodeTextBoxTextBox = New System.Windows.Forms.TextBox()
+        Me.MainStorageTypeCodeTextBox = New System.Windows.Forms.TextBox()
+        Me.StorageLocationCodeTextBox = New System.Windows.Forms.TextBox()
         Me.StorageLocationTextBox = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.SubStorageTypeTextBox = New System.Windows.Forms.TextBox()
@@ -50,13 +53,10 @@ Partial Class StockLocationsForm
         Me.StoragesLocationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.StoragesLocationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.InputBoxGroupBox = New System.Windows.Forms.GroupBox()
-        Me.DescriptionTextBox = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.DescriptionCodeTextBox = New System.Windows.Forms.TextBox()
-        Me.StorageLocationCodeTextBox = New System.Windows.Forms.TextBox()
-        Me.MainStorageTypeCodeTextBox = New System.Windows.Forms.TextBox()
-        Me.SubStorageTypeCodeTextBoxTextBox = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.DescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.StocksLocationsGroupBox.SuspendLayout()
         CType(Me.StocksLocationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StockLocationDetailsGroupBox.SuspendLayout()
@@ -121,6 +121,33 @@ Partial Class StockLocationsForm
         Me.StockLocationDetailsGroupBox.TabStop = False
         Me.StockLocationDetailsGroupBox.Text = "Stock Location Details"
         Me.StockLocationDetailsGroupBox.Visible = False
+        '
+        'SubStorageTypeCodeTextBoxTextBox
+        '
+        Me.SubStorageTypeCodeTextBoxTextBox.Enabled = False
+        Me.SubStorageTypeCodeTextBoxTextBox.Location = New System.Drawing.Point(183, 96)
+        Me.SubStorageTypeCodeTextBoxTextBox.Name = "SubStorageTypeCodeTextBoxTextBox"
+        Me.SubStorageTypeCodeTextBoxTextBox.ReadOnly = True
+        Me.SubStorageTypeCodeTextBoxTextBox.Size = New System.Drawing.Size(27, 26)
+        Me.SubStorageTypeCodeTextBoxTextBox.TabIndex = 84
+        '
+        'MainStorageTypeCodeTextBox
+        '
+        Me.MainStorageTypeCodeTextBox.Enabled = False
+        Me.MainStorageTypeCodeTextBox.Location = New System.Drawing.Point(183, 61)
+        Me.MainStorageTypeCodeTextBox.Name = "MainStorageTypeCodeTextBox"
+        Me.MainStorageTypeCodeTextBox.ReadOnly = True
+        Me.MainStorageTypeCodeTextBox.Size = New System.Drawing.Size(27, 26)
+        Me.MainStorageTypeCodeTextBox.TabIndex = 83
+        '
+        'StorageLocationCodeTextBox
+        '
+        Me.StorageLocationCodeTextBox.Enabled = False
+        Me.StorageLocationCodeTextBox.Location = New System.Drawing.Point(183, 24)
+        Me.StorageLocationCodeTextBox.Name = "StorageLocationCodeTextBox"
+        Me.StorageLocationCodeTextBox.ReadOnly = True
+        Me.StorageLocationCodeTextBox.Size = New System.Drawing.Size(27, 26)
+        Me.StorageLocationCodeTextBox.TabIndex = 82
         '
         'StorageLocationTextBox
         '
@@ -340,22 +367,6 @@ Partial Class StockLocationsForm
         Me.InputBoxGroupBox.Text = "Input Box"
         Me.InputBoxGroupBox.Visible = False
         '
-        'DescriptionTextBox
-        '
-        Me.DescriptionTextBox.Location = New System.Drawing.Point(124, 25)
-        Me.DescriptionTextBox.Name = "DescriptionTextBox"
-        Me.DescriptionTextBox.Size = New System.Drawing.Size(312, 26)
-        Me.DescriptionTextBox.TabIndex = 0
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 28)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(70, 20)
-        Me.Label3.TabIndex = 1
-        Me.Label3.Text = "Location"
-        '
         'Label4
         '
         Me.Label4.AutoSize = True
@@ -373,32 +384,21 @@ Partial Class StockLocationsForm
         Me.DescriptionCodeTextBox.Size = New System.Drawing.Size(27, 26)
         Me.DescriptionCodeTextBox.TabIndex = 2
         '
-        'StorageLocationCodeTextBox
+        'Label3
         '
-        Me.StorageLocationCodeTextBox.Enabled = False
-        Me.StorageLocationCodeTextBox.Location = New System.Drawing.Point(183, 24)
-        Me.StorageLocationCodeTextBox.Name = "StorageLocationCodeTextBox"
-        Me.StorageLocationCodeTextBox.ReadOnly = True
-        Me.StorageLocationCodeTextBox.Size = New System.Drawing.Size(27, 26)
-        Me.StorageLocationCodeTextBox.TabIndex = 82
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(6, 28)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(70, 20)
+        Me.Label3.TabIndex = 1
+        Me.Label3.Text = "Location"
         '
-        'MainStorageTypeCodeTextBox
+        'DescriptionTextBox
         '
-        Me.MainStorageTypeCodeTextBox.Enabled = False
-        Me.MainStorageTypeCodeTextBox.Location = New System.Drawing.Point(183, 61)
-        Me.MainStorageTypeCodeTextBox.Name = "MainStorageTypeCodeTextBox"
-        Me.MainStorageTypeCodeTextBox.ReadOnly = True
-        Me.MainStorageTypeCodeTextBox.Size = New System.Drawing.Size(27, 26)
-        Me.MainStorageTypeCodeTextBox.TabIndex = 83
-        '
-        'SubStorageTypeCodeTextBoxTextBox
-        '
-        Me.SubStorageTypeCodeTextBoxTextBox.Enabled = False
-        Me.SubStorageTypeCodeTextBoxTextBox.Location = New System.Drawing.Point(183, 96)
-        Me.SubStorageTypeCodeTextBoxTextBox.Name = "SubStorageTypeCodeTextBoxTextBox"
-        Me.SubStorageTypeCodeTextBoxTextBox.ReadOnly = True
-        Me.SubStorageTypeCodeTextBoxTextBox.Size = New System.Drawing.Size(27, 26)
-        Me.SubStorageTypeCodeTextBoxTextBox.TabIndex = 84
+        Me.DescriptionTextBox.Location = New System.Drawing.Point(124, 25)
+        Me.DescriptionTextBox.Name = "DescriptionTextBox"
+        Me.DescriptionTextBox.Size = New System.Drawing.Size(312, 26)
+        Me.DescriptionTextBox.TabIndex = 0
         '
         'StockLocationsForm
         '
