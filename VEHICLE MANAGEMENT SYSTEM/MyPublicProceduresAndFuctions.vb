@@ -1,5 +1,4 @@
 ﻿Module MyPublicProceduresAndFuctions
-
     Public Function NotEmpty(text As String) As Boolean
         Return Not String.IsNullOrEmpty(text)
     End Function
@@ -113,7 +112,7 @@
     Public Function TheseAreNotEqual(PassedVariable1 As Object, PassedVariable2 As Object, PurposeOfEntry As String)
         If IsEmpty(PassedVariable2) And IsEmpty(PassedVariable1) Is Nothing Then Return False
         If PassedVariable2 Is Nothing And Not PassedVariable1 Is Nothing Then Return True
-        If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return true
+        If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return True
         If PassedVariable1.GetType.Name = "String" Then
             If PassedVariable2.GetType.Name = "Decimal" Then
                 PassedVariable1 = CDec(PassedVariable1)
@@ -232,7 +231,6 @@
         RecordsSelectionFilter = " WHERE " & RecordsSelectionFilter
         Return RecordsSelectionFilter
     End Function
-
     Public Function RoundUp(DecimalValue)
         Return Math.Ceiling(DecimalValue * 10D) / 10D
     End Function
@@ -247,129 +245,6 @@
         End If
         Return False
     End Function
-    Public Sub SetFormWidthAndGroupBoxLeft(ActiveForm As Form,
-                                           ActiveFormMenuStrip As MenuStrip,
-                                           GroupBox1 As GroupBox,
-                                           GroupBox2 As GroupBox,
-                                           GroupBox3 As GroupBox,
-                                           GroupBox4 As GroupBox)
-        'Note: IF ONLY 2 OR 3 BOXES ARE INVOLVED,
-        '   INDICATE GROUPBOX3 AND / OR GROUPBOX4 = GROUPBOX1
-        If GroupBox1.Width >= VehicleManagementSystemForm.Width Then
-            GroupBox1.Width = VehicleManagementSystemForm.Width - 4
-        End If
-        If GroupBox2.Width >= VehicleManagementSystemForm.Width Then
-            GroupBox2.Width = VehicleManagementSystemForm.Width - 4
-        End If
-        If GroupBox3.Width >= VehicleManagementSystemForm.Width Then
-            GroupBox3.Width = VehicleManagementSystemForm.Width - 4
-        End If
-
-        If GroupBox3.Width >= VehicleManagementSystemForm.Width Then
-            GroupBox3.Width = VehicleManagementSystemForm.Width - 4
-        End If
-
-        Dim LargestWidth = 0
-        For i = 1 To 4
-            If GroupBox1.Width > LargestWidth Then
-                LargestWidth = GroupBox1.Width
-
-            ElseIf GroupBox2.Width > LargestWidth Then
-                LargestWidth = GroupBox2.Width
-            ElseIf GroupBox3.Width > LargestWidth Then
-                LargestWidth = GroupBox3.Width
-            ElseIf GroupBox4.Width > LargestWidth Then
-                LargestWidth = GroupBox4.Width
-            End If
-        Next
-        ActiveForm.Width = LargestWidth + 4
-        ActiveForm.Left = (VehicleManagementSystemForm.Width - ActiveForm.Width) / 2
-
-        GroupBox1.Top = ActiveFormMenuStrip.Top + ActiveFormMenuStrip.Height
-        GroupBox1.Left = (ActiveForm.Width - GroupBox1.Width) / 2
-
-        GroupBox2.Top = GroupBox1.Top + GroupBox1.Height
-        GroupBox2.Left = (ActiveForm.Width - GroupBox2.Width) / 2
-
-        If GroupBox3.Name = GroupBox1.Name Then Exit Sub
-        GroupBox3.Top = GroupBox2.Top + GroupBox2.Height
-        GroupBox3.Left = (ActiveForm.Width - GroupBox3.Width) / 2
-
-        If GroupBox4.Name = GroupBox1.Name Then Exit Sub
-        GroupBox4.Top = GroupBox3.Top + GroupBox3.Height
-        GroupBox4.Left = (ActiveForm.Width - GroupBox4.Width) / 2
-
-    End Sub
-    Public Sub VerticalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
-        ObjectToCenter.top = (FormToCenterIn.height - ObjectToCenter.height) / 2
-    End Sub
-    Public Sub HorizontalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
-        ObjectToCenter.left = (FormToCenterIn.width - ObjectToCenter.width) / 2
-    End Sub
-    Public Sub JustExecuteMySelection()
-        If NoRecordFound() Then Exit Sub
-    End Sub
-    Public Sub EnAbleAccess(MenuOption As ToolStripMenuItem)
-        MenuOption.Enabled = True
-    End Sub
-    Public Sub SetThisMenuVisible(MenuOption As Object)
-        MenuOption.Visible = True
-    End Sub
-
-    Public Sub DisAbleAccess(MenuOption As ToolStripMenuItem)
-        MenuOption.Enabled = False
-    End Sub
-    Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, Optional RecordFilter As String = "")
-        MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
-        JustExecuteMySelection()
-        If RecordCount = 0 Then
-            MsgBox("Unable to Update Table " & TableToUpdate & " FILTER: " & RecordFilter)
-            Exit Sub
-        End If
-        MySelection = " UPDATE " & TableToUpdate & Space(1) & SetCommand & Space(1) & RecordFilter
-        JustExecuteMySelection()
-    End Sub
-
-    Public Sub UpdateThisTable(TableToUpdate As String, FieldToCompare As String, DataToCompare As String, FieldToUpdate As String, ReplacementData As String)
-
-
-        RecordFinderDbControls.AddParam("@DataToCompare", Val(DataToCompare))
-        RecordFinderDbControls.AddParam("@ReplacementData", ReplacementData)
-
-
-        MySelection = " UPDATE " & TableToUpdate &
-                      " SET " & FieldToUpdate & " = " & Chr(34) & ReplacementData & Chr(34) &
-                      " WHERE " & FieldToCompare & " = @DataToCompare"
-
-        If NoRecordFound() Then Dim dummy = 1
-
-        RecordFinderDbControls.AddParam("@DataToCompare", Val(DataToCompare))
-        RecordFinderDbControls.AddParam("@ReplacementData", ReplacementData)
-
-
-        MySelection = "select * from  " & TableToUpdate &
-                      " WHERE " & FieldToCompare & " = @DataToCompare"
-
-        If NoRecordFound() Then
-            Exit Sub
-        End If
-        Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-        Dim xxx = r(FieldToUpdate)
-    End Sub
-    Public Sub SetParentRecordReference(ParentTableName, ParentFieldName, FieldValue)
-
-        If TypeName(FieldValue) = "String" Then
-            FieldValue = Chr(34) & FieldValue & Chr(34)
-        Else
-            FieldValue = FieldValue.ToString()
-        End If
-
-        MySelection = "SELECT * " &
-                      " FROM " & ParentTableName &
-                      " WHERE " & ParentFieldName & " = " & FieldValue
-
-        JustExecuteMySelection()
-    End Sub
     Public Function GetFieldValue(ParentTableName As String, ParentFieldName As String, FieldValue As Object, RequestedField As String)
         Dim RequestedValue As Object
         If TypeName(FieldValue) = "String" Then
@@ -443,6 +318,139 @@
         End Select
 
     End Function
+    Public Function LinkExistsIn(TablesToCheck As Array, FieldName As String, LinkKey As Integer)
+
+        For Each item As String In TablesToCheck
+            MySelection = " Select TOP 1 * FROM " & item & " Where " & FieldName & " = " & LinkKey.ToString
+            JustExecuteMySelection()
+            If RecordCount > 0 Then
+                MsgBox("link exist in " & item)
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+    Public Sub SetFormWidthAndGroupBoxLeft(ActiveForm As Form,
+                                           ActiveFormMenuStrip As MenuStrip,
+                                           GroupBox1 As GroupBox,
+                                           GroupBox2 As GroupBox,
+                                           GroupBox3 As GroupBox,
+                                           GroupBox4 As GroupBox)
+        'Note: IF ONLY 2 OR 3 BOXES ARE INVOLVED,
+        '   INDICATE GROUPBOX3 AND / OR GROUPBOX4 = GROUPBOX1
+        If GroupBox1.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox1.Width = VehicleManagementSystemForm.Width - 4
+        End If
+        If GroupBox2.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox2.Width = VehicleManagementSystemForm.Width - 4
+        End If
+        If GroupBox3.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox3.Width = VehicleManagementSystemForm.Width - 4
+        End If
+
+        If GroupBox3.Width >= VehicleManagementSystemForm.Width Then
+            GroupBox3.Width = VehicleManagementSystemForm.Width - 4
+        End If
+
+        Dim LargestWidth = 0
+        For i = 1 To 4
+            If GroupBox1.Width > LargestWidth Then
+                LargestWidth = GroupBox1.Width
+
+            ElseIf GroupBox2.Width > LargestWidth Then
+                LargestWidth = GroupBox2.Width
+            ElseIf GroupBox3.Width > LargestWidth Then
+                LargestWidth = GroupBox3.Width
+            ElseIf GroupBox4.Width > LargestWidth Then
+                LargestWidth = GroupBox4.Width
+            End If
+        Next
+        ActiveForm.Width = LargestWidth + 4
+        ActiveForm.Left = (VehicleManagementSystemForm.Width - ActiveForm.Width) / 2
+
+        GroupBox1.Top = ActiveFormMenuStrip.Top + ActiveFormMenuStrip.Height
+        GroupBox1.Left = (ActiveForm.Width - GroupBox1.Width) / 2
+
+        GroupBox2.Top = GroupBox1.Top + GroupBox1.Height
+        GroupBox2.Left = (ActiveForm.Width - GroupBox2.Width) / 2
+
+        If GroupBox3.Name = GroupBox1.Name Then Exit Sub
+        GroupBox3.Top = GroupBox2.Top + GroupBox2.Height
+        GroupBox3.Left = (ActiveForm.Width - GroupBox3.Width) / 2
+
+        If GroupBox4.Name = GroupBox1.Name Then Exit Sub
+        GroupBox4.Top = GroupBox3.Top + GroupBox3.Height
+        GroupBox4.Left = (ActiveForm.Width - GroupBox4.Width) / 2
+
+    End Sub
+    Public Sub VerticalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
+        ObjectToCenter.top = (FormToCenterIn.height - ObjectToCenter.height) / 2
+    End Sub
+    Public Sub HorizontalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
+        ObjectToCenter.left = (FormToCenterIn.width - ObjectToCenter.width) / 2
+    End Sub
+    Public Sub JustExecuteMySelection()
+        If NoRecordFound() Then Exit Sub
+    End Sub
+    Public Sub EnAbleAccess(MenuOption As ToolStripMenuItem)
+        MenuOption.Enabled = True
+    End Sub
+    Public Sub SetThisMenuVisible(MenuOption As Object)
+        MenuOption.Visible = True
+    End Sub
+    Public Sub DisAbleAccess(MenuOption As ToolStripMenuItem)
+        MenuOption.Enabled = False
+    End Sub
+    Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, Optional RecordFilter As String = "")
+        MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
+        JustExecuteMySelection()
+        If RecordCount = 0 Then
+            MsgBox("Unable to Update Table " & TableToUpdate & " FILTER: " & RecordFilter)
+            Exit Sub
+        End If
+        MySelection = " UPDATE " & TableToUpdate & Space(1) & SetCommand & Space(1) & RecordFilter
+        JustExecuteMySelection()
+    End Sub
+    Public Sub UpdateThisTable(TableToUpdate As String, FieldToCompare As String, DataToCompare As String, FieldToUpdate As String, ReplacementData As String)
+
+
+        RecordFinderDbControls.AddParam("@DataToCompare", Val(DataToCompare))
+        RecordFinderDbControls.AddParam("@ReplacementData", ReplacementData)
+
+
+        MySelection = " UPDATE " & TableToUpdate &
+                      " SET " & FieldToUpdate & " = " & Chr(34) & ReplacementData & Chr(34) &
+                      " WHERE " & FieldToCompare & " = @DataToCompare"
+
+        If NoRecordFound() Then Dim dummy = 1
+
+        RecordFinderDbControls.AddParam("@DataToCompare", Val(DataToCompare))
+        RecordFinderDbControls.AddParam("@ReplacementData", ReplacementData)
+
+
+        MySelection = "select * from  " & TableToUpdate &
+                      " WHERE " & FieldToCompare & " = @DataToCompare"
+
+        If NoRecordFound() Then
+            Exit Sub
+        End If
+        Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
+        Dim xxx = r(FieldToUpdate)
+    End Sub
+    Public Sub SetParentRecordReference(ParentTableName, ParentFieldName, FieldValue)
+
+        If TypeName(FieldValue) = "String" Then
+            FieldValue = Chr(34) & FieldValue & Chr(34)
+        Else
+            FieldValue = FieldValue.ToString()
+        End If
+
+        MySelection = "SELECT * " &
+                      " FROM " & ParentTableName &
+                      " WHERE " & ParentFieldName & " = " & FieldValue
+
+        JustExecuteMySelection()
+    End Sub
     Public Sub RevertCurrentStatusOf(PassedTable As String, PassedCurrentStatusSequence As Integer, CurrentRecordID As Integer)
         If PassedCurrentStatusSequence = 0 Then Exit Sub
         MySelection = " Select top 1 * From TableNamesTable Where TableName_ShortText60 = " & InQuotes(PassedTable)
@@ -527,8 +535,8 @@
                 PassedRecordCount = 1
             End If
             RecordsToDisplay = PassedRecordCount
-            End If
-            Dim TotalRowsHeight = 0
+        End If
+        Dim TotalRowsHeight = 0
         TotalRowsHeight = RecordsToDisplay * DataGridViewRowHeight
         PassedGroupBox.Height = (PassedDataGridView.ColumnHeadersHeight) + TotalRowsHeight + 44
     End Sub
@@ -571,16 +579,4 @@
         End If
 
     End Sub
-    Public Function LinkExistsIn(TablesToCheck As Array, FieldName As String, LinkKey As Integer)
-
-        For Each item As String In TablesToCheck
-            MySelection = " Select TOP 1 * FROM " & item & " Where " & FieldName & " = " & LinkKey.ToString
-            JustExecuteMySelection()
-            If RecordCount > 0 Then
-                MsgBox("link exist in " & item)
-                Return True
-            End If
-        Next
-        Return False
-    End Function
 End Module
