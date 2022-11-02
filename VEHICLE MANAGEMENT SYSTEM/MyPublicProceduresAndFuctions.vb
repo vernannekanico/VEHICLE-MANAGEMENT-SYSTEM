@@ -161,6 +161,11 @@
             End If
         End If
     End Function
+    Public Function NotTheSame(Variable1, variable2)
+        If IsEmpty(Variable1) And IsEmpty(variable2) Then Return False
+        If Variable1 = variable2 Then Return False
+        Return True
+    End Function
     Public Function InsertNewRecord(SubjectTable As String, FieldsToUpdate As String, FieldsData As String)
 
         MySelection = " SELECT * FROM " & SubjectTable

@@ -25,7 +25,13 @@ Partial Class StockLocationsForm
         Me.StocksLocationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.StocksLocationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.StockLocationDetailsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.SubStorageTypeCodeTextBoxTextBox = New System.Windows.Forms.TextBox()
+        Me.IncrementSubStorageTypeCodeButton = New System.Windows.Forms.Button()
+        Me.IncrementMainStorageTypeCodeButton = New System.Windows.Forms.Button()
+        Me.IncrementStorageLocationButton = New System.Windows.Forms.Button()
+        Me.SubStorageTypeCodeSuffixTextBox = New System.Windows.Forms.TextBox()
+        Me.MainStorageTypeCodeSuffixTextBox = New System.Windows.Forms.TextBox()
+        Me.StorageLocationCodeSuffixTextBox = New System.Windows.Forms.TextBox()
+        Me.SubStorageTypeCodeTextBox = New System.Windows.Forms.TextBox()
         Me.MainStorageTypeCodeTextBox = New System.Windows.Forms.TextBox()
         Me.StorageLocationCodeTextBox = New System.Windows.Forms.TextBox()
         Me.StorageLocationTextBox = New System.Windows.Forms.TextBox()
@@ -46,6 +52,7 @@ Partial Class StockLocationsForm
         Me.ActiveDGViewToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AnotherToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -104,7 +111,13 @@ Partial Class StockLocationsForm
         '
         Me.StockLocationDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StockLocationDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.StockLocationDetailsGroupBox.Controls.Add(Me.SubStorageTypeCodeTextBoxTextBox)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.IncrementSubStorageTypeCodeButton)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.IncrementMainStorageTypeCodeButton)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.IncrementStorageLocationButton)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.SubStorageTypeCodeSuffixTextBox)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.MainStorageTypeCodeSuffixTextBox)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.StorageLocationCodeSuffixTextBox)
+        Me.StockLocationDetailsGroupBox.Controls.Add(Me.SubStorageTypeCodeTextBox)
         Me.StockLocationDetailsGroupBox.Controls.Add(Me.MainStorageTypeCodeTextBox)
         Me.StockLocationDetailsGroupBox.Controls.Add(Me.StorageLocationCodeTextBox)
         Me.StockLocationDetailsGroupBox.Controls.Add(Me.StorageLocationTextBox)
@@ -120,20 +133,80 @@ Partial Class StockLocationsForm
         Me.StockLocationDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.StockLocationDetailsGroupBox.Location = New System.Drawing.Point(341, 287)
         Me.StockLocationDetailsGroupBox.Name = "StockLocationDetailsGroupBox"
-        Me.StockLocationDetailsGroupBox.Size = New System.Drawing.Size(563, 214)
+        Me.StockLocationDetailsGroupBox.Size = New System.Drawing.Size(651, 214)
         Me.StockLocationDetailsGroupBox.TabIndex = 86
         Me.StockLocationDetailsGroupBox.TabStop = False
         Me.StockLocationDetailsGroupBox.Text = "Stock Location Details"
         Me.StockLocationDetailsGroupBox.Visible = False
         '
-        'SubStorageTypeCodeTextBoxTextBox
+        'IncrementSubStorageTypeCodeButton
         '
-        Me.SubStorageTypeCodeTextBoxTextBox.Enabled = False
-        Me.SubStorageTypeCodeTextBoxTextBox.Location = New System.Drawing.Point(183, 96)
-        Me.SubStorageTypeCodeTextBoxTextBox.Name = "SubStorageTypeCodeTextBoxTextBox"
-        Me.SubStorageTypeCodeTextBoxTextBox.ReadOnly = True
-        Me.SubStorageTypeCodeTextBoxTextBox.Size = New System.Drawing.Size(27, 26)
-        Me.SubStorageTypeCodeTextBoxTextBox.TabIndex = 84
+        Me.IncrementSubStorageTypeCodeButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.IncrementSubStorageTypeCodeButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.IncrementSubStorageTypeCodeButton.Location = New System.Drawing.Point(576, 93)
+        Me.IncrementSubStorageTypeCodeButton.Name = "IncrementSubStorageTypeCodeButton"
+        Me.IncrementSubStorageTypeCodeButton.Size = New System.Drawing.Size(34, 30)
+        Me.IncrementSubStorageTypeCodeButton.TabIndex = 90
+        Me.IncrementSubStorageTypeCodeButton.Text = "+"
+        Me.IncrementSubStorageTypeCodeButton.UseVisualStyleBackColor = True
+        '
+        'IncrementMainStorageTypeCodeButton
+        '
+        Me.IncrementMainStorageTypeCodeButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.IncrementMainStorageTypeCodeButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.IncrementMainStorageTypeCodeButton.Location = New System.Drawing.Point(576, 61)
+        Me.IncrementMainStorageTypeCodeButton.Name = "IncrementMainStorageTypeCodeButton"
+        Me.IncrementMainStorageTypeCodeButton.Size = New System.Drawing.Size(34, 30)
+        Me.IncrementMainStorageTypeCodeButton.TabIndex = 89
+        Me.IncrementMainStorageTypeCodeButton.Text = "+"
+        Me.IncrementMainStorageTypeCodeButton.UseVisualStyleBackColor = True
+        '
+        'IncrementStorageLocationButton
+        '
+        Me.IncrementStorageLocationButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.IncrementStorageLocationButton.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.IncrementStorageLocationButton.Location = New System.Drawing.Point(576, 24)
+        Me.IncrementStorageLocationButton.Name = "IncrementStorageLocationButton"
+        Me.IncrementStorageLocationButton.Size = New System.Drawing.Size(34, 30)
+        Me.IncrementStorageLocationButton.TabIndex = 88
+        Me.IncrementStorageLocationButton.Text = "+"
+        Me.IncrementStorageLocationButton.UseVisualStyleBackColor = True
+        '
+        'SubStorageTypeCodeSuffixTextBox
+        '
+        Me.SubStorageTypeCodeSuffixTextBox.Enabled = False
+        Me.SubStorageTypeCodeSuffixTextBox.Location = New System.Drawing.Point(213, 96)
+        Me.SubStorageTypeCodeSuffixTextBox.Name = "SubStorageTypeCodeSuffixTextBox"
+        Me.SubStorageTypeCodeSuffixTextBox.ReadOnly = True
+        Me.SubStorageTypeCodeSuffixTextBox.Size = New System.Drawing.Size(19, 26)
+        Me.SubStorageTypeCodeSuffixTextBox.TabIndex = 87
+        '
+        'MainStorageTypeCodeSuffixTextBox
+        '
+        Me.MainStorageTypeCodeSuffixTextBox.Enabled = False
+        Me.MainStorageTypeCodeSuffixTextBox.Location = New System.Drawing.Point(213, 61)
+        Me.MainStorageTypeCodeSuffixTextBox.Name = "MainStorageTypeCodeSuffixTextBox"
+        Me.MainStorageTypeCodeSuffixTextBox.ReadOnly = True
+        Me.MainStorageTypeCodeSuffixTextBox.Size = New System.Drawing.Size(19, 26)
+        Me.MainStorageTypeCodeSuffixTextBox.TabIndex = 86
+        '
+        'StorageLocationCodeSuffixTextBox
+        '
+        Me.StorageLocationCodeSuffixTextBox.Enabled = False
+        Me.StorageLocationCodeSuffixTextBox.Location = New System.Drawing.Point(213, 24)
+        Me.StorageLocationCodeSuffixTextBox.Name = "StorageLocationCodeSuffixTextBox"
+        Me.StorageLocationCodeSuffixTextBox.ReadOnly = True
+        Me.StorageLocationCodeSuffixTextBox.Size = New System.Drawing.Size(19, 26)
+        Me.StorageLocationCodeSuffixTextBox.TabIndex = 85
+        '
+        'SubStorageTypeCodeTextBox
+        '
+        Me.SubStorageTypeCodeTextBox.Enabled = False
+        Me.SubStorageTypeCodeTextBox.Location = New System.Drawing.Point(183, 96)
+        Me.SubStorageTypeCodeTextBox.Name = "SubStorageTypeCodeTextBox"
+        Me.SubStorageTypeCodeTextBox.ReadOnly = True
+        Me.SubStorageTypeCodeTextBox.Size = New System.Drawing.Size(27, 26)
+        Me.SubStorageTypeCodeTextBox.TabIndex = 84
         '
         'MainStorageTypeCodeTextBox
         '
@@ -155,7 +228,7 @@ Partial Class StockLocationsForm
         '
         'StorageLocationTextBox
         '
-        Me.StorageLocationTextBox.Location = New System.Drawing.Point(217, 24)
+        Me.StorageLocationTextBox.Location = New System.Drawing.Point(239, 24)
         Me.StorageLocationTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.StorageLocationTextBox.Name = "StorageLocationTextBox"
         Me.StorageLocationTextBox.ReadOnly = True
@@ -173,29 +246,29 @@ Partial Class StockLocationsForm
         '
         'SubStorageTypeTextBox
         '
-        Me.SubStorageTypeTextBox.Location = New System.Drawing.Point(217, 96)
+        Me.SubStorageTypeTextBox.Location = New System.Drawing.Point(239, 96)
         Me.SubStorageTypeTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.SubStorageTypeTextBox.Name = "SubStorageTypeTextBox"
         Me.SubStorageTypeTextBox.ReadOnly = True
-        Me.SubStorageTypeTextBox.Size = New System.Drawing.Size(245, 26)
+        Me.SubStorageTypeTextBox.Size = New System.Drawing.Size(330, 26)
         Me.SubStorageTypeTextBox.TabIndex = 76
         '
         'BayTextBox
         '
         Me.BayTextBox.Enabled = False
-        Me.BayTextBox.Location = New System.Drawing.Point(217, 132)
+        Me.BayTextBox.Location = New System.Drawing.Point(183, 132)
         Me.BayTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.BayTextBox.Name = "BayTextBox"
-        Me.BayTextBox.Size = New System.Drawing.Size(245, 26)
+        Me.BayTextBox.Size = New System.Drawing.Size(28, 26)
         Me.BayTextBox.TabIndex = 75
         '
         'LevelTextBox
         '
         Me.LevelTextBox.Enabled = False
-        Me.LevelTextBox.Location = New System.Drawing.Point(217, 165)
+        Me.LevelTextBox.Location = New System.Drawing.Point(183, 165)
         Me.LevelTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.LevelTextBox.Name = "LevelTextBox"
-        Me.LevelTextBox.Size = New System.Drawing.Size(245, 26)
+        Me.LevelTextBox.Size = New System.Drawing.Size(28, 26)
         Me.LevelTextBox.TabIndex = 74
         '
         'Label11
@@ -228,7 +301,7 @@ Partial Class StockLocationsForm
         '
         'MainStorageTypeTextBox
         '
-        Me.MainStorageTypeTextBox.Location = New System.Drawing.Point(217, 60)
+        Me.MainStorageTypeTextBox.Location = New System.Drawing.Point(239, 60)
         Me.MainStorageTypeTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MainStorageTypeTextBox.Name = "MainStorageTypeTextBox"
         Me.MainStorageTypeTextBox.ReadOnly = True
@@ -271,7 +344,7 @@ Partial Class StockLocationsForm
         'StocksLocationsMainMenuStrip
         '
         Me.StocksLocationsMainMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StocksLocationsMainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ActiveDGViewToolStripTextBox, Me.SelectToolStripMenuItem, Me.NewToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveToolStripMenuItem})
+        Me.StocksLocationsMainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ActiveDGViewToolStripTextBox, Me.SelectToolStripMenuItem, Me.NewToolStripMenuItem, Me.AnotherToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveToolStripMenuItem})
         Me.StocksLocationsMainMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.StocksLocationsMainMenuStrip.Name = "StocksLocationsMainMenuStrip"
         Me.StocksLocationsMainMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -303,6 +376,12 @@ Partial Class StockLocationsForm
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
         Me.NewToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
         Me.NewToolStripMenuItem.Text = "New"
+        '
+        'AnotherToolStripMenuItem
+        '
+        Me.AnotherToolStripMenuItem.Name = "AnotherToolStripMenuItem"
+        Me.AnotherToolStripMenuItem.Size = New System.Drawing.Size(78, 25)
+        Me.AnotherToolStripMenuItem.Text = "Another"
         '
         'EditToolStripMenuItem
         '
@@ -500,9 +579,16 @@ Partial Class StockLocationsForm
     Friend WithEvents Label4 As Label
     Friend WithEvents DescriptionCodeTextBox As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents SubStorageTypeCodeTextBoxTextBox As TextBox
+    Friend WithEvents SubStorageTypeCodeTextBox As TextBox
     Friend WithEvents MainStorageTypeCodeTextBox As TextBox
     Friend WithEvents StorageLocationCodeTextBox As TextBox
     Friend WithEvents StorageTypesGroupBox As GroupBox
     Friend WithEvents StorageTypesDataGridView As DataGridView
+    Friend WithEvents SubStorageTypeCodeSuffixTextBox As TextBox
+    Friend WithEvents MainStorageTypeCodeSuffixTextBox As TextBox
+    Friend WithEvents StorageLocationCodeSuffixTextBox As TextBox
+    Friend WithEvents IncrementSubStorageTypeCodeButton As Button
+    Friend WithEvents IncrementMainStorageTypeCodeButton As Button
+    Friend WithEvents IncrementStorageLocationButton As Button
+    Friend WithEvents AnotherToolStripMenuItem As ToolStripMenuItem
 End Class
