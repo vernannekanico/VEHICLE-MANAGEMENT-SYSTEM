@@ -163,6 +163,8 @@
     End Function
     Public Function NotTheSame(Variable1, variable2)
         If IsEmpty(Variable1) And IsEmpty(variable2) Then Return False
+        If IsEmpty(Variable1) Then Return True
+        If IsEmpty(variable2) Then Return True
         If Variable1 = variable2 Then Return False
         Return True
     End Function
