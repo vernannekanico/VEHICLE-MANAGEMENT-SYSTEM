@@ -228,8 +228,7 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
     End Sub
 
     Private Sub DeliveriesStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeliveriesStripMenuItem.Click
-        ShowCalledForm(Me, StockLocationsForm)
-        '        ShowCalledForm(Me, DeliveriesForm)
+        ShowCalledForm(Me, DeliveriesForm)
     End Sub
 
     Private Sub UpdateStatusTablesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateStatusTablesToolStripMenuItem.Click

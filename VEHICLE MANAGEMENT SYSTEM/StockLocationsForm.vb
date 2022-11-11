@@ -262,6 +262,11 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
     End Function
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Select Case ActiveDGViewToolStripTextBox.Text
+            Case "Stocks Location"
+                Tunnel1 = "CurrentStocksLocationCode"
+                Tunnel2 = -1
+                Tunnel3 = CurrentStocksLocationCode_ShortText11
+                DoCommonHouseKeeping(Me, SavedCallingForm)
             Case "Storage Location"
                 FillField(StorageLocationTextBox.Text, StoragesLocationsDataGridView.Item("StoragesLocation_ShortText200", CurrentStoragesLocationsRow).Value)
                 FillField(StorageLocationCodeTextBox.Text, StoragesLocationsDataGridView.Item("StoragesLocationCode_ShortText2", CurrentStoragesLocationsRow).Value)

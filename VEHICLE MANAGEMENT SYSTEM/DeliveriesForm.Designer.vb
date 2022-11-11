@@ -22,12 +22,12 @@ Partial Class DeliveriesForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DeliveriesMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveryHeaderToolStripMenus = New System.Windows.Forms.ToolStripMenuItem()
@@ -37,7 +37,7 @@ Partial Class DeliveriesForm
         Me.NewDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveDeliveryHeaderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FinalizeDeliveryEntryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveryItemsToolStripMenus = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddDeliveryItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -45,6 +45,7 @@ Partial Class DeliveriesForm
         Me.FromPurchaseOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OrderDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveryHeaderDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.POReferenceTextBox = New System.Windows.Forms.TextBox()
@@ -72,7 +73,6 @@ Partial Class DeliveriesForm
         Me.Label7 = New System.Windows.Forms.Label()
         Me.BrandTextBox = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.OrderDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveriesMenuStrip.SuspendLayout()
         Me.DeliveryHeaderDetailsGroupBox.SuspendLayout()
         Me.DeliveryItemsGroupBox.SuspendLayout()
@@ -86,7 +86,7 @@ Partial Class DeliveriesForm
         '
         Me.DeliveriesMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveriesMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveDeliveryToolStripMenuItem, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem, Me.OrderDetailsToolStripMenuItem})
+        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.SaveDeliveryHeaderToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem, Me.OrderDetailsToolStripMenuItem})
         Me.DeliveriesMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.DeliveriesMenuStrip.Name = "DeliveriesMenuStrip"
         Me.DeliveriesMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -145,12 +145,12 @@ Partial Class DeliveriesForm
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
-        'SaveDeliveryToolStripMenuItem
+        'SaveDeliveryHeaderToolStripMenuItem
         '
-        Me.SaveDeliveryToolStripMenuItem.Name = "SaveDeliveryToolStripMenuItem"
-        Me.SaveDeliveryToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
-        Me.SaveDeliveryToolStripMenuItem.Text = "Save"
-        Me.SaveDeliveryToolStripMenuItem.Visible = False
+        Me.SaveDeliveryHeaderToolStripMenuItem.Name = "SaveDeliveryHeaderToolStripMenuItem"
+        Me.SaveDeliveryHeaderToolStripMenuItem.Size = New System.Drawing.Size(170, 25)
+        Me.SaveDeliveryHeaderToolStripMenuItem.Text = "Save Delivery Header"
+        Me.SaveDeliveryHeaderToolStripMenuItem.Visible = False
         '
         'FinalizeDeliveryEntryToolStripMenuItem
         '
@@ -197,6 +197,12 @@ Partial Class DeliveriesForm
         Me.RemoveDeliveryItemToolStripMenuItem.Name = "RemoveDeliveryItemToolStripMenuItem"
         Me.RemoveDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveDeliveryItemToolStripMenuItem.Text = "Remove"
+        '
+        'OrderDetailsToolStripMenuItem
+        '
+        Me.OrderDetailsToolStripMenuItem.Name = "OrderDetailsToolStripMenuItem"
+        Me.OrderDetailsToolStripMenuItem.Size = New System.Drawing.Size(114, 25)
+        Me.OrderDetailsToolStripMenuItem.Text = "Order Details"
         '
         'DeliveryHeaderDetailsGroupBox
         '
@@ -307,27 +313,27 @@ Partial Class DeliveriesForm
         Me.DeliveryItemsDataGridView.AllowUserToDeleteRows = False
         Me.DeliveryItemsDataGridView.AllowUserToOrderColumns = True
         Me.DeliveryItemsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DeliveryItemsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DeliveryItemsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DeliveryItemsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveryItemsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DeliveryItemsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DeliveryItemsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.DeliveryItemsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DeliveryItemsDataGridView.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DeliveryItemsDataGridView.DefaultCellStyle = DataGridViewCellStyle3
         Me.DeliveryItemsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DeliveryItemsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveryItemsDataGridView.Location = New System.Drawing.Point(3, 22)
@@ -357,27 +363,27 @@ Partial Class DeliveriesForm
         Me.DeliveriesDataGridView.AllowUserToDeleteRows = False
         Me.DeliveriesDataGridView.AllowUserToOrderColumns = True
         Me.DeliveriesDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.DeliveriesDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.DeliveriesDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.DeliveriesDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveriesDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DeliveriesDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DeliveriesDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.DeliveriesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DeliveriesDataGridView.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DeliveriesDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.DeliveriesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DeliveriesDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.DeliveriesDataGridView.Location = New System.Drawing.Point(3, 22)
@@ -536,12 +542,6 @@ Partial Class DeliveriesForm
         Me.Label16.TabIndex = 105
         Me.Label16.Text = "Quantity"
         '
-        'OrderDetailsToolStripMenuItem
-        '
-        Me.OrderDetailsToolStripMenuItem.Name = "OrderDetailsToolStripMenuItem"
-        Me.OrderDetailsToolStripMenuItem.Size = New System.Drawing.Size(114, 25)
-        Me.OrderDetailsToolStripMenuItem.Text = "Order Details"
-        '
         'DeliveriesForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -578,7 +578,7 @@ Partial Class DeliveriesForm
     Friend WithEvents NewDeliveryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteDeliveryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents SaveDeliveryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveDeliveryHeaderToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FinalizeDeliveryEntryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeliveryItemsToolStripMenus As ToolStripMenuItem
     Friend WithEvents AddDeliveryItemsToolStripMenuItem As ToolStripMenuItem

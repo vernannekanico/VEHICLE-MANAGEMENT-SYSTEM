@@ -17,6 +17,7 @@
     Private CurrentDeliveryItemsDataGridViewRow As Integer = -1
     Private DeliveryItemsDataGridViewAlreadyFormated = False
 
+    Private CurrentStocksLocationCode = ""
     Private SavedProductPartID = -1
     Private CurrentProductPartID = -1
     Private PurposeOfEntry = ""
@@ -70,6 +71,9 @@
         Select Case Tunnel1
             Case "Tunnel2IsProductPartID"
                 CurrentProductPartID = Tunnel2
+            Case "CurrentStocksLocationCode"
+                CurrentStocksLocationCode = Tunnel3
+                MsgBox("Please put this delivery on location " & CurrentStocksLocationCode)
         End Select
 
         ' GET RETURNED DATA HERE
@@ -306,7 +310,7 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         EditDeliveryItemToolStripMenuItem.Visible = True
         RemoveDeliveryItemToolStripMenuItem.Visible = True
         NewDeliveryToolStripMenuItem.Visible = False
-        SaveDeliveryToolStripMenuItem.Visible = True
+        SaveDeliveryHeaderToolStripMenuItem.Visible = True
         DeleteDeliveryToolStripMenuItem.Visible = False
     End Sub
     Private Sub DisableDeliveryItemMenus()
@@ -315,7 +319,7 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         EditDeliveryItemToolStripMenuItem.Visible = False
         RemoveDeliveryItemToolStripMenuItem.Visible = False
         NewDeliveryToolStripMenuItem.Visible = True
-        SaveDeliveryToolStripMenuItem.Visible = False
+        SaveDeliveryHeaderToolStripMenuItem.Visible = False
         DeleteDeliveryToolStripMenuItem.Visible = False
     End Sub
 
@@ -342,7 +346,7 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         DeliveryNoteNoTextBox.Text = ""
         DeliveriesGroupBox.Enabled = False
         DeliveryHeaderDetailsGroupBox.Visible = True
-        SaveDeliveryToolStripMenuItem.Visible = True
+        SaveDeliveryHeaderToolStripMenuItem.Visible = True
 
     End Sub
 
@@ -354,12 +358,6 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
                 DeliveryNoteNoTextBox.Select()
                 Exit Sub
             End If
-        End If
-        If IsNotEmpty(
-            DeliveryItemsDataGridView.Item("WorkOrderPartID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value
-            ) Then
-            ShowCalledForm(Me, StockLocationsForm)
-
         End If
         For i = 0 To DeliveryItemsRecordCount - 1
             If IsEmpty(DeliveryItemsDataGridView.Item("DeliveredQty_Double", i).Value) Then
@@ -377,7 +375,14 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
                               "SET DeliveryStatusID_LongInteger = " & GetStatusIdFor("DeliveriesTable", "Processed").ToString &
                               " WHERE DeliveryID_AutoNumber = " & CurrentDeliveryID.ToString
         JustExecuteMySelection()
+        Dim PurchaseRequestType = ""
 
+        If IsNotEmpty(
+            DeliveryItemsDataGridView.Item("WorkOrderPartID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value
+            ) Then
+            'GET LOCATION FOR TEMPORARY STORAGE
+            PurchaseRequestType = "Work Order Parts"
+        End If
 
         ' UPDATE DELIVERY ITEMS,        ' UPDATE stocks quantity
         For i = 0 To DeliveryItemsRecordCount - 1
@@ -389,11 +394,18 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
             Dim CurrentProductID = DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ProductsPartID_Autonumber", i).Value
             Dim xxDeliveredQuantity = DeliveryItemsDataGridView.Item("DeliveredQty_Double", i).Value
 
-            MySelection = " UPDATE StocksTable  " &
+            'nOTE only store stocks should be registered in the stockstable
+
+            If Not PurchaseRequestType = "Work Order Parts" Then
+
+                MySelection = " UPDATE StocksTable  " &
                               " SET QuantityInStock_Double = QuantityInStock_Double + " & xxDeliveredQuantity &
                               " WHERE ProductPartID_LongInteger = " & CurrentProductID
-            JustExecuteMySelection()
+                JustExecuteMySelection()
+            End If
+
             'UPDATE ProductsPartTable AND MARK FIELD Selected true
+            'THIS IS USED FOR THE TIME BEING
             UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductID)
 
         Next
@@ -401,6 +413,9 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
 
         DeliveriesSelectionFilter = ""
         FillDeliveriesDataGridView()
+        ShowCalledForm(Me, StockLocationsForm)
+        MsgBox("Select where to stock delivered parts")
+
     End Sub
 
 
@@ -536,10 +551,11 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         End If
     End Function
 
-    Private Sub SaveDeliveryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveDeliveryToolStripMenuItem.Click
+    Private Sub SaveDeliveryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveDeliveryHeaderToolStripMenuItem.Click
         If MsgBox("Proceed Saving this Delivery Header ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         StatusCodeUpdate = 0
         UpdateDeliveryHeader()
+        SaveDeliveryHeaderToolStripMenuItem.Visible = False
         FillDeliveriesDataGridView()
     End Sub
     Private Sub UpdateDeliveryHeader()
