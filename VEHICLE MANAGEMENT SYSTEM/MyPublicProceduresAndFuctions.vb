@@ -109,7 +109,7 @@
 
         Return NewWorkOrderID
     End Function
-    Public Function TheseAreNotEqual(PassedVariable1 As Object, PassedVariable2 As Object, PurposeOfEntry As String)
+    Public Function TheseAreNotEqual(PassedVariable1 As Object, PassedVariable2 As Object)
         If IsEmpty(PassedVariable2) And IsEmpty(PassedVariable1) Is Nothing Then Return False
         If PassedVariable2 Is Nothing And Not PassedVariable1 Is Nothing Then Return True
         If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return True
@@ -429,7 +429,6 @@
                       " SET " & FieldToUpdate & " = " & Chr(34) & ReplacementData & Chr(34) &
                       " WHERE " & FieldToCompare & " = @DataToCompare"
 
-        If NoRecordFound() Then Dim dummy = 1
 
         RecordFinderDbControls.AddParam("@DataToCompare", Val(DataToCompare))
         RecordFinderDbControls.AddParam("@ReplacementData", ReplacementData)

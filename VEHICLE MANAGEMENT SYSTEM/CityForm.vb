@@ -501,10 +501,10 @@ Public Class CityForm
     End Function
 
     Private Function AChangeOccured()
-        If TheseAreNotEqual(CityTextBox.Text, CityDataGridView.Item("LastName_ShortText30", CurrentCityDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(StateProvTextBox.Text, CityDataGridView.Item("FirstName_ShortText30", CurrentCityDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(ZipCodeMaskedTextBox.Text, CityDataGridView.Item("NamePrefix_ShortText3", CurrentCityDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(CountryTextBox.Text, CityDataGridView.Item("NickName_ShortText15", CurrentCityDataGridViewRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(CityTextBox.Text, CityDataGridView.Item("LastName_ShortText30", CurrentCityDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(StateProvTextBox.Text, CityDataGridView.Item("FirstName_ShortText30", CurrentCityDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(ZipCodeMaskedTextBox.Text, CityDataGridView.Item("NamePrefix_ShortText3", CurrentCityDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(CountryTextBox.Text, CityDataGridView.Item("NickName_ShortText15", CurrentCityDataGridViewRow).Value) Then Return True
         Return False
     End Function
 

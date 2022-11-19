@@ -556,12 +556,12 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     End Sub
     Private Function AChangeOccuredInPOEdit()
 
-        If TheseAreNotEqual(CurrentSupplierID, NotNull(PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PurchaseOrderDate.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(Val(POLumpSumDiscountTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("Discount_Integer", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(Val(POTaxAmountTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(Val(POTotalTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(CurrentSupplierID, NotNull(PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(PurchaseOrderDate.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(Val(POLumpSumDiscountTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("Discount_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(Val(POTaxAmountTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(Val(POTotalTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
         Return False
 
     End Function
@@ -653,11 +653,11 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
 
 
 
-        If TheseAreNotEqual(SupplierNameTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("SupplierName_ShortText35", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(xxxPurchaseOrderDate, NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POTaxAmountTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POTotalTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POLumpSumDiscountTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("Discount_Integer", CurrentPurchaseOrdersDataGridViewRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(SupplierNameTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("SupplierName_ShortText35", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(xxxPurchaseOrderDate, NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POTaxAmountTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POTotalTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POLumpSumDiscountTextBox.Text, NotNull(PurchaseOrdersDataGridView.Item("Discount_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
 
 
         Return False
@@ -953,19 +953,19 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     End Sub
     Private Function AChangeOccured()
 
-        If TheseAreNotEqual(SavedProductPartID, CurrentProductPartId, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemNoTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("POItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemPriceTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("Price_Currency", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemProductPartNoTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(SavedProductPartID, CurrentProductPartId) Then Return True
+        If TheseAreNotEqual(POItemNoTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("POItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POItemPriceTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("Price_Currency", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POItemProductPartNoTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
         Return False
     End Function
     Private Function ChangesInPackagePricesOccured()
         ' there is a package price but there is no Package Price linked
         If Val(PackagePriceTextBox.Text) > 0 And CurrentPackagePriceID = -1 Then Return True
-        If TheseAreNotEqual(PackagePriceTextBox.Text, PurchaseOrdersItemsDataGridView.Item("PackagePrice_Double", CurrentPurchaseOrdersItemsDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PackagePriceLastItemTextBox.Text, PurchaseOrdersItemsDataGridView.Item("LastItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(PackagePriceTextBox.Text, PurchaseOrdersItemsDataGridView.Item("PackagePrice_Double", CurrentPurchaseOrdersItemsDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(PackagePriceLastItemTextBox.Text, PurchaseOrdersItemsDataGridView.Item("LastItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value) Then Return True
         Return False
     End Function
     Private Sub CopyProductButton_Click(sender As Object, e As EventArgs) Handles CopyProductButton.Click
@@ -1045,7 +1045,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         '*******************************************************
         ' CHECK THIS THE TheseAreNotEqual ROUTINE WAS MODIFIED, WATCH PARAMETER pURPOSEOFENTRY
 
-        If TheseAreNotEqual(RequisitionItemUnitTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.Unit_ShortText3", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then
+        If TheseAreNotEqual(RequisitionItemUnitTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.Unit_ShortText3", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then
 
         End If
 

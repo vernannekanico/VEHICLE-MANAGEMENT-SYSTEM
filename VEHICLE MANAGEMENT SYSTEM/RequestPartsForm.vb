@@ -667,10 +667,10 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
 
         '*******************************************************
         If WorkOrderRequestedPartsRecordCount < 1 And IsNotEmpty(ProductTextBox.Text) Then Return True ' NO REQUESTED PART YET
-        If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(RequestedUnitTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedUnit_ShortText3", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PartNumberTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderRequestedPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedQuantity_Double", CurrentWorkOrderRequestedPartsRow).Value) Then Return True
+        If TheseAreNotEqual(RequestedUnitTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("RequestedUnit_ShortText3", CurrentWorkOrderRequestedPartsRow).Value) Then Return True
+        If TheseAreNotEqual(ProductTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderRequestedPartsRow).Value) Then Return True
+        If TheseAreNotEqual(PartNumberTextBox.Text, WorkOrderRequestedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderRequestedPartsRow).Value) Then Return True
         Return False
     End Function
     Private Function AChangeInWorkOrderPartsOccured()
@@ -682,7 +682,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
             Return False
         Else
             If CurrentWorkOrderPartsRow > -1 Then
-                If TheseAreNotEqual(PartDescriptionTextBox.Text, WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentWorkOrderPartsRow).Value, PurposeOfEntry) Then Return True
+                If TheseAreNotEqual(PartDescriptionTextBox.Text, WorkOrderPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentWorkOrderPartsRow).Value) Then Return True
             Else
                 If IsNotEmpty(PartDescriptionTextBox.Text) Then Return True
             End If
@@ -690,20 +690,20 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         Return False
     End Function
     Private Function AChangeInOrderedProductOccured()
-        If TheseAreNotEqual(ProductTextBox.Text, WorkOrderPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderPartsRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PartNumberTextBox.Text, WorkOrderPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(ProductTextBox.Text, WorkOrderPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentWorkOrderPartsRow).Value) Then Return True
+        If TheseAreNotEqual(PartNumberTextBox.Text, WorkOrderPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentWorkOrderPartsRow).Value) Then Return True
         If SubmitRequestForPartsToolStripMenuItem.Visible Then
-            If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderPartsDataGridView.Item("Quantity_Integer", CurrentWorkOrderPartsRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(RequestedQuantityTextBox.Text, WorkOrderPartsDataGridView.Item("Quantity_Integer", CurrentWorkOrderPartsRow).Value) Then Return True
         Else
-            If TheseAreNotEqual(CustomerSuppliedQuantityTextBox.Text, WorkOrderPartsDataGridView.Item("Quantity_Integer", CurrentWorkOrderPartsRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(CustomerSuppliedQuantityTextBox.Text, WorkOrderPartsDataGridView.Item("Quantity_Integer", CurrentWorkOrderPartsRow).Value) Then Return True
         End If
         Return False
     End Function
     Private Function AChangeInCustomerSuppliedPartsOccured()
         If CustomerSuppliedPartsRecordCount < 1 Then Return True 'NEWLY INSERTED CUSTOMER SUPPLIED PART
-        If TheseAreNotEqual(ProductTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentCustomerSuppliedPartsRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(CustomerSuppliedQuantityTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("ReceivedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(CustomerSuppliedUnitTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("Unit_ShortText3", CurrentWorkOrderPartsRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(ProductTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentCustomerSuppliedPartsRow).Value)) Then Return True
+        If TheseAreNotEqual(CustomerSuppliedQuantityTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("ReceivedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value)) Then Return True
+        If TheseAreNotEqual(CustomerSuppliedUnitTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("Unit_ShortText3", CurrentWorkOrderPartsRow).Value)) Then Return True
         Return False
     End Function
     Private Sub RegisterSpecificationsChanges()

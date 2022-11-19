@@ -508,9 +508,9 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
     Private Function AChangeInStocksDetails()
 
         If IsEmpty(CurrentStocksID) Then Return True
-        If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value) Then Return True
+        If TheseAreNotEqual(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value) Then Return True
+        If TheseAreNotEqual(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value) Then Return True
         Return False
     End Function
     Private Sub RegisterStocksDetailsChanges()
@@ -561,12 +561,12 @@ FROM ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Product
     Private Function AChangeInProductDetails()
 
         If CurrentProductsPartsRow > -1 Then
-            If TheseAreNotEqual(SystemPartDescriptionTextBox.Text, ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(ManufacturerPartNoTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(ManufacturerPartDescTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(ProductSpecificationTextBox.Text, ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(SystemPartDescriptionTextBox.Text, ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value) Then Return True
+            If TheseAreNotEqual(ManufacturerPartNoTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value) Then Return True
+            If TheseAreNotEqual(ManufacturerPartDescTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value) Then Return True
+            If TheseAreNotEqual(ProductSpecificationTextBox.Text, ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value) Then Return True
+            If TheseAreNotEqual(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value) Then Return True
+            If TheseAreNotEqual(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value) Then Return True
         Else
             If IsNotEmpty(ManufacturerPartDescTextBox.Text) Then Return True
         End If

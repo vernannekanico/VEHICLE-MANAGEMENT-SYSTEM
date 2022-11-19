@@ -519,17 +519,17 @@ LEFT JOIN WorkOrdersTable ON WorkOrderConcernJobsTable.WorkOrderID_LongInteger =
         CurrentJobsHistoryID = JobsHistoryDataGridView.Item("JobsHistoryID_Autonumber", CurrentJobsHistoryDataGridViewRow).Value
     End Sub
     Private Function AChangeOccuredInOwnerDetails()
-        If TheseAreNotEqual(LastNameTextBox.Text, OwnerDataGridView.Item("LastName_ShortText30", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(FirstNameTextBox.Text, OwnerDataGridView.Item("FirstName_ShortText30", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(NamePrefixTextBox.Text, OwnerDataGridView.Item("NamePrefix_ShortText3", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(AliasTextBox.Text, OwnerDataGridView.Item("NickName_ShortText15", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(EmailAddressTextBox.Text, OwnerDataGridView.Item("EmailAddress_ShortText20", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PhoneNumberTextBox.Text, OwnerDataGridView.Item("TelNo_ShortText10", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(StreetTextBox.Text, OwnerDataGridView.Item("Street_ShortText25", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(BldgAptRmNoTextBox.Text, OwnerDataGridView.Item("BldgAptRmNo_ShortText25", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(CityTextBox.Text, OwnerDataGridView.Item("CityName_ShortText25", CurrentOwnerDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(StateProvTextBox.Text, DefaultStateName, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(CountryTextBox.Text, DefaultCountryName, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(LastNameTextBox.Text, OwnerDataGridView.Item("LastName_ShortText30", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(FirstNameTextBox.Text, OwnerDataGridView.Item("FirstName_ShortText30", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(NamePrefixTextBox.Text, OwnerDataGridView.Item("NamePrefix_ShortText3", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(AliasTextBox.Text, OwnerDataGridView.Item("NickName_ShortText15", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(EmailAddressTextBox.Text, OwnerDataGridView.Item("EmailAddress_ShortText20", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(PhoneNumberTextBox.Text, OwnerDataGridView.Item("TelNo_ShortText10", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(StreetTextBox.Text, OwnerDataGridView.Item("Street_ShortText25", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(BldgAptRmNoTextBox.Text, OwnerDataGridView.Item("BldgAptRmNo_ShortText25", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(CityTextBox.Text, OwnerDataGridView.Item("CityName_ShortText25", CurrentOwnerDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(StateProvTextBox.Text, DefaultStateName) Then Return True
+        If TheseAreNotEqual(CountryTextBox.Text, DefaultCountryName) Then Return True
         Return False
     End Function
 
@@ -734,9 +734,9 @@ LEFT JOIN WorkOrdersTable ON WorkOrderConcernJobsTable.WorkOrderID_LongInteger =
     End Sub
     Private Function AChangeOccuredInVehicleDetails()
 
-        If TheseAreNotEqual(VINtextBox.Text, OwnedVehiclesDataGridView.Item("VinNo_ShortText20", CurrentOwnedVehicleDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PlateNumberTextBox.Text, OwnedVehiclesDataGridView.Item("PlateNumber_ShortText20", CurrentOwnedVehicleDataGridViewRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(VehicleTextBox.Text, OwnedVehiclesDataGridView.Item(1, CurrentOwnedVehicleDataGridViewRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(VINtextBox.Text, OwnedVehiclesDataGridView.Item("VinNo_ShortText20", CurrentOwnedVehicleDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(PlateNumberTextBox.Text, OwnedVehiclesDataGridView.Item("PlateNumber_ShortText20", CurrentOwnedVehicleDataGridViewRow).Value) Then Return True
+        If TheseAreNotEqual(VehicleTextBox.Text, OwnedVehiclesDataGridView.Item(1, CurrentOwnedVehicleDataGridViewRow).Value) Then Return True
         Return False
     End Function
 

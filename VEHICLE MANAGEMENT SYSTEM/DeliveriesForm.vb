@@ -551,8 +551,8 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
 
 
 
-            If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Double", CurrentDeliveryItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ManufacturerDescription_ShortText250", CurrentDeliveryItemsDataGridViewRow).Value)) Then Return True
+            If TheseAreNotEqual(POItemQuantityTextBox.Text, NotNull(DeliveryItemsDataGridView.Item("DeliveredQty_Double", CurrentDeliveryItemsDataGridViewRow).Value)) Then Return True
             Return False
         End If
     End Function

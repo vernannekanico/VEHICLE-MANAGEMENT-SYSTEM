@@ -9,7 +9,6 @@
 
     Private CurrentProductPartID = Tunnel2
     Private SavedCallingForm As Form
-    Private PurposeOfEntry = ""
     Private Sub ProductPartsPackingsPackingsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
         If Tunnel1 = "Tunnel2IsProductPartID" Then
@@ -182,9 +181,9 @@ FROM ProductPartsPackingsTable
         If CurrentProductPartsPackingID < 1 Then
             Return True
         End If
-        If TheseAreNotEqual(QuantityPerPackTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(UnitOfTheQuantityTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(UnitOfThePackingTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(QuantityPerPackTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value)) Then Return True
+        If TheseAreNotEqual(UnitOfTheQuantityTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value)) Then Return True
+        If TheseAreNotEqual(UnitOfThePackingTextBox.Text, NotNull(ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value)) Then Return True
         Return False
     End Function
     Private Sub RegisterProductPartsPackingsChanges()

@@ -299,9 +299,9 @@ FROM StatusesTable LEFT JOIN TableNamesTable ON StatusesTable.TableNameID_Intege
         '*******************************************************
         ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD OR EDIT
         If PurposeOfEntry = "ADD" Then Return True
-        If TheseAreNotEqual(SequenceOfActionTextBox.Text, StatusesDataGridView.Item("StatusSequence_LongInteger", CurrentStatusesRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(StatusOfActionTextBox.Text, StatusesDataGridView.Item("StatusText_ShortText25", CurrentStatusesRow).Value, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(RemarksTextBox.Text, StatusesDataGridView.Item("StatusDescription__Memo", CurrentStatusesRow).Value, PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(SequenceOfActionTextBox.Text, StatusesDataGridView.Item("StatusSequence_LongInteger", CurrentStatusesRow).Value) Then Return True
+        If TheseAreNotEqual(StatusOfActionTextBox.Text, StatusesDataGridView.Item("StatusText_ShortText25", CurrentStatusesRow).Value) Then Return True
+        If TheseAreNotEqual(RemarksTextBox.Text, StatusesDataGridView.Item("StatusDescription__Memo", CurrentStatusesRow).Value) Then Return True
         Return False
     End Function
     Private Sub RegisterStatusChanges()

@@ -493,7 +493,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         If CurrentPartNumberSpecificationID = -1 Then
             If IsNotEmpty(PartNumberSpecificationTextBox.Text) Then Return True
         Else
-            If TheseAreNotEqual(PartNumberSpecificationTextBox.Text, PartsSpecificationsDataGridView.Item("PartNumber_ShortText25", CurrentPartsSpecificationsDataGridViewRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(PartNumberSpecificationTextBox.Text, PartsSpecificationsDataGridView.Item("PartNumber_ShortText25", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
         End If
         Return False
     End Function
@@ -578,8 +578,8 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
 
     Private Function AChangeInQuantitySpecificationsOccured()
         If CurrentPartsSpecificationsDataGridViewRow > -1 Then
-            If TheseAreNotEqual(SpecifiedQuantityTextBox.Text, PartsSpecificationsDataGridView.Item("SpecifiedQuantity_Double", CurrentPartsSpecificationsDataGridViewRow).Value, PurposeOfEntry) Then Return True
-            If TheseAreNotEqual(SpecifiedUnitTextBox.Text, PartsSpecificationsDataGridView.Item("SpecifiedUnit_ShortText3", CurrentPartsSpecificationsDataGridViewRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(SpecifiedQuantityTextBox.Text, PartsSpecificationsDataGridView.Item("SpecifiedQuantity_Double", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
+            If TheseAreNotEqual(SpecifiedUnitTextBox.Text, PartsSpecificationsDataGridView.Item("SpecifiedUnit_ShortText3", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
         Else
             If IsNotEmpty(SpecifiedQuantityTextBox.Text) Then Return True
             If IsNotEmpty(SpecifiedUnitTextBox.Text) Then Return True
@@ -588,7 +588,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     End Function
     Private Function AChangeInPartSpecificationsOccured()
         If CurrentPartsSpecificationsDataGridViewRow > -1 Then
-            If TheseAreNotEqual(PartSpecificationsTextBox.Text, PartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value, PurposeOfEntry) Then Return True
+            If TheseAreNotEqual(PartSpecificationsTextBox.Text, PartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
         Else
             If IsNotEmpty(PartSpecificationsTextBox.Text) Then Return True
         End If

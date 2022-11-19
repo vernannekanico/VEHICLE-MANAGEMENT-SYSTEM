@@ -457,12 +457,12 @@ FROM (RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedB
         FillStoreSuppliesRequisitionsItemsDataGridView()
     End Sub
     Private Function AChangeOccured()
-        If TheseAreNotEqual(SavedProductPartID, CurrentRequestedProductPartID, PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(PartTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("MasterCodeBookTable.SystemDesc_ShortText100Fld", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(POItemProductPartNoTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("Price_Currency", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(RequisitionItemProductDescTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(RequisitionItemQuantityTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionQuantity_Double", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
-        If TheseAreNotEqual(RequisitionItemUnitTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionUnit_ShortText3", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value), PurposeOfEntry) Then Return True
+        If TheseAreNotEqual(SavedProductPartID, CurrentRequestedProductPartID) Then Return True
+        If TheseAreNotEqual(PartTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("MasterCodeBookTable.SystemDesc_ShortText100Fld", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(POItemProductPartNoTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("Price_Currency", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(RequisitionItemProductDescTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(RequisitionItemQuantityTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionQuantity_Double", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)) Then Return True
+        If TheseAreNotEqual(RequisitionItemUnitTextBox.Text, NotNull(StoreSuppliesRequisitionsItemsDataGridView.Item("StoreSupplyRequisitionUnit_ShortText3", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value)) Then Return True
         Return False
     End Function
 
