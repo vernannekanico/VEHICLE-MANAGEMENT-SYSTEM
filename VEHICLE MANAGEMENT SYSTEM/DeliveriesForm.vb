@@ -105,9 +105,9 @@ FROM DeliveriesTable LEFT JOIN StatusesTable ON DeliveriesTable.DeliveryStatusID
         DeliveriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         DeliveryHeaderDetailsGroupBox.Visible = False
         If DeliveryItemsRecordCount > 0 Then
-            OrderDetailsToolStripMenuItem.Visible = True
+            OrderItemDetailsToolStripMenuItem.Visible = True
         Else
-            OrderDetailsToolStripMenuItem.Visible = False
+            OrderItemDetailsToolStripMenuItem.Visible = False
         End If
 
         If Not DeliveriesDataGridViewAlreadyFormated Then
@@ -216,9 +216,13 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         If DeliveryItemsRecordCount > 0 Then
             DeliveryItemsGroupBox.Visible = True
             FinalizeDeliveryEntryToolStripMenuItem.Visible = True
+            PODetailsToolStripMenuItem.Visible = True
+            RequisitionDetailsToolStripMenuItem.Visible = True
         Else
             DeliveryItemsGroupBox.Visible = False
             FinalizeDeliveryEntryToolStripMenuItem.Visible = False
+            PODetailsToolStripMenuItem.Visible = False
+            RequisitionDetailsToolStripMenuItem.Visible = False
         End If
         DeliveryItemsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not DeliveryItemsDataGridViewAlreadyFormated Then
@@ -240,8 +244,8 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
                 Case "RequisitionID_LongInteger"
                     DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "REQ #"
                     DeliveryItemsDataGridView.Columns.Item(i).Width = 80
-                DeliveryItemsDataGridView.Columns.Item(i).Visible = True
-                DeliveryItemsDataGridView.Columns.Item(i).Visible = True
+                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
+                    DeliveryItemsDataGridView.Columns.Item(i).Visible = True
 
                 Case "WorkOrderPartID_LongInteger"
                     DeliveryItemsDataGridView.Columns.Item(i).HeaderText = "WO #"
@@ -299,6 +303,8 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         CurrentDeliveryItemsDataGridViewRow = e.RowIndex
         FillField(CurrentDeliveryItemID, DeliveryItemsDataGridView.Item("DeliveryItemID_AutoNumber", CurrentDeliveryItemsDataGridViewRow).Value)
         FillField(CurrentProductPartID, DeliveryItemsDataGridView.Item("ProductsPartsTableDelivered.ProductsPartID_Autonumber", CurrentDeliveryItemsDataGridViewRow).Value)
+        PODetailsToolStripMenuItem.Text = "PO " & DeliveryItemsDataGridView.Item("PurchaseOrderID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value & " Details"
+        RequisitionDetailsToolStripMenuItem.Text = "REQ " & DeliveryItemsDataGridView.Item("RequisitionID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value & " Details"
         If CurrentProductPartID = -1 Then
             EditCurrentItem()
         End If
@@ -592,7 +598,7 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         FillDeliveriesDataGridView()
     End Sub
 
-    Private Sub OrderDetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrderDetailsToolStripMenuItem.Click
+    Private Sub OrderDetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OrderItemDetailsToolStripMenuItem.Click
         'NOTE DeliveryItemDetailsGroupBox IS USED ALSO TO DISPLAY THE PURCHASE ORDER ITEM DETAILS
         If CurrentDeliveryItemsDataGridViewRow < 0 Then Exit Sub
         DeliveryItemDetailsGroupBox.Text = "Order Details"
@@ -611,5 +617,15 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
         Else
             DeliveryItemDetailsGroupBox.Enabled = True
         End If
+    End Sub
+
+    Private Sub PODetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PODetailsToolStripMenuItem.Click
+        Tunnel1 = DeliveryItemsDataGridView.Item("PurchaseOrderID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value
+
+        ShowCalledForm(Me, PurchaseOrdersForm)
+    End Sub
+
+    Private Sub RequisitionDetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RequisitionDetailsToolStripMenuItem.Click
+
     End Sub
 End Class

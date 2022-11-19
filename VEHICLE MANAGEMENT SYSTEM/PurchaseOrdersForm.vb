@@ -57,6 +57,9 @@
                     AddPurchaseOrderToolStripMenuItem.Visible = True
                     CurrentUserFilter = "PurchaserID_LongInteger = " & CurrentPersonelID.ToString
                     SetPurchaseOrdersSelectionFilter("Outstanding")
+                Case "Store Keeper" 'VIEW MODE ONLY
+                    'VIEW MODE ONLY
+                    SetToDeliveryMode()
             End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
             DeliveredToolStripMenuItem.Visible = False
@@ -81,7 +84,6 @@
                 SupplierNameTextBox.Text = Tunnel3
         End Select
     End Sub
-
     Private Sub FillPurchaseOrdersDataGridView()
         PurchaseOrderDate.Text = DateString
         PurchaseOrderRevisionNoTextBox.Text = "0"
@@ -192,7 +194,6 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
 
 
     End Sub
-
     Private Sub PurchaseOrderDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles PurchaseOrdersDataGridView.RowEnter
         If ShowInTaskbarFlag Then
             Exit Sub
@@ -249,8 +250,6 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
         FillPurchaseOrdersItemsDataGridView()
 
     End Sub
-
-
     Private Sub FillPurchaseOrdersItemsDataGridView()
 
         PurchaseOrdersItemsFieldsToSelect =
@@ -509,14 +508,12 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPurchaseOrderToolStripMenuItem.Click
         EnableEdit()
     End Sub
-
     Private Sub EnableEdit()
         PODetailsOFFToolStripMenuItem.Visible = False
         PurposeOfEntry = "EDIT"
         PurchaseOrderDetailsGroupBox.Enabled = True
         PurchaseOrderDetailsGroupBox.Visible = True
     End Sub
-
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeletePurchaseOrderToolStripMenuItem.Click
         PurposeOfEntry = "DELETE"
         '      LoadPurchaseOrderDetails()
@@ -554,7 +551,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         End If
 
     End Function
-
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SavePurchaseOrderToolStripMenuItem.Click
         DoCommonSaveRoutine()
     End Sub
@@ -669,7 +665,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     Private Sub DraftPurchaseOrdersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DraftPurchaseOrdersToolStripMenuItem.Click
         SetPurchaseOrdersSelectionFilter("Draft")
     End Sub
-
     Private Sub SubmittedForApprovalPurchaseOrders_Click(sender As Object, e As EventArgs) Handles SubmittedForApprovalPurchaseOrdersToolStripMenuItem.Click
         SetPurchaseOrdersSelectionFilter("For Approval")
     End Sub
@@ -726,7 +721,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             EnablePurchaseOrderItemMenus()
         End If
     End Sub
-
     Private Sub PurchaseOrderDetailsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles PurchaseOrderDetailsGroupBox.EnabledChanged
         'only draft status can be modified
         If CurrentPurchaseOrdersDataGridViewRow > -1 Then
@@ -749,14 +743,12 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             PurchaseOrdersItemsGroupBox.Visible = False
         End If
     End Sub
-
     Private Sub SupplierNameTextBox_Click(sender As Object, e As EventArgs) Handles SupplierNameTextBox.Click
         If SupplierNameTextBox.Text <> "Search" Or IsEmpty(SupplierNameTextBox.Text) Then
             If MsgBox("Do you intend to change the Supplier ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         End If
         ShowCalledForm(Me, SuppliersForm)
     End Sub
-
     Private Sub FromRequisitionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FromRequisitionsToolStripMenuItem.Click
         'note items will be selected from the PartsRequisitions for purchase
         RequisitionDetailsGroupBox.Visible = True
@@ -767,7 +759,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         ShowCalledForm(Me, RequisitionsForm)
 
     End Sub
-
     Private Sub AdditionalItemNotFromRequisitionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AdditionalItemNotFromRequisitionToolStripMenuItem.Click
         RequisitionDetailsGroupBox.Visible = True
         AddPurchaseOrderToolStripMenuItem.Enabled = False
@@ -775,7 +766,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         PurposeOfEntry = "ADD"
         ShowCalledForm(Me, ProductsPartsForm)
     End Sub
-
     Private Sub EditPOItemToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles EditPOItemToolStripMenuItem.Click
         RequisitionDetailsGroupBox.Visible = True
         POItemProductPartNoTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerPartNo_ShortText30Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
@@ -848,8 +838,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         JustExecuteMySelection()
         FillPurchaseOrdersItemsDataGridView()
     End Sub
-
-
     Private Sub ItemPurchseHistoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ItemPurchseHistoryToolStripMenuItem.Click
         ShowCalledForm(Me, PurchasedItemsForm)
     End Sub
@@ -980,7 +968,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         If TheseAreNotEqual(PackagePriceLastItemTextBox.Text, PurchaseOrdersItemsDataGridView.Item("LastItem_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value, PurposeOfEntry) Then Return True
         Return False
     End Function
-
     Private Sub CopyProductButton_Click(sender As Object, e As EventArgs) Handles CopyProductButton.Click
         If MsgBox("Cancel Copying the Specified Product ?", MsgBoxStyle.YesNo) = vbYes Then
             Exit Sub
@@ -1050,33 +1037,19 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             CurrentSupplierID = -1
         End If
     End Sub
-
     Private Sub SpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpecificationsToolStripMenuItem.Click
 
     End Sub
-
     Private Sub RequisitionItemUnitTextBox_Leave(sender As Object, e As EventArgs) Handles RequisitionItemUnitTextBox.Leave
         RequisitionItemUnitTextBox.Text = RequisitionItemUnitTextBox.Text.ToUpper
-
-
-
-
         '*******************************************************
         ' CHECK THIS THE TheseAreNotEqual ROUTINE WAS MODIFIED, WATCH PARAMETER pURPOSEOFENTRY
-
-
-
-
-
-
-
 
         If TheseAreNotEqual(RequisitionItemUnitTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.Unit_ShortText3", CurrentPurchaseOrdersItemsDataGridViewRow).Value), PurposeOfEntry) Then
 
         End If
 
     End Sub
-
     Private Sub SubmitForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitForApprovalToolStripMenuItem.Click
         Dim ReadyForApproval = True
         'PO header validation
@@ -1136,7 +1109,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         PurchaseOrdersItemsGroupBox.Visible = False
         FillPurchaseOrdersDataGridView()
     End Sub
-
     Private Sub POItemProductDescTextBox_TextChanged(sender As Object, e As EventArgs) Handles POItemProductDescTextBox.Click
         If POItemProductDescTextBox.Text <> "" Then
             If MsgBox("Do you intend to replace the Product?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -1148,7 +1120,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         ProductsPartsForm.VehicleModelSearchTextBox.Text = CurrentVehicleString
         ShowCalledForm(Me, ProductsPartsForm)
     End Sub
-
     Private Sub CalculateTotalsButton_Click(sender As Object, e As EventArgs) Handles CalculateTotalsButton.Click
         CalculatePOTotals()
     End Sub
@@ -1161,7 +1132,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         ViewToolStripMenuItem.Visible = False
         SavePurchaseOrderToolStripMenuItem.Visible = False
     End Sub
-
     Private Sub DeliveredToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeliveredToolStripMenuItem.Click
         UpdateDeliveredItems()
     End Sub
@@ -1197,11 +1167,9 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         Next
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
-
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles PackagePriceButton.Click
 
     End Sub
-
     Private Sub SendToSupplierToolStripMenu_Click(sender As Object, e As EventArgs) Handles SentToSupplierToolStripMenu.Click
         If MsgBox("Are you sure the purchase Order is already transmitted to the supplier?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         Dim RecordFilter = " WHERE PurchaseOrderID_AutoNumber = " & Str(CurrentPurchaseOrderID)

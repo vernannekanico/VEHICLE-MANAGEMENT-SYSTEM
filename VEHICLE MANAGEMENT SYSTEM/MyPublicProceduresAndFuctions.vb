@@ -552,7 +552,7 @@
             MsgBox("Error. Recursive call to a form" & vbCrLf & " Called form is currently active")
             Exit Sub
         End If
-        ActiveFormsQueue = ActiveFormsQueue & PassedCalledForm.Name
+        ActiveFormsQueue = ActiveFormsQueue & "," & PassedCalledForm.Name
         CallingForm = PassedCallingForm
         CallingForm.Enabled = False
         ShowInTaskbarFlag = True
@@ -572,7 +572,7 @@
         ResetTunnels() ' INFORMATION IN TUNNELS HAVE BEEN RECEIVED
         CallingForm.Select()
         CallingForm.Show()             'enables the page to be active
-        ActiveFormsQueue = Replace(ActiveFormsQueue, CalledForm.Name, "")
+        ActiveFormsQueue = Replace(ActiveFormsQueue, "," & CalledForm.Name, "")
 
     End Sub
     Public Sub EnableMenu(SystemsDepartmentToolStripMenuItem As ToolStripMenuItem)

@@ -37,15 +37,17 @@ Partial Class DeliveriesForm
         Me.NewDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteDeliveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveDeliveryHeaderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FinalizeDeliveryEntryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveDeliveryHeaderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveryItemsToolStripMenus = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddDeliveryItemsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FromCustomerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FromPurchaseOrdersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveDeliveryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OrderDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OrderItemDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PODetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RequisitionDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveryHeaderDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.POReferenceTextBox = New System.Windows.Forms.TextBox()
@@ -86,7 +88,7 @@ Partial Class DeliveriesForm
         '
         Me.DeliveriesMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveriesMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.SaveDeliveryHeaderToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem, Me.OrderDetailsToolStripMenuItem})
+        Me.DeliveriesMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.DeliveryHeaderToolStripMenus, Me.ViewToolStripMenuItem, Me.NewDeliveryToolStripMenuItem, Me.DeleteDeliveryToolStripMenuItem, Me.ToolStripMenuItem1, Me.FinalizeDeliveryEntryToolStripMenuItem, Me.SaveDeliveryHeaderToolStripMenuItem, Me.DeliveryItemsToolStripMenus, Me.AddDeliveryItemsToolStripMenuItem, Me.EditDeliveryItemToolStripMenuItem, Me.RemoveDeliveryItemToolStripMenuItem, Me.OrderItemDetailsToolStripMenuItem, Me.PODetailsToolStripMenuItem, Me.RequisitionDetailsToolStripMenuItem})
         Me.DeliveriesMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.DeliveriesMenuStrip.Name = "DeliveriesMenuStrip"
         Me.DeliveriesMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -145,18 +147,18 @@ Partial Class DeliveriesForm
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
+        'FinalizeDeliveryEntryToolStripMenuItem
+        '
+        Me.FinalizeDeliveryEntryToolStripMenuItem.Name = "FinalizeDeliveryEntryToolStripMenuItem"
+        Me.FinalizeDeliveryEntryToolStripMenuItem.Size = New System.Drawing.Size(175, 25)
+        Me.FinalizeDeliveryEntryToolStripMenuItem.Text = "Finalize Delivery Entry"
+        '
         'SaveDeliveryHeaderToolStripMenuItem
         '
         Me.SaveDeliveryHeaderToolStripMenuItem.Name = "SaveDeliveryHeaderToolStripMenuItem"
         Me.SaveDeliveryHeaderToolStripMenuItem.Size = New System.Drawing.Size(170, 25)
         Me.SaveDeliveryHeaderToolStripMenuItem.Text = "Save Delivery Header"
         Me.SaveDeliveryHeaderToolStripMenuItem.Visible = False
-        '
-        'FinalizeDeliveryEntryToolStripMenuItem
-        '
-        Me.FinalizeDeliveryEntryToolStripMenuItem.Name = "FinalizeDeliveryEntryToolStripMenuItem"
-        Me.FinalizeDeliveryEntryToolStripMenuItem.Size = New System.Drawing.Size(175, 25)
-        Me.FinalizeDeliveryEntryToolStripMenuItem.Text = "Finalize Delivery Entry"
         '
         'DeliveryItemsToolStripMenus
         '
@@ -198,11 +200,25 @@ Partial Class DeliveriesForm
         Me.RemoveDeliveryItemToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveDeliveryItemToolStripMenuItem.Text = "Remove"
         '
-        'OrderDetailsToolStripMenuItem
+        'OrderItemDetailsToolStripMenuItem
         '
-        Me.OrderDetailsToolStripMenuItem.Name = "OrderDetailsToolStripMenuItem"
-        Me.OrderDetailsToolStripMenuItem.Size = New System.Drawing.Size(114, 25)
-        Me.OrderDetailsToolStripMenuItem.Text = "Order Details"
+        Me.OrderItemDetailsToolStripMenuItem.Name = "OrderItemDetailsToolStripMenuItem"
+        Me.OrderItemDetailsToolStripMenuItem.Size = New System.Drawing.Size(149, 25)
+        Me.OrderItemDetailsToolStripMenuItem.Text = "Order Item Details"
+        '
+        'PODetailsToolStripMenuItem
+        '
+        Me.PODetailsToolStripMenuItem.Name = "PODetailsToolStripMenuItem"
+        Me.PODetailsToolStripMenuItem.Size = New System.Drawing.Size(94, 25)
+        Me.PODetailsToolStripMenuItem.Text = "PO Details"
+        Me.PODetailsToolStripMenuItem.Visible = False
+        '
+        'RequisitionDetailsToolStripMenuItem
+        '
+        Me.RequisitionDetailsToolStripMenuItem.Name = "RequisitionDetailsToolStripMenuItem"
+        Me.RequisitionDetailsToolStripMenuItem.Size = New System.Drawing.Size(151, 25)
+        Me.RequisitionDetailsToolStripMenuItem.Text = "Requisition Details"
+        Me.RequisitionDetailsToolStripMenuItem.Visible = False
         '
         'DeliveryHeaderDetailsGroupBox
         '
@@ -414,7 +430,7 @@ Partial Class DeliveriesForm
         Me.DeliveryItemDetailsGroupBox.Controls.Add(Me.Label16)
         Me.DeliveryItemDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DeliveryItemDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(404, 167)
+        Me.DeliveryItemDetailsGroupBox.Location = New System.Drawing.Point(418, 282)
         Me.DeliveryItemDetailsGroupBox.Name = "DeliveryItemDetailsGroupBox"
         Me.DeliveryItemDetailsGroupBox.Size = New System.Drawing.Size(715, 261)
         Me.DeliveryItemDetailsGroupBox.TabIndex = 110
@@ -613,5 +629,7 @@ Partial Class DeliveriesForm
     Friend WithEvents FromPurchaseOrdersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Label3 As Label
     Friend WithEvents POReferenceTextBox As TextBox
-    Friend WithEvents OrderDetailsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OrderItemDetailsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PODetailsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RequisitionDetailsToolStripMenuItem As ToolStripMenuItem
 End Class
