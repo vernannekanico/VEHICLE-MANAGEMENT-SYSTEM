@@ -778,7 +778,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
             SavedCustomer = Trim(CustomerTextBox.Text)
             Exit Sub
         End If
-        If NotEmpty(CustomerTextBox.Text) Then
+        If IsNotEmpty(CustomerTextBox.Text) Then
             If OwnersForm.NameSearchTextBox.Text = CustomerTextBox.Text Then
                 If Trim(CustomerTextBox.Text) = Trim(SavedCustomer) Then
                     Exit Sub

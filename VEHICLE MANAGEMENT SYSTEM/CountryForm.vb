@@ -54,7 +54,7 @@
     Private Sub CountryComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CountryComboBox.SelectedIndexChanged
         Dim CountrySelectedIndex = CountryComboBox.SelectedIndex
         Dim CountrySelectedItem = CountryComboBox.SelectedItem
-        If NotEmpty(CountryComboBox.Text) Then GetCountryID(CountryComboBox.Text)
+        If IsNotEmpty(CountryComboBox.Text) Then GetCountryID(CountryComboBox.Text)
 
     End Sub
 

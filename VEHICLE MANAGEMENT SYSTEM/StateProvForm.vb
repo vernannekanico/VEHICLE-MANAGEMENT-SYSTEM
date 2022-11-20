@@ -25,11 +25,11 @@
         'passed params
         '   tunnel1 - current state
         '   tunnel2 - Country filter
-        If NotEmpty(Tunnel1) Then
+        If IsNotEmpty(Tunnel1) Then
             SavedStateProvID = Tunnel1
         End If
 
-        If NotEmpty(Tunnel2) Then
+        If IsNotEmpty(Tunnel2) Then
             StateProvSelectionFilter = "CountryID_LongInteger = " & Str(Tunnel2)
         End If
 

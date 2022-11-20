@@ -44,10 +44,10 @@
         'Refresh datagridviw here
         ' GET RETURNED DATA HERE
         If Me.Enabled = False Then Exit Sub
-        If NotEmpty(Tunnel1) Then
+        If IsNotEmpty(Tunnel1) Then
             Dim xxxx = 1
         End If
-        If NotEmpty(Tunnel2) Then
+        If IsNotEmpty(Tunnel2) Then
             CurrentConcernDetailsId = Tunnel2
             '            AddNewConcern()
         End If

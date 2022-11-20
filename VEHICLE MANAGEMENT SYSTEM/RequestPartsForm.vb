@@ -599,7 +599,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
     End Sub
     Private Function AChangeInSpecificationsOccured()
         If CurrentQuantitySpecificationsID = -1 Then
-            If NotEmpty(SpecifiedQuantityTextBox.Text) Then Return True
+            If IsNotEmpty(SpecifiedQuantityTextBox.Text) Then Return True
             Return False
         End If
 

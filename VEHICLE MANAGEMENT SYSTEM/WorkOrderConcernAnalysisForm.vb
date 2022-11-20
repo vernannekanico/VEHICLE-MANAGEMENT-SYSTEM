@@ -223,7 +223,7 @@
                 CurrentMasterCodeBookID = Tunnel2
         End Select
 
-        If Me.Enabled And NotEmpty(Tunnel1) Then
+        If Me.Enabled And IsNotEmpty(Tunnel1) Then
             If Tunnel2 = "Tunnel1IsMasterCode" Then
             Else
                 CurrentConcernTypeID = Tunnel1

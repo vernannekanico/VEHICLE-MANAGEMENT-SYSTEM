@@ -154,7 +154,7 @@
     Private Sub NameSearchTextBox_TextChanged(sender As Object, e As EventArgs) Handles NameSearchTextBox.TextChanged
         If NameSearchTextBox.Text = "Search" Then Exit Sub
         FindKey = Trim(NameSearchTextBox.Text)
-        If NotEmpty(FindKey) Then
+        If IsNotEmpty(FindKey) Then
             RecordFinderDbControls.AddParam("@FindKey", "%" & FindKey & "%")
             MyCustomerFilter = " WHERE FirstName_ShortText30 LIKE @FindKey or " &
                                        " LastName_ShortText30 LIKE @FindKey or " &
@@ -573,40 +573,40 @@ LEFT JOIN WorkOrdersTable ON WorkOrderConcernJobsTable.WorkOrderID_LongInteger =
                               " SET LastName_ShortText30 = " & Chr(34) & LastNameTextBox.Text & Chr(34) & ", " &
                               "     FirstName_ShortText30  = " & Chr(34) & FirstNameTextBox.Text & Chr(34)
 
-        If NotEmpty(NamePrefixTextBox.Text) Then
+        If IsNotEmpty(NamePrefixTextBox.Text) Then
             MySelection = MySelection & ", NamePrefix_ShortText3  = " & Chr(34) & NamePrefixTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", NamePrefix_ShortText3  = " & MyNull
         End If
 
 
-        If NotEmpty(AliasTextBox.Text) Then
+        If IsNotEmpty(AliasTextBox.Text) Then
             MySelection = MySelection & ", NickName_ShortText15 = " & Chr(34) & AliasTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", NickName_ShortText15 = " & MyNull
         End If
 
 
-        If NotEmpty(EmailAddressTextBox.Text) Then
+        If IsNotEmpty(EmailAddressTextBox.Text) Then
             MySelection = MySelection & ", EmailAddress_ShortText20 = " & Chr(34) & EmailAddressTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", EmailAddress_ShortText20 = " & MyNull
         End If
 
-        If NotEmpty(PhoneNumberTextBox.Text) Then
+        If IsNotEmpty(PhoneNumberTextBox.Text) Then
             MySelection = MySelection & ", TelNo_ShortText10 = " & Chr(34) & PhoneNumberTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", TelNo_ShortText10 = " & MyNull
         End If
 
 
-        If NotEmpty(StreetTextBox.Text) Then
+        If IsNotEmpty(StreetTextBox.Text) Then
             MySelection = MySelection & ", Street_ShortText25 = " & Chr(34) & StreetTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", Street_ShortText25 = " & MyNull
         End If
 
-        If NotEmpty(BldgAptRmNoTextBox.Text) Then
+        If IsNotEmpty(BldgAptRmNoTextBox.Text) Then
             MySelection = MySelection & ", BldgAptRmNo_ShortText25 = " & Chr(34) & BldgAptRmNoTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", BldgAptRmNo_ShortText25 = " & MyNull
@@ -823,40 +823,40 @@ LEFT JOIN WorkOrdersTable ON WorkOrderConcernJobsTable.WorkOrderID_LongInteger =
                               " SET LastName_ShortText30 = " & Chr(34) & LastNameTextBox.Text & Chr(34) & ", " &
                               "     FirstName_ShortText30  = " & Chr(34) & FirstNameTextBox.Text & Chr(34)
 
-        If NotEmpty(NamePrefixTextBox.Text) Then
+        If IsNotEmpty(NamePrefixTextBox.Text) Then
             MySelection = MySelection & ", NamePrefix_ShortText3  = " & Chr(34) & NamePrefixTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", NamePrefix_ShortText3  = " & MyNull
         End If
 
 
-        If NotEmpty(AliasTextBox.Text) Then
+        If IsNotEmpty(AliasTextBox.Text) Then
             MySelection = MySelection & ", NickName_ShortText15 = " & Chr(34) & AliasTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", NickName_ShortText15 = " & MyNull
         End If
 
 
-        If NotEmpty(EmailAddressTextBox.Text) Then
+        If IsNotEmpty(EmailAddressTextBox.Text) Then
             MySelection = MySelection & ", EmailAddress_ShortText20 = " & Chr(34) & EmailAddressTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", EmailAddress_ShortText20 = " & MyNull
         End If
 
-        If NotEmpty(PhoneNumberTextBox.Text) Then
+        If IsNotEmpty(PhoneNumberTextBox.Text) Then
             MySelection = MySelection & ", TelNo_ShortText10 = " & Chr(34) & PhoneNumberTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", TelNo_ShortText10 = " & MyNull
         End If
 
 
-        If NotEmpty(StreetTextBox.Text) Then
+        If IsNotEmpty(StreetTextBox.Text) Then
             MySelection = MySelection & ", Street_ShortText25 = " & Chr(34) & StreetTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", Street_ShortText25 = " & MyNull
         End If
 
-        If NotEmpty(BldgAptRmNoTextBox.Text) Then
+        If IsNotEmpty(BldgAptRmNoTextBox.Text) Then
             MySelection = MySelection & ", BldgAptRmNo_ShortText25 = " & Chr(34) & BldgAptRmNoTextBox.Text & Chr(34)
         Else
             MySelection = MySelection & ", BldgAptRmNo_ShortText25 = " & MyNull

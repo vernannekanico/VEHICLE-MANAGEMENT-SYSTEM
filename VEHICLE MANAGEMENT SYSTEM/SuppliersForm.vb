@@ -163,7 +163,7 @@ FROM ((SuppliersTable LEFT JOIN CityTable ON SuppliersTable.CityID_LongInteger =
                 TelNo_ShortText10TextBox.Select()
                 Exit Sub
             End If
-            If Trim(CityID_LongIntegerTextBox.Text) = "" And NotEmpty(Street_ShortText25TextBox.Text) Then
+            If Trim(CityID_LongIntegerTextBox.Text) = "" And IsNotEmpty(Street_ShortText25TextBox.Text) Then
                 CityID_LongIntegerTextBox.Select()
                 Exit Sub
             End If

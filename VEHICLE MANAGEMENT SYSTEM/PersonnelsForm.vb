@@ -440,7 +440,7 @@
                     Exit Sub
                 End If
 
-                Dim FullName = Trim(LastNameTextBox.Text) & " " & Trim(FirstNameTextBox.Text) & " " & IIf(NotEmpty(NamePrefixTextBox.Text), Trim(NamePrefixTextBox.Text) & " ", "") & MiddleNameTextBox.Text
+                Dim FullName = Trim(LastNameTextBox.Text) & " " & Trim(FirstNameTextBox.Text) & " " & IIf(IsNotEmpty(NamePrefixTextBox.Text), Trim(NamePrefixTextBox.Text) & " ", "") & MiddleNameTextBox.Text
                 If Not MsgBox(" Confirm adding new EMPLOYEE " & FullName, vbYesNo) = vbYes Then
                     Exit Sub
                 End If
@@ -451,7 +451,7 @@
                 CreateLoginInformations()
 
             Case "EDIT"
-                Dim FullName = Trim(LastNameTextBox.Text) & " " & Trim(FirstNameTextBox.Text) & " " & IIf(NotEmpty(NamePrefixTextBox.Text), Trim(NamePrefixTextBox.Text) & " ", "") & MiddleNameTextBox.Text
+                Dim FullName = Trim(LastNameTextBox.Text) & " " & Trim(FirstNameTextBox.Text) & " " & IIf(IsNotEmpty(NamePrefixTextBox.Text), Trim(NamePrefixTextBox.Text) & " ", "") & MiddleNameTextBox.Text
                 If Not MsgBox(" Confirm Saving changes for EMPLOYEE " & FullName, vbYesNo) = vbYes Then
                     Exit Sub
                 End If
@@ -467,12 +467,12 @@
                                                        " CityID_LongInteger  = " & Chr(34) & Str(CurrentCityID) & Chr(34) & ", " &
                                                       " DepartmentID_LongInteger  = " & Chr(34) & Str(CurrentDepartmentID) & Chr(34) & ", " &
                                                        " JobPositionID_LongInteger  = " & Chr(34) & Str(CurrentJobPositionID) & Chr(34) & ", " &
-                IIf(NotEmpty(StreetTextBox.Text), " Street_ShortText25  = " & Chr(34) & StreetTextBox.Text & Chr(34), " Street_ShortText25 = " & MyNull) & ", " &
-                IIf(NotEmpty(MiddleNameTextBox.Text), " MidleName_ShortText15  = " & Chr(34) & MiddleNameTextBox.Text & Chr(34), " MidleName_ShortText15 = " & MyNull) & ", " &
-                 IIf(NotEmpty(BldgAptRmNoTextBox.Text), " BldgAptRmNo_ShortText25  = " & Chr(34) & BldgAptRmNoTextBox.Text & Chr(34), " BldgAptRmNo_ShortText25 = " & MyNull) & ", " &
-               IIf(NotEmpty(EmailAddressTextBox.Text), " EmailAddress_ShortText20  = " & Chr(34) & EmailAddressTextBox.Text & Chr(34), " EmailAddress_ShortText20 = " & MyNull) & ", " &
-                IIf(NotEmpty(NamePrefixTextBox.Text), " NamePrefix_ShortText3  = " & Chr(34) & NamePrefixTextBox.Text & Chr(34), " NamePrefix_ShortText3  = " & MyNull) & ", " &
-                IIf(NotEmpty(AliasTextBox.Text), " NickName_ShortText15  = " & Chr(34) & AliasTextBox.Text & Chr(34), " NickName_ShortText15 = " & MyNull) & ", " &
+                IIf(IsNotEmpty(StreetTextBox.Text), " Street_ShortText25  = " & Chr(34) & StreetTextBox.Text & Chr(34), " Street_ShortText25 = " & MyNull) & ", " &
+                IIf(IsNotEmpty(MiddleNameTextBox.Text), " MidleName_ShortText15  = " & Chr(34) & MiddleNameTextBox.Text & Chr(34), " MidleName_ShortText15 = " & MyNull) & ", " &
+                 IIf(IsNotEmpty(BldgAptRmNoTextBox.Text), " BldgAptRmNo_ShortText25  = " & Chr(34) & BldgAptRmNoTextBox.Text & Chr(34), " BldgAptRmNo_ShortText25 = " & MyNull) & ", " &
+               IIf(IsNotEmpty(EmailAddressTextBox.Text), " EmailAddress_ShortText20  = " & Chr(34) & EmailAddressTextBox.Text & Chr(34), " EmailAddress_ShortText20 = " & MyNull) & ", " &
+                IIf(IsNotEmpty(NamePrefixTextBox.Text), " NamePrefix_ShortText3  = " & Chr(34) & NamePrefixTextBox.Text & Chr(34), " NamePrefix_ShortText3  = " & MyNull) & ", " &
+                IIf(IsNotEmpty(AliasTextBox.Text), " NickName_ShortText15  = " & Chr(34) & AliasTextBox.Text & Chr(34), " NickName_ShortText15 = " & MyNull) & ", " &
                 " TelNo_ShortText10 = " & Chr(34) & PhoneNumberTextBox.Text & Chr(34)
 
 

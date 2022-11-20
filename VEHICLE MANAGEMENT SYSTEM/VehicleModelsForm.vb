@@ -138,7 +138,7 @@
         ' EXECUTE INSERT COMMAND
         If CurrentVehicleModelID = -1 Then
             VehicleModelsRelationsForm.Show()
-            If Not NotEmpty(Tunnel1) Then
+            If Not IsNotEmpty(Tunnel1) Then
                 Exit Sub
             End If
         End If

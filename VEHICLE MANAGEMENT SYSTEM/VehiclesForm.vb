@@ -298,25 +298,25 @@ YearManufactured_ShortText4
                                                            " VehicleRepairClassID_LongInteger = " & Str(CurrentVehicleRepairClassID)
 
 
-                If NotEmpty(EngineTypeTextBox.Text) Then
+                If IsNotEmpty(EngineTypeTextBox.Text) Then
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", Engine_ShortText20  = " & InQuotes(EngineTypeTextBox.Text)
                 Else
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", Engine_ShortText20  = " & MyNull
                 End If
 
-                If NotEmpty(BodyTypeTextBox.Text) Then
+                If IsNotEmpty(BodyTypeTextBox.Text) Then
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", BodyType_ShortText20 = " & InQuotes(BodyTypeTextBox.Text)
                 Else
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", BodyType_ShortText20 = " & MyNull
                 End If
 
-                If NotEmpty(EngineSeriesTextBox.Text) Then
+                If IsNotEmpty(EngineSeriesTextBox.Text) Then
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", EngineSeries_ShortText20 = " & InQuotes(EngineSeriesTextBox.Text)
                 Else
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", EngineSeries_ShortText20 = " & MyNull
                 End If
 
-                If NotEmpty(FuelTypeTextBox.Text) Then
+                If IsNotEmpty(FuelTypeTextBox.Text) Then
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", FuelType_ShortText20 = " & InQuotes(FuelTypeTextBox.Text)
                 Else
                     VehicleFieldsToUpdate = VehicleFieldsToUpdate & ", FuelType_ShortText20 = " & MyNull
@@ -324,7 +324,6 @@ YearManufactured_ShortText4
 
                 MySelection = VehicleFieldsToUpdate & VehicleFilter
 
-                If NoRecordFound() Then Dim dummy = 1
 
 
         End Select

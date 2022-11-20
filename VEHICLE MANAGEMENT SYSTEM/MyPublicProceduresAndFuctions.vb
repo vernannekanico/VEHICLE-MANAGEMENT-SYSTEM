@@ -1,7 +1,4 @@
 ﻿Module MyPublicProceduresAndFuctions
-    Public Function NotEmpty(text As String) As Boolean
-        Return Not String.IsNullOrEmpty(text)
-    End Function
     Public Function IsEmpty(PassedObject)
         If PassedObject Is Nothing Then Return True
         If PassedObject.GetType.Name = "DateTime" Then Return False

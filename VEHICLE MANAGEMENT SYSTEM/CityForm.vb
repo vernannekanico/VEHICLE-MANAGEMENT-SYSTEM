@@ -31,14 +31,14 @@ Public Class CityForm
         'GET ALL ENTRY PARAMETERS
 
         CitySelectionFilter = ""
-        If NotEmpty(Tunnel1) Then
+        If IsNotEmpty(Tunnel1) Then
             DefaultStateID = GetStateID(Tunnel1)
             CitySelectionFilter = " WHERE StateProvID_LongInteger = " & Str(DefaultStateID) & " "
 
         End If
         If IsNotEmpty(Tunnel2) Then
             DefaultCountryID = GetCountryID(Tunnel2)
-            If NotEmpty(CitySelectionFilter) Then
+            If IsNotEmpty(CitySelectionFilter) Then
                 CitySelectionFilter = CitySelectionFilter & " AND CountryID_LongInteger = " & Str(DefaultCountryID) & " "
             Else
                 CitySelectionFilter = " WHERE CountryID_LongInteger = " & Str(DefaultCountryID) & " "
@@ -141,7 +141,7 @@ Public Class CityForm
         ' setup default here
         StateProvTextBox.Text = DefaultStateName
         CountryTextBox.Text = DefaultCountryName
-        If NotEmpty(SearchCityTextBox.Text) And RecordCount = 0 Then
+        If IsNotEmpty(SearchCityTextBox.Text) And RecordCount = 0 Then
             CityTextBox.Text = SearchCityTextBox.Text
             SearchCityTextBox.Text = ""
         End If
@@ -198,7 +198,7 @@ Public Class CityForm
         If Not CityDataGridViewInitialized Then Exit Sub
         Dim FindKey As String = Trim(SearchCityTextBox.Text)
         Dim SearchCitySelectionFilter = ""
-        If NotEmpty(FindKey) Then
+        If IsNotEmpty(FindKey) Then
             SearchCitySelectionFilter = "  WHERE CityName_ShortText25 LIKE @FindKey "
         End If
         RecordFinderDbControls.AddParam("@FindKey", "%" & FindKey & "%")
@@ -379,7 +379,7 @@ Public Class CityForm
         If Trim(StateProvTextBox.Text) = "" Then
             Tunnel2 = CurrentCountryID ' filter for country
             StateProvForm.Show()
-            If NotEmpty(Tunnel1) Then
+            If IsNotEmpty(Tunnel1) Then
                 CurrentStateID = Tunnel1
                 Tunnel1 = ""
             End If

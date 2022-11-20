@@ -327,7 +327,7 @@
 
 
     Private Sub VehicleTrimTextBox_Click(sender As Object, e As EventArgs) Handles VehicleTrimTextBox.Click
-        If NotEmpty(VehicleTrimTextBox.Text) Then
+        If IsNotEmpty(VehicleTrimTextBox.Text) Then
             If MsgBox("Replace vehicle trim:   " & VehicleTrimTextBox.Text, vbYesNo) = MsgBoxResult.No Then Exit Sub
         End If
         ShowVehicleTrimsTableForm()

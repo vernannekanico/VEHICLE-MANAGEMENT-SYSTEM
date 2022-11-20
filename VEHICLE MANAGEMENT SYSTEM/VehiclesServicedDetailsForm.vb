@@ -42,7 +42,7 @@
         'Refresh datagridviw here
         ' GET RETURNED DATA HERE
         If Me.Enabled = False Then Exit Sub
-        If NotEmpty(Tunnel1) Then
+        If IsNotEmpty(Tunnel1) Then
             Select Case Tunnel1
                 Case "VehicleID"
                     AddNewOwnedVehicle()
@@ -134,10 +134,10 @@
                 ServicedVehicleDetailsFilter = " WHERE ServicedVehicleID_AutoNumber = " & Str(CurrentOwnedVehicleID)
 
                 Dim ServicedVehiclesTableFieldsToReplace = " UPDATE ServicedVehiclesTable SET "
-                If NotEmpty(VINtextBox.Text) Then
+                If IsNotEmpty(VINtextBox.Text) Then
                     ServicedVehiclesTableFieldsToReplace = ServicedVehiclesTableFieldsToReplace & " VinNo_ShortText20 = " & Chr(34) & VINtextBox.Text & Chr(34) & ", "
                 End If
-                If NotEmpty(PlateNumberTextBox.Text) Then
+                If IsNotEmpty(PlateNumberTextBox.Text) Then
                     ServicedVehiclesTableFieldsToReplace = ServicedVehiclesTableFieldsToReplace & " PlateNumber_ShortText20 = " & Chr(34) & PlateNumberTextBox.Text & Chr(34) & ", "
                 End If
                 ServicedVehiclesTableFieldsToReplace = ServicedVehiclesTableFieldsToReplace & " VehicleID_LongInteger = " & CurrentVehicleID.ToString

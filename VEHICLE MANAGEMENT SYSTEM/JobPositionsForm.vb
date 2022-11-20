@@ -32,7 +32,7 @@
         ' ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         ' enable all menus needded on first show
-        If NotEmpty(Tunnel1) Then
+        If IsNotEmpty(Tunnel1) Then
             If Tunnel1 > 0 Then
                 JobPositionsSelectionFilter = " WHERE DepartmentID_LongInteger = " & Str(Tunnel1)
             End If
@@ -336,7 +336,7 @@
         If DepartmentTextBox.Text = "" Then
             ShowDepartmenForm()
         End If
-        If NotEmpty(DepartmentTextBox.Text) Then
+        If IsNotEmpty(DepartmentTextBox.Text) Then
             JobPositionNameTextBox.Enabled = True
             SystemAccessLevelTextBox.Enabled = True
         Else

@@ -311,7 +311,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
 
         Dim RowsHeight = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
-            RowsHeight = RowsHeight + PurchaseOrdersItemsDataGridView.Rows(i).Height
+            RowsHeight += PurchaseOrdersItemsDataGridView.Rows(i).Height
         Next
         PurchaseOrdersItemsGroupBox.Height = RowsHeight + PurchaseOrdersItemsDataGridView.ColumnHeadersHeight + 60
 
@@ -622,8 +622,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     End Sub
     Private Function AChangeOccuredInPOHeaderEdit()
         Dim xxxPurchaseOrderDate = Convert.ToDateTime(PurchaseOrderDate.Text)
-        Dim xxxPurchaseOrderDate_ShortDate = NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersDataGridViewRow).Value)
-        xxxPurchaseOrderDate_ShortDate = Convert.ToDateTime(xxxPurchaseOrderDate_ShortDate)
+        Dim xxxPurchaseOrderDate_ShortDate = Convert.ToDateTime(NotNull(PurchaseOrdersDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersDataGridViewRow).Value))
 
 
 
@@ -669,12 +668,11 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         FillPurchaseOrdersDataGridView()
     End Sub
     Private Sub SetPurchaseOrdersSelectionFilter(Passed As String)
-        Dim PassedStatusSequence = ""
         If Passed = "Outstanding" Then
-            PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", "Approved and Finalized", 1)
+            Dim PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", "Approved and Finalized", 1)
             PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 1, Me, "Outstanding for Action", CurrentUserFilter)
         Else
-            PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", Passed, 1)
+            Dim PassedStatusSequence = GetStatusIdFor("PurchaseOrdersTable", Passed, 1)
             PurchaseOrdersSelectionFilter = SetupTableSelectionFilter(PassedStatusSequence, 2, Me, "Outstanding for Action", CurrentUserFilter)
         End If
         FillPurchaseOrdersDataGridView()
@@ -771,7 +769,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         RequisitionItemUnitTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsRequestedTable.Unit_ShortText3", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         PartDescTextBox.Text = NotNull(PurchaseOrdersItemsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentPurchaseOrdersItemsDataGridViewRow).Value)
         SavedProductPartID = CurrentProductPartId
-        If NotEmpty(RequisitionItemProductDescText.Text) Then
+        If IsNotEmpty(RequisitionItemProductDescText.Text) Then
             CopyProductButton.Visible = True
         Else
             CopyProductButton.Visible = False
@@ -970,17 +968,16 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     Private Sub CalculatePOTotals()
         If PurchaseOrdersItemsRecordCount < 1 Then Exit Sub
         'CALCULATE ITEM TOTAL
-        Dim xxComputedItemDiscount = 0
-        Dim ItemTotalCost = 0
+        Dim ItemTotalCost As Integer
         Dim POTotalCost = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
             Dim xxItemQuantity = Val(NotNull(PurchaseOrdersItemsDataGridView.Item("POQty_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value))
             Dim xxUnitPrice = Val(NotNull(PurchaseOrdersItemsDataGridView.Item("Price_Currency", CurrentPurchaseOrdersItemsDataGridViewRow).Value))
             Dim xxItemDiscount = Val(NotNull(PurchaseOrdersItemsDataGridView.Item("ItemDiscount_Integer", CurrentPurchaseOrdersItemsDataGridViewRow).Value))
-            CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
-            xxComputedItemDiscount = (xxItemDiscount * 10 / 100) * (xxItemQuantity * xxUnitPrice)
+            Dim CurrentProductPartId = PurchaseOrdersItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentPurchaseOrdersItemsDataGridViewRow).Value
+            Dim xxComputedItemDiscount = (xxItemDiscount * 10 / 100) * (xxItemQuantity * xxUnitPrice)
             ItemTotalCost = (xxItemQuantity * xxUnitPrice) - xxComputedItemDiscount
-            POTotalCost = POTotalCost + ItemTotalCost
+            POTotalCost += POTotalCost + ItemTotalCost
         Next
         POTotalItemCostTextBox.Text = POTotalCost.ToString
         POTotalBeforeTaxTextBox.Text = POTotalCost.ToString - Val(NotNull(POLumpSumDiscountTextBox.Text))
@@ -1079,7 +1076,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     End Sub
     Private Sub UpdatePOStatus(PassedStatus)
         Dim RecordFilter = " WHERE PurchaseOrderID_AutoNumber = " & Str(CurrentPurchaseOrderID)
-        Dim SetCommand = ""
+        Dim SetCommand As String
         If PassedStatus = 1 Then
             SetCommand = " SET PurchaseOrderStatusID_LongInteger = " & Str(GetStatusIdFor("PurchaseOrdersTable", "For Approval"))
         Else
@@ -1126,7 +1123,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     Private Sub UpdateDeliveredItems()
         MsgBox("This routine has been tested")
         If MsgBox("Have you Selected All Delivered Items from this Purchase Order ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        Dim xxselected = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
             If Not PurchaseOrdersItemsDataGridView.Rows(i).Selected Then Continue For
             Dim xxPurchaseOrdersItemID = PurchaseOrdersItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", i).Value
