@@ -28,10 +28,6 @@
             Return False
         End If
 
-        If NotEmpty(RecordFinderDbControls.Exception) Then
-            MsgBox(RecordFinderDbControls.Exception)
-            Return False
-        End If
         If RecordFinderDbControls.MyAccessDbDataTable.Rows.Count = 0 Then
             Return False
         Else

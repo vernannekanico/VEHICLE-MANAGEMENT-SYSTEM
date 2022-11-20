@@ -621,7 +621,6 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
 
     Private Sub PODetailsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PODetailsToolStripMenuItem.Click
         Tunnel1 = DeliveryItemsDataGridView.Item("PurchaseOrderID_LongInteger", CurrentDeliveryItemsDataGridViewRow).Value
-
         ShowCalledForm(Me, PurchaseOrdersForm)
     End Sub
 

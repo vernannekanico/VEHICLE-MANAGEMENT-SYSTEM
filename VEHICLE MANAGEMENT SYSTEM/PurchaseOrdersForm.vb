@@ -59,7 +59,10 @@
                     SetPurchaseOrdersSelectionFilter("Outstanding")
                 Case "Store Keeper" 'VIEW MODE ONLY
                     'VIEW MODE ONLY
+                    PurchaseOrdersSelectionFilter = " WHERE PurchaseOrderID_AutoNumber =  " & Tunnel1
+                    FillPurchaseOrdersDataGridView()
                     SetToDeliveryMode()
+                    PurchaseOrdersItemsGroupBox.Enabled = True
             End Select
             PurchaseOrderDetailsGroupBox.Enabled = False
             DeliveredToolStripMenuItem.Visible = False
