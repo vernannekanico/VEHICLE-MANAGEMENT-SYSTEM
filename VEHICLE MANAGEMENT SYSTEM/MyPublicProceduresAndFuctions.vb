@@ -23,6 +23,10 @@
     End Function
     Public Function ThereIsARecord()
         RecordFinderDbControls.MyDbCommand(MySelection)
+        If Not String.IsNullOrEmpty(RecordFinderDbControls.Exception) Then
+            MsgBox(RecordFinderDbControls.Exception)
+            Return False
+        End If
 
         If NotEmpty(RecordFinderDbControls.Exception) Then
             MsgBox(RecordFinderDbControls.Exception)
@@ -87,7 +91,7 @@
 
     End Function
     Public Function GetNewWorkOrderID(ServiceDate_DateTime, VehicleMilage_Integer)
-        Dim WorkOrderID1 = ""
+        Dim WorkOrderID1 As String
         Dim WorkOrderID2 = ""
 
         If IsDBNull(ServiceDate_DateTime) Then
@@ -111,8 +115,8 @@
     End Function
     Public Function TheseAreNotEqual(PassedVariable1 As Object, PassedVariable2 As Object)
         If IsEmpty(PassedVariable2) And IsEmpty(PassedVariable1) Is Nothing Then Return False
-        If PassedVariable2 Is Nothing And Not PassedVariable1 Is Nothing Then Return True
-        If PassedVariable1 Is Nothing And Not PassedVariable2 Is Nothing Then Return True
+        If PassedVariable2 Is Nothing And PassedVariable1 IsNot Nothing Then Return True
+        If PassedVariable1 Is Nothing And PassedVariable2 IsNot Nothing Then Return True
         If PassedVariable1.GetType.Name = "String" Then
             If PassedVariable2.GetType.Name = "Decimal" Then
                 PassedVariable1 = CDec(PassedVariable1)
@@ -183,8 +187,7 @@
             MsgBox("Unsuccesful insert")
             Return -1
         End If
-
-        Dim SortField = ""
+        Dim SortField As String
         If InStr(SubjectTable, "iesTable") > 0 Then
             SortField = Replace(SubjectTable, "iesTable", "") & "yID_AutoNumber DESC"
         Else
@@ -230,8 +233,7 @@
             Case 5
                 logicalOperator = " > "
         End Select
-        Dim RecordsSelectionFilter = ""
-        RecordsSelectionFilter = " StatusSequence_LongInteger " & logicalOperator & PassedStatusSequence.ToString
+        Dim RecordsSelectionFilter = " StatusSequence_LongInteger " & logicalOperator & PassedStatusSequence.ToString
         If IsNotEmpty(FixedFilter) Then
             RecordsSelectionFilter = FixedFilter & " AND " & RecordsSelectionFilter
         End If
@@ -542,8 +544,7 @@
             End If
             RecordsToDisplay = PassedRecordCount
         End If
-        Dim TotalRowsHeight = 0
-        TotalRowsHeight = RecordsToDisplay * DataGridViewRowHeight
+        Dim TotalRowsHeight = RecordsToDisplay * DataGridViewRowHeight
         PassedGroupBox.Height = (PassedDataGridView.ColumnHeadersHeight) + TotalRowsHeight + 44
     End Sub
     Public Sub ShowCalledForm(PassedCallingForm As Form, PassedCalledForm As Form)

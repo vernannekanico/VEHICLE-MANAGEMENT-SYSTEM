@@ -6,6 +6,7 @@
     Private ProductPartsPackingsDataGridViewAlreadyFormatted = False
     Private CurrentProductPartsPackingID = -1
     Private CurrentProductPartsPackingsRow As Integer = -1
+    Private PurposeOfEntry = ""
 
     Private CurrentProductPartID = Tunnel2
     Private SavedCallingForm As Form
