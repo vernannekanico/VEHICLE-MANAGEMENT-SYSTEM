@@ -5,7 +5,6 @@
     Private DeliveriesRecordCount As Integer = -1
     Private CurrentDeliveryID As Integer = -1
     Private CurrentDeliveriesDataGridViewRow As Integer = -1
-    Private CurrentDeliveriesStatusSelection = 0
     Private DeliveriesDataGridViewAlreadyFormated = False
     Private DeliveryStatus = -1
 

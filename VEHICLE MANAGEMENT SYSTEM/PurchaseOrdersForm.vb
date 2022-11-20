@@ -7,20 +7,16 @@
     Private CurrentPurchaseOrderRevision As Integer = 0
     Private CurrentPurchaseOrdersDataGridViewRow As Integer = -1
     Private PurchaseOrdersDataGridViewAlreadyFormated = False
-    Private PurchaseOrderStatus = ""
     Private CurrentPOStatus = -1
 
     Private PurchaseOrdersItemsFieldsToSelect = ""
-    Private PurchaseOrdersItemsTableLinks = ""
     Private PurchaseOrdersItemsSelectionFilter = ""
     Private PurchaseOrdersItemsSelectionOrder = ""
     Private PurchaseOrdersItemsRecordCount As Integer = -1
     Private CurrentPurchaseOrdersItemID As Integer = -1
     Private CurrentPurchaseOrdersItemsDataGridViewRow As Integer = -1
     Private PurchaseOrdersItemsDataGridViewAlreadyFormated = False
-    Private PurchaseOrdersItemStatus = ""
 
-    Private PurchaseStatusSelection = 0
     Private PurposeOfEntry As String
     Private CurrentPackagePriceID = -1
     Private CurrentSupplierID = -1
@@ -557,17 +553,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SavePurchaseOrderToolStripMenuItem.Click
         DoCommonSaveRoutine()
     End Sub
-    Private Function AChangeOccuredInPOEdit()
-
-        If TheseAreNotEqual(CurrentSupplierID, NotNull(PurchaseOrdersDataGridView.Item("SupplierID_LongInteger", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
-        If TheseAreNotEqual(PurchaseOrderDate.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("PurchaseOrderDate_ShortDate", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
-        If TheseAreNotEqual(Val(POLumpSumDiscountTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("Discount_Integer", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
-        If TheseAreNotEqual(Val(POTaxAmountTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("TaxedAmount_Double", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
-        If TheseAreNotEqual(Val(POTotalTextBox.Text), NotNull(PurchaseOrdersDataGridView.Item("POTotal_Double", CurrentPurchaseOrdersDataGridViewRow).Value)) Then Return True
-        If TheseAreNotEqual(POItemProductDescTextBox.Text, NotNull(PurchaseOrdersItemsDataGridView.Item("ProductsPartsOrderedTable.ManufacturerDescription_ShortText250", CurrentPurchaseOrdersItemsDataGridViewRow).Value)) Then Return True
-        Return False
-
-    End Function
     Private Sub DoCommonSaveRoutine()
         If PurchaseOrderDetailsGroupBox.Visible Then
             SavePOHeaderChanges()
