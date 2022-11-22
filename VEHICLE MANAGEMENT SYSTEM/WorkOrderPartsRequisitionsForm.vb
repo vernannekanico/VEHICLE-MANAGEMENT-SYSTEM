@@ -25,7 +25,6 @@ Public Class WorkOrderPartsRequisitionsForm
     Private CurrentAvailableStocksRow As Integer = -1
     Private AvailableStocksRecordCount As Integer = -1
     Private CurrentAvailableStockID = -1
-    Private CurrentAvailableStockStatus As String
     Private AvailableStocksDataGridViewAlreadyFormated = False
 
     Private WorkOrderIssuedPartsFieldsToSelect = ""

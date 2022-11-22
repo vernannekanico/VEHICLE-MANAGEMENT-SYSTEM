@@ -203,7 +203,7 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
 
     Private Sub InventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
         Tunnel3 = 2
-        ShowCalledForm(Me, ProductsPartsForm)
+        ShowCalledForm(Me, InventoriesForm)
     End Sub
 
     Private Sub FromCustomersToolStripMenuItem_Click(sender As Object, e As EventArgs)

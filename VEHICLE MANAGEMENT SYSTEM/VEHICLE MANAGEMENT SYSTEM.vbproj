@@ -166,10 +166,10 @@
     <Compile Include="PrintBillsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InventoryForm.Designer.vb">
-      <DependentUpon>InventoryForm.vb</DependentUpon>
+    <Compile Include="InventoriesForm.Designer.vb">
+      <DependentUpon>InventoriesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="InventoryForm.vb">
+    <Compile Include="InventoriesForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RequisitionsForm.Designer.vb">
@@ -486,6 +486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DepartmentsForm.resx">
       <DependentUpon>DepartmentsForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InventoriesForm.resx">
+      <DependentUpon>InventoriesForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PurchasedItemsForm.resx">
       <DependentUpon>PurchasedItemsForm.vb</DependentUpon>
