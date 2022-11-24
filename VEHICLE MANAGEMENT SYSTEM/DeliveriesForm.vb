@@ -28,9 +28,10 @@
     Private Sub ReceiveItemsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
 
-        Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
+        Me.Top = BottomOf(VehicleManagementSystemForm.VehicleManagementMenuStrip)
+        '.Top +VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         DeliveriesGroupBox.Left = 1
-        DeliveriesGroupBox.Top = DeliveriesMenuStrip.Top + DeliveriesMenuStrip.Height + 5
+        DeliveriesGroupBox.Top = BottomOf(DeliveriesMenuStrip)
         DeliveryHeaderDetailsGroupBox.Top = DeliveriesGroupBox.Top
         'Initiate formatting of Deliveries view
         DeliveryItemsSelectionFilter = " Where DeliveryItemID_AutoNumber = -1"
@@ -49,7 +50,8 @@
         Me.Left = (VehicleManagementSystemForm.Width - Me.Width) / 2
         DeliveryItemsGroupBox.Left = ((Me.Width - DeliveryItemsGroupBox.Width) / 2) + 1
         DeliveryItemDetailsGroupBox.Left = DeliveriesGroupBox.Left
-        DeliveryItemDetailsGroupBox.Top = DeliveriesGroupBox.Top + 50
+        '        DeliveryItemDetailsGroupBox.Top = DeliveriesGroupBox.Top + 50
+        DeliveryItemDetailsGroupBox.Top = BottomOf(DeliveriesGroupBox)
         Me.Width = DeliveryItemsGroupBox.Width + DeliveryHeaderDetailsGroupBox.Width + 2
 
     End Sub
@@ -230,7 +232,7 @@ FROM (((((((DeliveryItemsTable LEFT JOIN PurchaseOrdersItemsTable ON DeliveryIte
 
         SetGroupBoxHeight(15, DeliveryItemsRecordCount, DeliveryItemsGroupBox, DeliveryItemsDataGridView)
 
-        DeliveryItemsGroupBox.Top = DeliveryHeaderDetailsGroupBox.Top + DeliveryHeaderDetailsGroupBox.Height + 5
+        DeliveryItemsGroupBox.Top = BottomOf(DeliveryHeaderDetailsGroupBox)
     End Sub
 
 

@@ -24,7 +24,6 @@ Partial Class InventoriesForm
     Private Sub InitializeComponent()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -60,6 +59,7 @@ Partial Class InventoriesForm
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.ManufacturerPartNoLabel = New System.Windows.Forms.Label()
+        Me.AddProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MyStandardsFormMenuStrip.SuspendLayout()
         Me.SearchToolStrip.SuspendLayout()
         CType(Me.InventoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -78,12 +78,6 @@ Partial Class InventoriesForm
         Me.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem"
         Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
         Me.SelectToolStripMenuItem.Text = "Select"
-        '
-        'AddProductToolStripMenuItem
-        '
-        Me.AddProductToolStripMenuItem.Name = "AddProductToolStripMenuItem"
-        Me.AddProductToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
-        Me.AddProductToolStripMenuItem.Text = "Add"
         '
         'EditProductToolStripMenuItem
         '
@@ -425,7 +419,13 @@ Partial Class InventoriesForm
         Me.ManufacturerPartNoLabel.TabIndex = 40
         Me.ManufacturerPartNoLabel.Text = "Manufacturer's Part Number"
         '
-        'InventoryForm
+        'AddProductToolStripMenuItem
+        '
+        Me.AddProductToolStripMenuItem.Name = "AddProductToolStripMenuItem"
+        Me.AddProductToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
+        Me.AddProductToolStripMenuItem.Text = "Add"
+        '
+        'InventoriesForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -436,7 +436,7 @@ Partial Class InventoriesForm
         Me.Controls.Add(Me.MyStandardsFormMenuStrip)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.Name = "InventoryForm"
+        Me.Name = "InventoriesForm"
         Me.Text = "InventoryForm"
         Me.MyStandardsFormMenuStrip.ResumeLayout(False)
         Me.MyStandardsFormMenuStrip.PerformLayout()
@@ -453,7 +453,6 @@ Partial Class InventoriesForm
 
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SelectToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
@@ -489,4 +488,5 @@ Partial Class InventoriesForm
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
     Friend WithEvents ManufacturerPartNoLabel As Label
+    Friend WithEvents AddProductToolStripMenuItem As ToolStripMenuItem
 End Class
