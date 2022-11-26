@@ -489,6 +489,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InventoriesForm.resx">
       <DependentUpon>InventoriesForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PurchasedItemsForm.resx">
       <DependentUpon>PurchasedItemsForm.vb</DependentUpon>

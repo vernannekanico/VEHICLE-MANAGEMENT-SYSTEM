@@ -30,6 +30,7 @@ Partial Class InventoriesForm
         Me.EmployeeDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MyStandardsFormMenuStrip = New System.Windows.Forms.MenuStrip()
+        Me.AddProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.SearchMyStandardTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.SearchToolStrip = New System.Windows.Forms.ToolStrip()
@@ -59,7 +60,6 @@ Partial Class InventoriesForm
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.ManufacturerPartNoLabel = New System.Windows.Forms.Label()
-        Me.AddProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MyStandardsFormMenuStrip.SuspendLayout()
         Me.SearchToolStrip.SuspendLayout()
         CType(Me.InventoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,6 +120,12 @@ Partial Class InventoriesForm
         Me.MyStandardsFormMenuStrip.Size = New System.Drawing.Size(1200, 31)
         Me.MyStandardsFormMenuStrip.TabIndex = 84
         Me.MyStandardsFormMenuStrip.Text = "MenuStrip1"
+        '
+        'AddProductToolStripMenuItem
+        '
+        Me.AddProductToolStripMenuItem.Name = "AddProductToolStripMenuItem"
+        Me.AddProductToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
+        Me.AddProductToolStripMenuItem.Text = "Add"
         '
         'ToolStripLabel1
         '
@@ -230,7 +236,6 @@ Partial Class InventoriesForm
         '
         'PartSpecificationTextBox
         '
-        Me.PartSpecificationTextBox.Enabled = False
         Me.PartSpecificationTextBox.Location = New System.Drawing.Point(279, 49)
         Me.PartSpecificationTextBox.Name = "PartSpecificationTextBox"
         Me.PartSpecificationTextBox.ReadOnly = True
@@ -260,10 +265,10 @@ Partial Class InventoriesForm
         '
         'PackingTextBox
         '
-        Me.PackingTextBox.Enabled = False
         Me.PackingTextBox.Location = New System.Drawing.Point(279, 302)
         Me.PackingTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.PackingTextBox.Name = "PackingTextBox"
+        Me.PackingTextBox.ReadOnly = True
         Me.PackingTextBox.Size = New System.Drawing.Size(176, 26)
         Me.PackingTextBox.TabIndex = 119
         Me.PackingTextBox.Visible = False
@@ -290,6 +295,7 @@ Partial Class InventoriesForm
         '
         Me.LocationTextBox.Location = New System.Drawing.Point(279, 443)
         Me.LocationTextBox.Name = "LocationTextBox"
+        Me.LocationTextBox.ReadOnly = True
         Me.LocationTextBox.Size = New System.Drawing.Size(98, 26)
         Me.LocationTextBox.TabIndex = 58
         '
@@ -335,6 +341,7 @@ Partial Class InventoriesForm
         '
         Me.BrandNameTextBox.Location = New System.Drawing.Point(279, 236)
         Me.BrandNameTextBox.Name = "BrandNameTextBox"
+        Me.BrandNameTextBox.ReadOnly = True
         Me.BrandNameTextBox.Size = New System.Drawing.Size(220, 26)
         Me.BrandNameTextBox.TabIndex = 53
         '
@@ -352,6 +359,7 @@ Partial Class InventoriesForm
         '
         Me.UnitTextBox.Location = New System.Drawing.Point(279, 270)
         Me.UnitTextBox.Name = "UnitTextBox"
+        Me.UnitTextBox.ReadOnly = True
         Me.UnitTextBox.Size = New System.Drawing.Size(98, 26)
         Me.UnitTextBox.TabIndex = 48
         '
@@ -367,9 +375,9 @@ Partial Class InventoriesForm
         '
         'SystemPartDescriptionTextBox
         '
-        Me.SystemPartDescriptionTextBox.Enabled = False
         Me.SystemPartDescriptionTextBox.Location = New System.Drawing.Point(279, 16)
         Me.SystemPartDescriptionTextBox.Name = "SystemPartDescriptionTextBox"
+        Me.SystemPartDescriptionTextBox.ReadOnly = True
         Me.SystemPartDescriptionTextBox.Size = New System.Drawing.Size(457, 26)
         Me.SystemPartDescriptionTextBox.TabIndex = 45
         '
@@ -378,14 +386,15 @@ Partial Class InventoriesForm
         Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(279, 125)
         Me.ManufacturerPartDescTextBox.Multiline = True
         Me.ManufacturerPartDescTextBox.Name = "ManufacturerPartDescTextBox"
+        Me.ManufacturerPartDescTextBox.ReadOnly = True
         Me.ManufacturerPartDescTextBox.Size = New System.Drawing.Size(457, 68)
         Me.ManufacturerPartDescTextBox.TabIndex = 44
         '
         'ManufacturerPartNoTextBox
         '
-        Me.ManufacturerPartNoTextBox.Enabled = False
         Me.ManufacturerPartNoTextBox.Location = New System.Drawing.Point(279, 94)
         Me.ManufacturerPartNoTextBox.Name = "ManufacturerPartNoTextBox"
+        Me.ManufacturerPartNoTextBox.ReadOnly = True
         Me.ManufacturerPartNoTextBox.Size = New System.Drawing.Size(457, 26)
         Me.ManufacturerPartNoTextBox.TabIndex = 43
         '
@@ -418,12 +427,6 @@ Partial Class InventoriesForm
         Me.ManufacturerPartNoLabel.Size = New System.Drawing.Size(208, 20)
         Me.ManufacturerPartNoLabel.TabIndex = 40
         Me.ManufacturerPartNoLabel.Text = "Manufacturer's Part Number"
-        '
-        'AddProductToolStripMenuItem
-        '
-        Me.AddProductToolStripMenuItem.Name = "AddProductToolStripMenuItem"
-        Me.AddProductToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
-        Me.AddProductToolStripMenuItem.Text = "Add"
         '
         'InventoriesForm
         '

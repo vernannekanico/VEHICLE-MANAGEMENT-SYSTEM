@@ -45,7 +45,7 @@ Partial Class StockLocationsForm
         Me.Label1 = New System.Windows.Forms.Label()
         Me.StockLOcationSearchToolStrip = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.StockLocationTextBox = New System.Windows.Forms.ToolStripTextBox()
+        Me.StockLocationSearchTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.StocksLocationsMainMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ActiveDGViewToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
@@ -310,7 +310,7 @@ Partial Class StockLocationsForm
         'StockLOcationSearchToolStrip
         '
         Me.StockLOcationSearchToolStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StockLOcationSearchToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.StockLocationTextBox})
+        Me.StockLOcationSearchToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.StockLocationSearchTextBox})
         Me.StockLOcationSearchToolStrip.Location = New System.Drawing.Point(0, 31)
         Me.StockLOcationSearchToolStrip.Name = "StockLOcationSearchToolStrip"
         Me.StockLOcationSearchToolStrip.Padding = New System.Windows.Forms.Padding(0, 0, 2, 0)
@@ -324,12 +324,12 @@ Partial Class StockLocationsForm
         Me.ToolStripLabel1.Size = New System.Drawing.Size(35, 26)
         Me.ToolStripLabel1.Text = "Key"
         '
-        'StockLocationTextBox
+        'StockLocationSearchTextBox
         '
-        Me.StockLocationTextBox.Font = New System.Drawing.Font("Segoe UI", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StockLocationTextBox.Name = "StockLocationTextBox"
-        Me.StockLocationTextBox.Size = New System.Drawing.Size(300, 29)
-        Me.StockLocationTextBox.Text = "Search"
+        Me.StockLocationSearchTextBox.Font = New System.Drawing.Font("Segoe UI", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.StockLocationSearchTextBox.Name = "StockLocationSearchTextBox"
+        Me.StockLocationSearchTextBox.Size = New System.Drawing.Size(300, 29)
+        Me.StockLocationSearchTextBox.Text = "Search"
         '
         'StocksLocationsMainMenuStrip
         '
@@ -531,7 +531,7 @@ Partial Class StockLocationsForm
     Friend WithEvents Label1 As Label
     Friend WithEvents StockLOcationSearchToolStrip As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents StockLocationTextBox As ToolStripTextBox
+    Friend WithEvents StockLocationSearchTextBox As ToolStripTextBox
     Friend WithEvents StocksLocationsMainMenuStrip As MenuStrip
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SelectToolStripMenuItem As ToolStripMenuItem

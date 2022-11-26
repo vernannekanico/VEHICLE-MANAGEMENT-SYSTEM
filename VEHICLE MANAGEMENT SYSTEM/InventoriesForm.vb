@@ -6,12 +6,11 @@
     Private InventoriesRecordCount As Integer = -1
     Private CurrentProductPartID = -1
     Private InventoriesDataGridViewAlreadyFormated = False
-
     Private SavedCallingForm As Form
-
     Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SavedCallingForm = CallingForm
         FillInventoriesDataGridView()
+        InventoriesGroupBox.Top = BottomOf(SearchToolStrip)
     End Sub
     Private Sub FillInventoriesDataGridView()
         InventoriesSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld DESC "
@@ -28,6 +27,28 @@ BrandsTable.BrandID_Autonumber,
 BrandsTable.BrandName_ShortText20, 
 ProductsPartsTable.ProductsPartID_Autonumber
 FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
+"
+
+        InventoriesFieldsToSelect = " 
+SELECT ProductsPartsTable.Selected, 
+ProductsPartsTable.MasterCodeBookID_LongInteger, 
+MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+PartsSpecificationsTable.PartsSpecificationID_AutoNumber, 
+PartsSpecificationsTable.PartSpecifications_ShortText255, 
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
+ProductsPartsTable.ManufacturerDescription_ShortText250, 
+ProductsPartsTable.Unit_ShortText3, 
+BrandsTable.BrandID_Autonumber, 
+BrandsTable.BrandName_ShortText20, 
+StocksTable.QuantityInStock_Double,
+StocksTable.MinimumQuantity_Double, 
+StocksTable.StocksLocationID_LongInteger, 
+StocksLocationsTable.LocationCode_ShortText11,
+ProductPartsPackingsTable.QuantityPerPack_Double, 
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
+ProductsPartsTable.ProductsPartID_Autonumber
+FROM ((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) LEFT JOIN ProductPartsPackingsTable ON StocksTable.ProductPartID_LongInteger = ProductPartsPackingsTable.ProductPartID_LongInteger
 "
 
         MySelection = InventoriesFieldsToSelect & InventoriesSelectionFilter & InventoriesSelectionOrder
@@ -134,6 +155,11 @@ FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable O
                     InventoriesDataGridView.Columns.Item(i).HeaderText = "UnitOfTheQuantity"
                     InventoriesDataGridView.Columns.Item(i).Width = 70
                     InventoriesDataGridView.Columns.Item(i).Visible = True
+                Case "LocationCode_ShortText11"
+                    InventoriesDataGridView.Columns.Item(i).HeaderText = "location"
+                    InventoriesDataGridView.Columns.Item(i).Width = 120
+                    InventoriesDataGridView.Columns.Item(i).Visible = True
+
             End Select
 
             If InventoriesDataGridView.Columns.Item(i).Visible = True Then
@@ -145,6 +171,7 @@ FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable O
         Else
             HorizontalCenter(InventoriesGroupBox, Me)
         End If
+        InventoriesGroupBox.Top = BottomOf(SearchToolStrip)
     End Sub
     Private Sub InventoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles InventoriesDataGridView.RowEnter
         If ShowInTaskbarFlag Then Exit Sub
@@ -153,14 +180,10 @@ FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable O
 
         CurrentInventoriesRow = e.RowIndex
         CurrentProductPartID = InventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentInventoriesRow).Value
-
-
     End Sub
-
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
-
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductToolStripMenuItem.Click
         SetupEditMode()
     End Sub
@@ -204,7 +227,6 @@ FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable O
             JustExecuteMySelection()
             FillInventoriesDataGridView()
         End If
-
     End Sub
     Private Sub LoadProductDetails()
         FillField(ProductSpecificationTextBox.Text, InventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentInventoriesRow).Value)
@@ -215,7 +237,7 @@ FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable O
         FillField(UnitTextBox.Text, InventoriesDataGridView.Item("Unit_ShortText3", CurrentInventoriesRow).Value)
         FillField(AvailableQuantitiesTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value)
         FillField(MinimumQantityTextBox.Text, InventoriesDataGridView.Item("MinimumQuantity_Double", CurrentInventoriesRow).Value)
-        FillField(LocationTextBox.Text, InventoriesDataGridView.Item("Location_ShortText10", CurrentInventoriesRow).Value)
+        FillField(LocationTextBox.Text, InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value)
         If IsNotEmpty(InventoriesDataGridView.Item("QuantityPerPack_Double", CurrentInventoriesRow).Value) Then
             PackingTextBox.Text = InventoriesDataGridView.Item("QuantityPerPack_Double", CurrentInventoriesRow).Value.ToString & Space(1) &
                                       InventoriesDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentInventoriesRow).Value.ToString &
@@ -226,5 +248,26 @@ FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable O
             PackingTextBox.Text = ""
             PackingTextBox.Visible = False
         End If
+    End Sub
+    Private Sub LocationTextBox_Click(sender As Object, e As EventArgs) Handles LocationTextBox.Click
+        If Not LocationTextBox.Text = "" Then
+            If MsgBox("CHANGE BRAND?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                Exit Sub
+            End If
+            StockLocationsForm.StockLocationSearchTextBox.Text = LocationTextBox.Text
+        End If
+        ShowCalledForm(Me, StockLocationsForm)
+    End Sub
+
+    Private Sub InventoriesForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+        If Me.Enabled = False Then Exit Sub
+        CallingForm = SavedCallingForm
+
+        Select Case Tunnel1
+            Case "Tunnel3IsStocksLocationCode"
+                LocationTextBox.Text = Tunnel3
+        End Select
+
+        FillInventoriesDataGridView()
     End Sub
 End Class

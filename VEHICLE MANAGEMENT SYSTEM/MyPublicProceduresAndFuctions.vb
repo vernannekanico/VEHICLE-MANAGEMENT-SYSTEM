@@ -335,7 +335,6 @@
     Public Function BottomOf(PassedObject)
         Return PassedObject.top + PassedObject.height
     End Function
-
     Public Sub SetFormWidthAndGroupBoxLeft(ActiveForm As Form,
                                            ActiveFormMenuStrip As MenuStrip,
                                            GroupBox1 As GroupBox,
@@ -395,7 +394,6 @@
     Public Sub HorizontalCenter(ObjectToCenter As Object, FormToCenterIn As Object)
         ObjectToCenter.left = (FormToCenterIn.width - ObjectToCenter.width) / 2
     End Sub
-
     Public Sub JustExecuteMySelection()
         If NoRecordFound() Then Exit Sub
     End Sub

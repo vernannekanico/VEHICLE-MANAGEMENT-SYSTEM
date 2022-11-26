@@ -263,7 +263,7 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Select Case ActiveDGViewToolStripTextBox.Text
             Case "Stocks Location"
-                Tunnel1 = "CurrentStocksLocationCode"
+                Tunnel1 = "Tunnel3IsStocksLocationCode"
                 Tunnel2 = -1
                 Tunnel3 = CurrentStocksLocationCode_ShortText11
                 DoCommonHouseKeeping(Me, SavedCallingForm)
@@ -300,7 +300,6 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
                 StorageTypesGroupBox.Visible = False
         End Select
     End Sub
-
     Private Sub NewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NewToolStripMenuItem.Click
         NewToolStripMenuItem.Visible = False
         AnotherToolStripMenuItem.Visible = False
@@ -371,7 +370,6 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
         AnotherToolStripMenuItem.Text = ""
         AnotherToolStripMenuItem.Visible = False
     End Sub
-
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem.Click
         EditMode = "Edit"
         LoadStockLocationDetails()
@@ -391,7 +389,6 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
         BayTextBox.Text = StocksLocationsDataGridView.Item("Bay_ShortText1", CurrentStocksLocationsRow).Value
         LevelTextBox.Text = StocksLocationsDataGridView.Item("Level_Byte", CurrentStocksLocationsRow).Value
     End Sub
-
     Private Sub RemoveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveToolStripMenuItem.Click
         EditMode = "Remove"
         Select Case ActiveDGViewToolStripTextBox.Text
@@ -407,7 +404,6 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
                 End If
         End Select
     End Sub
-
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         CheckChangesCaller = "Save"
         'VALIDATE ENTRIES
@@ -700,7 +696,6 @@ FROM StorageTypesTable
             AddNewStorageType()
         End If
     End Sub
-
     Private Sub DisableDataGridViewMenus()
         SelectToolStripMenuItem.Visible = False
         EditToolStripMenuItem.Visible = False
@@ -717,7 +712,6 @@ FROM StorageTypesTable
         StoragesLocationsGroupBox.Visible = False
         DisableDataGridViewMenus()
     End Sub
-
     Private Sub StoragesLocationsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles StoragesLocationsGroupBox.VisibleChanged
         If StoragesLocationsGroupBox.Visible Then
             '          NewToolStripMenuItem.Visible = True   TRIED DELETED
@@ -737,13 +731,10 @@ FROM StorageTypesTable
             StockLocationDetailsGroupBox.Enabled = True
         End If
     End Sub
-
     Private Sub StocksLocationsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles StocksLocationsGroupBox.EnabledChanged
     End Sub
-
     Private Sub StoragesLocationsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles StoragesLocationsGroupBox.EnabledChanged
     End Sub
-
     Private Sub InputBoxGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles InputBoxGroupBox.VisibleChanged
         If InputBoxGroupBox.Visible Then
             DisableAllDataGridViews()
@@ -754,7 +745,6 @@ FROM StorageTypesTable
             SaveToolStripMenuItem.Visible = False
         End If
     End Sub
-
     Private Sub DescriptionTextBox_TextChanged(sender As Object, e As EventArgs) Handles DescriptionTextBox.TextChanged
         If IsNotEmpty(DescriptionTextBox.Text) Then DescriptionCodeTextBox.Enabled = True
     End Sub
@@ -807,7 +797,6 @@ FROM StorageTypesTable
             AnotherToolStripMenuItem.Visible = True
         End If
     End Sub
-
     Private Sub SubStorageTypeTextBox_Click(sender As Object, e As EventArgs) Handles SubStorageTypeTextBox.Click
         ActiveDGViewToolStripTextBox.Text = "Sub Storage Type"
         WhichStorageType = "Sub"
@@ -820,7 +809,6 @@ FROM StorageTypesTable
             AnotherToolStripMenuItem.Visible = True
         End If
     End Sub
-
     Private Sub BayTextBox_Click(sender As Object, e As EventArgs) Handles BayTextBox.Click
         NewToolStripMenuItem.Visible = False
         ActiveDGViewToolStripTextBox.Text = "Bay"
@@ -830,7 +818,6 @@ FROM StorageTypesTable
             AnotherToolStripMenuItem.Text = ""
         End If
     End Sub
-
     Private Sub LevelTextBox_Click(sender As Object, e As EventArgs) Handles LevelTextBox.Click
         ActiveDGViewToolStripTextBox.Text = "Level"
         NewToolStripMenuItem.Visible = False
@@ -842,7 +829,6 @@ FROM StorageTypesTable
             AnotherToolStripMenuItem.Text = ""
         End If
     End Sub
-
     Private Sub AnotherToolStripMenuItem_TextChanged(sender As Object, e As EventArgs) Handles AnotherToolStripMenuItem.TextChanged
         If AnotherToolStripMenuItem.Text = "" Then
             AnotherToolStripMenuItem.Visible = False
@@ -850,12 +836,10 @@ FROM StorageTypesTable
             AnotherToolStripMenuItem.Visible = True
         End If
     End Sub
-
     Private Sub ResetChangesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetChangesToolStripMenuItem.Click
         LoadStockLocationDetails()
         ResetChangesToolStripMenuItem.Visible = False
     End Sub
-
     Private Sub StorageTypesGroupBox_GotFocus(sender As Object, e As EventArgs) Handles StorageTypesGroupBox.GotFocus
         Dim xxx = 1
     End Sub

@@ -72,7 +72,7 @@
         Select Case Tunnel1
             Case "Tunnel2IsProductPartID"
                 CurrentProductPartID = Tunnel2
-            Case "CurrentStocksLocationCode"
+            Case "Tunnel3IsStocksLocationCode"
                 CurrentStocksLocationCode = Tunnel3
                 MsgBox("Please put this delivery on location " & CurrentStocksLocationCode)
         End Select

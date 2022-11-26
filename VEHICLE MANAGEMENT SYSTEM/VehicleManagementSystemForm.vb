@@ -20,7 +20,6 @@
         UsersDataGridView.Visible = True
         UsersDataGridView.Left = Me.Width - UsersDataGridView.Width - 100
     End Sub
-
     Private Sub ShowLoginForm()
         Me.Enabled = False
         LoginForm.Show()
@@ -124,7 +123,6 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
             End Select
         Next
     End Sub
-
     Private Sub LOGOFFToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles LOGOFFToolStripMenuItem.Click
         EnableMenus = False
         SetupSystemAccess()
@@ -137,11 +135,9 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
         LOGINToolStripMenuItem.Visible = False
         LoadRegisteredUsers()
     End Sub
-
     Private Sub EXITSYSTEMToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EXITSYSTEMToolStripMenuItem.Click
         Application.Exit()
     End Sub
-
     Private Sub GenerateWorkOrderRecordFromTheToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GenerateWorkOrderRecordFromTheToolStripMenuItem.Click
         GenerateRecordsForm.Show()
     End Sub

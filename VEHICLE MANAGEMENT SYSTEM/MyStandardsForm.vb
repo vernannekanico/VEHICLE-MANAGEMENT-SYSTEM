@@ -9,7 +9,6 @@
     Private ReleasedPartsDataGridViewAlreadyFormated = False
 
     Private SavedCallingForm As Form
-
     Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MsgBox("Set this form and all containers to 12pt pixel")
         SavedCallingForm = CallingForm
@@ -134,4 +133,16 @@
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
 
+    Private Sub ReleasedPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+        If Me.Enabled = False Then Exit Sub
+        CallingForm = SavedCallingForm
+
+        Select Case Tunnel1
+            Case "Tunnel2IsReleasedPartID"
+                CurrentReleasedPartID = Tunnel2
+            Case "Tunnel3IsReturnedTextData"
+                '              CurrentReturnedTextData = Tunnel3
+        End Select
+        FillReleasedPartsDataGridView()
+    End Sub
 End Class
