@@ -131,6 +131,7 @@
 
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         DoCommonHouseKeeping(Me, SavedCallingForm)
+
     End Sub
 
     Private Sub ReleasedPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
@@ -145,4 +146,23 @@
         End Select
         FillReleasedPartsDataGridView()
     End Sub
+
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+    End Sub
+    Private Sub InsertNewInventory()
+        Dim sampleInteger = 1
+        Dim SampleCurrentID = 1
+        Dim SampleText = "Sample"
+        Dim FieldsToUpdate =
+                              "  StockSequence_LongInteger, " &
+                               "  StockText_ShortText25, " &
+                              "  StockDescription__Memo "
+        Dim FieldsData =
+               Val(sampleInteger).ToString & ",  " &
+               SampleCurrentID.ToString & ",  " &
+               InQuotes(SampleText)
+
+        CurrentReleasedPartID = InsertNewRecord("MyStandardsTable", FieldsToUpdate, FieldsData)
+    End Sub
+
 End Class

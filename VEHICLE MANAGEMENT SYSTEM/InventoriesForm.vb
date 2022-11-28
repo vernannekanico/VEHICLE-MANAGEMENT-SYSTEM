@@ -1,35 +1,25 @@
 ﻿Public Class InventoriesForm
-    Private InventoriesFieldsToSelect = ""
-    Private InventoriesSelectionFilter = ""
-    Private InventoriesSelectionOrder = ""
-    Private CurrentInventoriesRow As Integer = -1
-    Private InventoriesRecordCount As Integer = -1
+    Private ProductsInventoriesFieldsToSelect = ""
+    Private ProductsInventoriesSelectionFilter = ""
+    Private ProductsInventoriesSelectionOrder = ""
+    Private CurrentProductsInventoriesRow As Integer = -1
+    Private ProductsInventoriesRecordCount As Integer = -1
     Private CurrentProductPartID = -1
-    Private InventoriesDataGridViewAlreadyFormated = False
+    Private Property CurrentStockID As Object
+    Private ProductsInventoriesDataGridViewAlreadyFormated = False
     Private SavedCallingForm As Form
+    Private CurrentlocationID As Object
+    Public Property SaveMessage As String
+
     Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SavedCallingForm = CallingForm
-        FillInventoriesDataGridView()
-        InventoriesGroupBox.Top = BottomOf(SearchToolStrip)
+        FillProductsInventoriesDataGridView()
+        ProductsInventoriesGroupBox.Top = BottomOf(SearchToolStrip)
     End Sub
-    Private Sub FillInventoriesDataGridView()
-        InventoriesSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld DESC "
-        InventoriesFieldsToSelect = " 
-SELECT ProductsPartsTable.Selected, 
-ProductsPartsTable.MasterCodeBookID_LongInteger, 
-MasterCodeBookTable.SystemDesc_ShortText100Fld, 
-PartsSpecificationsTable.PartsSpecificationID_AutoNumber, 
-PartsSpecificationsTable.PartSpecifications_ShortText255, 
-ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
-ProductsPartsTable.ManufacturerDescription_ShortText250, 
-ProductsPartsTable.Unit_ShortText3, 
-BrandsTable.BrandID_Autonumber, 
-BrandsTable.BrandName_ShortText20, 
-ProductsPartsTable.ProductsPartID_Autonumber
-FROM StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
-"
+    Private Sub FillProductsInventoriesDataGridView()
+        ProductsInventoriesSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld DESC "
 
-        InventoriesFieldsToSelect = " 
+        ProductsInventoriesFieldsToSelect = " 
 SELECT ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
@@ -41,159 +31,162 @@ ProductsPartsTable.Unit_ShortText3,
 BrandsTable.BrandID_Autonumber, 
 BrandsTable.BrandName_ShortText20, 
 StocksTable.QuantityInStock_Double,
-StocksTable.MinimumQuantity_Double, 
+StocksQuantitiesPerSpecsTable.MinimumQuantityPerSpecs_Double, 
 StocksTable.StocksLocationID_LongInteger, 
 StocksLocationsTable.LocationCode_ShortText11,
 ProductPartsPackingsTable.QuantityPerPack_Double, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
 ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
-ProductsPartsTable.ProductsPartID_Autonumber
-FROM ((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) LEFT JOIN ProductPartsPackingsTable ON StocksTable.ProductPartID_LongInteger = ProductPartsPackingsTable.ProductPartID_LongInteger
+ProductsPartsTable.ProductsPartID_Autonumber,
+StocksQuantitiesPerSpecsTable.MinimumQuantityPerSpecs_Double, 
+StocksQuantitiesPerSpecsTable.AvailableQuantityPerSpecs_Double, 
+StocksTable.StockID_Autonumber, 
+StocksLocationsTable.StocksLocationID_AutoNumber
+FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) LEFT JOIN ProductPartsPackingsTable ON StocksTable.ProductPartID_LongInteger = ProductPartsPackingsTable.ProductPartID_LongInteger) LEFT JOIN StocksQuantitiesPerSpecsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = StocksQuantitiesPerSpecsTable.PartsSpecificationID_LongInteger
 "
 
-        MySelection = InventoriesFieldsToSelect & InventoriesSelectionFilter & InventoriesSelectionOrder
+        MySelection = ProductsInventoriesFieldsToSelect & ProductsInventoriesSelectionFilter & ProductsInventoriesSelectionOrder
 
         JustExecuteMySelection()
-        InventoriesRecordCount = RecordCount
+        ProductsInventoriesRecordCount = RecordCount
 
-        If InventoriesRecordCount > 0 Then
-            InventoriesGroupBox.Visible = True
+        If ProductsInventoriesRecordCount > 0 Then
+            ProductsInventoriesGroupBox.Visible = True
         Else
-            InventoriesGroupBox.Visible = False
+            ProductsInventoriesGroupBox.Visible = False
         End If
-        InventoriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If InventoriesRecordCount = 0 Then
+        ProductsInventoriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        If ProductsInventoriesRecordCount = 0 Then
             CurrentProductPartID = -1
         End If
 
 
         ' HERE AT ROW_ENTER, FillReleasedPartConcernsDataGridView is called and ReleasedPartConcernsbOX IS ALREADY FORMATTED
-        If Not InventoriesDataGridViewAlreadyFormated Then
+        If Not ProductsInventoriesDataGridViewAlreadyFormated Then
             FormatInventoriesDataGridView()
             SetFormWidthAndGroupBoxLeft(Me,
                                             MyStandardsFormMenuStrip,
-                                            InventoriesGroupBox,
-                                            InventoriesGroupBox,
-                                            InventoriesGroupBox,
-                                            InventoriesGroupBox)
+                                            ProductsInventoriesGroupBox,
+                                            ProductsInventoriesGroupBox,
+                                            ProductsInventoriesGroupBox,
+                                            ProductsInventoriesGroupBox)
         End If
 
-        SetGroupBoxHeight(50, InventoriesRecordCount, InventoriesGroupBox, InventoriesDataGridView)
+        SetGroupBoxHeight(50, ProductsInventoriesRecordCount, ProductsInventoriesGroupBox, ProductsInventoriesDataGridView)
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
 
     End Sub
     Private Sub FormatInventoriesDataGridView()
-        InventoriesDataGridViewAlreadyFormated = True
-        InventoriesGroupBox.Width = 0
-        For i = 0 To InventoriesDataGridView.Columns.GetColumnCount(0) - 1
+        ProductsInventoriesDataGridViewAlreadyFormated = True
+        ProductsInventoriesGroupBox.Width = 0
+        For i = 0 To ProductsInventoriesDataGridView.Columns.GetColumnCount(0) - 1
 
-            InventoriesDataGridView.Columns.Item(i).Visible = False
-            Select Case InventoriesDataGridView.Columns.Item(i).Name
+            ProductsInventoriesDataGridView.Columns.Item(i).Visible = False
+            Select Case ProductsInventoriesDataGridView.Columns.Item(i).Name
                 Case "Selected"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "*"
-                    InventoriesDataGridView.Columns.Item(i).Width = 20
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "*"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 20
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "MasterCodeBookID_LongInteger"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "CodeBookID"
-                    InventoriesDataGridView.Columns.Item(i).Width = 80
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "CodeBookID"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 80
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Part Desc"
-                    InventoriesDataGridView.Columns.Item(i).Width = 300
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Part Desc"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 300
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "PartSpecifications_ShortText255"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Specification"
-                    InventoriesDataGridView.Columns.Item(i).Width = 150
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Specification"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 200
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerPartNo_ShortText30Fld"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Manufacturer PN"
-                    InventoriesDataGridView.Columns.Item(i).Width = 150
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Manufacturer PN"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 150
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerDescription_ShortText250"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Manufacturer Desc"
-                    InventoriesDataGridView.Columns.Item(i).Width = 400
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Manufacturer Desc"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 400
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "QuantityInStock_Double"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Qty in Stock"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Qty in Stock"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "Unit_ShortText3"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Unit"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Unit"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "BrandName_ShortText20"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Brand"
-                    InventoriesDataGridView.Columns.Item(i).Width = 150
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Brand"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 150
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "MinimumQuantity_Double"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Minimun Qty"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Minimun Qty"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "Location_ShortText10"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Location"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Location"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "ProductDescription_ShortText250"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "excel Desc"
-                    InventoriesDataGridView.Columns.Item(i).Width = 400
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "excel Desc"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 400
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleRepairClassID_LongInteger"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "RepairClassID"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "RepairClassID"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleDescription"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "Vehicle model"
-                    InventoriesDataGridView.Columns.Item(i).Width = 180
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "Vehicle model"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 180
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "QuantityPerPack_Double"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "QtyPerPack"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "QtyPerPack"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfTheQuantity_ShortText3"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "UnitOfTheQuantity"
-                    InventoriesDataGridView.Columns.Item(i).Width = 70
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "UnitOfTheQuantity"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 70
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "LocationCode_ShortText11"
-                    InventoriesDataGridView.Columns.Item(i).HeaderText = "location"
-                    InventoriesDataGridView.Columns.Item(i).Width = 120
-                    InventoriesDataGridView.Columns.Item(i).Visible = True
+                    ProductsInventoriesDataGridView.Columns.Item(i).HeaderText = "location"
+                    ProductsInventoriesDataGridView.Columns.Item(i).Width = 120
+                    ProductsInventoriesDataGridView.Columns.Item(i).Visible = True
 
             End Select
 
-            If InventoriesDataGridView.Columns.Item(i).Visible = True Then
-                InventoriesGroupBox.Width = InventoriesGroupBox.Width + InventoriesDataGridView.Columns.Item(i).Width
+            If ProductsInventoriesDataGridView.Columns.Item(i).Visible = True Then
+                ProductsInventoriesGroupBox.Width = ProductsInventoriesGroupBox.Width + ProductsInventoriesDataGridView.Columns.Item(i).Width
             End If
         Next
-        If InventoriesGroupBox.Width > VehicleManagementSystemForm.Width Then
-            InventoriesGroupBox.Width = VehicleManagementSystemForm.Width - 4
+        If ProductsInventoriesGroupBox.Width > VehicleManagementSystemForm.Width Then
+            ProductsInventoriesGroupBox.Width = VehicleManagementSystemForm.Width - 4
         Else
-            HorizontalCenter(InventoriesGroupBox, Me)
+            HorizontalCenter(ProductsInventoriesGroupBox, Me)
         End If
-        InventoriesGroupBox.Top = BottomOf(SearchToolStrip)
+        ProductsInventoriesGroupBox.Top = BottomOf(SearchToolStrip)
     End Sub
-    Private Sub InventoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles InventoriesDataGridView.RowEnter
+    Private Sub InventoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ProductsInventoriesDataGridView.RowEnter
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
-        If InventoriesRecordCount = 0 Then Exit Sub
+        If ProductsInventoriesRecordCount = 0 Then Exit Sub
 
-        CurrentInventoriesRow = e.RowIndex
-        CurrentProductPartID = InventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentInventoriesRow).Value
+        CurrentProductsInventoriesRow = e.RowIndex
+        CurrentProductPartID = ProductsInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsInventoriesRow).Value
+        CurrentStockID = ProductsInventoriesDataGridView.Item("StockID_Autonumber", CurrentProductsInventoriesRow).Value
+        CurrentlocationID = ProductsInventoriesDataGridView.Item("StocksLocationID_AutoNumber", CurrentProductsInventoriesRow).Value
     End Sub
-    Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
-        DoCommonHouseKeeping(Me, SavedCallingForm)
-    End Sub
-    Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductToolStripMenuItem.Click
+    Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
         SetupEditMode()
     End Sub
     Private Sub SetupEditMode()
-        ProductDetailsGroup.Visible = True
+        ThisProductDetailsGroup.Visible = True
         SelectToolStripMenuItem.Visible = False
         '     UpdateMasterCodeLinkToolStripMenuItem.Visible = False
         AddProductToolStripMenuItem.Visible = False
         DeleteProductToolStripMenuItem.Visible = False
-        EditProductToolStripMenuItem.Visible = False
+        EditProductDetailsToolStripMenuItem.Visible = False
 
         LoadProductDetails()
         ManufacturerPartDescTextBox.Select()
@@ -201,7 +194,7 @@ FROM ((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable
         BrandNameTextBox.Enabled = True
         UnitTextBox.Enabled = True
         AvailableQuantitiesTextBox.Enabled = True
-        MinimumQantityTextBox.Enabled = True
+        MinimumQuantityTextBox.Enabled = True
         LocationTextBox.Enabled = True
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteProductToolStripMenuItem.Click
@@ -225,24 +218,24 @@ FROM ((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable
             If MsgBox("Continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             MySelection = " DELETE FROM ProductsPartsTable WHERE ProductsPartID_Autonumber =  " & CurrentProductPartID
             JustExecuteMySelection()
-            FillInventoriesDataGridView()
+            FillProductsInventoriesDataGridView()
         End If
     End Sub
     Private Sub LoadProductDetails()
-        FillField(ProductSpecificationTextBox.Text, InventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentInventoriesRow).Value)
-        FillField(SystemPartDescriptionTextBox.Text, InventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentInventoriesRow).Value)
-        FillField(ManufacturerPartNoTextBox.Text, InventoriesDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentInventoriesRow).Value)
-        FillField(ManufacturerPartDescTextBox.Text, InventoriesDataGridView.Item("ManufacturerDescription_ShortText250", CurrentInventoriesRow).Value)
-        FillField(BrandNameTextBox.Text, InventoriesDataGridView.Item("BrandName_ShortText20", CurrentInventoriesRow).Value)
-        FillField(UnitTextBox.Text, InventoriesDataGridView.Item("Unit_ShortText3", CurrentInventoriesRow).Value)
-        FillField(AvailableQuantitiesTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value)
-        FillField(MinimumQantityTextBox.Text, InventoriesDataGridView.Item("MinimumQuantity_Double", CurrentInventoriesRow).Value)
-        FillField(LocationTextBox.Text, InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value)
-        If IsNotEmpty(InventoriesDataGridView.Item("QuantityPerPack_Double", CurrentInventoriesRow).Value) Then
-            PackingTextBox.Text = InventoriesDataGridView.Item("QuantityPerPack_Double", CurrentInventoriesRow).Value.ToString & Space(1) &
-                                      InventoriesDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentInventoriesRow).Value.ToString &
+        FillField(ProductSpecificationTextBox.Text, ProductsInventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsInventoriesRow).Value)
+        FillField(SystemPartDescriptionTextBox.Text, ProductsInventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsInventoriesRow).Value)
+        FillField(ManufacturerPartNoTextBox.Text, ProductsInventoriesDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsInventoriesRow).Value)
+        FillField(ManufacturerPartDescTextBox.Text, ProductsInventoriesDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsInventoriesRow).Value)
+        FillField(BrandNameTextBox.Text, ProductsInventoriesDataGridView.Item("BrandName_ShortText20", CurrentProductsInventoriesRow).Value)
+        FillField(UnitTextBox.Text, ProductsInventoriesDataGridView.Item("Unit_ShortText3", CurrentProductsInventoriesRow).Value)
+        FillField(AvailableQuantitiesTextBox.Text, ProductsInventoriesDataGridView.Item("QuantityInStock_Double", CurrentProductsInventoriesRow).Value)
+        FillField(MinimumQuantityTextBox.Text, ProductsInventoriesDataGridView.Item("MinimumQuantity_Double", CurrentProductsInventoriesRow).Value)
+        FillField(LocationTextBox.Text, ProductsInventoriesDataGridView.Item("LocationCode_ShortText11", CurrentProductsInventoriesRow).Value)
+        If IsNotEmpty(ProductsInventoriesDataGridView.Item("QuantityPerPack_Double", CurrentProductsInventoriesRow).Value) Then
+            PackingTextBox.Text = ProductsInventoriesDataGridView.Item("QuantityPerPack_Double", CurrentProductsInventoriesRow).Value.ToString & Space(1) &
+                                      ProductsInventoriesDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsInventoriesRow).Value.ToString &
                                         " / " &
-                                      InventoriesDataGridView.Item("Unit_ShortText3", CurrentInventoriesRow).Value.ToString
+                                      ProductsInventoriesDataGridView.Item("Unit_ShortText3", CurrentProductsInventoriesRow).Value.ToString
             PackingTextBox.Visible = True
         Else
             PackingTextBox.Text = ""
@@ -258,16 +251,81 @@ FROM ((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable
         End If
         ShowCalledForm(Me, StockLocationsForm)
     End Sub
-
     Private Sub InventoriesForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
         CallingForm = SavedCallingForm
 
         Select Case Tunnel1
-            Case "Tunnel3IsStocksLocationCode"
-                LocationTextBox.Text = Tunnel3
+            Case "Tunnel2IsStocksLocationID"
+                CurrentlocationID = Tunnel2
         End Select
 
-        FillInventoriesDataGridView()
+    End Sub
+    Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
+        If ThisProductDetailsGroup.Visible = True Then
+            SaveMessage = "Would you like to disregard your changes ?"
+            SaveChanges()
+            ThisProductDetailsGroup.Visible = False
+        Else
+            DoCommonHouseKeeping(Me, SavedCallingForm)
+        End If
+        DoCommonHouseKeeping(Me, SavedCallingForm)
+    End Sub
+    Private Sub SaveProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveProductDetailsToolStripMenuItem.Click
+        SaveMessage = "Continue saving the changes ?"
+        SaveChanges()
+    End Sub
+    Private Sub SaveChanges()
+        'CHECK CHANGES REGISTER IF NEEDED
+        If AChangeInThisStockInventoryDetailsOccurred() Then
+            'VALIDATE
+            If MsgBox(SaveMessage, MsgBoxStyle.YesNo) = vbNo Then
+                ThisProductDetailsGroup.Visible = False
+                Exit Sub
+            End If
+            If Not AllEntriesOfThisStockInventoryDetailsAreValid() Then Exit Sub
+            RegisterDetailsOfThisStockInventoryChanges()
+        End If
+    End Sub
+    Private Function AChangeInThisStockInventoryDetailsOccurred()
+        '*******************************************************
+        ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD OR EDIT
+        If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, ProductsInventoriesDataGridView.Item("QuantityInStock_Double", CurrentProductsInventoriesRow).Value) Then Return True
+        If TheseAreNotEqual(MinimumQuantityTextBox.Text, ProductsInventoriesDataGridView.Item("MinimumQuantity_Double", CurrentProductsInventoriesRow).Value) Then Return True
+        If TheseAreNotEqual(LocationTextBox.Text, ProductsInventoriesDataGridView.Item("LocationCode_ShortText11", CurrentProductsInventoriesRow).Value) Then Return True
+        Return False
+    End Function
+    Private Function AllEntriesOfThisStockInventoryDetailsAreValid()
+        If Trim(AvailableQuantitiesTextBox.Text) = "" Then
+            If MsgBox("Would you like to leave the quantities blank ?", vbYesNo) = vbNo Then
+                Return False
+            Else
+                If MsgBox("Would you like to add this to the" & " list of items to order " & "?", vbYesNo) = vbYes Then
+                    AddToListOfItemToBuy()
+                End If
+            End If
+        End If
+        Return True
+    End Function
+    Private Sub RegisterDetailsOfThisStockInventoryChanges()
+        'NOTE COMMENTED LINES DOES NOT APPLY HERE. NEW PRODUCTS ARE INSERTED IN THE PARTSPRODUCTSFORM
+        'STILL RETAINED HERE TO SHOW STANDARD ROUTINE
+        '        MySelection = " Select top 1 * FROM InventoriesTable WHERE InventoryID_Autonumber = " & CurrentInventoryID.ToString
+        '        JustExecuteMySelection()
+        '        If RecordCount = 0 Then
+        '        InsertNewInventory()
+        '        Else
+        SaveThisStockInventoryDetailsChanges()
+        '        End If
+        FillProductsInventoriesDataGridView()
+    End Sub
+    Private Sub SaveThisStockInventoryDetailsChanges()
+        Dim RecordFilter = " WHERE StockID_Autonumber = " & CurrentStockID.ToString
+        Dim SetCommand = " SET StocksLocationID_LongInteger = " & CurrentlocationID.ToString
+
+        UpdateTable("StocksTable", SetCommand, RecordFilter)
+    End Sub
+    Private Sub AddToListOfItemToBuy()
+        MsgBox("CODE this Routine AddToListOfItemToBuy()")
     End Sub
 End Class

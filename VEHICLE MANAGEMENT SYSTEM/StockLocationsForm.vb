@@ -263,9 +263,11 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Select Case ActiveDGViewToolStripTextBox.Text
             Case "Stocks Location"
-                Tunnel1 = "Tunnel3IsStocksLocationCode"
-                Tunnel2 = -1
-                Tunnel3 = CurrentStocksLocationCode_ShortText11
+                Tunnel1 = "Tunnel2IsStocksLocationID"
+                Tunnel2 = CurrentStocksLocationID
+                If SavedCallingForm.Name = "InventoriesForm" Then
+                    InventoriesForm.LocationTextBox.Text = CurrentStocksLocationCode_ShortText11
+                End If
                 DoCommonHouseKeeping(Me, SavedCallingForm)
             Case "Storage Location"
                 FillField(StorageLocationTextBox.Text, StoragesLocationsDataGridView.Item("StoragesLocation_ShortText200", CurrentStoragesLocationsRow).Value)

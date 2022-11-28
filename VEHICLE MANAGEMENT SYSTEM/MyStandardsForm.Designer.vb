@@ -22,7 +22,7 @@ Partial Class MyStandardForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.MyStandardDetailsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ThisMyStandardDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.MyStandardNameTextBox = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LinkedTextBox = New System.Windows.Forms.TextBox()
@@ -51,37 +51,37 @@ Partial Class MyStandardForm
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.ReleasedPartsGroupBox = New System.Windows.Forms.GroupBox()
         Me.ReleasedPartsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.MyStandardDetailsGroupBox.SuspendLayout()
+        Me.ThisMyStandardDetailsGroupBox.SuspendLayout()
         Me.SearchToolStrip.SuspendLayout()
         Me.MyStandardsFormMenuStrip.SuspendLayout()
         Me.ReleasedPartsGroupBox.SuspendLayout()
         CType(Me.ReleasedPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'MyStandardDetailsGroupBox
+        'ThisMyStandardDetailsGroupBox
         '
-        Me.MyStandardDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.MyStandardDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.MyStandardNameTextBox)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label13)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.LinkedTextBox)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.StateProvTextBox)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.ZipCodeTextBox)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label11)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label10)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.CountryTextBox)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label9)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label2)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.MyStandardDateDateTimeTextBox)
-        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label1)
-        Me.MyStandardDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.MyStandardDetailsGroupBox.Location = New System.Drawing.Point(341, 195)
-        Me.MyStandardDetailsGroupBox.Name = "MyStandardDetailsGroupBox"
-        Me.MyStandardDetailsGroupBox.Size = New System.Drawing.Size(624, 246)
-        Me.MyStandardDetailsGroupBox.TabIndex = 81
-        Me.MyStandardDetailsGroupBox.TabStop = False
-        Me.MyStandardDetailsGroupBox.Text = "Details"
-        Me.MyStandardDetailsGroupBox.Visible = False
+        Me.ThisMyStandardDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ThisMyStandardDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.MyStandardNameTextBox)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label13)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.LinkedTextBox)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.StateProvTextBox)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.ZipCodeTextBox)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label11)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label10)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.CountryTextBox)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label9)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label2)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.MyStandardDateDateTimeTextBox)
+        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label1)
+        Me.ThisMyStandardDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.ThisMyStandardDetailsGroupBox.Location = New System.Drawing.Point(341, 195)
+        Me.ThisMyStandardDetailsGroupBox.Name = "ThisMyStandardDetailsGroupBox"
+        Me.ThisMyStandardDetailsGroupBox.Size = New System.Drawing.Size(624, 246)
+        Me.ThisMyStandardDetailsGroupBox.TabIndex = 81
+        Me.ThisMyStandardDetailsGroupBox.TabStop = False
+        Me.ThisMyStandardDetailsGroupBox.Text = "Details"
+        Me.ThisMyStandardDetailsGroupBox.Visible = False
         '
         'MyStandardNameTextBox
         '
@@ -322,7 +322,7 @@ Partial Class MyStandardForm
         Me.ControlBox = False
         Me.Controls.Add(Me.ReleasedPartsGroupBox)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.MyStandardDetailsGroupBox)
+        Me.Controls.Add(Me.ThisMyStandardDetailsGroupBox)
         Me.Controls.Add(Me.SearchToolStrip)
         Me.Controls.Add(Me.MyStandardsFormMenuStrip)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -331,8 +331,8 @@ Partial Class MyStandardForm
         Me.MinimizeBox = False
         Me.Name = "MyStandardForm"
         Me.Text = "MyStandardForm"
-        Me.MyStandardDetailsGroupBox.ResumeLayout(False)
-        Me.MyStandardDetailsGroupBox.PerformLayout()
+        Me.ThisMyStandardDetailsGroupBox.ResumeLayout(False)
+        Me.ThisMyStandardDetailsGroupBox.PerformLayout()
         Me.SearchToolStrip.ResumeLayout(False)
         Me.SearchToolStrip.PerformLayout()
         Me.MyStandardsFormMenuStrip.ResumeLayout(False)
@@ -344,7 +344,7 @@ Partial Class MyStandardForm
 
     End Sub
 
-    Friend WithEvents MyStandardDetailsGroupBox As GroupBox
+    Friend WithEvents ThisMyStandardDetailsGroupBox As GroupBox
     Friend WithEvents MyStandardNameTextBox As TextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents LinkedTextBox As TextBox
