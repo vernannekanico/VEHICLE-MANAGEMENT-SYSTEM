@@ -29,13 +29,13 @@
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top +
                 VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
-        FillProductsPartsDataGridView()
         CurrentMasterCodeBookID = Tunnel2
 
         If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Then
             SetSearchParameters()
         End If
         FillProductsPartsDataGridView()
+        '        FillProductsPartsDataGridView()
     End Sub
     Private Sub ProductsPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -60,32 +60,10 @@
         End Select
 
     End Sub
-
-
-
     Private Sub FillProductsPartsDataGridView()
-        ProductsPartsFieldsToSelect = " 
-SELECT 
-ProductsPartsTable.Selected, 
-ProductsPartsTable.MasterCodeBookID_LongInteger, 
-MasterCodeBookTable.SystemDesc_ShortText100Fld, 
-PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
-PartsSpecificationsTable.PartSpecifications_ShortText255,
-ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
-ProductsPartsTable.ManufacturerDescription_ShortText250, 
-StocksTable.QuantityInStock_Double, 
-ProductsPartsTable.Unit_ShortText3, 
-BrandsTable.BrandID_Autonumber,
-BrandsTable.BrandName_ShortText20, 
-StocksTable.StockID_Autonumber, 
-StocksTable.Location_ShortText10, 
-StocksTable.MinimumQuantity_Double, 
-ProductsPartsTable.ProductsPartID_Autonumber,
-        ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
-        ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3
-FROM (StocksTable RIGHT JOIN ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber"
-        ProductsPartsFieldsToSelect = " 
-SELECT 
+        If Not ProductsPartsDataGridViewAlreadyFormated Then
+            ProductsPartsFieldsToSelect = "
+            Select 
 ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
@@ -97,18 +75,40 @@ ProductsPartsTable.Unit_ShortText3,
 BrandsTable.BrandID_Autonumber,
 BrandsTable.BrandName_ShortText20, 
 ProductsPartsTable.ProductsPartID_Autonumber
-FROM ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber
+FROM ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) 
+LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) 
+LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber
 "
+        Else
+            ProductsPartsFieldsToSelect = "
+            Select 
+ProductsPartsTable.Selected, 
+ProductsPartsTable.MasterCodeBookID_LongInteger, 
+MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
+PartsSpecificationsTable.PartSpecifications_ShortText255,
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
+ProductsPartsTable.ManufacturerDescription_ShortText250, 
+ProductsPartsTable.Unit_ShortText3, 
+BrandsTable.BrandID_Autonumber,
+BrandsTable.BrandName_ShortText20, 
+ProductsPartsTable.ProductsPartID_Autonumber
+FROM ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) 
+LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) 
+LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber
+"
+        End If
         ProductsPartsSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld" ', ManufacturerPartNo_ShortText30Fld "
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
         JustExecuteMySelection()
         ProductsPartsRecordCount = RecordCount
-        ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+        '       ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
         ProductsPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not ProductsPartsDataGridViewAlreadyFormated Then
             FormatProductsPartsDataGridView()
         End If
+        ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         Dim RowsHeight = 0
         Dim AvailableHeightSpace = VehicleManagementSystemForm.Height -
                                     (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height) +
@@ -131,7 +131,7 @@ FROM ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.Ma
         If ProductsPartsDataGridView.Height > MyMaximumHeight Then
             Me.Height = ProductsPartsDataGridView.Height + 20
         Else
-            Me.Height = mymaximumheight
+            Me.Height = MyMaximumHeight
         End If
         ProductDetailsGroup.Top = ProductsPartsDataGridView.Top
         ProductsPartsDataGridView.Top = ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height
