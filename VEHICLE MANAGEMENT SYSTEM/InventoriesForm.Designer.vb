@@ -36,7 +36,7 @@ Partial Class InventoriesForm
         Me.SearchToolStrip = New System.Windows.Forms.ToolStrip()
         Me.ProductsInventoriesDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsInventoriesGroupBox = New System.Windows.Forms.GroupBox()
-        Me.ThisProductDetailsGroup = New System.Windows.Forms.GroupBox()
+        Me.StockDetailsGroup = New System.Windows.Forms.GroupBox()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.PackingButton = New System.Windows.Forms.Button()
         Me.PackingTextBox = New System.Windows.Forms.TextBox()
@@ -59,11 +59,12 @@ Partial Class InventoriesForm
         Me.ManufacturerPartNoLabel = New System.Windows.Forms.Label()
         Me.ThisProductInventoriesGroupBox = New System.Windows.Forms.GroupBox()
         Me.ThisProductInventoriesDataGridView = New System.Windows.Forms.DataGridView()
+        Me.UpdateProductInformationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MyStandardsFormMenuStrip.SuspendLayout()
         Me.SearchToolStrip.SuspendLayout()
         CType(Me.ProductsInventoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ProductsInventoriesGroupBox.SuspendLayout()
-        Me.ThisProductDetailsGroup.SuspendLayout()
+        Me.StockDetailsGroup.SuspendLayout()
         Me.ThisProductInventoriesGroupBox.SuspendLayout()
         CType(Me.ThisProductInventoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -114,7 +115,7 @@ Partial Class InventoriesForm
         'MyStandardsFormMenuStrip
         '
         Me.MyStandardsFormMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MyStandardsFormMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.SelectToolStripMenuItem, Me.AddProductToolStripMenuItem, Me.EditProductDetailsToolStripMenuItem, Me.DeleteProductToolStripMenuItem, Me.ViewToolStripMenuItem, Me.SaveProductDetailsToolStripMenuItem})
+        Me.MyStandardsFormMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.SelectToolStripMenuItem, Me.AddProductToolStripMenuItem, Me.EditProductDetailsToolStripMenuItem, Me.DeleteProductToolStripMenuItem, Me.ViewToolStripMenuItem, Me.SaveProductDetailsToolStripMenuItem, Me.UpdateProductInformationToolStripMenuItem})
         Me.MyStandardsFormMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MyStandardsFormMenuStrip.Name = "MyStandardsFormMenuStrip"
         Me.MyStandardsFormMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -180,43 +181,43 @@ Partial Class InventoriesForm
         Me.ProductsInventoriesGroupBox.TabStop = False
         Me.ProductsInventoriesGroupBox.Text = "All Products Inventories"
         '
-        'ThisProductDetailsGroup
+        'StockDetailsGroup
         '
-        Me.ThisProductDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.ThisProductDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ThisProductDetailsGroup.Controls.Add(Me.ProductSpecificationTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.PackingButton)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.PackingTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label4)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.MinimumQuantityTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.LocationTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label8)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label6)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.AvailableQuantitiesTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label7)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.BrandNameTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label12)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.UnitTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label14)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.SystemPartDescriptionTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.ManufacturerPartDescTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.ManufacturerPartNoTextBox)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label15)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.Label16)
-        Me.ThisProductDetailsGroup.Controls.Add(Me.ManufacturerPartNoLabel)
-        Me.ThisProductDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.ThisProductDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ThisProductDetailsGroup.Location = New System.Drawing.Point(413, 101)
-        Me.ThisProductDetailsGroup.Name = "ThisProductDetailsGroup"
-        Me.ThisProductDetailsGroup.Size = New System.Drawing.Size(742, 491)
-        Me.ThisProductDetailsGroup.TabIndex = 90
-        Me.ThisProductDetailsGroup.TabStop = False
-        Me.ThisProductDetailsGroup.Text = "Product Details"
-        Me.ThisProductDetailsGroup.Visible = False
+        Me.StockDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.StockDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.StockDetailsGroup.Controls.Add(Me.ProductSpecificationTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.PackingButton)
+        Me.StockDetailsGroup.Controls.Add(Me.PackingTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.Label4)
+        Me.StockDetailsGroup.Controls.Add(Me.MinimumQuantityTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.LocationTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.Label8)
+        Me.StockDetailsGroup.Controls.Add(Me.Label6)
+        Me.StockDetailsGroup.Controls.Add(Me.AvailableQuantitiesTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.Label7)
+        Me.StockDetailsGroup.Controls.Add(Me.BrandNameTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.Label12)
+        Me.StockDetailsGroup.Controls.Add(Me.UnitTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.Label14)
+        Me.StockDetailsGroup.Controls.Add(Me.SystemPartDescriptionTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.ManufacturerPartDescTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.ManufacturerPartNoTextBox)
+        Me.StockDetailsGroup.Controls.Add(Me.Label15)
+        Me.StockDetailsGroup.Controls.Add(Me.Label16)
+        Me.StockDetailsGroup.Controls.Add(Me.ManufacturerPartNoLabel)
+        Me.StockDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.StockDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.StockDetailsGroup.Location = New System.Drawing.Point(413, 101)
+        Me.StockDetailsGroup.Name = "StockDetailsGroup"
+        Me.StockDetailsGroup.Size = New System.Drawing.Size(742, 425)
+        Me.StockDetailsGroup.TabIndex = 90
+        Me.StockDetailsGroup.TabStop = False
+        Me.StockDetailsGroup.Text = "Stock / Inventory Details"
+        Me.StockDetailsGroup.Visible = False
         '
         'ProductSpecificationTextBox
         '
-        Me.ProductSpecificationTextBox.Location = New System.Drawing.Point(383, 411)
+        Me.ProductSpecificationTextBox.Location = New System.Drawing.Point(383, 344)
         Me.ProductSpecificationTextBox.Name = "ProductSpecificationTextBox"
         Me.ProductSpecificationTextBox.ReadOnly = True
         Me.ProductSpecificationTextBox.Size = New System.Drawing.Size(353, 26)
@@ -226,7 +227,7 @@ Partial Class InventoriesForm
         '
         Me.PackingButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PackingButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.PackingButton.Location = New System.Drawing.Point(11, 259)
+        Me.PackingButton.Location = New System.Drawing.Point(11, 212)
         Me.PackingButton.Name = "PackingButton"
         Me.PackingButton.Size = New System.Drawing.Size(131, 40)
         Me.PackingButton.TabIndex = 120
@@ -235,7 +236,7 @@ Partial Class InventoriesForm
         '
         'PackingTextBox
         '
-        Me.PackingTextBox.Location = New System.Drawing.Point(279, 265)
+        Me.PackingTextBox.Location = New System.Drawing.Point(279, 218)
         Me.PackingTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.PackingTextBox.Name = "PackingTextBox"
         Me.PackingTextBox.ReadOnly = True
@@ -247,7 +248,7 @@ Partial Class InventoriesForm
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Britannic Bold", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(7, 345)
+        Me.Label4.Location = New System.Drawing.Point(294, 281)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(102, 21)
         Me.Label4.TabIndex = 60
@@ -255,7 +256,7 @@ Partial Class InventoriesForm
         '
         'MinimumQuantityTextBox
         '
-        Me.MinimumQuantityTextBox.Location = New System.Drawing.Point(279, 411)
+        Me.MinimumQuantityTextBox.Location = New System.Drawing.Point(279, 344)
         Me.MinimumQuantityTextBox.Multiline = True
         Me.MinimumQuantityTextBox.Name = "MinimumQuantityTextBox"
         Me.MinimumQuantityTextBox.Size = New System.Drawing.Size(98, 26)
@@ -263,7 +264,7 @@ Partial Class InventoriesForm
         '
         'LocationTextBox
         '
-        Me.LocationTextBox.Location = New System.Drawing.Point(279, 443)
+        Me.LocationTextBox.Location = New System.Drawing.Point(279, 376)
         Me.LocationTextBox.Name = "LocationTextBox"
         Me.LocationTextBox.ReadOnly = True
         Me.LocationTextBox.Size = New System.Drawing.Size(98, 26)
@@ -272,7 +273,7 @@ Partial Class InventoriesForm
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(7, 417)
+        Me.Label8.Location = New System.Drawing.Point(7, 350)
         Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(257, 20)
@@ -282,7 +283,7 @@ Partial Class InventoriesForm
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 449)
+        Me.Label6.Location = New System.Drawing.Point(7, 382)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(70, 20)
@@ -292,7 +293,7 @@ Partial Class InventoriesForm
         'AvailableQuantitiesTextBox
         '
         Me.AvailableQuantitiesTextBox.Enabled = False
-        Me.AvailableQuantitiesTextBox.Location = New System.Drawing.Point(279, 379)
+        Me.AvailableQuantitiesTextBox.Location = New System.Drawing.Point(279, 312)
         Me.AvailableQuantitiesTextBox.Name = "AvailableQuantitiesTextBox"
         Me.AvailableQuantitiesTextBox.Size = New System.Drawing.Size(98, 26)
         Me.AvailableQuantitiesTextBox.TabIndex = 55
@@ -300,7 +301,7 @@ Partial Class InventoriesForm
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(7, 385)
+        Me.Label7.Location = New System.Drawing.Point(7, 318)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(148, 20)
@@ -309,7 +310,7 @@ Partial Class InventoriesForm
         '
         'BrandNameTextBox
         '
-        Me.BrandNameTextBox.Location = New System.Drawing.Point(279, 199)
+        Me.BrandNameTextBox.Location = New System.Drawing.Point(279, 152)
         Me.BrandNameTextBox.Name = "BrandNameTextBox"
         Me.BrandNameTextBox.ReadOnly = True
         Me.BrandNameTextBox.Size = New System.Drawing.Size(220, 26)
@@ -318,7 +319,7 @@ Partial Class InventoriesForm
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(10, 233)
+        Me.Label12.Location = New System.Drawing.Point(10, 186)
         Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(38, 20)
@@ -327,7 +328,7 @@ Partial Class InventoriesForm
         '
         'UnitTextBox
         '
-        Me.UnitTextBox.Location = New System.Drawing.Point(279, 233)
+        Me.UnitTextBox.Location = New System.Drawing.Point(279, 186)
         Me.UnitTextBox.Name = "UnitTextBox"
         Me.UnitTextBox.ReadOnly = True
         Me.UnitTextBox.Size = New System.Drawing.Size(98, 26)
@@ -336,7 +337,7 @@ Partial Class InventoriesForm
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(7, 205)
+        Me.Label14.Location = New System.Drawing.Point(7, 158)
         Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(52, 20)
@@ -353,7 +354,7 @@ Partial Class InventoriesForm
         '
         'ManufacturerPartDescTextBox
         '
-        Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(279, 125)
+        Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(279, 78)
         Me.ManufacturerPartDescTextBox.Multiline = True
         Me.ManufacturerPartDescTextBox.Name = "ManufacturerPartDescTextBox"
         Me.ManufacturerPartDescTextBox.ReadOnly = True
@@ -362,7 +363,7 @@ Partial Class InventoriesForm
         '
         'ManufacturerPartNoTextBox
         '
-        Me.ManufacturerPartNoTextBox.Location = New System.Drawing.Point(279, 94)
+        Me.ManufacturerPartNoTextBox.Location = New System.Drawing.Point(279, 47)
         Me.ManufacturerPartNoTextBox.Name = "ManufacturerPartNoTextBox"
         Me.ManufacturerPartNoTextBox.ReadOnly = True
         Me.ManufacturerPartNoTextBox.Size = New System.Drawing.Size(457, 26)
@@ -374,14 +375,14 @@ Partial Class InventoriesForm
         Me.Label15.Location = New System.Drawing.Point(7, 22)
         Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(179, 20)
+        Me.Label15.Size = New System.Drawing.Size(238, 20)
         Me.Label15.TabIndex = 42
-        Me.Label15.Text = "System Part Description"
+        Me.Label15.Text = "System Part/Product Description"
         '
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(7, 131)
+        Me.Label16.Location = New System.Drawing.Point(7, 84)
         Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(232, 20)
@@ -391,7 +392,7 @@ Partial Class InventoriesForm
         'ManufacturerPartNoLabel
         '
         Me.ManufacturerPartNoLabel.AutoSize = True
-        Me.ManufacturerPartNoLabel.Location = New System.Drawing.Point(7, 100)
+        Me.ManufacturerPartNoLabel.Location = New System.Drawing.Point(7, 53)
         Me.ManufacturerPartNoLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.ManufacturerPartNoLabel.Name = "ManufacturerPartNoLabel"
         Me.ManufacturerPartNoLabel.Size = New System.Drawing.Size(208, 20)
@@ -426,12 +427,18 @@ Partial Class InventoriesForm
         Me.ThisProductInventoriesDataGridView.Size = New System.Drawing.Size(261, 148)
         Me.ThisProductInventoriesDataGridView.TabIndex = 52
         '
+        'UpdateProductInformationToolStripMenuItem
+        '
+        Me.UpdateProductInformationToolStripMenuItem.Name = "UpdateProductInformationToolStripMenuItem"
+        Me.UpdateProductInformationToolStripMenuItem.Size = New System.Drawing.Size(216, 25)
+        Me.UpdateProductInformationToolStripMenuItem.Text = "Update Product Information"
+        '
         'InventoriesForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1200, 692)
-        Me.Controls.Add(Me.ThisProductDetailsGroup)
+        Me.Controls.Add(Me.StockDetailsGroup)
         Me.Controls.Add(Me.ThisProductInventoriesGroupBox)
         Me.Controls.Add(Me.ProductsInventoriesGroupBox)
         Me.Controls.Add(Me.SearchToolStrip)
@@ -446,8 +453,8 @@ Partial Class InventoriesForm
         Me.SearchToolStrip.PerformLayout()
         CType(Me.ProductsInventoriesDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ProductsInventoriesGroupBox.ResumeLayout(False)
-        Me.ThisProductDetailsGroup.ResumeLayout(False)
-        Me.ThisProductDetailsGroup.PerformLayout()
+        Me.StockDetailsGroup.ResumeLayout(False)
+        Me.StockDetailsGroup.PerformLayout()
         Me.ThisProductInventoriesGroupBox.ResumeLayout(False)
         CType(Me.ThisProductInventoriesDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -468,7 +475,7 @@ Partial Class InventoriesForm
     Friend WithEvents SearchToolStrip As ToolStrip
     Friend WithEvents ProductsInventoriesDataGridView As DataGridView
     Friend WithEvents ProductsInventoriesGroupBox As GroupBox
-    Friend WithEvents ThisProductDetailsGroup As GroupBox
+    Friend WithEvents StockDetailsGroup As GroupBox
     Friend WithEvents ProductSpecificationTextBox As TextBox
     Friend WithEvents PackingButton As Button
     Friend WithEvents PackingTextBox As TextBox
@@ -492,4 +499,5 @@ Partial Class InventoriesForm
     Friend WithEvents AddProductToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ThisProductInventoriesGroupBox As GroupBox
     Friend WithEvents ThisProductInventoriesDataGridView As DataGridView
+    Friend WithEvents UpdateProductInformationToolStripMenuItem As ToolStripMenuItem
 End Class

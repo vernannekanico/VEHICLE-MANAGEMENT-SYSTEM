@@ -31,16 +31,19 @@
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         CurrentMasterCodeBookID = Tunnel2
         If Tunnel1 = "Tunnel2IsProductPartID" Then
-            ProductsPartsSelectionFilter = " WHERE ProductsPartID_Autonumber = " & Tunnel2.ToString
+            CurrentProductPartID = Tunnel2
+            ProductsPartsSelectionFilter = " WHERE ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
             FillProductsPartsDataGridView()
+            CurrentStocksID = GetFieldValue("StocksTable", "ProductPartID_LongInteger", CurrentProductPartID, "StockID_Autonumber")
             ProductsPartsMenuStrip.Visible = False
+            SystemPartDescriptionTextBox.Enabled = True
             SetupEditMode()
 
             If IsEmpty(ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value) Then
                 MsgBox("This Product is not linked to the MasterCodeBook, link this as " & SystemPartDescriptionTextBox.Text & "?")
                 ShowMasterCodeBookForm()
-                Exit Sub
             End If
+            Exit Sub
         End If
         If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Then
             SetSearchParameters()
@@ -71,9 +74,8 @@
 
     End Sub
     Private Sub FillProductsPartsDataGridView()
-        If Not ProductsPartsDataGridViewAlreadyFormated Then
-            ProductsPartsFieldsToSelect = "
-            Select 
+        ProductsPartsFieldsToSelect = "
+            Select Case
 ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
@@ -89,26 +91,12 @@ FROM ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.Ma
 LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) 
 LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber
 "
-        Else
-            ProductsPartsFieldsToSelect = "
-            Select 
-ProductsPartsTable.Selected, 
-ProductsPartsTable.MasterCodeBookID_LongInteger, 
-MasterCodeBookTable.SystemDesc_ShortText100Fld, 
-PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
-PartsSpecificationsTable.PartSpecifications_ShortText255,
-ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
-ProductsPartsTable.ManufacturerDescription_ShortText250, 
-ProductsPartsTable.Unit_ShortText3, 
-BrandsTable.BrandID_Autonumber,
-BrandsTable.BrandName_ShortText20, 
-ProductsPartsTable.ProductsPartID_Autonumber
-FROM ((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) 
-LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) 
-LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber
+        ProductsPartsFieldsToSelect = "
+        Select ProductsPartsTable.Selected, ProductsPartsTable.MasterCodeBookID_LongInteger, MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartsSpecificationID_AutoNumber, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, StocksTable.QuantityInStock_Double, ProductsPartsTable.Unit_ShortText3, BrandsTable.BrandID_Autonumber, BrandsTable.BrandName_ShortText20, StocksTable.StockID_Autonumber, StocksTable.Location_ShortText10, StocksTable.MinimumQuantity_Double, ProductsPartsTable.VehicleRepairClassID_LongInteger, VehicleDescription.VehicleDescription, ProductsPartsTable.ProductsPartID_Autonumber, ProductPartsPackingsTable.QuantityPerPack_Double, ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
+StocksLocationsTable.LocationCode_ShortText11
+FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber
 "
-        End If
-        ProductsPartsSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld" ', ManufacturerPartNo_ShortText30Fld "
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
         JustExecuteMySelection()
         ProductsPartsRecordCount = RecordCount
@@ -252,11 +240,9 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         CurrentBrandID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
         SelectToolStripMenuItem.Visible = True
         If CurrentMasterCodeBookID > -1 Then
-            If CurrentMasterCodeBookID = CurrentMasterCodeBookID Then
-                SelectToolStripMenuItem.Visible = True
-            Else
-                SelectToolStripMenuItem.Visible = False
-            End If
+            SelectToolStripMenuItem.Visible = True
+        Else
+            SelectToolStripMenuItem.Visible = False
         End If
 
     End Sub
@@ -363,9 +349,9 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         AddToolStripMenuItem.Visible = False
         DeleteToolStripMenuItem.Visible = False
         EditToolStripMenuItem.Visible = False
-        ToolStripMenuItem1.Visible = False
+        FiltersToolStripMenuItem.Visible = False
 
-        lOADProductDetails()
+        LoadProductDetails()
         ManufacturerPartDescTextBox.Select()
         ManufacturerPartNoTextBox.Enabled = True
         BrandNameTextBox.Enabled = True
@@ -409,7 +395,7 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         FillField(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value)
         FillField(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value)
         FillField(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value)
-        FillField(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value)
+        FillField(LocationTextBox.Text, ProductsPartsDataGridView.Item("LocationCode_ShortText11", CurrentProductsPartsRow).Value)
         If IsNotEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
             PackingTextBox.Text = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & Space(1) &
                                       ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString &
@@ -461,9 +447,6 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         If AChangeInProductDetails() Then
             RegisterProductDetailsChanges()
         End If
-        If AChangeInStocksDetails() Then
-            RegisterStocksDetailsChanges()
-        End If
         If BackToEditMode Then Exit Sub
         FillProductsPartsDataGridView()
         ProductDetailsGroup.Visible = False
@@ -473,59 +456,7 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         AddToolStripMenuItem.Visible = True
         DeleteToolStripMenuItem.Visible = True
         EditToolStripMenuItem.Visible = True
-        ToolStripMenuItem1.Visible = True
-    End Sub
-    Private Function AChangeInStocksDetails()
-
-        If IsEmpty(CurrentStocksID) Then Return True
-        If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value) Then Return True
-        If TheseAreNotEqual(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value) Then Return True
-        If TheseAreNotEqual(LocationTextBox.Text, ProductsPartsDataGridView.Item("Location_ShortText10", CurrentProductsPartsRow).Value) Then Return True
-        Return False
-    End Function
-    Private Sub RegisterStocksDetailsChanges()
-
-        If IsEmpty(CurrentStocksID) Then
-            InsertNewStocksInfoChanges()
-        Else
-            If MsgBox("Continue Save Stocks Info Changes ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
-                If MsgBox("Disregard your changes ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
-                    SystemPartDescriptionTextBox.Select()
-                    BackToEditMode = True
-                    Exit Sub
-                End If
-            End If
-            UpdateStocksInfoChanges()
-        End If
-        RegisterProductPartnumnberChanges()
-    End Sub
-    Private Sub InsertNewStocksInfoChanges()
-        Dim FieldsToUpdate =
-                               "
-                               ProductPartID_LongInteger,
-                               Location_ShortText10,
-                               MinimumQuantity_Double,
-                               QuantityInStock_Double
-                                "
-        Dim FieldsData =
-                                CurrentProductPartID.ToString & "," &
-                                InQuotes(LocationTextBox.Text) & "," &
-                                Val(MinimumQantityTextBox.Text) & "," &
-                                Val(AvailableQuantitiesTextBox.Text)
-
-        CurrentStocksID = InsertNewRecord("StocksTable", FieldsToUpdate, FieldsData)
-
-        'UPDATE ProductsPartTable AND MARK FIELD Selected true
-        UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
-    End Sub
-    Private Sub UpdateStocksInfoChanges()
-        Dim RecordFilter = " WHERE StockID_Autonumber = " & Str(CurrentStocksID)
-        Dim SetCommand =
-                    " Set " &
-                    " Location_ShortText10 = " & InQuotes(LocationTextBox.Text) & "," &
-                    " MinimumQuantity_Double = " & Val(MinimumQantityTextBox.Text) & "," &
-                    " QuantityInStock_Double = " & Val(AvailableQuantitiesTextBox.Text)
-        UpdateTable("StocksTable", SetCommand, RecordFilter)
+        FiltersToolStripMenuItem.Visible = True
     End Sub
     Private Function AChangeInProductDetails()
         If CurrentProductsPartsRow > -1 Then
@@ -563,10 +494,6 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         Else
             UpdateProductsPartChanges()
         End If
-        RegisterProductPartnumnberChanges()
-    End Sub
-    Private Sub RegisterProductPartnumnberChanges()
-        MsgBox("STUDY THIS, WORKING WITH PART NUMBERS")
     End Sub
     Private Sub InsertNewProductsPartChanges()
         Dim FieldsToUpdate =
@@ -612,7 +539,7 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
     End Sub
     Private Sub UpdateMasterCodeLinkToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateMasterCodeLinkToolStripMenuItem.Click
-        lOADProductDetails()
+        LoadProductDetails()
         ManufacturerPartDescTextBox.Select()
         ShowMasterCodeBookForm()
         ProductDetailsGroup.Visible = True
@@ -665,23 +592,23 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
     End Function
     Private Sub ProductDetailsGroup_VisibleChanged(sender As Object, e As EventArgs) Handles ProductDetailsGroup.VisibleChanged
         If ProductDetailsGroup.Visible = True Then
-            If Not PurposeOfEntry = "ADD" Then lOADProductDetails()
+            If Not PurposeOfEntry = "ADD" Then LoadProductDetails()
             SaveToolStripMenuItem.Visible = True
-                AddToolStripMenuItem.Visible = False
-                EditToolStripMenuItem.Visible = False
-                DeleteToolStripMenuItem.Visible = False
-                SelectToolStripMenuItem.Visible = False
-                ProductDetailsToolStripMenuItem.Visible = False
-                ToolStripMenuItem1.Visible = False
-                UpdateMasterCodeLinkToolStripMenuItem.Visible = False
-            Else
-                SaveToolStripMenuItem.Visible = False
+            AddToolStripMenuItem.Visible = False
+            EditToolStripMenuItem.Visible = False
+            DeleteToolStripMenuItem.Visible = False
+            SelectToolStripMenuItem.Visible = False
+            ProductDetailsToolStripMenuItem.Visible = False
+            FiltersToolStripMenuItem.Visible = False
+            UpdateMasterCodeLinkToolStripMenuItem.Visible = False
+        Else
+            SaveToolStripMenuItem.Visible = False
             AddToolStripMenuItem.Visible = True
             EditToolStripMenuItem.Visible = True
             DeleteToolStripMenuItem.Visible = True
             SelectToolStripMenuItem.Visible = True
             ProductDetailsToolStripMenuItem.Visible = True
-            ToolStripMenuItem1.Visible = True
+            FiltersToolStripMenuItem.Visible = True
             UpdateMasterCodeLinkToolStripMenuItem.Visible = True
         End If
     End Sub
@@ -705,12 +632,15 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         ManufacturerPartNoTextBox.Select()
     End Sub
     Private Sub CancelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelToolStripMenuItem.Click
+        If SavedCallingForm.Name = "InventoriesForm" Then
+            Tunnel1 = "Tunnel2IsProductPartID"
+            Tunnel2 = CurrentProductPartID
+        End If
         If ProductDetailsGroup.Visible = True Then
             If IsNotEmpty(ManufacturerPartDescTextBox.Text) Then
                 SaveChanges()
             End If
             ProductDetailsGroup.Visible = False
-            Exit Sub
         End If
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
@@ -810,5 +740,21 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
 
     Private Sub VehicleLinksToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VehicleLinksToolStripMenuItem.Click
 
+    End Sub
+
+    Private Sub LocationTextBox_Click(sender As Object, e As EventArgs) Handles LocationTextBox.Click
+        If Not LocationTextBox.Text = "" Then
+            If MsgBox("CHANGE Location?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                Exit Sub
+            End If
+            StockLocationsForm.StockLocationSearchTextBox.Text = LocationTextBox.Text
+        End If
+        ShowCalledForm(Me, StockLocationsForm)
+    End Sub
+
+    Private Sub SystemPartDescriptionTextBox_Click(sender As Object, e As EventArgs) Handles SystemPartDescriptionTextBox.Click
+        If MsgBox("Do you want to update MasterCodeBook link?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            ShowMasterCodeBookForm()
+        End If
     End Sub
 End Class

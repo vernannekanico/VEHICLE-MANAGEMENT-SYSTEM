@@ -36,7 +36,7 @@ Partial Class ProductsPartsForm
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FiltersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartDescriptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartSpecificationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -128,11 +128,11 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.Dock = System.Windows.Forms.DockStyle.None
         Me.ProductsPartsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ProductsPartsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.ProductsPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.UpdateMasterCodeLinkToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductDetailsToolStripMenuItem, Me.HistoryToolStripMenuItem})
+        Me.ProductsPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.UpdateMasterCodeLinkToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.SaveToolStripMenuItem, Me.FiltersToolStripMenuItem, Me.ProductDetailsToolStripMenuItem, Me.HistoryToolStripMenuItem})
         Me.ProductsPartsMenuStrip.Location = New System.Drawing.Point(69, 0)
         Me.ProductsPartsMenuStrip.Name = "ProductsPartsMenuStrip"
         Me.ProductsPartsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
-        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(796, 35)
+        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(916, 35)
         Me.ProductsPartsMenuStrip.TabIndex = 88
         Me.ProductsPartsMenuStrip.Text = "MenuStrip1"
         '
@@ -172,12 +172,12 @@ Partial Class ProductsPartsForm
         Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
-        'ToolStripMenuItem1
+        'FiltersToolStripMenuItem
         '
-        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartDescriptionToolStripMenuItem, Me.PartNumberToolStripMenuItem, Me.PartSpecificationToolStripMenuItem, Me.ToggleVehiclefilterToolStripMenuItem, Me.ExecuteSearchToolStripMenuItem})
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(79, 25)
-        Me.ToolStripMenuItem1.Text = "FILTERS:"
+        Me.FiltersToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PartDescriptionToolStripMenuItem, Me.PartNumberToolStripMenuItem, Me.PartSpecificationToolStripMenuItem, Me.ToggleVehiclefilterToolStripMenuItem, Me.ExecuteSearchToolStripMenuItem})
+        Me.FiltersToolStripMenuItem.Name = "FiltersToolStripMenuItem"
+        Me.FiltersToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
+        Me.FiltersToolStripMenuItem.Text = "FILTERS:"
         '
         'PartDescriptionToolStripMenuItem
         '
@@ -225,19 +225,19 @@ Partial Class ProductsPartsForm
         'PurchasesToolStripMenuItem
         '
         Me.PurchasesToolStripMenuItem.Name = "PurchasesToolStripMenuItem"
-        Me.PurchasesToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
+        Me.PurchasesToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
         Me.PurchasesToolStripMenuItem.Text = "Purchases"
         '
         'UsageToolStripMenuItem
         '
         Me.UsageToolStripMenuItem.Name = "UsageToolStripMenuItem"
-        Me.UsageToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
+        Me.UsageToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
         Me.UsageToolStripMenuItem.Text = "Usage"
         '
         'VehicleLinksToolStripMenuItem
         '
         Me.VehicleLinksToolStripMenuItem.Name = "VehicleLinksToolStripMenuItem"
-        Me.VehicleLinksToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
+        Me.VehicleLinksToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
         Me.VehicleLinksToolStripMenuItem.Text = "Vehicle Links"
         '
         'ProductDetailsGroup
@@ -347,6 +347,7 @@ Partial Class ProductsPartsForm
         '
         'MinimumQantityTextBox
         '
+        Me.MinimumQantityTextBox.Enabled = False
         Me.MinimumQantityTextBox.Location = New System.Drawing.Point(279, 411)
         Me.MinimumQantityTextBox.Multiline = True
         Me.MinimumQantityTextBox.Name = "MinimumQantityTextBox"
@@ -355,6 +356,7 @@ Partial Class ProductsPartsForm
         '
         'LocationTextBox
         '
+        Me.LocationTextBox.Enabled = False
         Me.LocationTextBox.Location = New System.Drawing.Point(279, 443)
         Me.LocationTextBox.Name = "LocationTextBox"
         Me.LocationTextBox.Size = New System.Drawing.Size(98, 26)
@@ -723,7 +725,7 @@ Partial Class ProductsPartsForm
     Friend WithEvents Label9 As Label
     Friend WithEvents AvailableQuantitiesTextBox As TextBox
     Friend WithEvents Label7 As Label
-    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents FiltersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PackingButton As Button
     Friend WithEvents PackingTextBox As TextBox
     Friend WithEvents PartSpecificationTextBox As TextBox

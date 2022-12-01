@@ -187,7 +187,10 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
                                                 " SPECIFICATION: " &
                                                 ProductsInventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsInventoriesRow).Value
         If IsEmpty(ProductsInventoriesDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value) Then
-            MsgBox("Part/Product Specification is missing, " & vbLf & "need to update, " & vbLf & "required to determine available quantities")
+            MsgBox("Part/Product Specification is missing, " & vbLf & "need to update, " & vbLf &
+                   "required to determine available quantities")
+            ThisProductInventoriesGroupBox.Visible = False
+            Exit Sub
         End If
         ThisProductInventoriesSelectionFilter = "WHERE PartsSpecificationID_AutoNumber = " &
                                                 ProductsInventoriesDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value
@@ -326,16 +329,10 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         CurrentThisProductInventoriesRow = e.RowIndex
     End Sub
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
-        'NOTE CODES-BEHIND MAYBE CONSIDERED TO BE DELETED
-        '        SetupEditMode()
-        Tunnel1 = "Tunnel2IsProductPartID"
-        Tunnel2 = CurrentProductPartID
-        ProductsPartsForm.SystemPartDescriptionTextBox.Text = ProductsInventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsInventoriesRow).Value
-
-        ShowCalledForm(Me, ProductsPartsForm)
+        SetupEditMode()
     End Sub
     Private Sub SetupEditMode()
-        ThisProductDetailsGroup.Visible = True
+        StockDetailsGroup.Visible = True
         SelectToolStripMenuItem.Visible = False
         '     UpdateMasterCodeLinkToolStripMenuItem.Visible = False
         AddProductToolStripMenuItem.Visible = False
@@ -397,13 +394,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         End If
     End Sub
     Private Sub LocationTextBox_Click(sender As Object, e As EventArgs) Handles LocationTextBox.Click
-        If Not LocationTextBox.Text = "" Then
-            If MsgBox("CHANGE BRAND?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
-                Exit Sub
-            End If
-            StockLocationsForm.StockLocationSearchTextBox.Text = LocationTextBox.Text
-        End If
-        ShowCalledForm(Me, StockLocationsForm)
     End Sub
     Private Sub InventoriesForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -412,14 +402,16 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         Select Case Tunnel1
             Case "Tunnel2IsStocksLocationID"
                 CurrentlocationID = Tunnel2
+            Case "Tunnel2IsProductPartID"
+                FillProductsInventoriesDataGridView()
         End Select
 
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
-        If ThisProductDetailsGroup.Visible = True Then
+        If StockDetailsGroup.Visible = True Then
             SaveMessage = "Would you like to disregard your changes ?"
             SaveChanges()
-            ThisProductDetailsGroup.Visible = False
+            StockDetailsGroup.Visible = False
         Else
             DoCommonHouseKeeping(Me, SavedCallingForm)
         End If
@@ -434,7 +426,7 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         If AChangeInThisStockInventoryDetailsOccurred() Then
             'VALIDATE
             If MsgBox(SaveMessage, MsgBoxStyle.YesNo) = vbNo Then
-                ThisProductDetailsGroup.Visible = False
+                StockDetailsGroup.Visible = False
                 Exit Sub
             End If
             If Not AllEntriesOfThisStockInventoryDetailsAreValid() Then Exit Sub
@@ -481,5 +473,14 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
     End Sub
     Private Sub AddToListOfItemToBuy()
         MsgBox("CODE this Routine AddToListOfItemToBuy()")
+    End Sub
+
+    Private Sub UpdateProductInformationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateProductInformationToolStripMenuItem.Click
+        Tunnel1 = "Tunnel2IsProductPartID"
+        Tunnel2 = CurrentProductPartID
+        ProductsPartsForm.SystemPartDescriptionTextBox.Text = ProductsInventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsInventoriesRow).Value
+
+        ShowCalledForm(Me, ProductsPartsForm)
+
     End Sub
 End Class
