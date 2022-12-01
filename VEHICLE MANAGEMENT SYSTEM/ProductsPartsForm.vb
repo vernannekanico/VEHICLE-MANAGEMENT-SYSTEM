@@ -30,12 +30,22 @@
                 VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         CurrentMasterCodeBookID = Tunnel2
+        If Tunnel1 = "Tunnel2IsProductPartID" Then
+            ProductsPartsSelectionFilter = " WHERE ProductsPartID_Autonumber = " & Tunnel2.ToString
+            FillProductsPartsDataGridView()
+            ProductsPartsMenuStrip.Visible = False
+            SetupEditMode()
 
+            If IsEmpty(ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value) Then
+                MsgBox("This Product is not linked to the MasterCodeBook, link this as " & SystemPartDescriptionTextBox.Text & "?")
+                ShowMasterCodeBookForm()
+                Exit Sub
+            End If
+        End If
         If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Then
             SetSearchParameters()
+            FillProductsPartsDataGridView()
         End If
-        FillProductsPartsDataGridView()
-        '        FillProductsPartsDataGridView()
     End Sub
     Private Sub ProductsPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -102,13 +112,12 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
         JustExecuteMySelection()
         ProductsPartsRecordCount = RecordCount
-        '       ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
         ProductsPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not ProductsPartsDataGridViewAlreadyFormated Then
             FormatProductsPartsDataGridView()
+            ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         End If
-        ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         Dim RowsHeight = 0
         Dim AvailableHeightSpace = VehicleManagementSystemForm.Height -
                                     (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height) +
@@ -150,10 +159,6 @@ LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.Br
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "MasterCodeBookID_LongInteger"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "CodeBookID"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 80
-                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "ProductPartID_LongInteger"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "linked as"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 80
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"

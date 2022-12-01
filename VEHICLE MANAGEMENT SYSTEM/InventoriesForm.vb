@@ -12,6 +12,7 @@
     Private ThisProductInventoriesSelectionOrder = ""
     Private CurrentThisProductInventoriesRow As Integer = -1
     Private ThisProductInventoriesRecordCount As Integer = -1
+    Private CurrentThisProductPartID = -1
     Private ThisProductInventoriesDataGridViewAlreadyFormated = False
     Private Property CurrentStockID As Object
     Private SavedCallingForm As Form
@@ -70,13 +71,13 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         ' HERE AT ROW_ENTER, FillReleasedPartConcernsDataGridView is called and ReleasedPartConcernsbOX IS ALREADY FORMATTED
         If Not ProductsInventoriesDataGridViewAlreadyFormated Then
             FormatInventoriesDataGridView()
-            SetFormWidthAndGroupBoxLeft(Me,
+        End If
+        SetFormWidthAndGroupBoxLeft(Me,
                                             MyStandardsFormMenuStrip,
                                             ProductsInventoriesGroupBox,
-                                            ProductsInventoriesGroupBox,
+                                            ThisProductInventoriesGroupBox,
                                             ProductsInventoriesGroupBox,
                                             ProductsInventoriesGroupBox)
-        End If
 
         SetGroupBoxHeight(50, ProductsInventoriesRecordCount, ProductsInventoriesGroupBox, ProductsInventoriesDataGridView)
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
@@ -320,11 +321,18 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If ThisProductInventoriesRecordCount = 0 Then Exit Sub
+        CurrentThisProductPartID = ProductsInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsInventoriesRow).Value
 
         CurrentThisProductInventoriesRow = e.RowIndex
     End Sub
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
-        SetupEditMode()
+        'NOTE CODES-BEHIND MAYBE CONSIDERED TO BE DELETED
+        '        SetupEditMode()
+        Tunnel1 = "Tunnel2IsProductPartID"
+        Tunnel2 = CurrentProductPartID
+        ProductsPartsForm.SystemPartDescriptionTextBox.Text = ProductsInventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsInventoriesRow).Value
+
+        ShowCalledForm(Me, ProductsPartsForm)
     End Sub
     Private Sub SetupEditMode()
         ThisProductDetailsGroup.Visible = True

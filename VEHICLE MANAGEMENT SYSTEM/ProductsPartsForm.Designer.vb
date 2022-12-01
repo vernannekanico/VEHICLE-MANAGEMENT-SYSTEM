@@ -43,6 +43,10 @@ Partial Class ProductsPartsForm
         Me.ToggleVehiclefilterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExecuteSearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PurchasesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UsageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VehicleLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductDetailsGroup = New System.Windows.Forms.GroupBox()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -71,6 +75,10 @@ Partial Class ProductsPartsForm
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.FiltersGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ProductSpecificationButton = New System.Windows.Forms.Button()
+        Me.VehicleModelButton = New System.Windows.Forms.Button()
+        Me.VehicleModelSearchTextBox = New System.Windows.Forms.TextBox()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.ProductSpecificationSearchTextBox = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.PartNoSearchTextBox = New System.Windows.Forms.TextBox()
@@ -79,14 +87,6 @@ Partial Class ProductsPartsForm
         Me.Label15 = New System.Windows.Forms.Label()
         Me.PartDescriptionSearchTextBox = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.HistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PurchasesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UsageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VehicleLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VehicleModelSearchTextBox = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.VehicleModelButton = New System.Windows.Forms.Button()
-        Me.ProductSpecificationButton = New System.Windows.Forms.Button()
         Me.HistoryDataGridView = New System.Windows.Forms.DataGridView()
         CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ProductsPartsMenuStrip.SuspendLayout()
@@ -214,6 +214,31 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsToolStripMenuItem.Name = "ProductDetailsToolStripMenuItem"
         Me.ProductDetailsToolStripMenuItem.Size = New System.Drawing.Size(134, 25)
         Me.ProductDetailsToolStripMenuItem.Text = "Products Details"
+        '
+        'HistoryToolStripMenuItem
+        '
+        Me.HistoryToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PurchasesToolStripMenuItem, Me.UsageToolStripMenuItem, Me.VehicleLinksToolStripMenuItem})
+        Me.HistoryToolStripMenuItem.Name = "HistoryToolStripMenuItem"
+        Me.HistoryToolStripMenuItem.Size = New System.Drawing.Size(87, 25)
+        Me.HistoryToolStripMenuItem.Text = "HISTORY:"
+        '
+        'PurchasesToolStripMenuItem
+        '
+        Me.PurchasesToolStripMenuItem.Name = "PurchasesToolStripMenuItem"
+        Me.PurchasesToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
+        Me.PurchasesToolStripMenuItem.Text = "Purchases"
+        '
+        'UsageToolStripMenuItem
+        '
+        Me.UsageToolStripMenuItem.Name = "UsageToolStripMenuItem"
+        Me.UsageToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
+        Me.UsageToolStripMenuItem.Text = "Usage"
+        '
+        'VehicleLinksToolStripMenuItem
+        '
+        Me.VehicleLinksToolStripMenuItem.Name = "VehicleLinksToolStripMenuItem"
+        Me.VehicleLinksToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
+        Me.VehicleLinksToolStripMenuItem.Text = "Vehicle Links"
         '
         'ProductDetailsGroup
         '
@@ -511,6 +536,41 @@ Partial Class ProductsPartsForm
         Me.FiltersGroupBox.Text = "FILTERS"
         Me.FiltersGroupBox.Visible = False
         '
+        'ProductSpecificationButton
+        '
+        Me.ProductSpecificationButton.Location = New System.Drawing.Point(203, 89)
+        Me.ProductSpecificationButton.Name = "ProductSpecificationButton"
+        Me.ProductSpecificationButton.Size = New System.Drawing.Size(70, 26)
+        Me.ProductSpecificationButton.TabIndex = 128
+        Me.ProductSpecificationButton.Text = "ON"
+        Me.ProductSpecificationButton.UseVisualStyleBackColor = True
+        '
+        'VehicleModelButton
+        '
+        Me.VehicleModelButton.Location = New System.Drawing.Point(203, 121)
+        Me.VehicleModelButton.Name = "VehicleModelButton"
+        Me.VehicleModelButton.Size = New System.Drawing.Size(70, 28)
+        Me.VehicleModelButton.TabIndex = 127
+        Me.VehicleModelButton.Text = "ON"
+        Me.VehicleModelButton.UseVisualStyleBackColor = True
+        '
+        'VehicleModelSearchTextBox
+        '
+        Me.VehicleModelSearchTextBox.Location = New System.Drawing.Point(279, 123)
+        Me.VehicleModelSearchTextBox.Name = "VehicleModelSearchTextBox"
+        Me.VehicleModelSearchTextBox.Size = New System.Drawing.Size(457, 26)
+        Me.VehicleModelSearchTextBox.TabIndex = 126
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(7, 131)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(108, 20)
+        Me.Label13.TabIndex = 125
+        Me.Label13.Text = "Vehicle Model"
+        '
         'ProductSpecificationSearchTextBox
         '
         Me.ProductSpecificationSearchTextBox.Location = New System.Drawing.Point(279, 89)
@@ -578,66 +638,6 @@ Partial Class ProductsPartsForm
         Me.Label19.Size = New System.Drawing.Size(122, 20)
         Me.Label19.TabIndex = 42
         Me.Label19.Text = "Part Description"
-        '
-        'HistoryToolStripMenuItem
-        '
-        Me.HistoryToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PurchasesToolStripMenuItem, Me.UsageToolStripMenuItem, Me.VehicleLinksToolStripMenuItem})
-        Me.HistoryToolStripMenuItem.Name = "HistoryToolStripMenuItem"
-        Me.HistoryToolStripMenuItem.Size = New System.Drawing.Size(87, 25)
-        Me.HistoryToolStripMenuItem.Text = "HISTORY:"
-        '
-        'PurchasesToolStripMenuItem
-        '
-        Me.PurchasesToolStripMenuItem.Name = "PurchasesToolStripMenuItem"
-        Me.PurchasesToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
-        Me.PurchasesToolStripMenuItem.Text = "Purchases"
-        '
-        'UsageToolStripMenuItem
-        '
-        Me.UsageToolStripMenuItem.Name = "UsageToolStripMenuItem"
-        Me.UsageToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
-        Me.UsageToolStripMenuItem.Text = "Usage"
-        '
-        'VehicleLinksToolStripMenuItem
-        '
-        Me.VehicleLinksToolStripMenuItem.Name = "VehicleLinksToolStripMenuItem"
-        Me.VehicleLinksToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
-        Me.VehicleLinksToolStripMenuItem.Text = "Vehicle Links"
-        '
-        'VehicleModelSearchTextBox
-        '
-        Me.VehicleModelSearchTextBox.Location = New System.Drawing.Point(279, 123)
-        Me.VehicleModelSearchTextBox.Name = "VehicleModelSearchTextBox"
-        Me.VehicleModelSearchTextBox.Size = New System.Drawing.Size(457, 26)
-        Me.VehicleModelSearchTextBox.TabIndex = 126
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(7, 131)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(108, 20)
-        Me.Label13.TabIndex = 125
-        Me.Label13.Text = "Vehicle Model"
-        '
-        'VehicleModelButton
-        '
-        Me.VehicleModelButton.Location = New System.Drawing.Point(203, 121)
-        Me.VehicleModelButton.Name = "VehicleModelButton"
-        Me.VehicleModelButton.Size = New System.Drawing.Size(70, 28)
-        Me.VehicleModelButton.TabIndex = 127
-        Me.VehicleModelButton.Text = "ON"
-        Me.VehicleModelButton.UseVisualStyleBackColor = True
-        '
-        'ProductSpecificationButton
-        '
-        Me.ProductSpecificationButton.Location = New System.Drawing.Point(203, 89)
-        Me.ProductSpecificationButton.Name = "ProductSpecificationButton"
-        Me.ProductSpecificationButton.Size = New System.Drawing.Size(70, 26)
-        Me.ProductSpecificationButton.TabIndex = 128
-        Me.ProductSpecificationButton.Text = "ON"
-        Me.ProductSpecificationButton.UseVisualStyleBackColor = True
         '
         'HistoryDataGridView
         '
