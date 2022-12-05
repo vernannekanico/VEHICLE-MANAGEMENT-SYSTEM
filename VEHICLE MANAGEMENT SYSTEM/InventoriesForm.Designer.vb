@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class InventoriesForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class InventoriesForm
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -31,6 +31,7 @@ Partial Class InventoriesForm
         Me.SaveProductDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MyStandardsFormMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.AddProductToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UpdateProductInformationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.SearchMyStandardTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.SearchToolStrip = New System.Windows.Forms.ToolStrip()
@@ -59,7 +60,6 @@ Partial Class InventoriesForm
         Me.ManufacturerPartNoLabel = New System.Windows.Forms.Label()
         Me.ThisProductInventoriesGroupBox = New System.Windows.Forms.GroupBox()
         Me.ThisProductInventoriesDataGridView = New System.Windows.Forms.DataGridView()
-        Me.UpdateProductInformationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MyStandardsFormMenuStrip.SuspendLayout()
         Me.SearchToolStrip.SuspendLayout()
         CType(Me.ProductsInventoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -128,6 +128,12 @@ Partial Class InventoriesForm
         Me.AddProductToolStripMenuItem.Name = "AddProductToolStripMenuItem"
         Me.AddProductToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
         Me.AddProductToolStripMenuItem.Text = "Add"
+        '
+        'UpdateProductInformationToolStripMenuItem
+        '
+        Me.UpdateProductInformationToolStripMenuItem.Name = "UpdateProductInformationToolStripMenuItem"
+        Me.UpdateProductInformationToolStripMenuItem.Size = New System.Drawing.Size(216, 25)
+        Me.UpdateProductInformationToolStripMenuItem.Text = "Update Product Information"
         '
         'ToolStripLabel1
         '
@@ -426,12 +432,6 @@ Partial Class InventoriesForm
         Me.ThisProductInventoriesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.ThisProductInventoriesDataGridView.Size = New System.Drawing.Size(261, 148)
         Me.ThisProductInventoriesDataGridView.TabIndex = 52
-        '
-        'UpdateProductInformationToolStripMenuItem
-        '
-        Me.UpdateProductInformationToolStripMenuItem.Name = "UpdateProductInformationToolStripMenuItem"
-        Me.UpdateProductInformationToolStripMenuItem.Size = New System.Drawing.Size(216, 25)
-        Me.UpdateProductInformationToolStripMenuItem.Text = "Update Product Information"
         '
         'InventoriesForm
         '

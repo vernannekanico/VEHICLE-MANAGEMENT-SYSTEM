@@ -47,6 +47,7 @@ ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
 ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
 ProductsPartsTable.ProductsPartID_Autonumber,
 StocksQuantitiesPerSpecsTable.AvailableQuantityPerSpecs_Double, 
+StocksQuantitiesPerSpecsTable.StocksQuantitiesPerSpecsID_AutoNumber, 
 StocksTable.StockID_Autonumber, 
 StocksLocationsTable.StocksLocationID_AutoNumber
 FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) LEFT JOIN ProductPartsPackingsTable ON StocksTable.ProductPartID_LongInteger = ProductPartsPackingsTable.ProductPartID_LongInteger) LEFT JOIN StocksQuantitiesPerSpecsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = StocksQuantitiesPerSpecsTable.PartsSpecificationID_LongInteger
@@ -183,9 +184,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         CurrentProductPartID = ProductsInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsInventoriesRow).Value
         CurrentStockID = ProductsInventoriesDataGridView.Item("StockID_Autonumber", CurrentProductsInventoriesRow).Value
         CurrentlocationID = ProductsInventoriesDataGridView.Item("StocksLocationID_AutoNumber", CurrentProductsInventoriesRow).Value
-        ThisProductInventoriesGroupBox.Text = "[" & ProductsInventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsInventoriesRow).Value & "]" &
-                                                " SPECIFICATION: " &
-                                                ProductsInventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsInventoriesRow).Value
         If IsEmpty(ProductsInventoriesDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value) Then
             MsgBox("Part/Product Specification is missing, " & vbLf & "need to update, " & vbLf &
                    "required to determine available quantities")
@@ -195,6 +193,23 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         ThisProductInventoriesSelectionFilter = "WHERE PartsSpecificationID_AutoNumber = " &
                                                 ProductsInventoriesDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value
         FillThisProductInventoriesDataGridView()
+        Dim AvailableQuantities = 0
+        For i = 0 To ThisProductInventoriesRecordCount - 1
+            Dim QuantityPerPack = 0
+            FillField(QuantityPerPack, ThisProductInventoriesDataGridView.Item("QuantityPerPack_Double", CurrentThisProductInventoriesRow).Value)
+            If QuantityPerPack = -1 Then QuantityPerPack = 0
+            AvailableQuantities +=
+             ThisProductInventoriesDataGridView.Item("BulkBalanceQuantity_Double", CurrentThisProductInventoriesRow).Value +
+             (ThisProductInventoriesDataGridView.Item("QuantityInStock_Double", CurrentThisProductInventoriesRow).Value *
+             QuantityPerPack)
+        Next i
+        Dim ThisProductMinimumQuantity = 0
+        FillField(ThisProductMinimumQuantity, ThisProductInventoriesDataGridView.Item("MinimumQuantityPerSpecs_Double", CurrentThisProductInventoriesRow).Value)
+        ThisProductInventoriesGroupBox.Text = "[" & ProductsInventoriesDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsInventoriesRow).Value & "] " &
+                                                " [SPECIFICATION: " &
+                                                ProductsInventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsInventoriesRow).Value & "] " &
+                                                " [Available Quantities : " & AvailableQuantities.ToString & "] " &
+                                                " [Minimum Quantity : " & ThisProductMinimumQuantity
     End Sub
     Private Sub FillThisProductInventoriesDataGridView()
         ThisProductInventoriesSelectionOrder = " ORDER BY SystemDesc_ShortText100Fld DESC "
@@ -211,6 +226,7 @@ ProductsPartsTable.Unit_ShortText3,
 BrandsTable.BrandID_Autonumber, 
 BrandsTable.BrandName_ShortText20, 
 StocksTable.QuantityInStock_Double,
+StocksTable.BulkBalanceQuantity_Double,
 StocksQuantitiesPerSpecsTable.MinimumQuantityPerSpecs_Double, 
 StocksTable.StocksLocationID_LongInteger, 
 StocksLocationsTable.LocationCode_ShortText11,
@@ -278,10 +294,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
                     ThisProductInventoriesDataGridView.Columns.Item(i).HeaderText = "Brand"
                     ThisProductInventoriesDataGridView.Columns.Item(i).Width = 150
                     ThisProductInventoriesDataGridView.Columns.Item(i).Visible = True
-                Case "MinimumQuantityPerSpecs_Double"
-                    ThisProductInventoriesDataGridView.Columns.Item(i).HeaderText = "Minimun Qty"
-                    ThisProductInventoriesDataGridView.Columns.Item(i).Width = 70
-                    ThisProductInventoriesDataGridView.Columns.Item(i).Visible = True
                 Case "Location_ShortText10"
                     ThisProductInventoriesDataGridView.Columns.Item(i).HeaderText = "Location"
                     ThisProductInventoriesDataGridView.Columns.Item(i).Width = 70
@@ -320,13 +332,14 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         End If
         ThisProductInventoriesGroupBox.Top = BottomOf(ProductsInventoriesGroupBox)
     End Sub
-    Private Sub InventoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ThisProductInventoriesDataGridView.RowEnter
+    Private Sub ThisProductInventoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ThisProductInventoriesDataGridView.RowEnter
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If ThisProductInventoriesRecordCount = 0 Then Exit Sub
-        CurrentThisProductPartID = ProductsInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsInventoriesRow).Value
+        CurrentThisProductPartID = ThisProductInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsInventoriesRow).Value
 
         CurrentThisProductInventoriesRow = e.RowIndex
+
     End Sub
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
         SetupEditMode()
@@ -349,28 +362,16 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         LocationTextBox.Enabled = True
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteProductToolStripMenuItem.Click
-        Dim TablesToCheck = {
-                                             "WorkOrderPartsTable",
-                                             "WorkOrderReceivedPartsTable",
-                                             "WorkOrderRequestedPartsTable",
-                                             "StoreSuppliesRequisitionsItemsTable",
-                                             "PurchaseOrdersItemsTable",
-                                             "RequisitionsItemsTable",
-                                             "DeliveryItemsTable"
-                                             }
-
-        If Not LinkExistsIn(TablesToCheck, "ProductPartID_LongInteger", CurrentProductPartID) Then
-            MySelection = " DELETE FROM StocksTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
-            JustExecuteMySelection()
-            ' delete all related records in stokcstable and StocksTable (delete stocks record)
-            '           ProductPartsPackingsTable
-            MySelection = " DELETE FROM ProductPartsPackingsTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
-            JustExecuteMySelection()
-            If MsgBox("Continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-            MySelection = " DELETE FROM ProductsPartsTable WHERE ProductsPartID_Autonumber =  " & CurrentProductPartID
-            JustExecuteMySelection()
-            FillProductsInventoriesDataGridView()
+        If IsDBNull(ProductsInventoriesDataGridView.Item("StocksQuantitiesPerSpecsID_AutoNumber", CurrentProductsInventoriesRow).Value) Then
+            If MsgBox("Continue delete this item?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                MySelection = " DELETE FROM StocksTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
+                JustExecuteMySelection()
+            End If
+        Else
+            MsgBox("This Product is listed as required to be always available on stock")
         End If
+
+        FillProductsInventoriesDataGridView()
     End Sub
     Private Sub LoadProductDetails()
         FillField(ProductSpecificationTextBox.Text, ProductsInventoriesDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsInventoriesRow).Value)
