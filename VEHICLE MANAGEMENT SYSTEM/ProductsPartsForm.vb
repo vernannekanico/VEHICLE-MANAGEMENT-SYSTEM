@@ -92,7 +92,24 @@ LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_Lo
 LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber
 "
         ProductsPartsFieldsToSelect = "
-        Select ProductsPartsTable.Selected, ProductsPartsTable.MasterCodeBookID_LongInteger, MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartsSpecificationID_AutoNumber, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, StocksTable.QuantityInStock_Double, ProductsPartsTable.Unit_ShortText3, BrandsTable.BrandID_Autonumber, BrandsTable.BrandName_ShortText20, StocksTable.StockID_Autonumber, StocksTable.Location_ShortText10, StocksTable.MinimumQuantity_Double, ProductsPartsTable.VehicleRepairClassID_LongInteger, VehicleDescription.VehicleDescription, ProductsPartsTable.ProductsPartID_Autonumber, ProductPartsPackingsTable.QuantityPerPack_Double, ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
+        Select ProductsPartsTable.Selected,
+ProductsPartsTable.MasterCodeBookID_LongInteger,
+MasterCodeBookTable.SystemDesc_ShortText100Fld,
+PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
+PartsSpecificationsTable.PartSpecifications_ShortText255,
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld,
+ProductsPartsTable.ManufacturerDescription_ShortText250,
+StocksTable.QuantityInStock_Double,
+ProductsPartsTable.Unit_ShortText3,
+BrandsTable.BrandID_Autonumber,
+BrandsTable.BrandName_ShortText20,
+StocksTable.StockID_Autonumber,
+StocksTable.Location_ShortText10,
+ProductsPartsTable.VehicleRepairClassID_LongInteger,
+VehicleDescription.VehicleDescription,
+ProductsPartsTable.ProductsPartID_Autonumber,
+ProductPartsPackingsTable.QuantityPerPack_Double,
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
 StocksLocationsTable.LocationCode_ShortText11
 FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber
@@ -176,10 +193,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
                 Case "BrandName_ShortText20"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Brand"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 150
-                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "MinimumQuantity_Double"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Minimun Qty"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "Location_ShortText10"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Location"
@@ -394,7 +407,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         FillField(CurrentBrandID, ProductsPartsDataGridView.Item("BrandID_Autonumber", CurrentProductsPartsRow).Value)
         FillField(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value)
         FillField(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value)
-        FillField(MinimumQantityTextBox.Text, ProductsPartsDataGridView.Item("MinimumQuantity_Double", CurrentProductsPartsRow).Value)
         FillField(LocationTextBox.Text, ProductsPartsDataGridView.Item("LocationCode_ShortText11", CurrentProductsPartsRow).Value)
         If IsNotEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
             PackingTextBox.Text = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & Space(1) &

@@ -336,9 +336,9 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If ThisProductInventoriesRecordCount = 0 Then Exit Sub
-        CurrentThisProductPartID = ThisProductInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsInventoriesRow).Value
-
         CurrentThisProductInventoriesRow = e.RowIndex
+        CurrentThisProductPartID = ThisProductInventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentThisProductInventoriesRow).Value
+
 
     End Sub
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
