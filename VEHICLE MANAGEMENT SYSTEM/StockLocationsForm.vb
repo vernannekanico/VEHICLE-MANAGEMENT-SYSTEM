@@ -56,24 +56,24 @@ Public Class StockLocationsForm
         StockLocationDetailsGroupBox.Enabled = False
     End Sub
     Private Sub FillStocksLocationsDataGridView()
-        Dim LocationCodeDescription = "StocksLocationsTable.LocationCode_ShortText11 &
-                                       StoragesLocationsTable.StoragesLocation_ShortText200 &
+        Dim LocationDescription = " StoragesLocationsTable.StoragesLocation_ShortText200 & chr(45) &
                                        MainStorageTypesTable.StorageTypeDescription_ShortText150 &
-                                       SubStorageTypesTable.StorageTypeDescription_ShortText150 &
-                                       ' bay ' & StocksLocationsTable.Bay_ShortText1 &
-                                       ' level ' & StocksLocationsTable.Level_Byte &
-                                       ','"
+                                       " & InQuotes("-bay ") & " &
+                                       StocksLocationsTable.Bay_ShortText1 &
+                                       " & InQuotes("-level ") & " &
+                                      StocksLocationsTable.Level_Byte &
+                                      SubStorageTypesTable.StorageTypeDescription_ShortText150 As LocationDescription "
 
         StocksLocationsSelectionOrder = " ORDER BY LocationCode_ShortText11"
 
         StocksLocationsFieldsToSelect = "
-        Select
+Select
 StocksLocationsTable.StocksLocationID_AutoNumber, 
 StocksLocationsTable.LocationCode_ShortText11, 
-StoragesLocationsTable.StoragesLocationID_Autonumber, 
-StoragesLocationsTable.StoragesLocation_ShortText200,  
-" & LocationCodeDescription &
+" & LocationDescription &
 "
+,StoragesLocationsTable.StoragesLocationID_Autonumber, 
+StoragesLocationsTable.StoragesLocation_ShortText200,  
 StoragesLocationsTable.StoragesLocationCode_ShortText2, 
 MainStorageTypesTable.StorageTypeID_Autonumber, 
 MainStorageTypesTable.StorageTypeCode_ShortText2, 
@@ -113,7 +113,7 @@ FROM ((StocksLocationsTable
                                         StocksLocationsGroupBox)
         End If
 
-        SetGroupBoxHeight(5, StocksLocationsRecordCount, StocksLocationsGroupBox, StocksLocationsDataGridView)
+        SetGroupBoxHeight(20, StocksLocationsRecordCount, StocksLocationsGroupBox, StocksLocationsDataGridView)
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
@@ -130,25 +130,9 @@ FROM ((StocksLocationsTable
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Location Code"
                     StocksLocationsDataGridView.Columns.Item(i).Width = 120
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "StoragesLocation_ShortText200"
-                    StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Storage Location"
-                    StocksLocationsDataGridView.Columns.Item(i).Width = 300
-                    StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "MainStorageTypesTable.StorageTypeDescription_ShortText150"
-                    StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Main Storage Type"
-                    StocksLocationsDataGridView.Columns.Item(i).Width = 200
-                    StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "SubStorageTypesTable.StorageTypeDescription_ShortText150"
-                    StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Sub Storage Type"
-                    StocksLocationsDataGridView.Columns.Item(i).Width = 200
-                    StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "Bay_ShortText1"
-                    StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Bay"
-                    StocksLocationsDataGridView.Columns.Item(i).Width = 70
-                    StocksLocationsDataGridView.Columns.Item(i).Visible = True
-                Case "Level_Byte"
-                    StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Level (1 is the lowest)"
-                    StocksLocationsDataGridView.Columns.Item(i).Width = 120
+                Case "LocationDescription"
+                    StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Location Description"
+                    StocksLocationsDataGridView.Columns.Item(i).Width = 400
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
             End Select
 
@@ -601,7 +585,7 @@ FROM StoragesLocationsTable
         FillStoragesLocationsDataGridView()
     End Sub
     Private Sub UpdateStocksLocationsTable()
-        If MsgBox("Is this a new Stocks Location (otherwise System updates current location) ? ", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox("Is this a new Stocks Location (otherwise System updates current location) ? ", ) = MsgBoxResult.Yes Then
             AddNewStocksLocation()
         Else
             UpdateCurrentStocksLocationTable()
