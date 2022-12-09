@@ -1,6 +1,9 @@
 ﻿Imports System.Reflection
 Imports System.Reflection.Emit
-
+'In the coding Series Should only be indicated when there are series of the of the Storage Types
+'example racks should only coded as rc1 if there is another rk otherwise it is only rk therefore
+'there should be a function that sets code
+'there should be a function that returns or sets a variables to actual representations of the code
 Public Class StockLocationsForm
     Private StocksLocationsFieldsToSelect = ""
     Private StocksLocationsSelectionFilter = ""
@@ -53,14 +56,24 @@ Public Class StockLocationsForm
         StockLocationDetailsGroupBox.Enabled = False
     End Sub
     Private Sub FillStocksLocationsDataGridView()
+        Dim LocationCodeDescription = "StocksLocationsTable.LocationCode_ShortText11 &
+                                       StoragesLocationsTable.StoragesLocation_ShortText200 &
+                                       MainStorageTypesTable.StorageTypeDescription_ShortText150 &
+                                       SubStorageTypesTable.StorageTypeDescription_ShortText150 &
+                                       ' bay ' & StocksLocationsTable.Bay_ShortText1 &
+                                       ' level ' & StocksLocationsTable.Level_Byte &
+                                       ','"
 
         StocksLocationsSelectionOrder = " ORDER BY LocationCode_ShortText11"
+
         StocksLocationsFieldsToSelect = "
         Select
 StocksLocationsTable.StocksLocationID_AutoNumber, 
 StocksLocationsTable.LocationCode_ShortText11, 
 StoragesLocationsTable.StoragesLocationID_Autonumber, 
 StoragesLocationsTable.StoragesLocation_ShortText200,  
+" & LocationCodeDescription &
+"
 StoragesLocationsTable.StoragesLocationCode_ShortText2, 
 MainStorageTypesTable.StorageTypeID_Autonumber, 
 MainStorageTypesTable.StorageTypeCode_ShortText2, 
@@ -70,9 +83,14 @@ SubStorageTypesTable.StorageTypeCode_ShortText2,
 SubStorageTypesTable.StorageTypeDescription_ShortText150,
 StocksLocationsTable.Bay_ShortText1, 
 StocksLocationsTable.Level_Byte
-FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsTable.StoragesLocationID_LongInteger = StoragesLocationsTable.StoragesLocationID_Autonumber) LEFT JOIN StorageTypesTable AS MainStorageTypesTable ON StocksLocationsTable.[MainStorageType_LongInteger] = MainStorageTypesTable.StorageTypeID_Autonumber) LEFT JOIN StorageTypesTable AS SubStorageTypesTable ON StocksLocationsTable.[SubStorageType_LongInteger] = SubStorageTypesTable.StorageTypeID_Autonumber
+FROM ((StocksLocationsTable 
+        LEFT JOIN StoragesLocationsTable ON StocksLocationsTable.StoragesLocationID_LongInteger = 
+             StoragesLocationsTable.StoragesLocationID_Autonumber) 
+        LEFT JOIN StorageTypesTable AS MainStorageTypesTable ON StocksLocationsTable.[MainStorageType_LongInteger] = 
+             MainStorageTypesTable.StorageTypeID_Autonumber) 
+        LEFT JOIN StorageTypesTable AS SubStorageTypesTable ON StocksLocationsTable.[SubStorageType_LongInteger] = 
+             SubStorageTypesTable.StorageTypeID_Autonumber
 "
-
         MySelection = StocksLocationsFieldsToSelect & StocksLocationsSelectionFilter & StocksLocationsSelectionOrder
 
         JustExecuteMySelection()
@@ -229,6 +247,7 @@ FROM ((StocksLocationsTable LEFT JOIN StoragesLocationsTable ON StocksLocationsT
         End If
         EditMode = ""
     End Sub
+
     Private Function NoChangesWereMade()
         Select Case EditMode
             Case "New"

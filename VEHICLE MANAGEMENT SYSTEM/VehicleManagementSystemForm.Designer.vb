@@ -65,6 +65,7 @@ Partial Class VehicleManagementSystemForm
         Me.RequisitionsforPurchaseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StoreSuppliesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DepartmentSuppliesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StorageSystemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LOGOFFToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LOGINToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EXITSYSTEMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -302,7 +303,7 @@ Partial Class VehicleManagementSystemForm
         '
         'WarehouseDepartmentToolStripMenuItem
         '
-        Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InventoryToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem})
+        Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InventoryToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem, Me.StorageSystemToolStripMenuItem})
         Me.WarehouseDepartmentToolStripMenuItem.Name = "WarehouseDepartmentToolStripMenuItem"
         Me.WarehouseDepartmentToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
         Me.WarehouseDepartmentToolStripMenuItem.Text = "Warehouse"
@@ -348,6 +349,12 @@ Partial Class VehicleManagementSystemForm
         Me.DepartmentSuppliesToolStripMenuItem.Name = "DepartmentSuppliesToolStripMenuItem"
         Me.DepartmentSuppliesToolStripMenuItem.Size = New System.Drawing.Size(225, 26)
         Me.DepartmentSuppliesToolStripMenuItem.Text = "Department Supplies"
+        '
+        'StorageSystemToolStripMenuItem
+        '
+        Me.StorageSystemToolStripMenuItem.Name = "StorageSystemToolStripMenuItem"
+        Me.StorageSystemToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
+        Me.StorageSystemToolStripMenuItem.Text = "Storage System"
         '
         'LOGOFFToolStripMenuItem
         '
@@ -477,4 +484,5 @@ Partial Class VehicleManagementSystemForm
     Friend WithEvents UpdateStatusTablesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ProductsToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents StorageSystemToolStripMenuItem As ToolStripMenuItem
 End Class

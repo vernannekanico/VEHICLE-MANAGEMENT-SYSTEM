@@ -168,10 +168,15 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
     Private Sub TestTemporaryFormToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestTemporaryFormToolStripMenuItem.Click
         TemporaryForThisProjectForm.Show()
     End Sub
-    Private Sub PartsForDeliveriesStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReleasePartsStripMenuItem.Click
+    Private Sub ReleasePartsStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReleasePartsStripMenuItem.Click
         ShowCalledForm(Me, WorkOrderPartsRequisitionsForm)
     End Sub
-
+    Private Sub StoreSuppliesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StoreSuppliesToolStripMenuItem.Click
+        ShowCalledForm(Me, StoreRequisitionsForm)
+    End Sub
+    Private Sub StorageSystemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StorageSystemToolStripMenuItem.Click
+        ShowCalledForm(Me, StockLocationsForm)
+    End Sub
 
     Private Sub UsersDataGridView_DoubleClick(sender As Object, e As EventArgs) Handles UsersDataGridView.DoubleClick
 
@@ -193,9 +198,6 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
         ShowCalledForm(Me, RequisitionsForm)
     End Sub
 
-    Private Sub StoreSuppliesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StoreSuppliesToolStripMenuItem.Click
-        ShowCalledForm(Me, StoreRequisitionsForm)
-    End Sub
 
     Private Sub InventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
         Tunnel3 = 2
@@ -237,4 +239,5 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
     Private Sub ProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsToolStripMenuItem.Click
 
     End Sub
+
 End Class
