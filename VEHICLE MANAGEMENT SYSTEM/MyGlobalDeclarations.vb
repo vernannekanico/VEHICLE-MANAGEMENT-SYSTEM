@@ -6,7 +6,7 @@ Module MyGlobalDeclarations
     Public RecordCount As Integer
     Public DefaultSystemPath = My.Computer.FileSystem.CurrentDirectory
     Public CurrentPersonnelName As String = "" ' name of employee
-    Public CurrentUserGroup As String = "" ' name of employee
+    Public CurrentUserGroup As String = "" ' group employee belongs
     Public CurrentDepartment As String = "" ' User s department
     Public CurrentUserName As String = ""      ' login name
     Public CurrentUserID As Integer = -1

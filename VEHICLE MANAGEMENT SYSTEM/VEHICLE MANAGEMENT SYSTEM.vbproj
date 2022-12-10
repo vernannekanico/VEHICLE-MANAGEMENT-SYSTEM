@@ -130,321 +130,321 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="SubSystem Procurement\BrandsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\BrandsForm.Designer.vb">
       <DependentUpon>BrandsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Procurement\BrandsForm.vb">
+    <Compile Include="Views\SubSystem Procurement\BrandsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CityForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\CityForm.Designer.vb">
       <DependentUpon>CityForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="CityForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\CityForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Human Resources\DepartmentsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\DepartmentsForm.Designer.vb">
       <DependentUpon>DepartmentsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Human Resources\DepartmentsForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\DepartmentsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Human Resources\EmailForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\EmailForm.Designer.vb">
       <DependentUpon>EmailForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Human Resources\EmailForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\EmailForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PurchasedItemsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\PurchasedItemsForm.Designer.vb">
       <DependentUpon>PurchasedItemsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PurchasedItemsForm.vb">
+    <Compile Include="Views\SubSystem Procurement\PurchasedItemsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PrintBillsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Billing and Finance\PrintBillsForm.Designer.vb">
       <DependentUpon>PrintBillsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PrintBillsForm.vb">
+    <Compile Include="Views\SubSystem Billing and Finance\PrintBillsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Warehousing\InventoriesForm.Designer.vb">
+    <Compile Include="Views\SubSystem Warehousing\InventoriesForm.Designer.vb">
       <DependentUpon>InventoriesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Warehousing\InventoriesForm.vb">
+    <Compile Include="Views\SubSystem Warehousing\InventoriesForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RequisitionsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\RequisitionsForm.Designer.vb">
       <DependentUpon>RequisitionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="RequisitionsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\RequisitionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Warehousing\DeliveriesForm.Designer.vb">
+    <Compile Include="Views\SubSystem Warehousing\DeliveriesForm.Designer.vb">
       <DependentUpon>DeliveriesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Warehousing\DeliveriesForm.vb">
+    <Compile Include="Views\SubSystem Warehousing\DeliveriesForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductPartsPackingsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\ProductPartsPackingsForm.Designer.vb">
       <DependentUpon>ProductPartsPackingsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductPartsPackingsForm.vb">
+    <Compile Include="Views\SubSystem Procurement\ProductPartsPackingsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StatusForm.Designer.vb">
+    <Compile Include="Views\SubSystem Systems\StatusForm.Designer.vb">
       <DependentUpon>StatusForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="StatusForm.vb">
+    <Compile Include="Views\SubSystem Systems\StatusForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Warehousing\StockLocationsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Warehousing\StockLocationsForm.Designer.vb">
       <DependentUpon>StockLocationsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Warehousing\StockLocationsForm.vb">
+    <Compile Include="Views\SubSystem Warehousing\StockLocationsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SuppliersForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\SuppliersForm.Designer.vb">
       <DependentUpon>SuppliersForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SuppliersForm.vb">
+    <Compile Include="Views\SubSystem Procurement\SuppliersForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PartsSpecificationsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\PartsSpecificationsForm.Designer.vb">
       <DependentUpon>PartsSpecificationsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PartsSpecificationsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\PartsSpecificationsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PurchaseOrdersForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\PurchaseOrdersForm.Designer.vb">
       <DependentUpon>PurchaseOrdersForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PurchaseOrdersForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\PurchaseOrdersForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StoreRequisitionsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Warehousing\StoreRequisitionsForm.Designer.vb">
       <DependentUpon>StoreRequisitionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="StoreRequisitionsForm.vb">
+    <Compile Include="Views\SubSystem Warehousing\StoreRequisitionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RequestPartsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\RequestPartsForm.Designer.vb">
       <DependentUpon>RequestPartsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="RequestPartsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\RequestPartsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RequisitionsNewSavedForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\RequisitionsNewSavedForm.Designer.vb">
       <DependentUpon>RequisitionsNewSavedForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="RequisitionsNewSavedForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\RequisitionsNewSavedForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="JobsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\JobsForm.Designer.vb">
       <DependentUpon>JobsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="JobsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\JobsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Human Resources\JobPositionsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\JobPositionsForm.Designer.vb">
       <DependentUpon>JobPositionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Human Resources\JobPositionsForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\JobPositionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InformationsHeadersForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\InformationsHeadersForm.Designer.vb">
       <DependentUpon>InformationsHeadersForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="InformationsHeadersForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\InformationsHeadersForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginForm.Designer.vb">
+    <Compile Include="Views\System Main Views\LoginForm.Designer.vb">
       <DependentUpon>LoginForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="LoginForm.vb">
+    <Compile Include="Views\System Main Views\LoginForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Human Resources\PersonnelsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\PersonnelsForm.Designer.vb">
       <DependentUpon>PersonnelsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Human Resources\PersonnelsForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\PersonnelsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PositionsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\PositionsForm.Designer.vb">
       <DependentUpon>PositionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PositionsForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\PositionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductsPartsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\ProductsPartsForm.Designer.vb">
       <DependentUpon>ProductsPartsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ProductsPartsForm.vb">
+    <Compile Include="Views\SubSystem Procurement\ProductsPartsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TemporaryForThisProjectForm.Designer.vb">
+    <Compile Include="Views\SubSystem Systems\TemporaryForThisProjectForm.Designer.vb">
       <DependentUpon>TemporaryForThisProjectForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="TemporaryForThisProjectForm.vb">
+    <Compile Include="Views\SubSystem Systems\TemporaryForThisProjectForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UsersForm.Designer.vb">
+    <Compile Include="Views\System Main Views\UsersForm.Designer.vb">
       <DependentUpon>UsersForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="UsersForm.vb">
+    <Compile Include="Views\System Main Views\UsersForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleRepairClassForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleRepairClassForm.Designer.vb">
       <DependentUpon>VehicleRepairClassForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleRepairClassForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleRepairClassForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Vehicle_Management_DatabaseDataSet.vb">
       <DependentUpon>Vehicle_Management_DatabaseDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrderConcernAnalysisForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderConcernAnalysisForm.Designer.vb">
       <DependentUpon>WorkOrderConcernAnalysisForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrderConcernAnalysisForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderConcernAnalysisForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConcernsDetailsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\ConcernsDetailsForm.Designer.vb">
       <DependentUpon>ConcernsDetailsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConcernsDetailsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\ConcernsDetailsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConcernsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\ConcernsForm.Designer.vb">
       <DependentUpon>ConcernsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConcernsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\ConcernsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConcernTypesForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\ConcernTypesForm.Designer.vb">
       <DependentUpon>ConcernTypesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConcernTypesForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\ConcernTypesForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CountryForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\CountryForm.Designer.vb">
       <DependentUpon>CountryForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="CountryForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\CountryForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MyStandardsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Systems\MyStandardsForm.Designer.vb">
       <DependentUpon>MyStandardsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="MyStandardsForm.vb">
+    <Compile Include="Views\SubSystem Systems\MyStandardsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleModelsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleModelsForm.Designer.vb">
       <DependentUpon>VehicleModelsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleModelsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleModelsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StateProvForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\StateProvForm.Designer.vb">
       <DependentUpon>StateProvForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="StateProvForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\StateProvForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GenerateRecordsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Systems\GenerateRecordsForm.Designer.vb">
       <DependentUpon>GenerateRecordsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="GenerateRecordsForm.vb">
+    <Compile Include="Views\SubSystem Systems\GenerateRecordsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceTechnicianForm.Designer.vb">
+    <Compile Include="Views\SubSystem Human Resources\ServiceTechnicianForm.Designer.vb">
       <DependentUpon>ServiceTechnicianForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ServiceTechnicianForm.vb">
+    <Compile Include="Views\SubSystem Human Resources\ServiceTechnicianForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OwnersForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\OwnersForm.Designer.vb">
       <DependentUpon>OwnersForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="OwnersForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\OwnersForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateATableForm.Designer.vb">
+    <Compile Include="Views\SubSystem Systems\UpdateATableForm.Designer.vb">
       <DependentUpon>UpdateATableForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="UpdateATableForm.vb">
+    <Compile Include="Views\SubSystem Systems\UpdateATableForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleDetailsDetailsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleDetailsDetailsForm.Designer.vb">
       <DependentUpon>VehicleDetailsDetailsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleDetailsDetailsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleDetailsDetailsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleModelsRelationsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleModelsRelationsForm.Designer.vb">
       <DependentUpon>VehicleModelsRelationsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleModelsRelationsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleModelsRelationsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehiclesServicedDetailsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehiclesServicedDetailsForm.Designer.vb">
       <DependentUpon>VehiclesServicedDetailsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehiclesServicedDetailsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehiclesServicedDetailsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehiclesForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehiclesForm.Designer.vb">
       <DependentUpon>VehiclesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehiclesForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehiclesForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehiclesServicedForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehiclesServicedForm.Designer.vb">
       <DependentUpon>VehiclesServicedForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehiclesServicedForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehiclesServicedForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleTrimsEditForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleTrimsEditForm.Designer.vb">
       <DependentUpon>VehicleTrimsEditForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleTrimsEditForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleTrimsEditForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleTrimsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleTrimsForm.Designer.vb">
       <DependentUpon>VehicleTrimsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleTrimsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleTrimsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleMakeForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleMakeForm.Designer.vb">
       <DependentUpon>VehicleMakeForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="VehicleMakeForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\VehicleMakeForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorkOrderFormASM.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderFormASM.Designer.vb">
       <DependentUpon>WorkOrderFormASM.vb</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrderFormASM.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderFormASM.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorkOrderFormCRS.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderFormCRS.Designer.vb">
       <DependentUpon>WorkOrderFormCRS.vb</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrderFormCRS.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderFormCRS.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SubSystem Procurement\MasterCodeBookForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\MasterCodeBookForm.Designer.vb">
       <DependentUpon>MasterCodeBookForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="SubSystem Procurement\MasterCodeBookForm.vb">
+    <Compile Include="Views\SubSystem Procurement\MasterCodeBookForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MyPublicProceduresAndFuctions.vb" />
     <Compile Include="MyGlobalDeclarations.vb" />
-    <Compile Include="VehicleManagementSystemForm.vb">
+    <Compile Include="Views\System Main Views\VehicleManagementSystemForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VehicleManagementSystemForm.Designer.vb">
+    <Compile Include="Views\System Main Views\VehicleManagementSystemForm.Designer.vb">
       <DependentUpon>VehicleManagementSystemForm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
@@ -470,143 +470,143 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Vehicle_Management_DatabaseDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrderPartsRequisitionsForm.Designer.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderPartsRequisitionsForm.Designer.vb">
       <DependentUpon>WorkOrderPartsRequisitionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrderPartsRequisitionsForm.vb">
+    <Compile Include="Views\SubSystem Vehicle Services\WorkOrderPartsRequisitionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubSystem Procurement\BrandsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\BrandsForm.resx">
       <DependentUpon>BrandsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CityForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\CityForm.resx">
       <DependentUpon>CityForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Human Resources\DepartmentsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\DepartmentsForm.resx">
       <DependentUpon>DepartmentsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Warehousing\InventoriesForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Warehousing\InventoriesForm.resx">
       <DependentUpon>InventoriesForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PurchasedItemsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\PurchasedItemsForm.resx">
       <DependentUpon>PurchasedItemsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PrintBillsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Billing and Finance\PrintBillsForm.resx">
       <DependentUpon>PrintBillsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RequisitionsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\RequisitionsForm.resx">
       <DependentUpon>RequisitionsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PartsSpecificationsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\PartsSpecificationsForm.resx">
       <DependentUpon>PartsSpecificationsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductPartsPackingsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\ProductPartsPackingsForm.resx">
       <DependentUpon>ProductPartsPackingsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PurchaseOrdersForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\PurchaseOrdersForm.resx">
       <DependentUpon>PurchaseOrdersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Warehousing\DeliveriesForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Warehousing\DeliveriesForm.resx">
       <DependentUpon>DeliveriesForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StatusForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Systems\StatusForm.resx">
       <DependentUpon>StatusForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Warehousing\StockLocationsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Warehousing\StockLocationsForm.resx">
       <DependentUpon>StockLocationsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StoreRequisitionsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Warehousing\StoreRequisitionsForm.resx">
       <DependentUpon>StoreRequisitionsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RequestPartsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\RequestPartsForm.resx">
       <DependentUpon>RequestPartsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RequisitionsNewSavedForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\RequisitionsNewSavedForm.resx">
       <DependentUpon>RequisitionsNewSavedForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SuppliersForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\SuppliersForm.resx">
       <DependentUpon>SuppliersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Human Resources\JobPositionsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\JobPositionsForm.resx">
       <DependentUpon>JobPositionsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InformationsHeadersForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\InformationsHeadersForm.resx">
       <DependentUpon>InformationsHeadersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="JobsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\JobsForm.resx">
       <DependentUpon>JobsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm.resx">
+    <EmbeddedResource Include="Views\System Main Views\LoginForm.resx">
       <DependentUpon>LoginForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Human Resources\PersonnelsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\PersonnelsForm.resx">
       <DependentUpon>PersonnelsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductsPartsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\ProductsPartsForm.resx">
       <DependentUpon>ProductsPartsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TemporaryForThisProjectForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Systems\TemporaryForThisProjectForm.resx">
       <DependentUpon>TemporaryForThisProjectForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UsersForm.resx">
+    <EmbeddedResource Include="Views\System Main Views\UsersForm.resx">
       <DependentUpon>UsersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleRepairClassForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleRepairClassForm.resx">
       <DependentUpon>VehicleRepairClassForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkOrderConcernAnalysisForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\WorkOrderConcernAnalysisForm.resx">
       <DependentUpon>WorkOrderConcernAnalysisForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConcernsDetailsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\ConcernsDetailsForm.resx">
       <DependentUpon>ConcernsDetailsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConcernsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\ConcernsForm.resx">
       <DependentUpon>ConcernsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConcernTypesForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\ConcernTypesForm.resx">
       <DependentUpon>ConcernTypesForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CountryForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\CountryForm.resx">
       <DependentUpon>CountryForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GenerateRecordsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Systems\GenerateRecordsForm.resx">
       <DependentUpon>GenerateRecordsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyStandardsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Systems\MyStandardsForm.resx">
       <DependentUpon>MyStandardsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleModelsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleModelsForm.resx">
       <DependentUpon>VehicleModelsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceTechnicianForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\ServiceTechnicianForm.resx">
       <DependentUpon>ServiceTechnicianForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SubSystem Procurement\MasterCodeBookForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\MasterCodeBookForm.resx">
       <DependentUpon>MasterCodeBookForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OwnersForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\OwnersForm.resx">
       <DependentUpon>OwnersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StateProvForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Human Resources\StateProvForm.resx">
       <DependentUpon>StateProvForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateATableForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Systems\UpdateATableForm.resx">
       <DependentUpon>UpdateATableForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleDetailsDetailsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleDetailsDetailsForm.resx">
       <DependentUpon>VehicleDetailsDetailsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleModelsRelationsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleModelsRelationsForm.resx">
       <DependentUpon>VehicleModelsRelationsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehiclesServicedDetailsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehiclesServicedDetailsForm.resx">
       <DependentUpon>VehiclesServicedDetailsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleManagementSystemForm.resx">
+    <EmbeddedResource Include="Views\System Main Views\VehicleManagementSystemForm.resx">
       <DependentUpon>VehicleManagementSystemForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -615,28 +615,28 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehiclesForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehiclesForm.resx">
       <DependentUpon>VehiclesForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehiclesServicedForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehiclesServicedForm.resx">
       <DependentUpon>VehiclesServicedForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleTrimsEditForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleTrimsEditForm.resx">
       <DependentUpon>VehicleTrimsEditForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleTrimsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleTrimsForm.resx">
       <DependentUpon>VehicleTrimsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleMakeForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\VehicleMakeForm.resx">
       <DependentUpon>VehicleMakeForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkOrderFormASM.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\WorkOrderFormASM.resx">
       <DependentUpon>WorkOrderFormASM.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkOrderFormCRS.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\WorkOrderFormCRS.resx">
       <DependentUpon>WorkOrderFormCRS.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorkOrderPartsRequisitionsForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Vehicle Services\WorkOrderPartsRequisitionsForm.resx">
       <DependentUpon>WorkOrderPartsRequisitionsForm.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -716,6 +716,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\SubSystem Management\" />
+    <Folder Include="Views\System Common Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
