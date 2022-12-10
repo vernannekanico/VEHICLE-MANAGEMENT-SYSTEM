@@ -1,129 +1,130 @@
 ﻿Public Class MyStandardForm
-    Private ReleasedPartsFieldsToSelect = ""
-    Private ReleasedPartsSelectionFilter = ""
-    Private ReleasedPartsSelectionOrder = ""
-    Private CurrentReleasedPartsRow As Integer = -1
-    Private ReleasedPartsRecordCount As Integer = -1
-    Private CurrentReleasedPartID = -1
-    Private CurrentReleasedPartStatus As String
-    Private ReleasedPartsDataGridViewAlreadyFormated = False
+    Private MyStandardsFieldsToSelect = ""
+    Private MyStandardsSelectionFilter = ""
+    Private MyStandardsSelectionOrder = ""
+    Private CurrentMyStandardsRow As Integer = -1
+    Private MyStandardsRecordCount As Integer = -1
+    Private CurrentMyStandardID = -1
+    Private CurrentMyStandardStatus As String
+    Private MyStandardsDataGridViewAlreadyFormated = False
+    Private SaveMessage As String
 
     Private SavedCallingForm As Form
-    Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MyStandardForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MsgBox("Set this form and all containers to 12pt pixel")
         SavedCallingForm = CallingForm
-        FillReleasedPartsDataGridView()
+        FillMyStandardsDataGridView()
 
     End Sub
-    Private Sub FillReleasedPartsDataGridView()
+    Private Sub FillMyStandardsDataGridView()
 
-        ReleasedPartsSelectionOrder = " ORDER BY ReleasedPartID_AutoNumber DESC "
-        ReleasedPartsFieldsToSelect = " 
+        MyStandardsSelectionOrder = " ORDER BY MyStandardID_AutoNumber DESC "
+        MyStandardsFieldsToSelect = " 
 "
 
-        MySelection = ReleasedPartsFieldsToSelect & ReleasedPartsSelectionFilter & ReleasedPartsSelectionOrder
+        MySelection = MyStandardsFieldsToSelect & MyStandardsSelectionFilter & MyStandardsSelectionOrder
 
         JustExecuteMySelection()
-        ReleasedPartsRecordCount = RecordCount
+        MyStandardsRecordCount = RecordCount
 
-        If ReleasedPartsRecordCount > 0 Then
-            ReleasedPartsGroupBox.Visible = True
+        If MyStandardsRecordCount > 0 Then
+            MyStandardsGroupBox.Visible = True
         Else
-            ReleasedPartsGroupBox.Visible = False
+            MyStandardsGroupBox.Visible = False
         End If
-        ReleasedPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If ReleasedPartsRecordCount = 0 Then
-            CurrentReleasedPartID = -1
+        MyStandardsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        If MyStandardsRecordCount = 0 Then
+            CurrentMyStandardID = -1
         End If
 
 
-        ' HERE AT ROW_ENTER, FillReleasedPartConcernsDataGridView is called and ReleasedPartConcernsbOX IS ALREADY FORMATTED
-        If Not ReleasedPartsDataGridViewAlreadyFormated Then
-            FormatReleasedPartsDataGridView()
+        ' HERE AT ROW_ENTER, FillMyStandardConcernsDataGridView is called and MyStandardConcernsbOX IS ALREADY FORMATTED
+        If Not MyStandardsDataGridViewAlreadyFormated Then
+            FormatMyStandardsDataGridView()
             SetFormWidthAndGroupBoxLeft(Me,
                                         MyStandardsFormMenuStrip,
-                                        ReleasedPartsGroupBox,
-                                        ReleasedPartsGroupBox,
-                                        ReleasedPartsGroupBox,
-                                        ReleasedPartsGroupBox)
+                                        MyStandardsGroupBox,
+                                        MyStandardsGroupBox,
+                                        MyStandardsGroupBox,
+                                        MyStandardsGroupBox)
         End If
 
-        SetGroupBoxHeight(5, ReleasedPartsRecordCount, ReleasedPartsGroupBox, ReleasedPartsDataGridView)
+        SetGroupBoxHeight(5, MyStandardsRecordCount, MyStandardsGroupBox, MyStandardsDataGridView)
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
 
     End Sub
-    Private Sub FormatReleasedPartsDataGridView()
-        ReleasedPartsDataGridViewAlreadyFormated = True
-        ReleasedPartsGroupBox.Width = 0
-        For i = 0 To ReleasedPartsDataGridView.Columns.GetColumnCount(0) - 1
+    Private Sub FormatMyStandardsDataGridView()
+        MyStandardsDataGridViewAlreadyFormated = True
+        MyStandardsGroupBox.Width = 0
+        For i = 0 To MyStandardsDataGridView.Columns.GetColumnCount(0) - 1
 
-            ReleasedPartsDataGridView.Columns.Item(i).Visible = False
-            Select Case ReleasedPartsDataGridView.Columns.Item(i).Name
-                Case "ReleasedPartNumber_ShortText12"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "WORK ORDER No."
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 120
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+            MyStandardsDataGridView.Columns.Item(i).Visible = False
+            Select Case MyStandardsDataGridView.Columns.Item(i).Name
+                Case "MyStandardNumber_ShortText12"
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "WORK ORDER No."
+                    MyStandardsDataGridView.Columns.Item(i).Width = 120
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "ServiceDate_DateTime"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "Date/Time In"
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 80
-                    ReleasedPartsDataGridView.Columns(i).DefaultCellStyle.Format = "yy-MM-dd"
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "Date/Time In"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 80
+                    MyStandardsDataGridView.Columns(i).DefaultCellStyle.Format = "yy-MM-dd"
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleMilage_Integer"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "Milage"
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 70
-                    ReleasedPartsDataGridView.Columns(i).DefaultCellStyle.Format = "###,###"
-                    ReleasedPartsDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "Milage"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 70
+                    MyStandardsDataGridView.Columns(i).DefaultCellStyle.Format = "###,###"
+                    MyStandardsDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleDescription"
-                    ReleasedPartsDataGridView.Columns.Item("VehicleDescription").HeaderText = "VEHICLE"
-                    ReleasedPartsDataGridView.Columns.Item("VehicleDescription").Width = 200
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+                    MyStandardsDataGridView.Columns.Item("VehicleDescription").HeaderText = "VEHICLE"
+                    MyStandardsDataGridView.Columns.Item("VehicleDescription").Width = 200
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "OwnerName"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "OWNER"
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 150
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "OWNER"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 150
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "TelNo_ShortText10"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "TEL. NO."
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 100
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "TEL. NO."
+                    MyStandardsDataGridView.Columns.Item(i).Width = 100
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "AssignedLeadMechanic"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "Lead Mechanic"
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 160
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
-                    If CurrentUserGroup = "Lead Service Specialist" Then ReleasedPartsDataGridView.Columns.Item(i).Visible = False
-                Case "ReleasedPartStatus"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "Status"
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 171
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
-                Case "NewReleasedPartStatus"
-                    ReleasedPartsDataGridView.Columns.Item(i).HeaderText = "Status (new)"
-                    ReleasedPartsDataGridView.Columns.Item(i).Width = 200
-                    ReleasedPartsDataGridView.Columns.Item(i).Visible = True
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "Lead Mechanic"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 160
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
+                    If CurrentUserGroup = "Lead Service Specialist" Then MyStandardsDataGridView.Columns.Item(i).Visible = False
+                Case "MyStandardStatus"
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "Status"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 171
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
+                Case "NewMyStandardStatus"
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "Status (new)"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 200
+                    MyStandardsDataGridView.Columns.Item(i).Visible = True
             End Select
 
-            If ReleasedPartsDataGridView.Columns.Item(i).Visible = True Then
-                ReleasedPartsGroupBox.Width = ReleasedPartsGroupBox.Width + ReleasedPartsDataGridView.Columns.Item(i).Width
+            If MyStandardsDataGridView.Columns.Item(i).Visible = True Then
+                MyStandardsGroupBox.Width = MyStandardsGroupBox.Width + MyStandardsDataGridView.Columns.Item(i).Width
             End If
         Next
-        If ReleasedPartsGroupBox.Width > VehicleManagementSystemForm.Width Then
-            ReleasedPartsGroupBox.Width = VehicleManagementSystemForm.Width - 4
+        If MyStandardsGroupBox.Width > VehicleManagementSystemForm.Width Then
+            MyStandardsGroupBox.Width = VehicleManagementSystemForm.Width - 4
         Else
-            HorizontalCenter(ReleasedPartsGroupBox, Me)
+            HorizontalCenter(MyStandardsGroupBox, Me)
         End If
     End Sub
-    Private Sub ReleasedPartsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ReleasedPartsDataGridView.RowEnter
+    Private Sub MyStandardsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles MyStandardsDataGridView.RowEnter
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
-        If ReleasedPartsRecordCount = 0 Then Exit Sub
+        If MyStandardsRecordCount = 0 Then Exit Sub
 
-        CurrentReleasedPartsRow = e.RowIndex
-        CurrentReleasedPartID = ReleasedPartsDataGridView.Item("ReleasedPartID_AutoNumber", CurrentReleasedPartsRow).Value
+        CurrentMyStandardsRow = e.RowIndex
+        CurrentMyStandardID = MyStandardsDataGridView.Item("MyStandardID_AutoNumber", CurrentMyStandardsRow).Value
 
-        FillField(CurrentReleasedPartStatus, ReleasedPartsDataGridView.Item("ReleasedPartStatus", CurrentReleasedPartsRow).Value)
+        FillField(CurrentMyStandardStatus, MyStandardsDataGridView.Item("MyStandardStatus", CurrentMyStandardsRow).Value)
 
-        Select Case CurrentReleasedPartStatus
+        Select Case CurrentMyStandardStatus
             Case "Assigned"
         End Select
 
@@ -134,22 +135,75 @@
 
     End Sub
 
-    Private Sub ReleasedPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
+    Private Sub MyStandardsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
         CallingForm = SavedCallingForm
 
         Select Case Tunnel1
-            Case "Tunnel2IsReleasedPartID"
-                CurrentReleasedPartID = Tunnel2
+            Case "Tunnel2IsMyStandardID"
+                CurrentMyStandardID = Tunnel2
             Case "Tunnel3IsReturnedTextData"
                 '              CurrentReturnedTextData = Tunnel3
         End Select
-        FillReleasedPartsDataGridView()
+        FillMyStandardsDataGridView()
     End Sub
 
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+    Private Sub SaveMyStandardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveMyStandardToolStripMenuItem.Click
+        SaveMessage = "Continue saving the changes ?"
+        SaveChanges()
     End Sub
-    Private Sub InsertNewInventory()
+    Private Sub SaveChanges()
+        'CHECK CHANGES REGISTER IF NEEDED
+        If AChangeInMyStandardDetailsOccurred() Then
+            'VALIDATE
+            If MsgBox(SaveMessage, MsgBoxStyle.YesNo) = vbNo Then
+                MyStandardDetailsGroupBox.Visible = False
+                Exit Sub
+            End If
+            If Not AllEntriesOfThisMyStandardDetailsAreValid() Then Exit Sub
+            RegisterDetailsOfThisMyStandardChanges()
+        End If
+    End Sub
+    Private Function AChangeInMyStandardDetailsOccurred()
+        '*******************************************************
+        ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD OR EDIT
+        If TheseAreNotEqual(MyStandardNameTextBox.Text, MyStandardsDataGridView.Item("", CurrentMyStandardsRow).Value) Then Return True
+        Return False
+    End Function
+    Private Function AllEntriesOfThisMyStandardDetailsAreValid()
+        If Trim(MyStandardNameTextBox.Text) = "" Then
+            If MsgBox("Would you like to leave the MyStandard blank ?", vbYesNo) = vbNo Then
+                Return False
+            End If
+        End If
+        Return True
+    End Function
+    Private Sub RegisterDetailsOfThisMyStandardChanges()
+        MySelection = " Select  * FROM MyStandardsTable WHERE MyStandardsPartID_Autonumber = " & CurrentMyStandardID
+        JustExecuteMySelection()
+
+        Dim xxMessage As String
+
+        If RecordCount = 0 Then
+            xxMessage = "Continue ADD this MyStandard ? "
+        Else
+            xxMessage = "Continue Save Changes ? "
+        End If
+        If MsgBox(xxMessage, MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+            If MsgBox("Disregard your changes ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                MyStandardNameTextBox.Select()
+                Exit Sub
+            End If
+        End If
+
+        If RecordCount = 0 Then
+            InsertNewMyStandard()
+        Else
+            UpdateMyStandardChanges()
+        End If
+    End Sub
+
+    Private Sub InsertNewMyStandard()
         Dim sampleInteger = 1
         Dim SampleCurrentID = 1
         Dim SampleText = "Sample"
@@ -162,7 +216,16 @@
                SampleCurrentID.ToString & ",  " &
                InQuotes(SampleText)
 
-        CurrentReleasedPartID = InsertNewRecord("MyStandardsTable", FieldsToUpdate, FieldsData)
+        CurrentMyStandardID = InsertNewRecord("MyStandardsTable", FieldsToUpdate, FieldsData)
     End Sub
+    Private Sub UpdateMyStandardChanges()
+        Dim RecordFilter = " WHERE ProductsPartID_Autonumber = " & Str(CurrentMyStandardID)
+        Dim SetCommand =
+                    " Set " &
+                    " ManufacturerPartNo_ShortText30Fld = " & InQuotes(MyStandardNameTextBox.Text) & ", "
+        UpdateTable("MyStandardsTable", SetCommand, RecordFilter)
+    End Sub
+    Private Sub SelectMyStandardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectMyStandardToolStripMenuItem.Click
 
+    End Sub
 End Class

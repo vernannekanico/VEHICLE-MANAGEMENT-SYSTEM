@@ -64,6 +64,8 @@ Partial Class StockLocationsForm
         Me.DescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.StorageTypesGroupBox = New System.Windows.Forms.GroupBox()
         Me.StorageTypesDataGridView = New System.Windows.Forms.DataGridView()
+        Me.StocksTextBoxAsLabel = New System.Windows.Forms.ToolStripTextBox()
+        Me.StoreStocksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StocksLocationsGroupBox.SuspendLayout()
         CType(Me.StocksLocationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StoragesLocationsGroupBox.SuspendLayout()
@@ -334,7 +336,7 @@ Partial Class StockLocationsForm
         'StocksLocationsMainMenuStrip
         '
         Me.StocksLocationsMainMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StocksLocationsMainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ActiveDGViewToolStripTextBox, Me.SelectToolStripMenuItem, Me.NewToolStripMenuItem, Me.AnotherToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveToolStripMenuItem, Me.ResetChangesToolStripMenuItem})
+        Me.StocksLocationsMainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ActiveDGViewToolStripTextBox, Me.SelectToolStripMenuItem, Me.NewToolStripMenuItem, Me.AnotherToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripMenuItem1, Me.SaveToolStripMenuItem, Me.ResetChangesToolStripMenuItem, Me.StocksTextBoxAsLabel, Me.StoreStocksToolStripMenuItem})
         Me.StocksLocationsMainMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.StocksLocationsMainMenuStrip.Name = "StocksLocationsMainMenuStrip"
         Me.StocksLocationsMainMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -481,6 +483,19 @@ Partial Class StockLocationsForm
         Me.StorageTypesDataGridView.Size = New System.Drawing.Size(261, 148)
         Me.StorageTypesDataGridView.TabIndex = 52
         '
+        'StocksTextBoxAsLabel
+        '
+        Me.StocksTextBoxAsLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.StocksTextBoxAsLabel.Name = "StocksTextBoxAsLabel"
+        Me.StocksTextBoxAsLabel.Size = New System.Drawing.Size(55, 25)
+        Me.StocksTextBoxAsLabel.Text = "STOCKS :"
+        '
+        'StoreStocksToolStripMenuItem
+        '
+        Me.StoreStocksToolStripMenuItem.Name = "StoreStocksToolStripMenuItem"
+        Me.StoreStocksToolStripMenuItem.Size = New System.Drawing.Size(106, 25)
+        Me.StoreStocksToolStripMenuItem.Text = "Store Stocks"
+        '
         'StockLocationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -558,4 +573,6 @@ Partial Class StockLocationsForm
     Friend WithEvents StorageLocationCodeSuffixTextBox As TextBox
     Friend WithEvents AnotherToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetChangesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StocksTextBoxAsLabel As ToolStripTextBox
+    Friend WithEvents StoreStocksToolStripMenuItem As ToolStripMenuItem
 End Class

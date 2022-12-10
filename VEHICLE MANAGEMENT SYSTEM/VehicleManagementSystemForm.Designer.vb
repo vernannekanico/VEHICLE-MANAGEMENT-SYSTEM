@@ -22,9 +22,9 @@ Partial Class VehicleManagementSystemForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.CurrentPersonnelNameLabel = New System.Windows.Forms.Label()
         Me.VehicleManagementMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SystemsDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -150,8 +150,8 @@ Partial Class VehicleManagementSystemForm
         '
         Me.ServicesDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CustomerServiceToolStripMenuItem, Me.VehicleRepairToolStripMenuItem, Me.CustomerInfoSysToolStripMenuItem, Me.VehicleInformationsToolStripMenuItem, Me.MasterCodeBookToolStripMenuItem})
         Me.ServicesDepartmentToolStripMenuItem.Name = "ServicesDepartmentToolStripMenuItem"
-        Me.ServicesDepartmentToolStripMenuItem.Size = New System.Drawing.Size(77, 25)
-        Me.ServicesDepartmentToolStripMenuItem.Text = "Services"
+        Me.ServicesDepartmentToolStripMenuItem.Size = New System.Drawing.Size(131, 25)
+        Me.ServicesDepartmentToolStripMenuItem.Text = "Vehicle Services"
         Me.ServicesDepartmentToolStripMenuItem.Visible = False
         '
         'CustomerServiceToolStripMenuItem
@@ -251,8 +251,8 @@ Partial Class VehicleManagementSystemForm
         '
         Me.PersonnelDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonnelsInformationFilesToolStripMenuItem})
         Me.PersonnelDepartmentToolStripMenuItem.Name = "PersonnelDepartmentToolStripMenuItem"
-        Me.PersonnelDepartmentToolStripMenuItem.Size = New System.Drawing.Size(90, 25)
-        Me.PersonnelDepartmentToolStripMenuItem.Text = "Personnel"
+        Me.PersonnelDepartmentToolStripMenuItem.Size = New System.Drawing.Size(146, 25)
+        Me.PersonnelDepartmentToolStripMenuItem.Text = "Human Rresource"
         Me.PersonnelDepartmentToolStripMenuItem.Visible = False
         '
         'PersonnelsInformationFilesToolStripMenuItem
@@ -382,28 +382,28 @@ Partial Class VehicleManagementSystemForm
         Me.UsersDataGridView.AllowUserToDeleteRows = False
         Me.UsersDataGridView.AllowUserToOrderColumns = True
         Me.UsersDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.UsersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.UsersDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.UsersDataGridView.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.UsersDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.UsersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.UsersDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UsersDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.UsersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.UsersDataGridView.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.UsersDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.UsersDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.UsersDataGridView.Location = New System.Drawing.Point(384, 34)
         Me.UsersDataGridView.Name = "UsersDataGridView"

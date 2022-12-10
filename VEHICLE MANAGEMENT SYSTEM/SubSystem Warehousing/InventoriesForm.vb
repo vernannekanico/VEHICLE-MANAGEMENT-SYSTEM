@@ -17,7 +17,7 @@
     Private Property CurrentStockID As Object
     Private SavedCallingForm As Form
     Private CurrentlocationID As Object
-    Public Property SaveMessage As String
+    Private Property SaveMessage As String
 
     Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SavedCallingForm = CallingForm
@@ -482,4 +482,5 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         ShowCalledForm(Me, ProductsPartsForm)
 
     End Sub
+
 End Class

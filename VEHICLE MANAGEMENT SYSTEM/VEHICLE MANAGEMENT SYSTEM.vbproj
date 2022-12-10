@@ -130,10 +130,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="BrandsForm.Designer.vb">
+    <Compile Include="SubSystem Procurement\BrandsForm.Designer.vb">
       <DependentUpon>BrandsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="BrandsForm.vb">
+    <Compile Include="SubSystem Procurement\BrandsForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CityForm.Designer.vb">
@@ -142,16 +142,16 @@
     <Compile Include="CityForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DepartmentsForm.Designer.vb">
+    <Compile Include="SubSystem Human Resources\DepartmentsForm.Designer.vb">
       <DependentUpon>DepartmentsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="DepartmentsForm.vb">
+    <Compile Include="SubSystem Human Resources\DepartmentsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmailForm.Designer.vb">
+    <Compile Include="SubSystem Human Resources\EmailForm.Designer.vb">
       <DependentUpon>EmailForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="EmailForm.vb">
+    <Compile Include="SubSystem Human Resources\EmailForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PurchasedItemsForm.Designer.vb">
@@ -166,10 +166,10 @@
     <Compile Include="PrintBillsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InventoriesForm.Designer.vb">
+    <Compile Include="SubSystem Warehousing\InventoriesForm.Designer.vb">
       <DependentUpon>InventoriesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="InventoriesForm.vb">
+    <Compile Include="SubSystem Warehousing\InventoriesForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RequisitionsForm.Designer.vb">
@@ -178,10 +178,10 @@
     <Compile Include="RequisitionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DeliveriesForm.Designer.vb">
+    <Compile Include="SubSystem Warehousing\DeliveriesForm.Designer.vb">
       <DependentUpon>DeliveriesForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="DeliveriesForm.vb">
+    <Compile Include="SubSystem Warehousing\DeliveriesForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ProductPartsPackingsForm.Designer.vb">
@@ -196,10 +196,10 @@
     <Compile Include="StatusForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StockLocationsForm.Designer.vb">
+    <Compile Include="SubSystem Warehousing\StockLocationsForm.Designer.vb">
       <DependentUpon>StockLocationsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="StockLocationsForm.vb">
+    <Compile Include="SubSystem Warehousing\StockLocationsForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SuppliersForm.Designer.vb">
@@ -244,10 +244,10 @@
     <Compile Include="JobsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="JobPositionsForm.Designer.vb">
+    <Compile Include="SubSystem Human Resources\JobPositionsForm.Designer.vb">
       <DependentUpon>JobPositionsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="JobPositionsForm.vb">
+    <Compile Include="SubSystem Human Resources\JobPositionsForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InformationsHeadersForm.Designer.vb">
@@ -262,10 +262,10 @@
     <Compile Include="LoginForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PersonnelsForm.Designer.vb">
+    <Compile Include="SubSystem Human Resources\PersonnelsForm.Designer.vb">
       <DependentUpon>PersonnelsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="PersonnelsForm.vb">
+    <Compile Include="SubSystem Human Resources\PersonnelsForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PositionsForm.Designer.vb">
@@ -433,10 +433,10 @@
     <Compile Include="WorkOrderFormCRS.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MasterCodeBookForm.Designer.vb">
+    <Compile Include="SubSystem Procurement\MasterCodeBookForm.Designer.vb">
       <DependentUpon>MasterCodeBookForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="MasterCodeBookForm.vb">
+    <Compile Include="SubSystem Procurement\MasterCodeBookForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MyPublicProceduresAndFuctions.vb" />
@@ -478,16 +478,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BrandsForm.resx">
+    <EmbeddedResource Include="SubSystem Procurement\BrandsForm.resx">
       <DependentUpon>BrandsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CityForm.resx">
       <DependentUpon>CityForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DepartmentsForm.resx">
+    <EmbeddedResource Include="SubSystem Human Resources\DepartmentsForm.resx">
       <DependentUpon>DepartmentsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InventoriesForm.resx">
+    <EmbeddedResource Include="SubSystem Warehousing\InventoriesForm.resx">
       <DependentUpon>InventoriesForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -509,13 +509,13 @@
     <EmbeddedResource Include="PurchaseOrdersForm.resx">
       <DependentUpon>PurchaseOrdersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DeliveriesForm.resx">
+    <EmbeddedResource Include="SubSystem Warehousing\DeliveriesForm.resx">
       <DependentUpon>DeliveriesForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StatusForm.resx">
       <DependentUpon>StatusForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StockLocationsForm.resx">
+    <EmbeddedResource Include="SubSystem Warehousing\StockLocationsForm.resx">
       <DependentUpon>StockLocationsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StoreRequisitionsForm.resx">
@@ -530,7 +530,7 @@
     <EmbeddedResource Include="SuppliersForm.resx">
       <DependentUpon>SuppliersForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="JobPositionsForm.resx">
+    <EmbeddedResource Include="SubSystem Human Resources\JobPositionsForm.resx">
       <DependentUpon>JobPositionsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InformationsHeadersForm.resx">
@@ -543,7 +543,7 @@
       <DependentUpon>LoginForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonnelsForm.resx">
+    <EmbeddedResource Include="SubSystem Human Resources\PersonnelsForm.resx">
       <DependentUpon>PersonnelsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductsPartsForm.resx">
@@ -585,7 +585,7 @@
     <EmbeddedResource Include="ServiceTechnicianForm.resx">
       <DependentUpon>ServiceTechnicianForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MasterCodeBookForm.resx">
+    <EmbeddedResource Include="SubSystem Procurement\MasterCodeBookForm.resx">
       <DependentUpon>MasterCodeBookForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OwnersForm.resx">

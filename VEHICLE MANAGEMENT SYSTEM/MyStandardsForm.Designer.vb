@@ -22,7 +22,7 @@ Partial Class MyStandardForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.ThisMyStandardDetailsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.MyStandardDetailsGroupBox = New System.Windows.Forms.GroupBox()
         Me.MyStandardNameTextBox = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.LinkedTextBox = New System.Windows.Forms.TextBox()
@@ -40,48 +40,48 @@ Partial Class MyStandardForm
         Me.SearchMyStandardTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.MyStandardsFormMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectMyStandardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewMyStandardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditMtStandardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteMyStandardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ViewMyStandardsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EmployeeDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveMyStandardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.ReleasedPartsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.ReleasedPartsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.ThisMyStandardDetailsGroupBox.SuspendLayout()
+        Me.MyStandardsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.MyStandardsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.MyStandardDetailsGroupBox.SuspendLayout()
         Me.SearchToolStrip.SuspendLayout()
         Me.MyStandardsFormMenuStrip.SuspendLayout()
-        Me.ReleasedPartsGroupBox.SuspendLayout()
-        CType(Me.ReleasedPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MyStandardsGroupBox.SuspendLayout()
+        CType(Me.MyStandardsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'ThisMyStandardDetailsGroupBox
+        'MyStandardDetailsGroupBox
         '
-        Me.ThisMyStandardDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ThisMyStandardDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.MyStandardNameTextBox)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label13)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.LinkedTextBox)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.StateProvTextBox)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.ZipCodeTextBox)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label11)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label10)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.CountryTextBox)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label9)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label2)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.MyStandardDateDateTimeTextBox)
-        Me.ThisMyStandardDetailsGroupBox.Controls.Add(Me.Label1)
-        Me.ThisMyStandardDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.ThisMyStandardDetailsGroupBox.Location = New System.Drawing.Point(341, 195)
-        Me.ThisMyStandardDetailsGroupBox.Name = "ThisMyStandardDetailsGroupBox"
-        Me.ThisMyStandardDetailsGroupBox.Size = New System.Drawing.Size(624, 246)
-        Me.ThisMyStandardDetailsGroupBox.TabIndex = 81
-        Me.ThisMyStandardDetailsGroupBox.TabStop = False
-        Me.ThisMyStandardDetailsGroupBox.Text = "Details"
-        Me.ThisMyStandardDetailsGroupBox.Visible = False
+        Me.MyStandardDetailsGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MyStandardDetailsGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.MyStandardNameTextBox)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label13)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.LinkedTextBox)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.StateProvTextBox)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.ZipCodeTextBox)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label11)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label10)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.CountryTextBox)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label9)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label2)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.MyStandardDateDateTimeTextBox)
+        Me.MyStandardDetailsGroupBox.Controls.Add(Me.Label1)
+        Me.MyStandardDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.MyStandardDetailsGroupBox.Location = New System.Drawing.Point(341, 195)
+        Me.MyStandardDetailsGroupBox.Name = "MyStandardDetailsGroupBox"
+        Me.MyStandardDetailsGroupBox.Size = New System.Drawing.Size(624, 246)
+        Me.MyStandardDetailsGroupBox.TabIndex = 81
+        Me.MyStandardDetailsGroupBox.TabStop = False
+        Me.MyStandardDetailsGroupBox.Text = "Details"
+        Me.MyStandardDetailsGroupBox.Visible = False
         '
         'MyStandardNameTextBox
         '
@@ -215,7 +215,7 @@ Partial Class MyStandardForm
         'MyStandardsFormMenuStrip
         '
         Me.MyStandardsFormMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MyStandardsFormMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.SelectToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.ToolStripMenuItem1, Me.ViewToolStripMenuItem, Me.SaveToolStripMenuItem})
+        Me.MyStandardsFormMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.SelectMyStandardToolStripMenuItem, Me.NewMyStandardToolStripMenuItem, Me.EditMtStandardToolStripMenuItem, Me.DeleteMyStandardToolStripMenuItem, Me.ToolStripMenuItem1, Me.ViewMyStandardsToolStripMenuItem, Me.SaveMyStandardToolStripMenuItem})
         Me.MyStandardsFormMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MyStandardsFormMenuStrip.Name = "MyStandardsFormMenuStrip"
         Me.MyStandardsFormMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -229,41 +229,41 @@ Partial Class MyStandardForm
         Me.ReturnToolStripMenuItem.Size = New System.Drawing.Size(40, 25)
         Me.ReturnToolStripMenuItem.Text = "◄ "
         '
-        'SelectToolStripMenuItem
+        'SelectMyStandardToolStripMenuItem
         '
-        Me.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem"
-        Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
-        Me.SelectToolStripMenuItem.Text = "Select"
+        Me.SelectMyStandardToolStripMenuItem.Name = "SelectMyStandardToolStripMenuItem"
+        Me.SelectMyStandardToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
+        Me.SelectMyStandardToolStripMenuItem.Text = "Select"
         '
-        'AddToolStripMenuItem
+        'NewMyStandardToolStripMenuItem
         '
-        Me.AddToolStripMenuItem.Name = "AddToolStripMenuItem"
-        Me.AddToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
-        Me.AddToolStripMenuItem.Text = "Add"
+        Me.NewMyStandardToolStripMenuItem.Name = "NewMyStandardToolStripMenuItem"
+        Me.NewMyStandardToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
+        Me.NewMyStandardToolStripMenuItem.Text = "New"
         '
-        'EditToolStripMenuItem
+        'EditMtStandardToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
-        Me.EditToolStripMenuItem.Text = "Edit"
+        Me.EditMtStandardToolStripMenuItem.Name = "EditMtStandardToolStripMenuItem"
+        Me.EditMtStandardToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
+        Me.EditMtStandardToolStripMenuItem.Text = "Edit"
         '
-        'DeleteToolStripMenuItem
+        'DeleteMyStandardToolStripMenuItem
         '
-        Me.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem"
-        Me.DeleteToolStripMenuItem.Size = New System.Drawing.Size(66, 25)
-        Me.DeleteToolStripMenuItem.Text = "Delete"
+        Me.DeleteMyStandardToolStripMenuItem.Name = "DeleteMyStandardToolStripMenuItem"
+        Me.DeleteMyStandardToolStripMenuItem.Size = New System.Drawing.Size(66, 25)
+        Me.DeleteMyStandardToolStripMenuItem.Text = "Delete"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
-        'ViewToolStripMenuItem
+        'ViewMyStandardsToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EmployeeDetailsToolStripMenuItem})
-        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(56, 25)
-        Me.ViewToolStripMenuItem.Text = "View"
+        Me.ViewMyStandardsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EmployeeDetailsToolStripMenuItem})
+        Me.ViewMyStandardsToolStripMenuItem.Name = "ViewMyStandardsToolStripMenuItem"
+        Me.ViewMyStandardsToolStripMenuItem.Size = New System.Drawing.Size(56, 25)
+        Me.ViewMyStandardsToolStripMenuItem.Text = "View"
         '
         'EmployeeDetailsToolStripMenuItem
         '
@@ -271,11 +271,11 @@ Partial Class MyStandardForm
         Me.EmployeeDetailsToolStripMenuItem.Size = New System.Drawing.Size(197, 26)
         Me.EmployeeDetailsToolStripMenuItem.Text = "Employee details"
         '
-        'SaveToolStripMenuItem
+        'SaveMyStandardToolStripMenuItem
         '
-        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
-        Me.SaveToolStripMenuItem.Text = "Save"
+        Me.SaveMyStandardToolStripMenuItem.Name = "SaveMyStandardToolStripMenuItem"
+        Me.SaveMyStandardToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
+        Me.SaveMyStandardToolStripMenuItem.Text = "Save"
         '
         'TextBox1
         '
@@ -286,33 +286,33 @@ Partial Class MyStandardForm
         Me.TextBox1.TabIndex = 82
         Me.TextBox1.Text = "SETUP NEW PAGE TO SIZE 12"
         '
-        'ReleasedPartsGroupBox
+        'MyStandardsGroupBox
         '
-        Me.ReleasedPartsGroupBox.Controls.Add(Me.ReleasedPartsDataGridView)
-        Me.ReleasedPartsGroupBox.Location = New System.Drawing.Point(30, 87)
-        Me.ReleasedPartsGroupBox.Name = "ReleasedPartsGroupBox"
-        Me.ReleasedPartsGroupBox.Size = New System.Drawing.Size(267, 173)
-        Me.ReleasedPartsGroupBox.TabIndex = 83
-        Me.ReleasedPartsGroupBox.TabStop = False
-        Me.ReleasedPartsGroupBox.Text = "Work Orders"
+        Me.MyStandardsGroupBox.Controls.Add(Me.MyStandardsDataGridView)
+        Me.MyStandardsGroupBox.Location = New System.Drawing.Point(30, 87)
+        Me.MyStandardsGroupBox.Name = "MyStandardsGroupBox"
+        Me.MyStandardsGroupBox.Size = New System.Drawing.Size(267, 173)
+        Me.MyStandardsGroupBox.TabIndex = 83
+        Me.MyStandardsGroupBox.TabStop = False
+        Me.MyStandardsGroupBox.Text = "My Standards"
         '
-        'ReleasedPartsDataGridView
+        'MyStandardsDataGridView
         '
-        Me.ReleasedPartsDataGridView.AllowUserToAddRows = False
-        Me.ReleasedPartsDataGridView.AllowUserToDeleteRows = False
-        Me.ReleasedPartsDataGridView.AllowUserToOrderColumns = True
-        Me.ReleasedPartsDataGridView.AllowUserToResizeRows = False
-        Me.ReleasedPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ReleasedPartsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ReleasedPartsDataGridView.Location = New System.Drawing.Point(3, 22)
-        Me.ReleasedPartsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.ReleasedPartsDataGridView.MultiSelect = False
-        Me.ReleasedPartsDataGridView.Name = "ReleasedPartsDataGridView"
-        Me.ReleasedPartsDataGridView.ReadOnly = True
-        Me.ReleasedPartsDataGridView.RowHeadersVisible = False
-        Me.ReleasedPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.ReleasedPartsDataGridView.Size = New System.Drawing.Size(261, 148)
-        Me.ReleasedPartsDataGridView.TabIndex = 52
+        Me.MyStandardsDataGridView.AllowUserToAddRows = False
+        Me.MyStandardsDataGridView.AllowUserToDeleteRows = False
+        Me.MyStandardsDataGridView.AllowUserToOrderColumns = True
+        Me.MyStandardsDataGridView.AllowUserToResizeRows = False
+        Me.MyStandardsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.MyStandardsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MyStandardsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.MyStandardsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.MyStandardsDataGridView.MultiSelect = False
+        Me.MyStandardsDataGridView.Name = "MyStandardsDataGridView"
+        Me.MyStandardsDataGridView.ReadOnly = True
+        Me.MyStandardsDataGridView.RowHeadersVisible = False
+        Me.MyStandardsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.MyStandardsDataGridView.Size = New System.Drawing.Size(261, 148)
+        Me.MyStandardsDataGridView.TabIndex = 52
         '
         'MyStandardForm
         '
@@ -320,9 +320,9 @@ Partial Class MyStandardForm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1200, 472)
         Me.ControlBox = False
-        Me.Controls.Add(Me.ReleasedPartsGroupBox)
+        Me.Controls.Add(Me.MyStandardsGroupBox)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.ThisMyStandardDetailsGroupBox)
+        Me.Controls.Add(Me.MyStandardDetailsGroupBox)
         Me.Controls.Add(Me.SearchToolStrip)
         Me.Controls.Add(Me.MyStandardsFormMenuStrip)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -331,20 +331,20 @@ Partial Class MyStandardForm
         Me.MinimizeBox = False
         Me.Name = "MyStandardForm"
         Me.Text = "MyStandardForm"
-        Me.ThisMyStandardDetailsGroupBox.ResumeLayout(False)
-        Me.ThisMyStandardDetailsGroupBox.PerformLayout()
+        Me.MyStandardDetailsGroupBox.ResumeLayout(False)
+        Me.MyStandardDetailsGroupBox.PerformLayout()
         Me.SearchToolStrip.ResumeLayout(False)
         Me.SearchToolStrip.PerformLayout()
         Me.MyStandardsFormMenuStrip.ResumeLayout(False)
         Me.MyStandardsFormMenuStrip.PerformLayout()
-        Me.ReleasedPartsGroupBox.ResumeLayout(False)
-        CType(Me.ReleasedPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MyStandardsGroupBox.ResumeLayout(False)
+        CType(Me.MyStandardsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents ThisMyStandardDetailsGroupBox As GroupBox
+    Friend WithEvents MyStandardDetailsGroupBox As GroupBox
     Friend WithEvents MyStandardNameTextBox As TextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents LinkedTextBox As TextBox
@@ -362,15 +362,15 @@ Partial Class MyStandardForm
     Friend WithEvents SearchMyStandardTextBox As ToolStripTextBox
     Friend WithEvents MyStandardsFormMenuStrip As MenuStrip
     Friend WithEvents ReturnToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SelectToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SelectMyStandardToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NewMyStandardToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EditMtStandardToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DeleteMyStandardToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ViewMyStandardsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EmployeeDetailsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveMyStandardToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents ReleasedPartsGroupBox As GroupBox
-    Friend WithEvents ReleasedPartsDataGridView As DataGridView
+    Friend WithEvents MyStandardsGroupBox As GroupBox
+    Friend WithEvents MyStandardsDataGridView As DataGridView
 End Class

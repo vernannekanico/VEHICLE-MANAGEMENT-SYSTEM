@@ -585,7 +585,7 @@ FROM StoragesLocationsTable
         FillStoragesLocationsDataGridView()
     End Sub
     Private Sub UpdateStocksLocationsTable()
-        If MsgBox("Is this a new Stocks Location (otherwise System updates current location) ? ", ) = MsgBoxResult.Yes Then
+        If MsgBox("Is this a new Stocks Location (otherwise System updates current location) ? ", MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton1) = MsgBoxResult.Yes Then
             AddNewStocksLocation()
         Else
             UpdateCurrentStocksLocationTable()
