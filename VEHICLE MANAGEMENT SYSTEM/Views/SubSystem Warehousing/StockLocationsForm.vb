@@ -33,6 +33,16 @@ Public Class StockLocationsForm
     Private WhichStorageType = ""
 
     Private CurrentStoragesLocationsCounter = 1
+
+    Private StocksFieldsToSelect = ""
+    Private StocksSelectionFilter = ""
+    Private StocksSelectionOrder = ""
+    Private StocksRecordCount As Integer = -1
+    Private CurrentStocksRow As Integer = -1
+    Private CurrentStockID = -1
+    Private StocksDataGridViewAlreadyFormated = False
+    Private SaveMessage As String
+
     Private EditMode = ""
     Private SelectionMode = ""
     Private CheckChangesCaller = ""
@@ -98,6 +108,7 @@ FROM ((StocksLocationsTable
 
         StocksLocationsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If StocksLocationsRecordCount = 0 Then
+            EnableDataGridViewMenus()
             CurrentStocksLocationID = -1
         End If
 
@@ -109,7 +120,7 @@ FROM ((StocksLocationsTable
                                         StocksLocationsMainMenuStrip,
                                         StocksLocationsGroupBox,
                                         StoragesLocationsGroupBox,
-                                        StocksLocationsGroupBox,
+                                        StocksGroupBox,
                                         StocksLocationsGroupBox)
         End If
 
@@ -156,7 +167,97 @@ FROM ((StocksLocationsTable
         FillField(CurrentStoragesLocationID, StocksLocationsDataGridView.Item("StoragesLocationID_Autonumber", CurrentStocksLocationsRow).Value)
         FillField(CurrentMainStorageTypeID, StocksLocationsDataGridView.Item("MainStorageTypesTable.StorageTypeID_Autonumber", CurrentStocksLocationsRow).Value)
         FillField(CurrentSubStorageTypeID, StocksLocationsDataGridView.Item("SubStorageTypesTable.StorageTypeID_Autonumber", CurrentStocksLocationsRow).Value)
-        EnableDataGridViewMenus()
+        StocksSelectionFilter = "WHERE StocksLocationID_LongInteger = " & CurrentStocksLocationID
+        FillStocksDataGridView()
+    End Sub
+    Private Sub FillStocksDataGridView()
+
+        StocksSelectionOrder = " ORDER BY MasterCodeBookID_Autonumber ASC "
+        StocksFieldsToSelect =
+" 
+SELECT 
+MasterCodeBookTable.MasterCodeBookID_Autonumber,
+StocksTable.StockID_Autonumber
+StocksTable.StocksLocationID_LongInteger, 
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
+ProductsPartsTable.ManufacturerDescription_ShortText250, 
+PartsSpecificationsTable.PartSpecifications_ShortText255, 
+StocksTable.QuantityInStock_Double, 
+StocksTable.BulkBalanceQuantity_Double, 
+ProductsPartsTable.Unit_ShortText3
+FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber
+"
+
+        MySelection = StocksFieldsToSelect & StocksSelectionFilter & StocksSelectionOrder
+
+        JustExecuteMySelection()
+        StocksRecordCount = RecordCount
+
+        If StocksRecordCount > 0 Then
+            StocksGroupBox.Visible = True
+        Else
+            StocksGroupBox.Visible = False
+        End If
+        StocksDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        If StocksRecordCount = 0 Then
+            CurrentStockID = -1
+        End If
+
+
+        If Not StocksDataGridViewAlreadyFormated Then
+            FormatStocksDataGridView()
+        End If
+
+        SetGroupBoxHeight(15, StocksRecordCount, StocksGroupBox, StocksDataGridView)
+        StocksGroupBox.Top = BottomOf(StocksLocationsGroupBox)
+    End Sub
+    Private Sub FormatStocksDataGridView()
+        StocksDataGridViewAlreadyFormated = True
+        StocksGroupBox.Width = 0
+        For i = 0 To StocksDataGridView.Columns.GetColumnCount(0) - 1
+
+            StocksDataGridView.Columns.Item(i).Visible = False
+            Select Case StocksDataGridView.Columns.Item(i).Name
+                Case "ManufacturerPartNo_ShortText30Fld"
+                    StocksDataGridView.Columns.Item(i).HeaderText = "Part Number"
+                    StocksDataGridView.Columns.Item(i).Width = 120
+                    StocksDataGridView.Columns.Item(i).Visible = True
+                Case "ManufacturerDescription_ShortText250"
+                    StocksDataGridView.Columns.Item(i).HeaderText = "Part / Product"
+                    StocksDataGridView.Columns.Item(i).Width = 300
+                    StocksDataGridView.Columns.Item(i).Visible = True
+                Case "PartSpecifications_ShortText255"
+                    StocksDataGridView.Columns.Item(i).HeaderText = "Product Specification"
+                    StocksDataGridView.Columns.Item(i).Width = 200
+                    StocksDataGridView.Columns.Item(i).Visible = True
+                Case "QuantityInStock_Double"
+                    StocksDataGridView.Columns.Item(i).HeaderText = "Quantity"
+                    StocksDataGridView.Columns.Item(i).Width = 120
+                    StocksDataGridView.Columns.Item(i).Visible = True
+                Case "BulkBalanceQuantity_Double"
+                    StocksDataGridView.Columns.Item(i).HeaderText = "Bulk Balance"
+                    StocksDataGridView.Columns.Item(i).Width = 120
+                    StocksDataGridView.Columns.Item(i).Visible = True
+                Case "Unit_ShortText3"
+                    StocksDataGridView.Columns.Item(i).HeaderText = "Unit"
+                    StocksDataGridView.Columns.Item(i).Width = 70
+                    StocksDataGridView.Columns.Item(i).Visible = True
+            End Select
+
+            If StocksDataGridView.Columns.Item(i).Visible = True Then
+                StocksGroupBox.Width = StocksGroupBox.Width + StocksDataGridView.Columns.Item(i).Width
+            End If
+        Next
+    End Sub
+    Private Sub StocksDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles StocksDataGridView.RowEnter
+        If ShowInTaskbarFlag Then Exit Sub
+        If e.RowIndex < 0 Then Exit Sub
+        If StocksRecordCount = 0 Then Exit Sub
+
+        CurrentStocksRow = e.RowIndex
+        CurrentStockID = StocksDataGridView.Item("StockID_AutoNumber", CurrentStocksRow).Value
+
+
     End Sub
     Private Sub StockLocationDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles StockLocationDetailsGroupBox.VisibleChanged
         If StockLocationDetailsGroupBox.Visible Then

@@ -1234,6 +1234,7 @@ Partial Public Class Vehicle_Management_DatabaseDataSet
             Me.columnProductCodeID_AutonumberFld.Unique = true
             Me.columnProductCode_ShortTextFld.MaxLength = 20
             Me.columnProductDetails_ShortTextFld.MaxLength = 100
+            Me.columnBrandCode_ShortTextFld.DefaultValue = CType("""""",String)
             Me.columnBrandCode_ShortTextFld.MaxLength = 255
             Me.columnManufacturerProductCode_ShortTextFld.MaxLength = 255
             Me.columnMadeIn_ShortText.MaxLength = 255

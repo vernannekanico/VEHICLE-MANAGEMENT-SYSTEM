@@ -2,8 +2,8 @@
     Private MyStandardsFieldsToSelect = ""
     Private MyStandardsSelectionFilter = ""
     Private MyStandardsSelectionOrder = ""
-    Private CurrentMyStandardsRow As Integer = -1
     Private MyStandardsRecordCount As Integer = -1
+    Private CurrentMyStandardsRow As Integer = -1
     Private CurrentMyStandardID = -1
     Private CurrentMyStandardStatus As String
     Private MyStandardsDataGridViewAlreadyFormated = False
@@ -78,8 +78,8 @@
                     MyStandardsDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                     MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleDescription"
-                    MyStandardsDataGridView.Columns.Item("VehicleDescription").HeaderText = "VEHICLE"
-                    MyStandardsDataGridView.Columns.Item("VehicleDescription").Width = 200
+                    MyStandardsDataGridView.Columns.Item(i).HeaderText = "VEHICLE"
+                    MyStandardsDataGridView.Columns.Item(i).Width = 200
                     MyStandardsDataGridView.Columns.Item(i).Visible = True
                 Case "OwnerName"
                     MyStandardsDataGridView.Columns.Item(i).HeaderText = "OWNER"

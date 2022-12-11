@@ -57,6 +57,8 @@ Partial Class StockLocationsForm
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetChangesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StocksTextBoxAsLabel = New System.Windows.Forms.ToolStripTextBox()
+        Me.StoreStocksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InputBoxGroupBox = New System.Windows.Forms.GroupBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.DescriptionCodeTextBox = New System.Windows.Forms.TextBox()
@@ -64,8 +66,8 @@ Partial Class StockLocationsForm
         Me.DescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.StorageTypesGroupBox = New System.Windows.Forms.GroupBox()
         Me.StorageTypesDataGridView = New System.Windows.Forms.DataGridView()
-        Me.StocksTextBoxAsLabel = New System.Windows.Forms.ToolStripTextBox()
-        Me.StoreStocksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StocksGroupBox = New System.Windows.Forms.GroupBox()
+        Me.StocksDataGridView = New System.Windows.Forms.DataGridView()
         Me.StocksLocationsGroupBox.SuspendLayout()
         CType(Me.StocksLocationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StoragesLocationsGroupBox.SuspendLayout()
@@ -76,6 +78,8 @@ Partial Class StockLocationsForm
         Me.InputBoxGroupBox.SuspendLayout()
         Me.StorageTypesGroupBox.SuspendLayout()
         CType(Me.StorageTypesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.StocksGroupBox.SuspendLayout()
+        CType(Me.StocksDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'StocksLocationsGroupBox
@@ -84,7 +88,7 @@ Partial Class StockLocationsForm
         Me.StocksLocationsGroupBox.Enabled = False
         Me.StocksLocationsGroupBox.Location = New System.Drawing.Point(51, 80)
         Me.StocksLocationsGroupBox.Name = "StocksLocationsGroupBox"
-        Me.StocksLocationsGroupBox.Size = New System.Drawing.Size(410, 388)
+        Me.StocksLocationsGroupBox.Size = New System.Drawing.Size(317, 184)
         Me.StocksLocationsGroupBox.TabIndex = 88
         Me.StocksLocationsGroupBox.TabStop = False
         Me.StocksLocationsGroupBox.Text = "Stocks Locations"
@@ -104,7 +108,7 @@ Partial Class StockLocationsForm
         Me.StocksLocationsDataGridView.ReadOnly = True
         Me.StocksLocationsDataGridView.RowHeadersVisible = False
         Me.StocksLocationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.StocksLocationsDataGridView.Size = New System.Drawing.Size(404, 363)
+        Me.StocksLocationsDataGridView.Size = New System.Drawing.Size(311, 159)
         Me.StocksLocationsDataGridView.TabIndex = 52
         '
         'StoragesLocationsGroupBox
@@ -407,6 +411,19 @@ Partial Class StockLocationsForm
         Me.ResetChangesToolStripMenuItem.Text = "Reset Changes"
         Me.ResetChangesToolStripMenuItem.Visible = False
         '
+        'StocksTextBoxAsLabel
+        '
+        Me.StocksTextBoxAsLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.StocksTextBoxAsLabel.Name = "StocksTextBoxAsLabel"
+        Me.StocksTextBoxAsLabel.Size = New System.Drawing.Size(55, 25)
+        Me.StocksTextBoxAsLabel.Text = "STOCKS :"
+        '
+        'StoreStocksToolStripMenuItem
+        '
+        Me.StoreStocksToolStripMenuItem.Name = "StoreStocksToolStripMenuItem"
+        Me.StoreStocksToolStripMenuItem.Size = New System.Drawing.Size(106, 25)
+        Me.StoreStocksToolStripMenuItem.Text = "Store Stocks"
+        '
         'InputBoxGroupBox
         '
         Me.InputBoxGroupBox.Controls.Add(Me.Label4)
@@ -483,24 +500,40 @@ Partial Class StockLocationsForm
         Me.StorageTypesDataGridView.Size = New System.Drawing.Size(261, 148)
         Me.StorageTypesDataGridView.TabIndex = 52
         '
-        'StocksTextBoxAsLabel
+        'StocksGroupBox
         '
-        Me.StocksTextBoxAsLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.StocksTextBoxAsLabel.Name = "StocksTextBoxAsLabel"
-        Me.StocksTextBoxAsLabel.Size = New System.Drawing.Size(55, 25)
-        Me.StocksTextBoxAsLabel.Text = "STOCKS :"
+        Me.StocksGroupBox.Controls.Add(Me.StocksDataGridView)
+        Me.StocksGroupBox.Location = New System.Drawing.Point(68, 305)
+        Me.StocksGroupBox.Name = "StocksGroupBox"
+        Me.StocksGroupBox.Size = New System.Drawing.Size(267, 173)
+        Me.StocksGroupBox.TabIndex = 92
+        Me.StocksGroupBox.TabStop = False
+        Me.StocksGroupBox.Text = "Stored Stocks"
         '
-        'StoreStocksToolStripMenuItem
+        'StocksDataGridView
         '
-        Me.StoreStocksToolStripMenuItem.Name = "StoreStocksToolStripMenuItem"
-        Me.StoreStocksToolStripMenuItem.Size = New System.Drawing.Size(106, 25)
-        Me.StoreStocksToolStripMenuItem.Text = "Store Stocks"
+        Me.StocksDataGridView.AllowUserToAddRows = False
+        Me.StocksDataGridView.AllowUserToDeleteRows = False
+        Me.StocksDataGridView.AllowUserToOrderColumns = True
+        Me.StocksDataGridView.AllowUserToResizeRows = False
+        Me.StocksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.StocksDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.StocksDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.StocksDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.StocksDataGridView.MultiSelect = False
+        Me.StocksDataGridView.Name = "StocksDataGridView"
+        Me.StocksDataGridView.ReadOnly = True
+        Me.StocksDataGridView.RowHeadersVisible = False
+        Me.StocksDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.StocksDataGridView.Size = New System.Drawing.Size(261, 148)
+        Me.StocksDataGridView.TabIndex = 52
         '
         'StockLocationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1051, 624)
+        Me.Controls.Add(Me.StocksGroupBox)
         Me.Controls.Add(Me.InputBoxGroupBox)
         Me.Controls.Add(Me.StorageTypesGroupBox)
         Me.Controls.Add(Me.StockLocationDetailsGroupBox)
@@ -526,6 +559,8 @@ Partial Class StockLocationsForm
         Me.InputBoxGroupBox.PerformLayout()
         Me.StorageTypesGroupBox.ResumeLayout(False)
         CType(Me.StorageTypesDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.StocksGroupBox.ResumeLayout(False)
+        CType(Me.StocksDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -575,4 +610,6 @@ Partial Class StockLocationsForm
     Friend WithEvents ResetChangesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StocksTextBoxAsLabel As ToolStripTextBox
     Friend WithEvents StoreStocksToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StocksGroupBox As GroupBox
+    Friend WithEvents StocksDataGridView As DataGridView
 End Class
