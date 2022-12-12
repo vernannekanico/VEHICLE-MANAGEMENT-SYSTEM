@@ -59,7 +59,7 @@ Partial Class VehicleManagementSystemForm
         Me.ProductsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.LogisticsDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WarehouseDepartmentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InventoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StocksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveriesStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReleasePartsStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RequisitionsforPurchaseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -303,18 +303,18 @@ Partial Class VehicleManagementSystemForm
         '
         'WarehouseDepartmentToolStripMenuItem
         '
-        Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InventoryToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem, Me.StorageSystemToolStripMenuItem})
+        Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StocksToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem, Me.StorageSystemToolStripMenuItem})
         Me.WarehouseDepartmentToolStripMenuItem.Name = "WarehouseDepartmentToolStripMenuItem"
         Me.WarehouseDepartmentToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
         Me.WarehouseDepartmentToolStripMenuItem.Text = "Warehouse"
         Me.WarehouseDepartmentToolStripMenuItem.Visible = False
         '
-        'InventoryToolStripMenuItem
+        'StocksToolStripMenuItem
         '
-        Me.InventoryToolStripMenuItem.Name = "InventoryToolStripMenuItem"
-        Me.InventoryToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
-        Me.InventoryToolStripMenuItem.Text = "Inventory"
-        Me.InventoryToolStripMenuItem.Visible = False
+        Me.StocksToolStripMenuItem.Name = "StocksToolStripMenuItem"
+        Me.StocksToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
+        Me.StocksToolStripMenuItem.Text = "Stocks"
+        Me.StocksToolStripMenuItem.Visible = False
         '
         'DeliveriesStripMenuItem
         '
@@ -466,7 +466,7 @@ Partial Class VehicleManagementSystemForm
     Friend WithEvents VehicleInformationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AllServicedVehiclesOfServicesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WarehouseDepartmentToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents InventoryToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StocksToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeliveriesStripMenuItem As ToolStripMenuItem
     Friend WithEvents ReleasePartsStripMenuItem As ToolStripMenuItem
     Friend WithEvents RequisitionsforPurchaseToolStripMenuItem As ToolStripMenuItem

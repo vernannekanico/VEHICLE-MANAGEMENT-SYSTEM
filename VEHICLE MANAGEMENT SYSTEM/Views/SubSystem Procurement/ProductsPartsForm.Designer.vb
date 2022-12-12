@@ -54,13 +54,6 @@ Partial Class ProductsPartsForm
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PackingButton = New System.Windows.Forms.Button()
         Me.PackingTextBox = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.MinimumQantityTextBox = New System.Windows.Forms.TextBox()
-        Me.LocationTextBox = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.AvailableQuantitiesTextBox = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.BrandNameTextBox = New System.Windows.Forms.MaskedTextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.UnitTextBox = New System.Windows.Forms.TextBox()
@@ -132,7 +125,7 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.Location = New System.Drawing.Point(69, 0)
         Me.ProductsPartsMenuStrip.Name = "ProductsPartsMenuStrip"
         Me.ProductsPartsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
-        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(916, 35)
+        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(796, 35)
         Me.ProductsPartsMenuStrip.TabIndex = 88
         Me.ProductsPartsMenuStrip.Text = "MenuStrip1"
         '
@@ -225,19 +218,19 @@ Partial Class ProductsPartsForm
         'PurchasesToolStripMenuItem
         '
         Me.PurchasesToolStripMenuItem.Name = "PurchasesToolStripMenuItem"
-        Me.PurchasesToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.PurchasesToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
         Me.PurchasesToolStripMenuItem.Text = "Purchases"
         '
         'UsageToolStripMenuItem
         '
         Me.UsageToolStripMenuItem.Name = "UsageToolStripMenuItem"
-        Me.UsageToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.UsageToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
         Me.UsageToolStripMenuItem.Text = "Usage"
         '
         'VehicleLinksToolStripMenuItem
         '
         Me.VehicleLinksToolStripMenuItem.Name = "VehicleLinksToolStripMenuItem"
-        Me.VehicleLinksToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.VehicleLinksToolStripMenuItem.Size = New System.Drawing.Size(169, 26)
         Me.VehicleLinksToolStripMenuItem.Text = "Vehicle Links"
         '
         'ProductDetailsGroup
@@ -250,13 +243,6 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.Controls.Add(Me.Label5)
         Me.ProductDetailsGroup.Controls.Add(Me.PackingButton)
         Me.ProductDetailsGroup.Controls.Add(Me.PackingTextBox)
-        Me.ProductDetailsGroup.Controls.Add(Me.Label1)
-        Me.ProductDetailsGroup.Controls.Add(Me.MinimumQantityTextBox)
-        Me.ProductDetailsGroup.Controls.Add(Me.LocationTextBox)
-        Me.ProductDetailsGroup.Controls.Add(Me.Label8)
-        Me.ProductDetailsGroup.Controls.Add(Me.Label9)
-        Me.ProductDetailsGroup.Controls.Add(Me.AvailableQuantitiesTextBox)
-        Me.ProductDetailsGroup.Controls.Add(Me.Label7)
         Me.ProductDetailsGroup.Controls.Add(Me.BrandNameTextBox)
         Me.ProductDetailsGroup.Controls.Add(Me.Label6)
         Me.ProductDetailsGroup.Controls.Add(Me.UnitTextBox)
@@ -271,7 +257,7 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ProductDetailsGroup.Location = New System.Drawing.Point(433, 38)
         Me.ProductDetailsGroup.Name = "ProductDetailsGroup"
-        Me.ProductDetailsGroup.Size = New System.Drawing.Size(742, 491)
+        Me.ProductDetailsGroup.Size = New System.Drawing.Size(742, 361)
         Me.ProductDetailsGroup.TabIndex = 89
         Me.ProductDetailsGroup.TabStop = False
         Me.ProductDetailsGroup.Text = "Product Details"
@@ -334,71 +320,6 @@ Partial Class ProductsPartsForm
         Me.PackingTextBox.Size = New System.Drawing.Size(176, 26)
         Me.PackingTextBox.TabIndex = 119
         Me.PackingTextBox.Visible = False
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Britannic Bold", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(7, 345)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(102, 21)
-        Me.Label1.TabIndex = 60
-        Me.Label1.Text = "INVENTORY"
-        '
-        'MinimumQantityTextBox
-        '
-        Me.MinimumQantityTextBox.Enabled = False
-        Me.MinimumQantityTextBox.Location = New System.Drawing.Point(279, 411)
-        Me.MinimumQantityTextBox.Multiline = True
-        Me.MinimumQantityTextBox.Name = "MinimumQantityTextBox"
-        Me.MinimumQantityTextBox.Size = New System.Drawing.Size(98, 26)
-        Me.MinimumQantityTextBox.TabIndex = 59
-        '
-        'LocationTextBox
-        '
-        Me.LocationTextBox.Enabled = False
-        Me.LocationTextBox.Location = New System.Drawing.Point(279, 443)
-        Me.LocationTextBox.Name = "LocationTextBox"
-        Me.LocationTextBox.Size = New System.Drawing.Size(98, 26)
-        Me.LocationTextBox.TabIndex = 58
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(7, 417)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(135, 20)
-        Me.Label8.TabIndex = 57
-        Me.Label8.Text = "Minimum Quantity"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(7, 449)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(70, 20)
-        Me.Label9.TabIndex = 56
-        Me.Label9.Text = "Location"
-        '
-        'AvailableQuantitiesTextBox
-        '
-        Me.AvailableQuantitiesTextBox.Enabled = False
-        Me.AvailableQuantitiesTextBox.Location = New System.Drawing.Point(279, 379)
-        Me.AvailableQuantitiesTextBox.Name = "AvailableQuantitiesTextBox"
-        Me.AvailableQuantitiesTextBox.Size = New System.Drawing.Size(98, 26)
-        Me.AvailableQuantitiesTextBox.TabIndex = 55
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(7, 385)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(148, 20)
-        Me.Label7.TabIndex = 54
-        Me.Label7.Text = "Available Quantities"
         '
         'BrandNameTextBox
         '
@@ -718,13 +639,6 @@ Partial Class ProductsPartsForm
     Friend WithEvents CancelToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
     Friend WithEvents ProductDetailsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents Label1 As Label
-    Friend WithEvents MinimumQantityTextBox As TextBox
-    Friend WithEvents LocationTextBox As TextBox
-    Friend WithEvents Label8 As Label
-    Friend WithEvents Label9 As Label
-    Friend WithEvents AvailableQuantitiesTextBox As TextBox
-    Friend WithEvents Label7 As Label
     Friend WithEvents FiltersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PackingButton As Button
     Friend WithEvents PackingTextBox As TextBox

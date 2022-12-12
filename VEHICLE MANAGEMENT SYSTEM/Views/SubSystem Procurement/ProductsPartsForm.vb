@@ -343,9 +343,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         ManufacturerPartDescTextBox.Text = ""
         BrandNameTextBox.Text = ""
         UnitTextBox.Text = ""
-        AvailableQuantitiesTextBox.Text = ""
-        LocationTextBox.Text = ""
-        MinimumQantityTextBox.Text = ""
         PackingTextBox.Text = ""
         PurposeOfEntry = "ADD"
         CurrentProductPartID = -1
@@ -369,9 +366,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         ManufacturerPartNoTextBox.Enabled = True
         BrandNameTextBox.Enabled = True
         UnitTextBox.Enabled = True
-        AvailableQuantitiesTextBox.Enabled = True
-        MinimumQantityTextBox.Enabled = True
-        LocationTextBox.Enabled = True
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
         Dim TablesToCheck = {
@@ -406,8 +400,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         FillField(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value)
         FillField(CurrentBrandID, ProductsPartsDataGridView.Item("BrandID_Autonumber", CurrentProductsPartsRow).Value)
         FillField(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value)
-        FillField(AvailableQuantitiesTextBox.Text, ProductsPartsDataGridView.Item("QuantityInStock_Double", CurrentProductsPartsRow).Value)
-        FillField(LocationTextBox.Text, ProductsPartsDataGridView.Item("LocationCode_ShortText11", CurrentProductsPartsRow).Value)
         If IsNotEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
             PackingTextBox.Text = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & Space(1) &
                                       ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString &
@@ -754,19 +746,11 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
 
     End Sub
 
-    Private Sub LocationTextBox_Click(sender As Object, e As EventArgs) Handles LocationTextBox.Click
-        If Not LocationTextBox.Text = "" Then
-            If MsgBox("CHANGE Location?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
-                Exit Sub
-            End If
-            StockLocationsForm.StockLocationSearchTextBox.Text = LocationTextBox.Text
-        End If
-        ShowCalledForm(Me, StockLocationsForm)
-    End Sub
-
     Private Sub SystemPartDescriptionTextBox_Click(sender As Object, e As EventArgs) Handles SystemPartDescriptionTextBox.Click
         If MsgBox("Do you want to update MasterCodeBook link?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             ShowMasterCodeBookForm()
         End If
     End Sub
+
+
 End Class

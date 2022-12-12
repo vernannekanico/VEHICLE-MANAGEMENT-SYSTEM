@@ -227,14 +227,14 @@ FROM ProductPartsPackingsTable
         End If
         Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductPartsPackingID.ToString
         Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString & "," &
-                                      "QuantityPerPack_Double = " & Val(QuantityPerPackTextBox.Text) &
-                                      "UnitOfTheQuantity_ShortText3 = " & InQuotes(UnitOfTheQuantityTextBox.Text) &
+                                      "QuantityPerPack_Double = " & Val(QuantityPerPackTextBox.Text) & "," &
+                                      "UnitOfTheQuantity_ShortText3 = " & InQuotes(UnitOfTheQuantityTextBox.Text) & "," &
                                       "UnitOfThePacking_ShortText3 = " & InQuotes(UnitOfThePackingTextBox.Text)
 
         UpdateTable("ProductPartsPackingsTable", SetCommand, RecordFilter)
 
         'UPDATE ProductsPartTable AND MARK FIELD Selected true
-        UpdateTable("ProductsPartTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
+        UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
     End Sub
 
 End Class

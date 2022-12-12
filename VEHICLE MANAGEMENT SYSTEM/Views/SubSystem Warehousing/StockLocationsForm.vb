@@ -177,7 +177,7 @@ FROM ((StocksLocationsTable
 " 
 SELECT 
 MasterCodeBookTable.MasterCodeBookID_Autonumber,
-StocksTable.StockID_Autonumber
+StocksTable.StockID_Autonumber,
 StocksTable.StocksLocationID_LongInteger, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
@@ -209,7 +209,8 @@ FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_Lon
         End If
 
         SetGroupBoxHeight(15, StocksRecordCount, StocksGroupBox, StocksDataGridView)
-        StocksGroupBox.Top = BottomOf(StocksLocationsGroupBox)
+        VerticalCenter(StocksGroupBox, Me)
+        HorizontalCenter(StocksGroupBox, Me)
     End Sub
     Private Sub FormatStocksDataGridView()
         StocksDataGridViewAlreadyFormated = True
@@ -370,7 +371,7 @@ FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_Lon
                 Tunnel1 = "Tunnel2IsStocksLocationID"
                 Tunnel2 = CurrentStocksLocationID
                 If SavedCallingForm.Name = "InventoriesForm" Then
-                    InventoriesForm.LocationTextBox.Text = CurrentStocksLocationCode_ShortText11
+                    StocksForm.LocationTextBox.Text = CurrentStocksLocationCode_ShortText11
                 End If
                 DoCommonHouseKeeping(Me, SavedCallingForm)
             Case "Storage Location"

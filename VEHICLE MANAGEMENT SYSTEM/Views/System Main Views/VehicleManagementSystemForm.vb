@@ -114,7 +114,7 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
                 Case "RequisitionsforPurchaseToolStripMenuItem"
                     EnableMenu(RequisitionsforPurchaseToolStripMenuItem)
                 Case "InventoryToolStripMenuItem"
-                    EnableMenu(InventoryToolStripMenuItem)
+                    EnableMenu(StocksToolStripMenuItem)
                 Case "DeliveriesStripMenuItem"
                     EnableMenu(DeliveriesStripMenuItem)
 
@@ -199,9 +199,9 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
     End Sub
 
 
-    Private Sub InventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventoryToolStripMenuItem.Click
+    Private Sub StocksToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StocksToolStripMenuItem.Click
         Tunnel3 = 2
-        ShowCalledForm(Me, InventoriesForm)
+        ShowCalledForm(Me, StocksForm)
     End Sub
 
     Private Sub FromCustomersToolStripMenuItem_Click(sender As Object, e As EventArgs)
