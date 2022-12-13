@@ -70,6 +70,7 @@ Partial Class VehicleManagementSystemForm
         Me.LOGINToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EXITSYSTEMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UsersDataGridView = New System.Windows.Forms.DataGridView()
+        Me.InventoriesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehicleManagementMenuStrip.SuspendLayout()
         CType(Me.UsersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -303,7 +304,7 @@ Partial Class VehicleManagementSystemForm
         '
         'WarehouseDepartmentToolStripMenuItem
         '
-        Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StocksToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem, Me.StorageSystemToolStripMenuItem})
+        Me.WarehouseDepartmentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StocksToolStripMenuItem, Me.DeliveriesStripMenuItem, Me.ReleasePartsStripMenuItem, Me.RequisitionsforPurchaseToolStripMenuItem, Me.StorageSystemToolStripMenuItem, Me.InventoriesToolStripMenuItem})
         Me.WarehouseDepartmentToolStripMenuItem.Name = "WarehouseDepartmentToolStripMenuItem"
         Me.WarehouseDepartmentToolStripMenuItem.Size = New System.Drawing.Size(101, 25)
         Me.WarehouseDepartmentToolStripMenuItem.Text = "Warehouse"
@@ -414,6 +415,12 @@ Partial Class VehicleManagementSystemForm
         Me.UsersDataGridView.Size = New System.Drawing.Size(263, 297)
         Me.UsersDataGridView.TabIndex = 58
         '
+        'InventoriesToolStripMenuItem
+        '
+        Me.InventoriesToolStripMenuItem.Name = "InventoriesToolStripMenuItem"
+        Me.InventoriesToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
+        Me.InventoriesToolStripMenuItem.Text = "Inventories"
+        '
         'VehicleManagementSystemForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -485,4 +492,5 @@ Partial Class VehicleManagementSystemForm
     Friend WithEvents ProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ProductsToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents StorageSystemToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents InventoriesToolStripMenuItem As ToolStripMenuItem
 End Class

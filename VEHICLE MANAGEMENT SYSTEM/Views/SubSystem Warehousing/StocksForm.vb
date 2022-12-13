@@ -28,9 +28,8 @@
     Private CurrentlocationID As Object
     Private Property SaveMessage As String
 
-    Private Sub ReleasedPartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub StocksForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SavedCallingForm = CallingForm
-        SetInventoryModeOff()
         FillProductsInventoriesDataGridView()
         StocksGroupBox.Top = BottomOf(SearchToolStrip)
     End Sub
@@ -336,74 +335,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
         SetupEditMode()
     End Sub
-    Private Sub FillInventoriesDataGridView()
-
-        InventoriesSelectionOrder = " ORDER BY InventoryID_AutoNumber DESC "
-        InventoriesFieldsToSelect = " 
-"
-
-        MySelection = InventoriesFieldsToSelect & InventoriesSelectionFilter & InventoriesSelectionOrder
-
-        JustExecuteMySelection()
-        InventoriesRecordCount = RecordCount
-
-        If InventoriesRecordCount > 0 Then
-            InventoriesGroupBox.Visible = True
-        Else
-            InventoriesGroupBox.Visible = False
-        End If
-        InventoriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If InventoriesRecordCount = 0 Then
-            CurrentInventoryID = -1
-        End If
-
-
-        If Not InventoriesDataGridViewAlreadyFormated Then
-            FormatInventoriesDataGridView()
-        End If
-        SetGroupBoxHeight(5, InventoriesRecordCount, InventoriesGroupBox, InventoriesDataGridView)
-
-    End Sub
-    Private Sub FormatInventoriesDataGridView()
-        InventoriesDataGridViewAlreadyFormated = True
-        InventoriesGroupBox.Width = 0
-        For i = 0 To InventoriesDataGridView.Columns.GetColumnCount(0) - 1
-            Select Case InventoriesDataGridView.Columns.Item(i).Name
-                Case ""
-                    If InventoriesDataGridView.Columns.Item(i).Visible = True Then
-
-                        InventoriesGroupBox.Width = InventoriesGroupBox.Width + InventoriesDataGridView.Columns.Item(i).Width
-                    End If
-            End Select
-
-        Next
-        If SpecificationInventoriesGroupBox.Width > VehicleManagementSystemForm.Width Then
-            SpecificationInventoriesGroupBox.Width = VehicleManagementSystemForm.Width - 4
-        Else
-            HorizontalCenter(SpecificationInventoriesGroupBox, Me)
-        End If
-        If InventoriesGroupBox.Width > VehicleManagementSystemForm.Width Then
-            InventoriesGroupBox.Width = VehicleManagementSystemForm.Width - 4
-        Else
-            HorizontalCenter(InventoriesGroupBox, Me)
-        End If
-    End Sub
-
-    Private Sub InventoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles InventoriesDataGridView.RowEnter
-        If ShowInTaskbarFlag Then Exit Sub
-        If e.RowIndex < 0 Then Exit Sub
-        If InventoriesRecordCount = 0 Then Exit Sub
-
-        CurrentInventoriesRow = e.RowIndex
-        CurrentInventoryID = InventoriesDataGridView.Item("InventoryID_AutoNumber", CurrentInventoriesRow).Value
-
-        FillField(CurrentInventoryStatus, InventoriesDataGridView.Item("Inventoriestatus", CurrentInventoriesRow).Value)
-
-        Select Case CurrentInventoryStatus
-            Case "Assigned"
-        End Select
-
-    End Sub
     Private Sub SetupEditMode()
         StockDetailsGroup.Visible = True
         SelectToolStripMenuItem.Visible = False
@@ -514,7 +445,7 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
     Private Sub RegisterDetailsOfThisStockInventoryChanges()
         'NOTE COMMENTED LINES DOES NOT APPLY HERE. NEW PRODUCTS ARE INSERTED IN THE PARTSPRODUCTSFORM
         'STILL RETAINED HERE TO SHOW STANDARD ROUTINE
-        '        MySelection = " Select top 1 * FROM InventoriesTable WHERE InventoryID_Autonumber = " & CurrentInventoryID.ToString
+        '        MySelection = " Select top 1 * FROM InventoriesTable WHERE InventoryID_Autonumber = " & CurrentInventoryHeaderID.ToString
         '        JustExecuteMySelection()
         '        If RecordCount = 0 Then
         '        InsertNewInventory()
@@ -532,7 +463,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
     Private Sub AddToListOfItemToBuy()
         MsgBox("CODE this Routine AddToListOfItemToBuy()")
     End Sub
-
     Private Sub UpdateProductInformationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateProductInformationToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
@@ -541,7 +471,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         ShowCalledForm(Me, ProductsPartsForm)
 
     End Sub
-
     Private Sub LocationTextBox_Click(sender As Object, e As EventArgs) Handles LocationTextBox.Click
         If Not LocationTextBox.Text = "" Then
             If MsgBox("CHANGE Location?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
@@ -551,25 +480,5 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         End If
         ShowCalledForm(Me, StockLocationsForm)
 
-    End Sub
-
-    Private Sub UpdateInventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateInventoryToolStripMenuItem.Click
-        SetInventoryModeOn()
-
-    End Sub
-    Private Sub SetInventoryModeOn()
-        SelectToolStripMenuItem.Visible = True
-        AddProductToolStripMenuItem.Visible = True
-        EditProductDetailsToolStripMenuItem.Visible = True
-        DeleteProductToolStripMenuItem.Visible = True
-        StocksGroupBox.Visible = False
-        SpecificationInventoriesGroupBox.Visible = False
-        FillInventoriesDataGridView()
-    End Sub
-    Private Sub SetInventoryModeOff()
-        SelectToolStripMenuItem.Visible = False
-        AddProductToolStripMenuItem.Visible = False
-        EditProductDetailsToolStripMenuItem.Visible = False
-        DeleteProductToolStripMenuItem.Visible = False
     End Sub
 End Class

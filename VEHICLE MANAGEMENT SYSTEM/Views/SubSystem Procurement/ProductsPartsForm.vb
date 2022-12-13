@@ -260,7 +260,7 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
 
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
-        Dim CurrentPartDescription = ProductsPartsDataGridView.Item("ProductDescription_ShortText250", CurrentProductsPartsRow).Value
+        Dim CurrentPartDescription = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
 
         If IsEmpty(ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value) Then
             MsgBox("This Product is not linked to the MasterCodeBook, link this as " & CurrentPartDescription & "?")
@@ -274,8 +274,37 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
+        ProductsPartsFieldsToSelect = "
+        Select ProductsPartsTable.Selected,
+MasterCodeBookTable.SystemDesc_ShortText100Fld,
+PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
+PartsSpecificationsTable.PartSpecifications_ShortText255,
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld,
+ProductsPartsTable.ManufacturerDescription_ShortText250,
+StocksTable.QuantityInStock_Double,
+ProductsPartsTable.Unit_ShortText3,
+BrandsTable.BrandID_Autonumber,
+BrandsTable.,
+StocksTable.StockID_Autonumber,
+StocksTable.Location_ShortText10,
+ProductsPartsTable.VehicleRepairClassID_LongInteger,
+VehicleDescription.VehicleDescription,
+ProductsPartsTable.ProductsPartID_Autonumber,
+ProductPartsPackingsTable.QuantityPerPack_Double,
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
+StocksLocationsTable.LocationCode_ShortText11
+"
 
         Select Case SavedCallingForm.Name
+            Case "InventoriesForm"
+                Dim Packing = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
+                InventoriesForm.ManufacturerPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
+                InventoriesForm.ManufacturerPartDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
+                InventoriesForm.UnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
+                InventoriesForm.PackingTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
+                InventoriesForm.BrandNameTextBox.Text = ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value
+                InventoriesForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value
             Case "PurchaseOrdersForm"
                 PurchaseOrdersForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 PurchaseOrdersForm.POItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
