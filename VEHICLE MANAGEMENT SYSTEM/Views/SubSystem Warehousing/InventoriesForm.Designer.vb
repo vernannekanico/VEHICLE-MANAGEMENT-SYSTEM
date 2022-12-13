@@ -450,8 +450,8 @@ Partial Class InventoriesForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1200, 692)
-        Me.Controls.Add(Me.InventoryItemsGroupBox)
         Me.Controls.Add(Me.StockDetailsGroup)
+        Me.Controls.Add(Me.InventoryItemsGroupBox)
         Me.Controls.Add(Me.InventoriesGroupBox)
         Me.Controls.Add(Me.SearchToolStrip)
         Me.Controls.Add(Me.StocksFormMenuStrip)

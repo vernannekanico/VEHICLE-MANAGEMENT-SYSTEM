@@ -30,6 +30,8 @@
                 VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         CurrentMasterCodeBookID = Tunnel2
+        ProductsPartsSelectionFilter = "  "
+
         If Tunnel1 = "Tunnel2IsProductPartID" Then
             CurrentProductPartID = Tunnel2
             ProductsPartsSelectionFilter = " WHERE ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
@@ -298,11 +300,13 @@ StocksLocationsTable.LocationCode_ShortText11
 
         Select Case SavedCallingForm.Name
             Case "InventoriesForm"
-                Dim Packing = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
+                Dim Packing = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & " " &
+                              ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString & "s/" &
+                              ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value.ToString
                 InventoriesForm.ManufacturerPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 InventoriesForm.ManufacturerPartDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
                 InventoriesForm.UnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
-                InventoriesForm.PackingTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
+                InventoriesForm.PackingTextBox.Text = Packing
                 InventoriesForm.BrandNameTextBox.Text = ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value
                 InventoriesForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value
             Case "PurchaseOrdersForm"
@@ -338,15 +342,6 @@ StocksLocationsTable.LocationCode_ShortText11
 
         End Select
         DoCommonHouseKeeping(Me, SavedCallingForm)
-    End Sub
-    Private Sub ExecuteSearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExecuteSearchToolStripMenuItem.Click
-        FiltersGroupBox.Visible = False
-        If PartDescriptionSearchTextBox.Text = "" And PartNoSearchTextBox.Text = "" Then Exit Sub
-        SetSearchParameters()
-        FillProductsPartsDataGridView()
-        If ProductsPartsRecordCount > 0 Then
-            ProductsPartsDataGridView.Rows(0).Selected = False
-        End If
     End Sub
     Private Sub SetSearchParameters()
         ProductsPartsSelectionFilter = " WHERE "
@@ -781,5 +776,14 @@ StocksLocationsTable.LocationCode_ShortText11
         End If
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        FiltersGroupBox.Visible = False
+        If PartDescriptionSearchTextBox.Text = "" And PartNoSearchTextBox.Text = "" Then Exit Sub
+        SetSearchParameters()
+        FillProductsPartsDataGridView()
+        If ProductsPartsRecordCount > 0 Then
+            ProductsPartsDataGridView.Rows(0).Selected = False
+        End If
+    End Sub
 
 End Class
