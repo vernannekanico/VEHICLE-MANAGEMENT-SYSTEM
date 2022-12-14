@@ -30,7 +30,6 @@
                 VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
         'NOTE: FILL PRODUCTS IS ALREADY IN THE ExecuteSearchParameters()
         CurrentMasterCodeBookID = Tunnel2
-        ProductsPartsSelectionFilter = "  "
 
         If Tunnel1 = "Tunnel2IsProductPartID" Then
             CurrentProductPartID = Tunnel2
@@ -51,6 +50,7 @@
             SetSearchParameters()
             FillProductsPartsDataGridView()
         End If
+        FillProductsPartsDataGridView()
     End Sub
     Private Sub ProductsPartsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -276,39 +276,21 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
-        ProductsPartsFieldsToSelect = "
-        Select ProductsPartsTable.Selected,
-MasterCodeBookTable.SystemDesc_ShortText100Fld,
-PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
-PartsSpecificationsTable.PartSpecifications_ShortText255,
-ProductsPartsTable.ManufacturerPartNo_ShortText30Fld,
-ProductsPartsTable.ManufacturerDescription_ShortText250,
-StocksTable.QuantityInStock_Double,
-ProductsPartsTable.Unit_ShortText3,
-BrandsTable.BrandID_Autonumber,
-BrandsTable.,
-StocksTable.StockID_Autonumber,
-StocksTable.Location_ShortText10,
-ProductsPartsTable.VehicleRepairClassID_LongInteger,
-VehicleDescription.VehicleDescription,
-ProductsPartsTable.ProductsPartID_Autonumber,
-ProductPartsPackingsTable.QuantityPerPack_Double,
-ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
-StocksLocationsTable.LocationCode_ShortText11
-"
-
         Select Case SavedCallingForm.Name
             Case "InventoriesForm"
                 Dim Packing = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & " " &
                               ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString & "s/" &
                               ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value.ToString
+                InventoriesForm.SystemPartDescriptionTextBox.Text = ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value
                 InventoriesForm.ManufacturerPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 InventoriesForm.ManufacturerPartDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
-                InventoriesForm.UnitTextBox.Text = ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value
+                InventoriesForm.UnitTextBox.Text = ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value
                 InventoriesForm.PackingTextBox.Text = Packing
+                InventoriesForm.BulkBalanceUnitTextBox.Text = ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString()
                 InventoriesForm.BrandNameTextBox.Text = ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value
                 InventoriesForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value
+                InventoriesForm.LocationTextBox.Text = ProductsPartsDataGridView.Item("LocationCode_ShortText11", CurrentProductsPartsRow).Value
+
             Case "PurchaseOrdersForm"
                 PurchaseOrdersForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 PurchaseOrdersForm.POItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value

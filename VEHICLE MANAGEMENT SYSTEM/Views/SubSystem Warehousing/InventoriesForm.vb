@@ -18,6 +18,7 @@
     Private CurrentlocationID = -1
     Private CurrentStockID = -1
     Private CurrentProductPartId = -1
+    Private CurrentInventoryHeaderID = -1
     Private Property SaveMessage As String
 
     Private Sub InventoriesForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -30,6 +31,9 @@
         InventoryItemsGroupBox.Left = InventoriesGroupBox.Left + InventoriesGroupBox.Width
         HorizontalCenter(StockDetailsGroup, Me)
         VerticalCenter(StockDetailsGroup, Me)
+        StockDetailsGroup.Visible = False
+        RegisterInventoryToolStripMenuItem.Visible = False
+        PrintToolStripMenuItem.Visible = False
 
     End Sub
     Private Sub FillInventoriesDataGridView()
@@ -241,25 +245,49 @@ FROM (InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable
         InventoryItemsGroupBox.Top = BottomOf(InventoriesGroupBox)
     End Sub
     Private Sub InventoryItemsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles InventoryItemsDataGridView.RowEnter
+        If ShowInTaskbarFlag Then Exit Sub
+        If e.RowIndex < 0 Then Exit Sub
+        If InventoryItemsRecordCount = 0 Then Exit Sub
+
+        CurrentInventoryItemsRow = e.RowIndex
+        CurrentInventoryHeaderID = InventoryItemsDataGridView.Item("InventoryHeaderID_LongInteger", CurrentInventoryItemsRow).Value
+
+        FillField(CurrentMyStandardStatus, MyStandardsDataGridView.Item("MyStandardStatus", CurrentMyStandardsRow).Value)
+
+        Select Case CurrentMyStandardStatus
+            Case "Assigned"
+        End Select
+
+        RegisterInventoryToolStripMenuItem.Visible = True
+        PrintToolStripMenuItem.Visible = True
     End Sub
     Private Sub EditProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditProductDetailsToolStripMenuItem.Click
+        LoadProductDetails()
+        StockDetailsGroup.Visible = True
         SetupEditMode()
     End Sub
+    Private Sub StockDetailsGroup_VisibleChanged(sender As Object, e As EventArgs) Handles StockDetailsGroup.VisibleChanged
+        If StockDetailsGroup.Visible Then
+            SetupEditMode()
+        Else
+            SetupBrowseMode()
+        End If
+    End Sub
     Private Sub SetupEditMode()
-        StockDetailsGroup.Visible = True
-        '     UpdateMasterCodeLinkToolStripMenuItem.Visible = False
+        ViewToolStripMenuItem.Visible = False
         AddProductToolStripMenuItem.Visible = False
-        DeleteProductToolStripMenuItem.Visible = False
         EditProductDetailsToolStripMenuItem.Visible = False
-
-        LoadProductDetails()
-        ManufacturerPartDescTextBox.Select()
-        ManufacturerPartDescTextBox.Enabled = True
-        BrandNameTextBox.Enabled = True
-        UnitTextBox.Enabled = True
-        AvailableQuantitiesTextBox.Enabled = True
-        MinimumQuantityTextBox.Enabled = True
-        LocationTextBox.Enabled = True
+        DeleteProductToolStripMenuItem.Visible = False
+        SaveProductDetailsToolStripMenuItem.Visible = True
+        RegisterInventoryToolStripMenuItem.Visible = False
+        PrintToolStripMenuItem.Visible = False
+    End Sub
+    Private Sub SetupBrowseMode()
+        ViewToolStripMenuItem.Visible = True
+        AddProductToolStripMenuItem.Visible = True
+        EditProductDetailsToolStripMenuItem.Visible = True
+        DeleteProductToolStripMenuItem.Visible = True
+        SaveProductDetailsToolStripMenuItem.Visible = False
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteProductToolStripMenuItem.Click
         If IsDBNull(InventoriesDataGridView.Item("StocksQuantitiesPerSpecsID_AutoNumber", CurrentInventoriesRow).Value) Then
@@ -280,7 +308,7 @@ FROM (InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable
         FillField(ManufacturerPartDescTextBox.Text, InventoriesDataGridView.Item("ManufacturerDescription_ShortText250", CurrentInventoriesRow).Value)
         FillField(BrandNameTextBox.Text, InventoriesDataGridView.Item("BrandName_ShortText20", CurrentInventoriesRow).Value)
         FillField(UnitTextBox.Text, InventoriesDataGridView.Item("Unit_ShortText3", CurrentInventoriesRow).Value)
-        FillField(AvailableQuantitiesTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value)
+        FillField(QtyInBasicUnitTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value)
         FillField(MinimumQuantityTextBox.Text, InventoriesDataGridView.Item("MinimumQuantityPerSpecs_Double", CurrentInventoriesRow).Value)
         FillField(LocationTextBox.Text, InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value)
         If IsNotEmpty(InventoriesDataGridView.Item("QuantityPerPack_Double", CurrentInventoriesRow).Value) Then
@@ -309,16 +337,18 @@ FROM (InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         If StockDetailsGroup.Visible = True Then
-            SaveMessage = "Would you like to disregard your changes ?"
-            SaveChanges()
-            StockDetailsGroup.Visible = False
-        Else
-            DoCommonHouseKeeping(Me, SavedCallingForm)
+            SaveMessage = "There are new entries made, save your changes ?"
+            If AllEntriesOfThisStockInventoryDetailsAreValid() Then
+                SaveChanges()
+                StockDetailsGroup.Visible = False
+                Exit Sub
+            End If
         End If
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub SaveProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveProductDetailsToolStripMenuItem.Click
         SaveMessage = "Continue saving the changes ?"
+        If Not AllEntriesOfThisStockInventoryDetailsAreValid() Then Exit Sub
         SaveChanges()
     End Sub
     Private Sub SaveChanges()
@@ -329,57 +359,55 @@ FROM (InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable
                 StockDetailsGroup.Visible = False
                 Exit Sub
             End If
-            If Not AllEntriesOfThisStockInventoryDetailsAreValid() Then Exit Sub
             RegisterDetailsOfThisStockInventoryChanges()
         End If
     End Sub
     Private Function AChangeInThisStockInventoryDetailsOccurred()
         '*******************************************************
+        'Test 1st if a Part/Product is selected and this is the 1st entry in the list
+        If CurrentProductPartId > 0 And CurrentInventoriesRow = -1 Then Return True
         ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD OR EDIT
-        If TheseAreNotEqual(AvailableQuantitiesTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value) Then Return True
+        If TheseAreNotEqual(QtyInBasicUnitTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value) Then Return True
         If TheseAreNotEqual(MinimumQuantityTextBox.Text, InventoriesDataGridView.Item("MinimumQuantityPerSpecs_Double", CurrentInventoriesRow).Value) Then Return True
         If TheseAreNotEqual(LocationTextBox.Text, InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value) Then Return True
         Return False
     End Function
     Private Function AllEntriesOfThisStockInventoryDetailsAreValid()
-        If Trim(AvailableQuantitiesTextBox.Text) = "" Then
-            If MsgBox("Would you like to leave the quantities blank ?", vbYesNo) = vbNo Then
-                Return False
-            Else
-                If MsgBox("Would you like to add this to the" & " list of items to order " & "?", vbYesNo) = vbYes Then
-                    AddToListOfItemToBuy()
-                End If
-            End If
+        If Trim(QtyInBasicUnitTextBox.Text) = "" And Trim(BulkBalanceTextBox.Text) = "" Then
+            MsgBox("No quantities are entered ")
+            QtyInBasicUnitTextBox.Select()
+            Return False
         End If
         Return True
     End Function
     Private Sub RegisterDetailsOfThisStockInventoryChanges()
-        'NOTE COMMENTED LINES DOES NOT APPLY HERE. NEW PRODUCTS ARE INSERTED IN THE PARTSPRODUCTSFORM
-        'STILL RETAINED HERE TO SHOW STANDARD ROUTINE
-        '        MySelection = " Select top 1 * FROM InventoriesTable WHERE InventoryID_Autonumber = " & CurrentInventoryHeaderID.ToString
-        '        JustExecuteMySelection()
-        '        If RecordCount = 0 Then
-        '        InsertNewInventory()
-        '        Else
         SaveThisStockInventoryDetailsChanges()
-        '        End If
         FillInventoriesDataGridView()
     End Sub
     Private Sub SaveThisStockInventoryDetailsChanges()
-        Dim RecordFilter = " WHERE StockID_Autonumber = " & CurrentStockID.ToString
+        Dim RecordFilter = " SELECT TOP 1 FROM InventoryItemsTable WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString
+        JustExecuteMySelection()
+        If RecordCount > 1 Then
+            UpdateCurrentInventoryItemId()
+        Else
+            AddNewInventoryItem()
+        End If
         Dim SetCommand = " SET StocksLocationID_LongInteger = " & CurrentlocationID.ToString
 
         UpdateTable("StocksTable", SetCommand, RecordFilter)
     End Sub
-    Private Sub AddToListOfItemToBuy()
-        MsgBox("CODE this Routine AddToListOfItemToBuy()")
-    End Sub
-    Private Sub UpdateProductInformationToolStripMenuItem_Click(sender As Object, e As EventArgs)
-
-    End Sub
 
     Private Sub AddProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddProductToolStripMenuItem.Click
+        ShowProductsForm()
+    End Sub
+    Private Sub ShowProductsForm()
         ShowCalledForm(Me, ProductsPartsForm)
+    End Sub
+    Private Sub ManufacturerPartDescTextBox_Click(sender As Object, e As EventArgs) Handles ManufacturerPartDescTextBox.Click
+        If Not ManufacturerPartDescTextBox.Text = "" Then
+            If MsgBox("Would you like to change the product ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        End If
+        ShowProductsForm()
     End Sub
 
 End Class
