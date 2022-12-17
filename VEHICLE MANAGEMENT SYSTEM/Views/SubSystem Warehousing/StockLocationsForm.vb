@@ -371,7 +371,7 @@ FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_Lon
                 Tunnel1 = "Tunnel2IsStocksLocationID"
                 Tunnel2 = CurrentStocksLocationID
                 If SavedCallingForm.Name = "InventoriesForm" Then
-                    StocksForm.LocationTextBox.Text = CurrentStocksLocationCode_ShortText11
+                    InventoriesForm.LocationTextBox.Text = CurrentStocksLocationCode_ShortText11
                 End If
                 DoCommonHouseKeeping(Me, SavedCallingForm)
             Case "Storage Location"

@@ -28,6 +28,11 @@
                                       ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value.ToString &
                                         " / " &
                                       ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value.ToString
+        Select Case SavedCallingForm.Name
+            Case "ProductsPartsForm"
+                ProductsPartsForm.UnitTextBox.Text = ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value
+                ProductsPartsForm.PackingTextBox.Text = Tunnel3
+        End Select
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub FillProductPartsPackingsDataGridView()
@@ -35,13 +40,7 @@
 
         ProductPartsPackingsFieldsToSelect =
 " 
-SELECT 
-ProductPartsPackingsTable.ProductPartsPackingID_Autonumber, 
-ProductPartsPackingsTable.ProductPartID_LongInteger, 
-ProductPartsPackingsTable.QuantityPerPack_Double, 
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
-ProductPartsPackingsTable.UnitOfThePacking_ShortText3
-FROM ProductPartsPackingsTable
+SELECT * ProductPartPackingsQuery
 "
 
 
