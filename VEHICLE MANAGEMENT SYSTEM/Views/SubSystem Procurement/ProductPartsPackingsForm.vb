@@ -36,11 +36,10 @@
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub FillProductPartsPackingsDataGridView()
-        ProductPartsPackingsSelectionOrder = " ORDER BY ProductPartsPackingID_AutoNumber DESC "
 
         ProductPartsPackingsFieldsToSelect =
 " 
-SELECT * ProductPartPackingsQuery
+SELECT * FROM ProductPartPackingsQuery
 "
 
 

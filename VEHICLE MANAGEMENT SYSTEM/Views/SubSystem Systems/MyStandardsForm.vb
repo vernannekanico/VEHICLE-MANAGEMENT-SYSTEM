@@ -31,12 +31,9 @@
             MyStandardsGroupBox.Visible = True
         Else
             MyStandardsGroupBox.Visible = False
-        End If
-        MyStandardsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If MyStandardsRecordCount = 0 Then
             CurrentMyStandardID = -1
         End If
-
+        MyStandardsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
 
         ' HERE AT ROW_ENTER, FillMyStandardConcernsDataGridView is called and MyStandardConcernsbOX IS ALREADY FORMATTED
         If Not MyStandardsDataGridViewAlreadyFormated Then

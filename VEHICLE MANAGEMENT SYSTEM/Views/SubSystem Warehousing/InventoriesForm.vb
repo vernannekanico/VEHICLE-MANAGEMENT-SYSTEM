@@ -226,10 +226,6 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "excel Desc"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 400
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleRepairClassID_LongInteger"
-                    InventoryItemsDataGridView.Columns.Item(i).HeaderText = "RepairClassID"
-                    InventoryItemsDataGridView.Columns.Item(i).Width = 70
-                    InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "Packing"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Packing"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 130

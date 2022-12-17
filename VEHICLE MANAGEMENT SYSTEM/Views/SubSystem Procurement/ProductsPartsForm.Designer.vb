@@ -43,6 +43,8 @@ Partial Class ProductsPartsForm
         Me.VehicleLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductDetailsGroup = New System.Windows.Forms.GroupBox()
+        Me.ProductsPartsPackingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ProductsPartsPackingsDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PartSpecificationTextBox = New System.Windows.Forms.TextBox()
@@ -80,6 +82,8 @@ Partial Class ProductsPartsForm
         CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
+        Me.ProductsPartsPackingsGroupBox.SuspendLayout()
+        CType(Me.ProductsPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CancelMenuStrip.SuspendLayout()
         Me.FiltersGroupBox.SuspendLayout()
         CType(Me.HistoryDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -202,6 +206,7 @@ Partial Class ProductsPartsForm
         '
         Me.ProductDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.ProductDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.ProductDetailsGroup.Controls.Add(Me.ProductsPartsPackingsGroupBox)
         Me.ProductDetailsGroup.Controls.Add(Me.ProductSpecificationTextBox)
         Me.ProductDetailsGroup.Controls.Add(Me.Label10)
         Me.ProductDetailsGroup.Controls.Add(Me.PartSpecificationTextBox)
@@ -222,11 +227,38 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ProductDetailsGroup.Location = New System.Drawing.Point(433, 38)
         Me.ProductDetailsGroup.Name = "ProductDetailsGroup"
-        Me.ProductDetailsGroup.Size = New System.Drawing.Size(742, 361)
+        Me.ProductDetailsGroup.Size = New System.Drawing.Size(742, 474)
         Me.ProductDetailsGroup.TabIndex = 89
         Me.ProductDetailsGroup.TabStop = False
         Me.ProductDetailsGroup.Text = "Product Details"
         Me.ProductDetailsGroup.Visible = False
+        '
+        'ProductsPartsPackingsGroupBox
+        '
+        Me.ProductsPartsPackingsGroupBox.Controls.Add(Me.ProductsPartsPackingsDataGridView)
+        Me.ProductsPartsPackingsGroupBox.Location = New System.Drawing.Point(11, 342)
+        Me.ProductsPartsPackingsGroupBox.Name = "ProductsPartsPackingsGroupBox"
+        Me.ProductsPartsPackingsGroupBox.Size = New System.Drawing.Size(659, 84)
+        Me.ProductsPartsPackingsGroupBox.TabIndex = 126
+        Me.ProductsPartsPackingsGroupBox.TabStop = False
+        '
+        'ProductsPartsPackingsDataGridView
+        '
+        Me.ProductsPartsPackingsDataGridView.AllowUserToAddRows = False
+        Me.ProductsPartsPackingsDataGridView.AllowUserToDeleteRows = False
+        Me.ProductsPartsPackingsDataGridView.AllowUserToOrderColumns = True
+        Me.ProductsPartsPackingsDataGridView.AllowUserToResizeRows = False
+        Me.ProductsPartsPackingsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ProductsPartsPackingsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProductsPartsPackingsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.ProductsPartsPackingsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ProductsPartsPackingsDataGridView.MultiSelect = False
+        Me.ProductsPartsPackingsDataGridView.Name = "ProductsPartsPackingsDataGridView"
+        Me.ProductsPartsPackingsDataGridView.ReadOnly = True
+        Me.ProductsPartsPackingsDataGridView.RowHeadersVisible = False
+        Me.ProductsPartsPackingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.ProductsPartsPackingsDataGridView.Size = New System.Drawing.Size(653, 59)
+        Me.ProductsPartsPackingsDataGridView.TabIndex = 52
         '
         'ProductSpecificationTextBox
         '
@@ -269,7 +301,7 @@ Partial Class ProductsPartsForm
         '
         Me.PackingButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PackingButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.PackingButton.Location = New System.Drawing.Point(11, 296)
+        Me.PackingButton.Location = New System.Drawing.Point(9, 296)
         Me.PackingButton.Name = "PackingButton"
         Me.PackingButton.Size = New System.Drawing.Size(131, 40)
         Me.PackingButton.TabIndex = 120
@@ -296,12 +328,12 @@ Partial Class ProductsPartsForm
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(10, 270)
+        Me.Label6.Location = New System.Drawing.Point(7, 270)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(38, 20)
+        Me.Label6.Size = New System.Drawing.Size(82, 20)
         Me.Label6.TabIndex = 49
-        Me.Label6.Text = "Unit"
+        Me.Label6.Text = "Least Unit"
         '
         'UnitTextBox
         '
@@ -583,6 +615,8 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.PerformLayout()
         Me.ProductDetailsGroup.ResumeLayout(False)
         Me.ProductDetailsGroup.PerformLayout()
+        Me.ProductsPartsPackingsGroupBox.ResumeLayout(False)
+        CType(Me.ProductsPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CancelMenuStrip.ResumeLayout(False)
         Me.CancelMenuStrip.PerformLayout()
         Me.FiltersGroupBox.ResumeLayout(False)
@@ -641,4 +675,6 @@ Partial Class ProductsPartsForm
     Friend WithEvents Label13 As Label
     Friend WithEvents HistoryDataGridView As DataGridView
     Friend WithEvents Button1 As Button
+    Friend WithEvents ProductsPartsPackingsGroupBox As GroupBox
+    Friend WithEvents ProductsPartsPackingsDataGridView As DataGridView
 End Class

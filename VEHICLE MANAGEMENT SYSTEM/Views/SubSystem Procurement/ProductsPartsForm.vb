@@ -6,12 +6,21 @@
     Private CurrentProductPartID As Integer = -1
     Private CurrentProductsPartsRow = -1
     Private ProductsPartsDataGridViewAlreadyFormated = False
+
+    Private ProductsPartsPackingsFieldsToSelect = ""
+    Private ProductsPartsPackingsSelectionFilter = ""
+    Private ProductsPartsPackingsSelectionOrder = ""
+    Private ProductsPartsPackingsRecordCount As Integer = -1
+    Private CurrentProductsPartsPackingsRow As Integer = -1
+    Private CurrentProductsPartsPackingID = -1
+    Private CurrentProductsPartsPackingStatus As String
+    Private ProductsPartsPackingsDataGridViewAlreadyFormated = False
+
     Private CleanedManufacturerPartNo = ""
     Private PurposeOfEntry As String
     Private CurrentMasterCodeBookID = -1
     Private CurrentBrandID = -1
     Private CurrentStocksID = -1
-    Private CurrentProductPartsPackingID = -1
     Private SavedCallingForm As Form
     Private BackToEditMode = False
     Private CurrentProductSpecificationID = -1
@@ -64,7 +73,7 @@
             Case "Tunnel2IsBrandID"
                 CurrentBrandID = Tunnel2
             Case "Tunnel2IsProductPartsPackingID"
-                CurrentProductPartsPackingID = Tunnel2
+                CurrentProductsPartsPackingID = Tunnel2
                 PackingTextBox.Visible = True
             Case "Tunnel2IsMasterCodeBookID"
                 ProductDetailsGroup.Visible = True
@@ -73,7 +82,7 @@
                 SystemPartDescriptionTextBox.Text = Tunnel3
             Case "Tunnel2IsProductPartsPackingID"
                 PackingTextBox.Text = Tunnel3
-                CurrentProductPartsPackingID = Tunnel2
+                CurrentProductsPartsPackingID = Tunnel2
         End Select
 
     End Sub
@@ -224,6 +233,73 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         Else
             SelectToolStripMenuItem.Visible = False
         End If
+
+    End Sub
+    Private Sub FillProductsPartsPackingsDataGridView()
+
+        ProductsPartsPackingsSelectionOrder = ""
+        ProductsPartsPackingsFieldsToSelect = " * FROM ProductPartPackingsQuery "
+
+
+        MySelection = ProductsPartsPackingsFieldsToSelect & ProductsPartsPackingsSelectionFilter & ProductsPartsPackingsSelectionOrder
+
+        JustExecuteMySelection()
+        ProductsPartsPackingsRecordCount = RecordCount
+
+        If ProductsPartsPackingsRecordCount > 0 Then
+            ProductsPartsPackingsGroupBox.Visible = True
+        Else
+            ProductsPartsPackingsGroupBox.Visible = False
+            CurrentProductsPartsPackingID = -1
+        End If
+        ProductsPartsPackingsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+
+        If Not ProductsPartsPackingsDataGridViewAlreadyFormated Then
+            FormatProductsPartsPackingsDataGridView()
+        End If
+        SetGroupBoxHeight(5, ProductsPartsPackingsRecordCount, ProductsPartsPackingsGroupBox, ProductsPartsPackingsDataGridView)
+
+    End Sub
+    Private Sub FormatProductsPartsPackingsDataGridView()
+        ProductsPartsPackingsDataGridViewAlreadyFormated = True
+        ProductsPartsPackingsGroupBox.Width = 0
+
+        For i = 0 To ProductsPartsPackingsDataGridView.Columns.GetColumnCount(0) - 1
+
+            ProductsPartsPackingsDataGridView.Columns.Item(i).Visible = False
+            Select Case ProductsPartsPackingsDataGridView.Columns.Item(i).Name
+                Case "QuantityPerPack_Double"
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).HeaderText = "Quantity Per Pack"
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).Width = 80
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfTheQuantity_ShortText3"
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).HeaderText = "Quantity Unit"
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).Width = 80
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfThePacking_ShortText3"
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).HeaderText = "Packing Unit"
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).Width = 80
+                    ProductsPartsPackingsDataGridView.Columns.Item(i).Visible = True
+            End Select
+
+            If ProductsPartsPackingsDataGridView.Columns.Item(i).Visible = True Then
+                ProductsPartsPackingsGroupBox.Width = ProductsPartsPackingsGroupBox.Width + ProductsPartsPackingsDataGridView.Columns.Item(i).Width
+            End If
+        Next
+    End Sub
+    Private Sub ProductsPartsPackingsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs)
+        If ShowInTaskbarFlag Then Exit Sub
+        If e.RowIndex < 0 Then Exit Sub
+        If ProductsPartsPackingsRecordCount = 0 Then Exit Sub
+
+        CurrentProductsPartsPackingsRow = e.RowIndex
+        CurrentProductsPartsPackingID = ProductsPartsPackingsDataGridView.Item("ProductPartsPackingID_AutoNumber", CurrentProductsPartsPackingsRow).Value
+
+        FillField(CurrentProductsPartsPackingStatus, ProductsPartsPackingsDataGridView.Item("ProductPartsPackingStatus", CurrentProductsPartsPackingsRow).Value)
+
+        Select Case CurrentProductsPartsPackingStatus
+            Case "Assigned"
+        End Select
 
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
@@ -381,6 +457,8 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
             PackingTextBox.Text = ""
             PackingTextBox.Visible = False
         End If
+        ProductsPartsPackingsSelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartID
+        FillProductsPartsPackingsDataGridView()
     End Sub
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         Dim CurrentPartDescription = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
@@ -490,11 +568,11 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
                     InQuotes(Trim(UnitTextBox.Text).ToUpper)
 
         CurrentProductPartID = InsertNewRecord("ProductsPartsTable", FieldsToUpdate, ReplacementData)
-        If CurrentProductPartsPackingID > -1 Then
+        If CurrentProductsPartsPackingID > -1 Then
             'update new packing record with with the currentproduct
-            Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductPartsPackingID.ToString
+            Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductsPartsPackingID.ToString
             Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
-            UpdateTable("ProductPartsPackingsTable", SetCommand, RecordFilter)
+            UpdateTable("ProductsPartsPackingsTable", SetCommand, RecordFilter)
 
             'UPDATE ProductsPartTable AND MARK FIELD Selected true
             UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
@@ -620,10 +698,7 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub PartDescriptionSearchTextBox_Click(sender As Object, e As EventArgs) Handles PartDescriptionSearchTextBox.Click
-        If PartDescriptionSearchTextBox.Text <> "" Then
-            If MsgBox("Do you want to update the part description ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        End If
-        ShowCalledForm(Me, MasterCodeBookForm)
+        PartDescriptionSearchTextBox.SelectAll()
     End Sub
     Private Sub PackingButton_Click(sender As Object, e As EventArgs) Handles PackingButton.Click
         If IsEmpty(UnitTextBox.Text) Then
@@ -721,10 +796,4 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         FiltersGroupBox.Visible = True
     End Sub
 
-    Private Sub UnitTextBox_Click(sender As Object, e As EventArgs) Handles UnitTextBox.Click
-        If PackingTextBox.Text <> "" Then
-            If MsgBox("Would you like to remove the packing information ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        End If
-        MsgBox("DELETE THE LINKED PACKING INFORMATION FOR THIS PRODUCT")
-    End Sub
 End Class
