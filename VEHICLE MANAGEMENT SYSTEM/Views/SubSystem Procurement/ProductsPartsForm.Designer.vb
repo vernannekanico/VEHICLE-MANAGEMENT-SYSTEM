@@ -22,13 +22,9 @@ Partial Class ProductsPartsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.ProductsPartsDataGridView = New System.Windows.Forms.DataGridView()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ProductsPartsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UpdateMasterCodeLinkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -79,7 +75,8 @@ Partial Class ProductsPartsForm
         Me.PartDescriptionSearchTextBox = New System.Windows.Forms.TextBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.HistoryDataGridView = New System.Windows.Forms.DataGridView()
-        CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ProductsPartsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ProductsPartsDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
         Me.ProductsPartsPackingsGroupBox.SuspendLayout()
@@ -87,34 +84,9 @@ Partial Class ProductsPartsForm
         Me.CancelMenuStrip.SuspendLayout()
         Me.FiltersGroupBox.SuspendLayout()
         CType(Me.HistoryDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ProductsPartsGroupBox.SuspendLayout()
+        CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'ProductsPartsDataGridView
-        '
-        Me.ProductsPartsDataGridView.AllowUserToAddRows = False
-        Me.ProductsPartsDataGridView.AllowUserToDeleteRows = False
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ProductsPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
-        Me.ProductsPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ProductsPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle8
-        Me.ProductsPartsDataGridView.Location = New System.Drawing.Point(31, 72)
-        Me.ProductsPartsDataGridView.Margin = New System.Windows.Forms.Padding(10, 12, 10, 12)
-        Me.ProductsPartsDataGridView.Name = "ProductsPartsDataGridView"
-        Me.ProductsPartsDataGridView.ReadOnly = True
-        Me.ProductsPartsDataGridView.RowHeadersVisible = False
-        Me.ProductsPartsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ProductsPartsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle9
-        Me.ProductsPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.ProductsPartsDataGridView.Size = New System.Drawing.Size(603, 60)
-        Me.ProductsPartsDataGridView.TabIndex = 86
         '
         'ProductsPartsMenuStrip
         '
@@ -225,7 +197,7 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.Controls.Add(Me.ManufacturerPartNoLabel)
         Me.ProductDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ProductDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ProductDetailsGroup.Location = New System.Drawing.Point(433, 38)
+        Me.ProductDetailsGroup.Location = New System.Drawing.Point(463, 49)
         Me.ProductDetailsGroup.Name = "ProductDetailsGroup"
         Me.ProductDetailsGroup.Size = New System.Drawing.Size(742, 474)
         Me.ProductDetailsGroup.TabIndex = 89
@@ -574,28 +546,56 @@ Partial Class ProductsPartsForm
         '
         Me.HistoryDataGridView.AllowUserToAddRows = False
         Me.HistoryDataGridView.AllowUserToDeleteRows = False
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.HistoryDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.HistoryDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.HistoryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.HistoryDataGridView.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.HistoryDataGridView.DefaultCellStyle = DataGridViewCellStyle2
         Me.HistoryDataGridView.Location = New System.Drawing.Point(31, 163)
         Me.HistoryDataGridView.Margin = New System.Windows.Forms.Padding(10, 12, 10, 12)
         Me.HistoryDataGridView.Name = "HistoryDataGridView"
         Me.HistoryDataGridView.ReadOnly = True
         Me.HistoryDataGridView.RowHeadersVisible = False
         Me.HistoryDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.HistoryDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.HistoryDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.HistoryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.HistoryDataGridView.Size = New System.Drawing.Size(603, 60)
         Me.HistoryDataGridView.TabIndex = 93
+        '
+        'ProductsPartsGroupBox
+        '
+        Me.ProductsPartsGroupBox.Controls.Add(Me.ProductsPartsDataGridView)
+        Me.ProductsPartsGroupBox.Location = New System.Drawing.Point(31, 73)
+        Me.ProductsPartsGroupBox.Name = "ProductsPartsGroupBox"
+        Me.ProductsPartsGroupBox.Size = New System.Drawing.Size(311, 85)
+        Me.ProductsPartsGroupBox.TabIndex = 96
+        Me.ProductsPartsGroupBox.TabStop = False
+        Me.ProductsPartsGroupBox.Text = "All Products/Parts"
+        '
+        'ProductsPartsDataGridView
+        '
+        Me.ProductsPartsDataGridView.AllowUserToAddRows = False
+        Me.ProductsPartsDataGridView.AllowUserToDeleteRows = False
+        Me.ProductsPartsDataGridView.AllowUserToOrderColumns = True
+        Me.ProductsPartsDataGridView.AllowUserToResizeRows = False
+        Me.ProductsPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ProductsPartsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProductsPartsDataGridView.Location = New System.Drawing.Point(3, 16)
+        Me.ProductsPartsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ProductsPartsDataGridView.MultiSelect = False
+        Me.ProductsPartsDataGridView.Name = "ProductsPartsDataGridView"
+        Me.ProductsPartsDataGridView.ReadOnly = True
+        Me.ProductsPartsDataGridView.RowHeadersVisible = False
+        Me.ProductsPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.ProductsPartsDataGridView.Size = New System.Drawing.Size(305, 66)
+        Me.ProductsPartsDataGridView.TabIndex = 52
         '
         'ProductsPartsForm
         '
@@ -604,13 +604,12 @@ Partial Class ProductsPartsForm
         Me.ClientSize = New System.Drawing.Size(1275, 535)
         Me.Controls.Add(Me.ProductDetailsGroup)
         Me.Controls.Add(Me.FiltersGroupBox)
+        Me.Controls.Add(Me.ProductsPartsGroupBox)
         Me.Controls.Add(Me.CancelMenuStrip)
         Me.Controls.Add(Me.ProductsPartsMenuStrip)
-        Me.Controls.Add(Me.ProductsPartsDataGridView)
         Me.Controls.Add(Me.HistoryDataGridView)
         Me.Name = "ProductsPartsForm"
         Me.Text = "ProductsPartsForm"
-        CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ProductsPartsMenuStrip.ResumeLayout(False)
         Me.ProductsPartsMenuStrip.PerformLayout()
         Me.ProductDetailsGroup.ResumeLayout(False)
@@ -622,11 +621,12 @@ Partial Class ProductsPartsForm
         Me.FiltersGroupBox.ResumeLayout(False)
         Me.FiltersGroupBox.PerformLayout()
         CType(Me.HistoryDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ProductsPartsGroupBox.ResumeLayout(False)
+        CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ProductsPartsDataGridView As DataGridView
     Friend WithEvents ProductsPartsMenuStrip As MenuStrip
     Friend WithEvents SelectToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents UpdateMasterCodeLinkToolStripMenuItem As ToolStripMenuItem
@@ -677,4 +677,6 @@ Partial Class ProductsPartsForm
     Friend WithEvents Button1 As Button
     Friend WithEvents ProductsPartsPackingsGroupBox As GroupBox
     Friend WithEvents ProductsPartsPackingsDataGridView As DataGridView
+    Friend WithEvents ProductsPartsGroupBox As GroupBox
+    Friend WithEvents ProductsPartsDataGridView As DataGridView
 End Class

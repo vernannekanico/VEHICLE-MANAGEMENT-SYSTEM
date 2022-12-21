@@ -87,28 +87,28 @@
 
     End Sub
     Private Sub FillProductsPartsDataGridView()
+        Dim UnitOfPacking As String = " IIf(ProductPartsPackingsTable.UnitOfThePacking_ShortText3 <> null,ProductsPartsTable.Unit_ShortText3,ProductPartsPackingsTable.UnitOfThePacking_ShortText3) AS UnitOfPacking, "
         ProductsPartsFieldsToSelect = "
-        Select ProductsPartsTable.Selected,
-ProductsPartsTable.MasterCodeBookID_LongInteger,
-MasterCodeBookTable.SystemDesc_ShortText100Fld,
-PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
-PartsSpecificationsTable.PartSpecifications_ShortText255,
-ProductsPartsTable.ManufacturerPartNo_ShortText30Fld,
-ProductsPartsTable.ManufacturerDescription_ShortText250,
-StocksTable.QuantityInStock_Double,
-ProductsPartsTable.Unit_ShortText3,
-BrandsTable.BrandID_Autonumber,
-BrandsTable.BrandName_ShortText20,
-StocksTable.StockID_Autonumber,
-StocksTable.Location_ShortText10,
-ProductsPartsTable.VehicleRepairClassID_LongInteger,
-VehicleDescription.VehicleDescription,
-ProductsPartsTable.ProductsPartID_Autonumber,
-ProductPartsPackingsTable.QuantityPerPack_Double,
+SELECT 
+ProductsPartsTable.Selected, 
+ProductsPartsTable.MasterCodeBookID_LongInteger, 
+MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+PartsSpecificationsTable.PartsSpecificationID_AutoNumber, 
+PartsSpecificationsTable.PartSpecifications_ShortText255, 
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
+ProductsPartsTable.ManufacturerDescription_ShortText250, 
+ProductPartsPackingsTable.QuantityPerPack_Double, 
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
 ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
-StocksLocationsTable.LocationCode_ShortText11
-FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN VehicleRepairClassTable ON ProductsPartsTable.VehicleRepairClassID_LongInteger = VehicleRepairClassTable.VehicleRepairClassID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON ProductsPartsTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehiclesTable ON ServicedVehiclesTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber
+" & UnitOfPacking &
+" 
+BrandsTable.BrandName_ShortText20, 
+ProductsPartsTable.ProductDescription_ShortText250,
+ProductsPartsTable.Unit_ShortText3, 
+BrandsTable.BrandID_Autonumber, 
+ProductsPartsTable.ProductsPartID_Autonumber, 
+ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationsID_AutoNumber
+FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN ProductsPartsPackingRelationsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductsPartsPackingRelationsTable.ProductPartID_LongInteger) LEFT JOIN ProductPartsPackingsTable ON ProductsPartsPackingRelationsTable.ProductPartsPackingID_LongInteger = ProductPartsPackingsTable.ProductPartsPackingID_Autonumber
 "
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
         JustExecuteMySelection()
@@ -119,13 +119,13 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
             FormatProductsPartsDataGridView()
             ProductsPartsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         End If
-        Dim RowsHeight = 0
         Dim AvailableHeightSpace = VehicleManagementSystemForm.Height -
                                     (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height) +
                                     ProductsPartsDataGridView.ColumnHeadersHeight
         Dim MyMaximumHeight = VehicleManagementSystemForm.Height -
                                   VehicleManagementSystemForm.VehicleManagementMenuStrip.Top
 
+        Dim RowsHeight = 0
         If CurrentProductsPartsRow > -1 Then
             For i = 0 To ProductsPartsRecordCount - 1
                 RowsHeight += RowsHeight + ProductsPartsDataGridView.Rows(i).Height
@@ -145,11 +145,17 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         End If
         ProductDetailsGroup.Top = ProductsPartsDataGridView.Top
         ProductsPartsDataGridView.Top = ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height
+        '---------------------------------------------------------------------
+
+        SetGroupBoxHeight(20, ProductsPartsRecordCount, ProductsPartsGroupBox, ProductsPartsDataGridView)
+        '      ProductsPartsDataGridView.Width = Me.Width - 4
+        '      HorizontalCenter(ProductsPartsDataGridView, Me)
+        '     VerticalCenter(ProductsPartsDataGridView, Me)
     End Sub
 
     Private Sub FormatProductsPartsDataGridView()
         ProductsPartsDataGridViewAlreadyFormated = True
-        ProductsPartsDataGridView.Width = 0
+        ProductsPartsGroupBox.Width = 0
         For i = 0 To ProductsPartsDataGridView.Columns.GetColumnCount(0) - 1
 
             ProductsPartsDataGridView.Columns.Item(i).Visible = False
@@ -160,7 +166,7 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Part Desc"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 300
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 250
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "PartSpecifications_ShortText255"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Specification"
@@ -172,11 +178,7 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerDescription_ShortText250"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Manufacturer Desc"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 400
-                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "Unit_ShortText3"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Unit"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 350
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "BrandName_ShortText20"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Brand"
@@ -194,31 +196,45 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "UnitOfTheQuantity"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 70
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfThePacking_ShortText3"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "UnitOfThePacking_ShortText3"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfPacking"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "UnitOfPacking"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
+                Case "Unit_ShortText3"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Unit"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
+
             End Select
 
             If ProductsPartsDataGridView.Columns.Item(i).Visible = True Then
-                ProductsPartsDataGridView.Width = ProductsPartsDataGridView.Width + ProductsPartsDataGridView.Columns.Item(i).Width
+                ProductsPartsGroupBox.Width = ProductsPartsGroupBox.Width + ProductsPartsDataGridView.Columns.Item(i).Width
             End If
         Next
 
         ' NOTE" SYSTEM AUTOFITS THE GRIDVIEW FIELDS ACCORDING To THEIR WITDH
         Me.Width = VehicleManagementSystemForm.Width
-        If ProductsPartsDataGridView.Width > Me.Width + 20 Then
-            ProductsPartsDataGridView.Width = Me.Width - 80
+        If ProductsPartsGroupBox.Width > Me.Width + 20 Then
+            ProductsPartsGroupBox.Width = Me.Width - 80
         Else
-            ProductsPartsDataGridView.Width = ProductsPartsDataGridView.Width + 20
+            ProductsPartsGroupBox.Width = ProductsPartsGroupBox.Width + 20
         End If
         '
-        If Me.Width > ProductsPartsDataGridView.Width Then
-            ProductsPartsDataGridView.Left = (Me.Width - ProductsPartsDataGridView.Width) / 2
+        If Me.Width > ProductsPartsGroupBox.Width Then
+            ProductsPartsGroupBox.Left = (Me.Width - ProductsPartsGroupBox.Width) / 2
         Else
-            ProductsPartsDataGridView.Left = Me.Left
-            ProductsPartsDataGridView.Width = Me.Width
+            ProductsPartsGroupBox.Left = Me.Left
+            ProductsPartsGroupBox.Width = Me.Width
         End If
-        ProductsPartsDataGridView.Top = (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height)
+        ProductsPartsGroupBox.Top = (ProductsPartsMenuStrip.Top + ProductsPartsMenuStrip.Height)
         Me.Left = VehicleManagementSystemForm.Left
     End Sub
     Private Sub ProductsPartsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ProductsPartsDataGridView.RowEnter
+
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If ProductsPartsRecordCount = 0 Then Exit Sub
@@ -237,8 +253,7 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
     End Sub
     Private Sub FillProductsPartsPackingsDataGridView()
 
-        ProductsPartsPackingsSelectionOrder = ""
-        ProductsPartsPackingsFieldsToSelect = " * FROM ProductPartPackingsQuery "
+        ProductsPartsPackingsFieldsToSelect = " SELECT * FROM ProductPartPackingsQuery "
 
 
         MySelection = ProductsPartsPackingsFieldsToSelect & ProductsPartsPackingsSelectionFilter & ProductsPartsPackingsSelectionOrder
@@ -287,7 +302,8 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
             End If
         Next
     End Sub
-    Private Sub ProductsPartsPackingsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs)
+    Private Sub ProductsPartsPackingsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ProductsPartsPackingsDataGridView.RowEnter
+
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If ProductsPartsPackingsRecordCount = 0 Then Exit Sub
@@ -447,16 +463,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         FillField(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value)
         FillField(CurrentBrandID, ProductsPartsDataGridView.Item("BrandID_Autonumber", CurrentProductsPartsRow).Value)
         FillField(UnitTextBox.Text, ProductsPartsDataGridView.Item("Unit_ShortText3", CurrentProductsPartsRow).Value)
-        If IsNotEmpty(ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value) Then
-            PackingTextBox.Text = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & Space(1) &
-                                      ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString &
-                                        " / " &
-                                      ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value.ToString
-            PackingTextBox.Visible = True
-        Else
-            PackingTextBox.Text = ""
-            PackingTextBox.Visible = False
-        End If
         ProductsPartsPackingsSelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartID
         FillProductsPartsPackingsDataGridView()
     End Sub
@@ -750,9 +756,6 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         Tunnel3 = CurrentMasterCodeBookID
         ShowCalledForm(Me, PartsSpecificationsForm)
     End Sub
-    Private Sub ProductSpecificationButton_Click(sender As Object, e As EventArgs) Handles ProductSpecificationButton.Click
-
-    End Sub
 
     Private Sub VehicleModelButton_Click(sender As Object, e As EventArgs) Handles VehicleModelButton.Click
         If VehicleModelButton.Text = "ON" Then
@@ -763,17 +766,7 @@ FROM (ProductPartsPackingsTable RIGHT JOIN ((StocksTable RIGHT JOIN ((((((Produc
         FiltersGroupBox.Visible = True
     End Sub
 
-    Private Sub PurchasesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PurchasesToolStripMenuItem.Click
 
-    End Sub
-
-    Private Sub UsageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UsageToolStripMenuItem.Click
-
-    End Sub
-
-    Private Sub VehicleLinksToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VehicleLinksToolStripMenuItem.Click
-
-    End Sub
 
     Private Sub SystemPartDescriptionTextBox_Click(sender As Object, e As EventArgs) Handles SystemPartDescriptionTextBox.Click
         If MsgBox("Do you want to update MasterCodeBook link?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then

@@ -186,14 +186,21 @@ SELECT * FROM ProductPartPackingsQuery
         Return False
     End Function
     Private Sub RegisterProductPartsPackingsChanges()
-        MySelection = " Select top 1 * FROM ProductPartsPackingsTable WHERE ProductPartsPackingID_Autonumber = " & CurrentProductPartsPackingID.ToString
+        'NOTE DO VALIDATION FIRST
+        'PACKING IS DIFFERENT FROM PRODUCTPARTPACKING
+        MySelection = " Select top 1 * FROM ProductPartsPackingsTable WHERE QuantityPerPack_Double = " & Val(QuantityPerPackTextBox.Text) &
+                        " AND UnitOfTheQuantity_ShortText3 = " & InQuotes(UnitOfTheQuantityTextBox.Text) &
+                        " AND UnitOfThePacking_ShortText3 = " & InQuotes(UnitOfThePackingTextBox.Text)
 
         JustExecuteMySelection()
         If RecordCount = 0 Then
+            'HERE THE PACKING IS NOT FOUND SO INSERT THE NEW PACKING AND SET THE CURRENT PACKING
             InsertProductPartsPacking()
         Else
-            UpdateProductPartsPacking()
+            Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
+            CurrentProductPartsPackingID = r("ProductPartsPackingID_Autonumber")
         End If
+        UpdateProductPartsPacking()
     End Sub
     Private Sub InsertProductPartsPacking()
         MySelection = " Select * from ProductPartsPackingsTable WHERE ProductPartID_LongInteger = " & CurrentProductPartID.ToString &
