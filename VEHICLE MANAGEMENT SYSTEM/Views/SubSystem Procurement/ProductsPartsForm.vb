@@ -309,13 +309,7 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         If ProductsPartsPackingsRecordCount = 0 Then Exit Sub
 
         CurrentProductsPartsPackingsRow = e.RowIndex
-        CurrentProductsPartsPackingID = ProductsPartsPackingsDataGridView.Item("ProductPartsPackingID_AutoNumber", CurrentProductsPartsPackingsRow).Value
-
-        FillField(CurrentProductsPartsPackingStatus, ProductsPartsPackingsDataGridView.Item("ProductPartsPackingStatus", CurrentProductsPartsPackingsRow).Value)
-
-        Select Case CurrentProductsPartsPackingStatus
-            Case "Assigned"
-        End Select
+        CurrentProductsPartsPackingID = ProductsPartsPackingsDataGridView.Item("ProductsPartsPackingRelationsID_AutoNumber", CurrentProductsPartsPackingsRow).Value
 
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
@@ -706,11 +700,13 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
     Private Sub PartDescriptionSearchTextBox_Click(sender As Object, e As EventArgs) Handles PartDescriptionSearchTextBox.Click
         PartDescriptionSearchTextBox.SelectAll()
     End Sub
-    Private Sub PackingButton_Click(sender As Object, e As EventArgs) Handles PackingButton.Click
-        If IsEmpty(UnitTextBox.Text) Then
-            MsgBox("Unit should not be empty before working on the packing" & vbCrLf & "should indicate the least of the product")
-            UnitTextBox.Select()
-            Exit Sub
+    Private Sub UnitTextBox_Click(sender As Object, e As EventArgs) Handles UnitTextBox.Click
+
+        If IsNotEmpty(UnitTextBox.Text) Then
+            If MsgBox("do you want to replace the unit ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
+                UnitTextBox.Select()
+                Exit Sub
+            End If
         End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
@@ -788,5 +784,6 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         PartDescriptionSearchTextBox.Select()
         FiltersGroupBox.Visible = True
     End Sub
+
 
 End Class
