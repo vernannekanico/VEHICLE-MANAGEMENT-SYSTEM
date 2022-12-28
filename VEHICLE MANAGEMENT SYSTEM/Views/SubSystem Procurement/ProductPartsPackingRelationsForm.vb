@@ -10,9 +10,9 @@
 
     Private CurrentProductPartID = Tunnel2
     Private SavedCallingForm As Form
-
     Private Sub ProductPartsPackingRelationsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
+        MsgBox("CLEAR ALL PROCEDURES Not USED")
         If Tunnel1 = "Tunnel2IsProductPartID" Then
             CurrentProductPartID = Tunnel2
             ProductPartsPackingRelationsSelectionFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductPartID.ToString
@@ -29,12 +29,12 @@
             Case "Tunnel2IsProductPartsPackingID"
                 If MsgBox("Continue adding this in the packing list ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
                 CurrentProductPartsPackingID = Tunnel2
-                RegisterProductPartsPackingRelationsChanges()
+                InsertProductPartsPackingRelation()
         End Select
         FillProductPartsPackingRelationsDataGridView()
     End Sub
     Private Sub CancelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelToolStripMenuItem.Click
-        DoCommonHouseKeeping(Me, SavedCallingForm)
+        Me.Close()
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartsPackingID"
@@ -52,7 +52,8 @@
 
         ProductPartsPackingRelationsFieldsToSelect =
 " 
-SELECT * FROM ProductPartPackingsQuery
+SELECT ProductPartsPackingsTable.QuantityPerPack_Double, ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, ProductPartsPackingsTable.UnitOfThePacking_ShortText3, ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber, ProductsPartsPackingRelationsTable.ProductPartID_LongInteger
+FROM ProductsPartsPackingRelationsTable LEFT JOIN ProductPartsPackingsTable ON ProductsPartsPackingRelationsTable.ProductPartsPackingID_LongInteger = ProductPartsPackingsTable.ProductPartsPackingID_Autonumber
 "
 
 
@@ -72,9 +73,7 @@ SELECT * FROM ProductPartPackingsQuery
         Dim RecordsToDisplay = 25
         SetGroupBoxHeight(RecordsToDisplay, ProductPartsPackingRelationsRecordCount, ProductPartsPackingRelationsGroupBox, ProductPartsPackingRelationsDataGridView)
         ProductPartsPackingRelationsGroupBox.Top = ProductsPartsPackingMenuStrip.Top + ProductsPartsPackingMenuStrip.Height
-        PackingDetailsGroupBox.Top = ProductPartsPackingRelationsGroupBox.Top + ProductPartsPackingRelationsGroupBox.Height
-        Me.Height = ProductPartsPackingRelationsGroupBox.Top + ProductPartsPackingRelationsGroupBox.Height + PackingDetailsGroupBox.Height + 50
-        PackingDetailsGroupBox.Left = (Me.Width - PackingDetailsGroupBox.Width) / 2
+        Me.Height = ProductPartsPackingRelationsGroupBox.Top + ProductPartsPackingRelationsGroupBox.Height + 50
 
         Me.Top = (VehicleManagementSystemForm.Height - Me.Height) / 2
     End Sub
@@ -129,82 +128,11 @@ SELECT * FROM ProductPartPackingsQuery
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
         ShowCalledForm(Me, ProductPartsPackingsForm)
     End Sub
-    Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem.Click
-        LoadPackingDetails()
-    End Sub
-    Private Sub LoadPackingDetails()
-        PackingDetailsGroupBox.Visible = True
-        QuantityPerPackTextBox.Text = NotNull(ProductPartsPackingRelationsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingRelationsRow).Value)
-        UnitOfTheQuantityTextBox.Text = NotNull(ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value)
-        UnitOfThePackingTextBox.Text = NotNull(ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value)
-    End Sub
-    Private Sub PackingDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles PackingDetailsGroupBox.VisibleChanged
-        If PackingDetailsGroupBox.Visible = True Then
-            SelectToolStripMenuItem.Visible = False
-            AddToolStripMenuItem.Visible = False
-            EditToolStripMenuItem.Visible = False
-            RemoveToolStripMenuItem.Visible = False
-            SaveToolStripMenuItem.Visible = True
-        Else
-            SelectToolStripMenuItem.Visible = True
-            AddToolStripMenuItem.Visible = True
-            EditToolStripMenuItem.Visible = True
-            RemoveToolStripMenuItem.Visible = True
-            SaveToolStripMenuItem.Visible = False
-        End If
-    End Sub
     Private Sub RemoveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveToolStripMenuItem.Click
         If MsgBox("Are you sure you want to remove this packing for this product ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         MySelection = " DELETE FROM ProductsPartsPackingRelationsTable WHERE ProductsPartsPackingRelationID_AutoNumber =  " & CurrentProductsPartsPackingRelationID.ToString
         JustExecuteMySelection()
         FillProductPartsPackingRelationsDataGridView()
-    End Sub
-    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
-        SaveChanges()
-        PackingDetailsGroupBox.Visible = False
-    End Sub
-    Private Sub SaveChanges()
-        If IsEmpty(QuantityPerPackTextBox.Text) Then
-            QuantityPerPackTextBox.Select()
-            Exit Sub
-        End If
-        If IsEmpty(UnitOfTheQuantityTextBox.Text) Then
-            UnitOfTheQuantityTextBox.Select()
-            Exit Sub
-        End If
-        If AChangeInProductPartsPackingRelationsOccured() Then
-            Dim xxmsgResult = MsgBox("Save Changes?", MsgBoxStyle.YesNoCancel)
-            If xxmsgResult = vbNo Then
-                PackingDetailsGroupBox.Visible = False
-                Exit Sub
-            ElseIf xxmsgResult = MsgBoxResult.Cancel Then
-                Exit Sub
-            End If
-            RegisterProductPartsPackingRelationsChanges()
-        End If
-        FillProductPartsPackingRelationsDataGridView()
-    End Sub
-    Private Function AChangeInProductPartsPackingRelationsOccured()
-        '*******************************************************
-        ' CHECK THIS THE TheseAreNotEqual ROUTINE WAS MODIFIED, WATCH PARAMETER pURPOSEOFENTRY
-        If CurrentProductsPartsPackingRelationID < 1 Then
-            Return True
-        End If
-        If TheseAreNotEqual(QuantityPerPackTextBox.Text, NotNull(ProductPartsPackingRelationsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingRelationsRow).Value)) Then Return True
-        If TheseAreNotEqual(UnitOfTheQuantityTextBox.Text, NotNull(ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value)) Then Return True
-        If TheseAreNotEqual(UnitOfThePackingTextBox.Text, NotNull(ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value)) Then Return True
-        Return False
-    End Function
-    Private Sub RegisterProductPartsPackingRelationsChanges()
-        'NOTE DO VALIDATION FIRST
-        'PACKING IS DIFFERENT FROM PRODUCTPARTPACKING
-        MySelection = " Select top 1 * FROM ProductsPartsPackingRelationsTable WHERE ProductsPartsPackingRelationID_AutoNumber = " & CurrentProductPartsPackingID.ToString
-        JustExecuteMySelection()
-        If RecordCount = 1 Then
-            MsgBox("This packing already exist")
-            Exit Sub
-        End If
-        InsertProductPartsPackingRelation()
     End Sub
     Private Sub InsertProductPartsPackingRelation()
         Dim FieldsToUpdate = "  ProductPartID_LongInteger, " &

@@ -11,6 +11,8 @@
     Private SavedCallingForm As Form
     Private Sub ProductPartsPackingsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
+        MsgBox("in ProductPartsPackingsForm CLEAR ALL PROCEDURES NOT USED")
+        MsgBox("code deletion with checking links for 3.12 oz btl")
         FillProductPartsPackingsDataGridView()
     End Sub
     Private Sub CancelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelToolStripMenuItem.Click

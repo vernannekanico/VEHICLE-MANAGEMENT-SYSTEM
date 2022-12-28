@@ -22,9 +22,9 @@ Partial Class ProductsPartsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ProductsPartsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UpdateMasterCodeLinkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -38,9 +38,14 @@ Partial Class ProductsPartsForm
         Me.UsageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehicleLinksToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SearchToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditPackingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MarkAllRecordsAsForDeletionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UpdatePackingForAllRecordsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReIDSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MarkSeletedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductDetailsGroup = New System.Windows.Forms.GroupBox()
-        Me.ProductsPartsPackingsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.ProductsPartsPackingsDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PartSpecificationTextBox = New System.Windows.Forms.TextBox()
@@ -53,6 +58,8 @@ Partial Class ProductsPartsForm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ManufacturerPartNoLabel = New System.Windows.Forms.Label()
+        Me.ProductsPartsPackingsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ProductsPartsPackingsDataGridView = New System.Windows.Forms.DataGridView()
         Me.CancelMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
@@ -73,7 +80,7 @@ Partial Class ProductsPartsForm
         Me.HistoryDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsPartsGroupBox = New System.Windows.Forms.GroupBox()
         Me.ProductsPartsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.EditPackingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToggleFilterToForDeletionOnOffToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
         Me.ProductsPartsPackingsGroupBox.SuspendLayout()
@@ -90,11 +97,11 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.Dock = System.Windows.Forms.DockStyle.None
         Me.ProductsPartsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ProductsPartsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.ProductsPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.UpdateMasterCodeLinkToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ProductDetailsToolStripMenuItem, Me.HistoryToolStripMenuItem, Me.SearchToolStripMenuItem, Me.EditPackingToolStripMenuItem})
+        Me.ProductsPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.UpdateMasterCodeLinkToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ProductDetailsToolStripMenuItem, Me.HistoryToolStripMenuItem, Me.SearchToolStripMenuItem, Me.EditPackingToolStripMenuItem, Me.ToolStripMenuItem1, Me.UpdatePackingForAllRecordsToolStripMenuItem, Me.ReIDSelectedToolStripMenuItem, Me.MarkSeletedToolStripMenuItem})
         Me.ProductsPartsMenuStrip.Location = New System.Drawing.Point(69, 0)
         Me.ProductsPartsMenuStrip.Name = "ProductsPartsMenuStrip"
         Me.ProductsPartsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
-        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(786, 35)
+        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(1614, 35)
         Me.ProductsPartsMenuStrip.TabIndex = 88
         Me.ProductsPartsMenuStrip.Text = "MenuStrip1"
         '
@@ -171,6 +178,50 @@ Partial Class ProductsPartsForm
         Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(69, 25)
         Me.SearchToolStripMenuItem.Text = "Search"
         '
+        'EditPackingToolStripMenuItem
+        '
+        Me.EditPackingToolStripMenuItem.Name = "EditPackingToolStripMenuItem"
+        Me.EditPackingToolStripMenuItem.Size = New System.Drawing.Size(105, 25)
+        Me.EditPackingToolStripMenuItem.Text = "Edit Packing"
+        Me.EditPackingToolStripMenuItem.Visible = False
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MarkAllRecordsAsForDeletionToolStripMenuItem, Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem, Me.ToggleFilterToForDeletionOnOffToolStripMenuItem})
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(131, 25)
+        Me.ToolStripMenuItem1.Text = "Direct Updating"
+        '
+        'MarkAllRecordsAsForDeletionToolStripMenuItem
+        '
+        Me.MarkAllRecordsAsForDeletionToolStripMenuItem.Name = "MarkAllRecordsAsForDeletionToolStripMenuItem"
+        Me.MarkAllRecordsAsForDeletionToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
+        Me.MarkAllRecordsAsForDeletionToolStripMenuItem.Text = "Mark all records as for deletion"
+        '
+        'SetToFalseForAllRecordsWithUnitToolStripMenuItem
+        '
+        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem.Name = "SetToFalseForAllRecordsWithUnitToolStripMenuItem"
+        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
+        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem.Text = "Set To false for all records with unit"
+        '
+        'UpdatePackingForAllRecordsToolStripMenuItem
+        '
+        Me.UpdatePackingForAllRecordsToolStripMenuItem.Name = "UpdatePackingForAllRecordsToolStripMenuItem"
+        Me.UpdatePackingForAllRecordsToolStripMenuItem.Size = New System.Drawing.Size(229, 25)
+        Me.UpdatePackingForAllRecordsToolStripMenuItem.Text = "Update Packing for all records"
+        '
+        'ReIDSelectedToolStripMenuItem
+        '
+        Me.ReIDSelectedToolStripMenuItem.Name = "ReIDSelectedToolStripMenuItem"
+        Me.ReIDSelectedToolStripMenuItem.Size = New System.Drawing.Size(123, 25)
+        Me.ReIDSelectedToolStripMenuItem.Text = "Re-ID Selected"
+        '
+        'MarkSeletedToolStripMenuItem
+        '
+        Me.MarkSeletedToolStripMenuItem.Name = "MarkSeletedToolStripMenuItem"
+        Me.MarkSeletedToolStripMenuItem.Size = New System.Drawing.Size(120, 25)
+        Me.MarkSeletedToolStripMenuItem.Text = "Mark Selected"
+        '
         'ProductDetailsGroup
         '
         Me.ProductDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
@@ -196,34 +247,6 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.TabStop = False
         Me.ProductDetailsGroup.Text = "Product Details"
         Me.ProductDetailsGroup.Visible = False
-        '
-        'ProductsPartsPackingsGroupBox
-        '
-        Me.ProductsPartsPackingsGroupBox.Controls.Add(Me.ProductsPartsPackingsDataGridView)
-        Me.ProductsPartsPackingsGroupBox.Location = New System.Drawing.Point(800, 357)
-        Me.ProductsPartsPackingsGroupBox.Name = "ProductsPartsPackingsGroupBox"
-        Me.ProductsPartsPackingsGroupBox.Size = New System.Drawing.Size(659, 84)
-        Me.ProductsPartsPackingsGroupBox.TabIndex = 126
-        Me.ProductsPartsPackingsGroupBox.TabStop = False
-        Me.ProductsPartsPackingsGroupBox.Visible = False
-        '
-        'ProductsPartsPackingsDataGridView
-        '
-        Me.ProductsPartsPackingsDataGridView.AllowUserToAddRows = False
-        Me.ProductsPartsPackingsDataGridView.AllowUserToDeleteRows = False
-        Me.ProductsPartsPackingsDataGridView.AllowUserToOrderColumns = True
-        Me.ProductsPartsPackingsDataGridView.AllowUserToResizeRows = False
-        Me.ProductsPartsPackingsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ProductsPartsPackingsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ProductsPartsPackingsDataGridView.Location = New System.Drawing.Point(3, 16)
-        Me.ProductsPartsPackingsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.ProductsPartsPackingsDataGridView.MultiSelect = False
-        Me.ProductsPartsPackingsDataGridView.Name = "ProductsPartsPackingsDataGridView"
-        Me.ProductsPartsPackingsDataGridView.ReadOnly = True
-        Me.ProductsPartsPackingsDataGridView.RowHeadersVisible = False
-        Me.ProductsPartsPackingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.ProductsPartsPackingsDataGridView.Size = New System.Drawing.Size(653, 65)
-        Me.ProductsPartsPackingsDataGridView.TabIndex = 52
         '
         'ProductSpecificationTextBox
         '
@@ -332,6 +355,34 @@ Partial Class ProductsPartsForm
         Me.ManufacturerPartNoLabel.Size = New System.Drawing.Size(208, 20)
         Me.ManufacturerPartNoLabel.TabIndex = 40
         Me.ManufacturerPartNoLabel.Text = "Manufacturer's Part Number"
+        '
+        'ProductsPartsPackingsGroupBox
+        '
+        Me.ProductsPartsPackingsGroupBox.Controls.Add(Me.ProductsPartsPackingsDataGridView)
+        Me.ProductsPartsPackingsGroupBox.Location = New System.Drawing.Point(800, 357)
+        Me.ProductsPartsPackingsGroupBox.Name = "ProductsPartsPackingsGroupBox"
+        Me.ProductsPartsPackingsGroupBox.Size = New System.Drawing.Size(659, 84)
+        Me.ProductsPartsPackingsGroupBox.TabIndex = 126
+        Me.ProductsPartsPackingsGroupBox.TabStop = False
+        Me.ProductsPartsPackingsGroupBox.Visible = False
+        '
+        'ProductsPartsPackingsDataGridView
+        '
+        Me.ProductsPartsPackingsDataGridView.AllowUserToAddRows = False
+        Me.ProductsPartsPackingsDataGridView.AllowUserToDeleteRows = False
+        Me.ProductsPartsPackingsDataGridView.AllowUserToOrderColumns = True
+        Me.ProductsPartsPackingsDataGridView.AllowUserToResizeRows = False
+        Me.ProductsPartsPackingsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ProductsPartsPackingsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ProductsPartsPackingsDataGridView.Location = New System.Drawing.Point(3, 16)
+        Me.ProductsPartsPackingsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ProductsPartsPackingsDataGridView.MultiSelect = False
+        Me.ProductsPartsPackingsDataGridView.Name = "ProductsPartsPackingsDataGridView"
+        Me.ProductsPartsPackingsDataGridView.ReadOnly = True
+        Me.ProductsPartsPackingsDataGridView.RowHeadersVisible = False
+        Me.ProductsPartsPackingsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.ProductsPartsPackingsDataGridView.Size = New System.Drawing.Size(653, 65)
+        Me.ProductsPartsPackingsDataGridView.TabIndex = 52
         '
         'CancelMenuStrip
         '
@@ -501,25 +552,25 @@ Partial Class ProductsPartsForm
         '
         Me.HistoryDataGridView.AllowUserToAddRows = False
         Me.HistoryDataGridView.AllowUserToDeleteRows = False
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.HistoryDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.HistoryDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.HistoryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.HistoryDataGridView.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.HistoryDataGridView.DefaultCellStyle = DataGridViewCellStyle2
         Me.HistoryDataGridView.Location = New System.Drawing.Point(31, 163)
         Me.HistoryDataGridView.Margin = New System.Windows.Forms.Padding(10, 12, 10, 12)
         Me.HistoryDataGridView.Name = "HistoryDataGridView"
         Me.HistoryDataGridView.ReadOnly = True
         Me.HistoryDataGridView.RowHeadersVisible = False
         Me.HistoryDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.HistoryDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.HistoryDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.HistoryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.HistoryDataGridView.Size = New System.Drawing.Size(603, 60)
         Me.HistoryDataGridView.TabIndex = 93
@@ -552,12 +603,11 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsDataGridView.Size = New System.Drawing.Size(305, 66)
         Me.ProductsPartsDataGridView.TabIndex = 52
         '
-        'EditPackingToolStripMenuItem
+        'ToggleFilterToForDeletionOnOffToolStripMenuItem
         '
-        Me.EditPackingToolStripMenuItem.Name = "EditPackingToolStripMenuItem"
-        Me.EditPackingToolStripMenuItem.Size = New System.Drawing.Size(105, 25)
-        Me.EditPackingToolStripMenuItem.Text = "Edit Packing"
-        Me.EditPackingToolStripMenuItem.Visible = False
+        Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Name = "ToggleFilterToForDeletionOnOffToolStripMenuItem"
+        Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
+        Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Text = "Toggle filter to ForDeletion On/Off"
         '
         'ProductsPartsForm
         '
@@ -639,4 +689,11 @@ Partial Class ProductsPartsForm
     Friend WithEvents ProductsPartsGroupBox As GroupBox
     Friend WithEvents ProductsPartsDataGridView As DataGridView
     Friend WithEvents EditPackingToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents UpdatePackingForAllRecordsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ReIDSelectedToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MarkSeletedToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents MarkAllRecordsAsForDeletionToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SetToFalseForAllRecordsWithUnitToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToggleFilterToForDeletionOnOffToolStripMenuItem As ToolStripMenuItem
 End Class

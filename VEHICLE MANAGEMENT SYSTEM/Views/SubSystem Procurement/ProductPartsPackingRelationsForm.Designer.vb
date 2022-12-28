@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ProductPartsPackingRelationsForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,25 +20,18 @@ Partial Class ProductPartsPackingRelationsForm
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ProductPartsPackingRelationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.ProductPartsPackingRelationsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.PackingDetailsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.UnitOfThePackingTextBox = New System.Windows.Forms.TextBox()
-        Me.UnitOfTheQuantityTextBox = New System.Windows.Forms.TextBox()
-        Me.QuantityPerPackTextBox = New System.Windows.Forms.TextBox()
         Me.ProductsPartsPackingMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductPartsPackingRelationsGroupBox.SuspendLayout()
         CType(Me.ProductPartsPackingRelationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PackingDetailsGroupBox.SuspendLayout()
         Me.ProductsPartsPackingMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -71,54 +64,10 @@ Partial Class ProductPartsPackingRelationsForm
         Me.ProductPartsPackingRelationsDataGridView.Size = New System.Drawing.Size(282, 205)
         Me.ProductPartsPackingRelationsDataGridView.TabIndex = 52
         '
-        'PackingDetailsGroupBox
-        '
-        Me.PackingDetailsGroupBox.Controls.Add(Me.Label1)
-        Me.PackingDetailsGroupBox.Controls.Add(Me.UnitOfThePackingTextBox)
-        Me.PackingDetailsGroupBox.Controls.Add(Me.UnitOfTheQuantityTextBox)
-        Me.PackingDetailsGroupBox.Controls.Add(Me.QuantityPerPackTextBox)
-        Me.PackingDetailsGroupBox.Location = New System.Drawing.Point(327, 212)
-        Me.PackingDetailsGroupBox.Name = "PackingDetailsGroupBox"
-        Me.PackingDetailsGroupBox.Size = New System.Drawing.Size(191, 44)
-        Me.PackingDetailsGroupBox.TabIndex = 92
-        Me.PackingDetailsGroupBox.TabStop = False
-        Me.PackingDetailsGroupBox.Visible = False
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(112, 15)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(13, 20)
-        Me.Label1.TabIndex = 3
-        Me.Label1.Text = "/"
-        '
-        'UnitOfThePackingTextBox
-        '
-        Me.UnitOfThePackingTextBox.Location = New System.Drawing.Point(131, 12)
-        Me.UnitOfThePackingTextBox.Name = "UnitOfThePackingTextBox"
-        Me.UnitOfThePackingTextBox.Size = New System.Drawing.Size(41, 26)
-        Me.UnitOfThePackingTextBox.TabIndex = 2
-        '
-        'UnitOfTheQuantityTextBox
-        '
-        Me.UnitOfTheQuantityTextBox.Location = New System.Drawing.Point(63, 12)
-        Me.UnitOfTheQuantityTextBox.Name = "UnitOfTheQuantityTextBox"
-        Me.UnitOfTheQuantityTextBox.Size = New System.Drawing.Size(43, 26)
-        Me.UnitOfTheQuantityTextBox.TabIndex = 1
-        Me.UnitOfTheQuantityTextBox.Text = "BOX"
-        '
-        'QuantityPerPackTextBox
-        '
-        Me.QuantityPerPackTextBox.Location = New System.Drawing.Point(15, 12)
-        Me.QuantityPerPackTextBox.Name = "QuantityPerPackTextBox"
-        Me.QuantityPerPackTextBox.Size = New System.Drawing.Size(42, 26)
-        Me.QuantityPerPackTextBox.TabIndex = 0
-        '
         'ProductsPartsPackingMenuStrip
         '
         Me.ProductsPartsPackingMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ProductsPartsPackingMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.SelectToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.SaveToolStripMenuItem})
+        Me.ProductsPartsPackingMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.SelectToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.RemoveToolStripMenuItem})
         Me.ProductsPartsPackingMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.ProductsPartsPackingMenuStrip.Name = "ProductsPartsPackingMenuStrip"
         Me.ProductsPartsPackingMenuStrip.Padding = New System.Windows.Forms.Padding(22, 8, 0, 8)
@@ -155,19 +104,11 @@ Partial Class ProductPartsPackingRelationsForm
         Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveToolStripMenuItem.Text = "Remove"
         '
-        'SaveToolStripMenuItem
-        '
-        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
-        Me.SaveToolStripMenuItem.Text = "Save"
-        Me.SaveToolStripMenuItem.Visible = False
-        '
         'ProductPartsPackingRelationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(760, 303)
-        Me.Controls.Add(Me.PackingDetailsGroupBox)
         Me.Controls.Add(Me.ProductsPartsPackingMenuStrip)
         Me.Controls.Add(Me.ProductPartsPackingRelationsGroupBox)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -176,8 +117,6 @@ Partial Class ProductPartsPackingRelationsForm
         Me.Text = "UPDATE DIFFERENT PACKINGS for "
         Me.ProductPartsPackingRelationsGroupBox.ResumeLayout(False)
         CType(Me.ProductPartsPackingRelationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PackingDetailsGroupBox.ResumeLayout(False)
-        Me.PackingDetailsGroupBox.PerformLayout()
         Me.ProductsPartsPackingMenuStrip.ResumeLayout(False)
         Me.ProductsPartsPackingMenuStrip.PerformLayout()
         Me.ResumeLayout(False)
@@ -192,11 +131,5 @@ Partial Class ProductPartsPackingRelationsForm
     Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemoveToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CancelToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PackingDetailsGroupBox As GroupBox
-    Friend WithEvents UnitOfTheQuantityTextBox As TextBox
-    Friend WithEvents QuantityPerPackTextBox As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents UnitOfThePackingTextBox As TextBox
 End Class

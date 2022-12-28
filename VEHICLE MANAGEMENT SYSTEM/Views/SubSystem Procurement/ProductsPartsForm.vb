@@ -1,4 +1,6 @@
-﻿Public Class ProductsPartsForm
+﻿Imports System.Data.SqlClient
+
+Public Class ProductsPartsForm
     Private ProductsPartsFieldsToSelect = " "
     Private ProductsPartsSelectionFilter = " "
     Private ProductsPartsSelectionOrder = " "
@@ -24,6 +26,7 @@
     Private BackToEditMode = False
     Private CurrentProductSpecificationID = -1
     Public CurrentVehicleID = -1
+    Private ForDeletionRecord_YesNo As Boolean
 
     Private Sub ProductsPartsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
@@ -101,6 +104,7 @@ ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
 " 
 BrandsTable.BrandName_ShortText20, 
 ProductsPartsTable.ProductDescription_ShortText250,
+ProductsPartsTable.WorkOrderItemID_LongInteger,
 ProductsPartsTable.Unit_ShortText3, 
 BrandsTable.BrandID_Autonumber, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
@@ -368,7 +372,7 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub SetSearchParameters()
-        ProductsPartsSelectionFilter = " WHERE "
+        ProductsPartsSelectionFilter = " WHERE ( "
         Dim xxOR = ""
         If IsNotEmpty(PartNoSearchTextBox.Text) Then
             ProductsPartsSelectionFilter &= " ManufacturerPartNo_ShortText30Fld Like " & InQuotes("%" & Trim(PartNoSearchTextBox.Text) & "%")
@@ -384,6 +388,12 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         If IsNotEmpty(CurrentMasterCodeBookID) Then
             ProductsPartsSelectionFilter &= " OR ProductsPartsTable.MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
         End If
+        If ProductsPartsSelectionFilter <> " WHERE ( " Then
+            ProductsPartsSelectionFilter += ") AND NOT ForDeletionRecord_YesNo "
+        Else
+            ProductsPartsSelectionFilter = " NOT ForDeletionRecord_YesNo "
+        End If
+
     End Sub
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToolStripMenuItem.Click
         SystemPartDescriptionTextBox.Text = ""
@@ -628,6 +638,7 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         If ProductDetailsGroup.Visible = True Then
             If Not PurposeOfEntry = "ADD" Then LoadProductDetails()
             SaveToolStripMenuItem.Visible = True
+            EditPackingToolStripMenuItem.Visible = True
             AddToolStripMenuItem.Visible = False
             EditToolStripMenuItem.Visible = False
             DeleteToolStripMenuItem.Visible = False
@@ -644,6 +655,7 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
             ProductDetailsToolStripMenuItem.Visible = True
             SearchToolStripMenuItem.Visible = True
             UpdateMasterCodeLinkToolStripMenuItem.Visible = True
+            EditPackingToolStripMenuItem.Visible = False
         End If
     End Sub
     Private Sub BrandNameTextBox_GotFocus(sender As Object, e As EventArgs) Handles BrandNameTextBox.Click
@@ -739,11 +751,12 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         FiltersGroupBox.Visible = False
         If PartDescriptionSearchTextBox.Text = "" And PartNoSearchTextBox.Text = "" Then
-            ProductsPartsSelectionFilter = ""
+            ProductsPartsSelectionFilter = " WHERE NOT ForDeletionRecord_YesNo "
         Else
             SetSearchParameters()
         End If
         FillProductsPartsDataGridView()
+
         If ProductsPartsRecordCount > 0 Then
             ProductsPartsDataGridView.Rows(0).Selected = True
         End If
@@ -756,11 +769,104 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
     Private Sub EditPackingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPackingToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
-        ShowCalledForm(Me, ProductPartsPackingRelationsForm)
+        ProductPartsPackingRelationsForm.Show()
         ProductPartsPackingRelationsForm.Text = "PACKINGS for " & ManufacturerPartDescTextBox.Text
         If IsNotEmpty(ManufacturerPartNoTextBox.Text) Then
             ProductPartsPackingRelationsForm.Text = ProductPartsPackingRelationsForm.Text & " PART NUMBER: " & ManufacturerPartNoTextBox.Text
         End If
     End Sub
 
+    Private Sub MarkSeletedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkSeletedToolStripMenuItem.Click
+        If ProductsPartsRecordCount < 1 Then Exit Sub
+        If ProductsPartsDataGridView.MultiSelect Then
+            ' this option works only when not in multi selection mode
+            MsgBox("Multi Select has been enabled, now Disabled")
+            For i = 0 To ProductsPartsRecordCount - 1
+                ProductsPartsDataGridView.Rows(i).Selected = False
+            Next
+            MsgBox("Select the row you want to MARK SELECTED")
+            ProductsPartsDataGridView.MultiSelect = False
+        Else
+            If ProductsPartsDataGridView.Rows(CurrentProductsPartsRow).Selected = False Then
+                MsgBox("Please select the row to mark SELECTED")
+                Exit Sub
+            End If
+            Dim SetCommand = "Set Selected = true, ProductsPartID_Selected = " & CurrentProductPartID.ToString
+            Dim RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
+            UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
+        End If
+        FillProductsPartsDataGridView()
+    End Sub
+
+    Private Sub ReIDSelectedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReIDSelectedToolStripMenuItem.Click
+        If Not ProductsPartsDataGridView.MultiSelect Then
+            ProductsPartsDataGridView.MultiSelect = True
+            MsgBox("Multi Select has been enabled, Please Select your records")
+        Else
+            Dim SelectedRecordsCount = 0
+            For i = 0 To ProductsPartsRecordCount - 1
+                If ProductsPartsDataGridView.Rows(i).Selected Then SelectedRecordsCount += 1
+                If ProductsPartsDataGridView.Item("Selected", i).Value Then
+                    CurrentProductPartID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value
+                End If
+            Next
+            If SelectedRecordsCount < 1 Then
+                MsgBox("Not more than 1 record is selected")
+                Exit Sub
+            End If
+            For i = 0 To ProductsPartsRecordCount - 1
+                If ProductsPartsDataGridView.Rows(i).Selected Then
+                    'UPDATE ALL REFERENCING TABLE TO THIS PRODUCT
+                    Dim SetCommand = "SET ProductsPartID_Selected = " & CurrentProductPartID.ToString & ", " &
+                                      "   ForDeletionRecord_YesNo = TRUE "
+                    Dim RecordFilter = "where ProductPartID_LongInteger = " & ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value.ToString
+                    UpdateTable("WorkOrderPartsTable", SetCommand, RecordFilter)
+                    UpdateTable("WorkOrderRequestedPartsTable", SetCommand, RecordFilter)
+                    UpdateTable("WorkOrderReceivedPartsTable", SetCommand, RecordFilter)
+                    UpdateTable("WorkOrderPartsIssuedItemsTable", SetCommand, RecordFilter)
+                    UpdateTable("StoreSuppliesRequisitionsItemsTable", SetCommand, RecordFilter)
+                    UpdateTable("StocksTable", SetCommand, RecordFilter)
+                    UpdateTable("RequisitionsItemsTable", SetCommand, RecordFilter)
+                    UpdateTable("PurchaseOrdersItemsTable", SetCommand, RecordFilter)
+                    UpdateTable("ProductsPartsPackingRelationsTable", SetCommand, RecordFilter)
+                    UpdateTable("InventoryItemsTable", SetCommand, RecordFilter)
+                    UpdateTable("DeliveryItemsTable", SetCommand, RecordFilter)
+                    UpdateTable("CodeVehicleProductsPartsTable", SetCommand, RecordFilter)
+                End If
+            Next
+            ProductsPartsDataGridView.MultiSelect = False
+            FillProductsPartsDataGridView()
+        End If
+    End Sub
+
+    Private Sub MarkAllRecordsAsForDeletionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkAllRecordsAsForDeletionToolStripMenuItem.Click
+        MsgBox("This has been Done")
+        Exit Sub
+        UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = TRUE", "")
+    End Sub
+
+    Private Sub SetToFalseForAllRecordsWithUnitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetToFalseForAllRecordsWithUnitToolStripMenuItem.Click
+        MsgBox("REMOVE THE FIELD WorkOrderItemID_LongInteger FROM THE FILLPARTS")
+        For i = 0 To ProductsPartsRecordCount - 1
+            Dim SetToFalseForDeletion = False
+            Dim CurrentProductPartID2 = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value
+            If IsNotEmpty(ProductsPartsDataGridView.Item("Unit_ShortText3", i).Value) Then SetToFalseForDeletion = True
+            If IsNotEmpty(ProductsPartsDataGridView.Item("WorkOrderItemID_LongInteger", i).Value) Then SetToFalseForDeletion = True
+            If SetToFalseForDeletion Then
+                UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = FALSE", "WHERE ProductsPartID_Autonumber = " & CurrentProductPartID2)
+            End If
+        Next
+    End Sub
+
+    Private Sub ToggleFilterToForDeletionOnOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleFilterToForDeletionOnOffToolStripMenuItem.Click
+        If ForDeletionRecord_YesNo Then
+            ForDeletionRecord_YesNo = False
+            ProductsPartsSelectionFilter = " WHERE ForDeletionRecord_YesNo = false "
+        Else
+            ForDeletionRecord_YesNo = True
+            ProductsPartsSelectionFilter = " WHERE ForDeletionRecord_YesNo = true "
+        End If
+        FillProductsPartsDataGridView()
+
+    End Sub
 End Class
