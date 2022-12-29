@@ -808,11 +808,8 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
                     RequestPartsForm.PartNumberSpecificationTextBox.Text = CodeVehiclePNSpecificationsDataGridView.Item("PartNumberSpecifications_ShortText30", CurrentCodeVehiclePNSpecificationsDataGridViewRow).Value
             End Select
             DoCommonHouseKeeping(Me, SavedCallingForm)
-
         End If
-
     End Sub
-
     Private Sub AddPartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPartNumberToolStripMenuItem.Click
         PartSpecificationsDetailsGroup.Visible = True
         CodeVehiclePNSpecificationsGroupBox.Enabled = False
@@ -827,15 +824,10 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         PartNumberSpecificationTextBox.ReadOnly = False
         PartNumberSpecificationTextBox.SelectAll()
     End Sub
-
     Private Sub RemovePartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemovePartNumberToolStripMenuItem.Click
-
     End Sub
-
     Private Sub DeletePartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs)
-
     End Sub
-
     Private Sub CopyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyToolStripMenuItem.Click
         My.Computer.Clipboard.Clear()
         My.Computer.Clipboard.SetText(CodeVehiclePartsSpecificationsDataGridView.Item("PartsSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value)

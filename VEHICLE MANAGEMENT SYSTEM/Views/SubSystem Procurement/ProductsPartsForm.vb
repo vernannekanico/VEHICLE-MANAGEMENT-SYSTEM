@@ -886,6 +886,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     Private Sub SearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchToolStripMenuItem.Click
         PartDescriptionSearchTextBox.Select()
         FiltersGroupBox.Visible = True
+        FiltersGroupBox.BringToFront()
     End Sub
     Private Sub EditPackingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPackingToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartID"
@@ -899,6 +900,8 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
 
     Private Sub MarkSeletedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkSeletedToolStripMenuItem.Click
         If ProductsPartsRecordCount < 1 Then Exit Sub
+        Dim SetCommand = ""
+        Dim RecordFilter = ""
         If ProductsPartsDataGridView.MultiSelect Then
             ' this option works only when not in multi selection mode
             MsgBox("Multi Select has been enabled, now Disabled")
@@ -911,15 +914,22 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             If ProductsPartsDataGridView.Rows(CurrentProductsPartsRow).Selected = False Then
                 MsgBox("Please select the row to mark SELECTED")
                 Exit Sub
+            Else
+                If MsgBox("Do you want to unselect this product?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    SetCommand = "Set Selected = false, ProductsPartID_Selected = -1 "
+                    RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
+                    UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
+                End If
+                Exit Sub
             End If
-            Dim SetCommand = "Set Selected = true, ProductsPartID_Selected = " & CurrentProductPartID.ToString
-            Dim RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
+            SetCommand = "Set Selected = true "
+            RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
             UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
         End If
         FillProductsPartsDataGridView()
     End Sub
     Private Sub MarkAllRecordsAsForDeletionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkAllRecordsAsForDeletionToolStripMenuItem.Click
-        MsgBox("This has been Done")
+        MsgBox("This has been Done, no need to do")
         Exit Sub
         UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = TRUE", "")
     End Sub
@@ -951,24 +961,55 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             ProductsPartsDataGridView.MultiSelect = True
             MsgBox("Multi Select has been enabled, Please Select your records")
         Else
+            ' DETERMINE IF MORE THAN 1 RECORD IS SELECTED AND IF THERE IS A RECORD WITH FIELD Selected = true
+            ' SelectedRecordsCount IS SET TO 0
+            ' ONLY ONE AND THERE MUST BE ONE SELECTED
+            ' FOR  ProductsPartsDataGridView.Item("Selected", i).Value = TRUE, THE ProductsPartID_Autonumber FIELD 
+            ' IS SAVED TO REPLACE THE ProductsPartID_Selected OF THE PRODUCTSPARTSTABLE
+            ' SET THE FIELD ForDeletionRecord_YesNo = TRUE
+            ' SET THE ProductPartID_LongInteger FIELD OF THE REFERENCING TABLES TO THIS PRODUCT (SEE BELOW LIST)
+            Dim RecordsSetSelected = 0
             Dim SelectedRecordsCount = 0
             For i = 0 To ProductsPartsRecordCount - 1
-                If ProductsPartsDataGridView.Rows(i).Selected Then SelectedRecordsCount += 1
-                If ProductsPartsDataGridView.Item("Selected", i).Value Then
-                    CurrentProductPartID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value
+                If ProductsPartsDataGridView.Rows(i).Selected Then
+                    SelectedRecordsCount += 1
+                    If ProductsPartsDataGridView.Item("Selected", i).Value Then
+                        CurrentProductPartID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value
+                        RecordsSetSelected += 1
+                    End If
                 End If
             Next
             If SelectedRecordsCount < 1 Then
                 MsgBox("Not more than 1 record is selected")
                 Exit Sub
             End If
+            If RecordsSetSelected = 0 Then
+                MsgBox("There is no record set as Selected")
+                Exit Sub
+            End If
+            If RecordsSetSelected > 1 Then
+                MsgBox("Only 1 record SHOULD BE set as Selected" & vbLf & "Deselect 1 by hitting again the MARK SELECTED")
+                Exit Sub
+            End If
+            Dim SetCommand = ""
+            Dim RecordFilter = ""
+
             For i = 0 To ProductsPartsRecordCount - 1
                 If ProductsPartsDataGridView.Rows(i).Selected Then
-                    'UPDATE ALL REFERENCING TABLE TO THIS PRODUCT
-                    Dim SetCommand = "SET ProductsPartID_Selected = " & CurrentProductPartID.ToString & ", " &
+                    'PROCESS ONLY THE SELECTED
+                    ' UPDATE CURRENT SELECTED RECORD
+                    If Not ProductsPartsDataGridView.Item("Selected", i).Value Then
+                        SetCommand = "SET ProductsPartID_Selected = " & CurrentProductPartID.ToString & ", " &
                                       "   ForDeletionRecord_YesNo = TRUE "
-                    Dim RecordFilter = "where ProductPartID_LongInteger = " & ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value.ToString
-                    UpdateTable("WorkOrderPartsTable", SetCommand, RecordFilter)
+                        RecordFilter = "where ProductsPartID_Autonumber = " & ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value.ToString
+                        UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
+                    Else
+                        'NO NEED TO UPDATE THE REFERENCING TABLES
+                        Continue For
+                    End If
+                    'now UPDATE ALL REFERENCING TABLE TO THIS PRODUCT
+                    SetCommand = "SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
+                    RecordFilter = "where ProductPartID_LongInteger = " & ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value.ToString
                     UpdateTable("WorkOrderRequestedPartsTable", SetCommand, RecordFilter)
                     UpdateTable("WorkOrderReceivedPartsTable", SetCommand, RecordFilter)
                     UpdateTable("WorkOrderPartsIssuedItemsTable", SetCommand, RecordFilter)

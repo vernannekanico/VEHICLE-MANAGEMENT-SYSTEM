@@ -410,7 +410,7 @@
         MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
         JustExecuteMySelection()
         If RecordCount = 0 Then
-            MsgBox("Unable to Update Table, NO MATCHING RECORD FOUND " & TableToUpdate & " FILTER: " & RecordFilter)
+            MsgBox("Unable to Update " & TableToUpdate & " Table, NO MATCHING RECORD FOUND " & TableToUpdate & " FILTER: " & RecordFilter)
             Exit Sub
         End If
         MySelection = " UPDATE " & TableToUpdate & Space(1) & SetCommand & Space(1) & RecordFilter
