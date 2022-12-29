@@ -66,7 +66,7 @@ Public Class MasterCodeBookForm
 
         SavedCallingForm = CallingForm
         ' NOTE ON ENTRY TUNNEL THREE WILL CONTAIN THE SUBCODE IF REFERRING TO A SPECIFIC RECORD
-        If CurrentWorkOrderItemID > -1 Then DefaultVehicleModelTextBox.Text = CurrentVehicleString
+        If CurrentWorkOrderID > -1 Then DefaultVehicleModelTextBox.Text = CurrentVehicleString
         MasterCodeBookDetailsGroup.Location = New Point(50, 85)
         If DefaultVehicleModelTextBox.Text = "Set Default Vehicle" Then
             CurrentVehicleID = -1

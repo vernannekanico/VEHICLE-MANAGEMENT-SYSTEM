@@ -15,7 +15,7 @@ Module MyGlobalDeclarations
     Public CurrentVehicleID As Integer = -1
     Public CurrentCodeVehicleID As Integer = -1
     Public CurrentVehicleString = ""
-    Public CurrentWorkOrderItemID As Integer = -1
+    Public CurrentWorkOrderID As Integer = -1
     Public DataGridViewRowHeight = 22
     Public RecordFinderDbControls As New MyDbControls
     Public Tunnel1 As String = ""

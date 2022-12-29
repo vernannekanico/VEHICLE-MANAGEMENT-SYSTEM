@@ -73,7 +73,7 @@
         Else
             'note: check if there already exists a requisition header for this workorder (unfinished / on preparation requisition for this Concern
             RequisitionDetailsGroupBox.Visible = True
-            WOPartsRequisitionNumberTextBox.Text = "WOR" & CurrentWorkOrderItemID.ToString & "-" & CurrentWorkOrderConcernID.ToString
+            WOPartsRequisitionNumberTextBox.Text = "WOR" & CurrentWorkOrderID.ToString & "-" & CurrentWorkOrderConcernID.ToString
             Dim r As DataRow
             SetParentRecordReference("WorkOrderRequestedPartsHeadersTable", "WorkOrderRequestedPartsHeaderNumber_ShortText12", WOPartsRequisitionNumberTextBox.Text)
             If RecordCount > 0 Then
@@ -776,7 +776,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                        " WorkOrderPartStatusID_LongInteger "
 
         Dim FieldsData = CurrentWorkOrderRequestedPartsHeaderID.ToString & ",  " &
-                                  CurrentWorkOrderItemID.ToString & ",  " &
+                                  CurrentWorkOrderID.ToString & ",  " &
                                   CurrentWorkOrderConcernJobID.ToString & ",  " &
                                   CurrentInformationsHeaderID.ToString & ",  " &
                                   CurrentMasterCodeBookID.ToString & ",  " &
@@ -1080,7 +1080,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                              " WorkOrderRequestedPartsHeaderDate_ShortDate, " &
                              " WorkOrderRequestedPartsHeaderStatusID_Integer "
 
-        Dim FieldsData = CurrentWorkOrderItemID.ToString & ",  " &
+        Dim FieldsData = CurrentWorkOrderID.ToString & ",  " &
                          InQuotes(WOPartsRequisitionNumberTextBox.Text) & ",  " &
                          InQuotes(WOPartsRequisionRevisionTextBox.Text) & ",  " &
                          CurrentPersonelID.ToString & ",  " &

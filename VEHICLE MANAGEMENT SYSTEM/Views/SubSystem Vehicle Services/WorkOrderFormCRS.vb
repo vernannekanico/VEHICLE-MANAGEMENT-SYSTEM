@@ -228,7 +228,7 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
         If Not WorkOrderConcernsDataGridViewInitialized Then
             WorkOrderConcernsDataGridViewInitialized = True
         End If
-        CurrentWorkOrderItemID = WorkOrdersDataGridView.Item("WorkOrderID_AutoNumber", CurrentWorkOrderRow).Value
+        CurrentWorkOrderID = WorkOrdersDataGridView.Item("WorkOrderID_AutoNumber", CurrentWorkOrderRow).Value
         SetVehicleInformations()
         CurrentWorkOrderNumber = WorkOrdersDataGridView.Item("WorkOrderNumber_ShortText12", CurrentWorkOrderRow).Value
         CurrentServicedVehicleID = WorkOrdersDataGridView.Item("ServicedVehicleID_LongInteger", CurrentWorkOrderRow).Value
@@ -258,7 +258,7 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
                 PrintWorkOrderToolStripMenuItem.Visible = False
         End Select
 
-        AllWorkOrderPartsSelectionFilter = " WHERE WorkOrderPartsTable.WorkOrderConcernJobID_LongInteger = " & CurrentWorkOrderItemID
+        AllWorkOrderPartsSelectionFilter = " WHERE WorkOrderPartsTable.WorkOrderConcernJobID_LongInteger = " & CurrentWorkOrderID
         AllWorkOrderPartsDataGridView.Visible = False
         FillAllWorkOrdersPartsDataGridView()
     End Sub
@@ -300,7 +300,7 @@ OriginalExcelRecordTable.description
 , StatusesTable.StatusText_ShortText25
 FROM (((((WorkOrderConcernsTable LEFT JOIN ConcernsTable ON WorkOrderConcernsTable.ConcernID_LongInteger = ConcernsTable.ConcernID_AutoNumber) LEFT JOIN InformationsHeadersTypeTable ON ConcernsTable.InformationsHeadersTypeID_LongInteger = InformationsHeadersTypeTable.InformationsHeadersTypeID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ConcernsTable.MasterCodeBookId_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ConcernAsIsByClientTable ON WorkOrderConcernsTable.ConcernLongTextCodeID_LongInteger = ConcernAsIsByClientTable.LongTextConcernID_Autonumber) LEFT JOIN OriginalExcelRecordTable ON WorkOrderConcernsTable.OriginalID_LongInteger = OriginalExcelRecordTable.OriginalID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderConcernsTable.WorkOrderConcernStatusID_LongInteger = StatusesTable.StatusID_Autonumber
 "
-        WorkOrderConcernsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & Str(CurrentWorkOrderItemID)
+        WorkOrderConcernsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & Str(CurrentWorkOrderID)
 
         MySelection = WorkOrderConcernsFieldsToSelect & WorkOrderConcernsSelectionFilter & WorkOrderConcernsSelectionOrder
         JustExecuteMySelection()
@@ -508,7 +508,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
     Private Sub WorkOrdersDataGridView_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles WorkOrdersDataGridView.DataBindingComplete
         If ShowInTaskbarFlag Then Exit Sub
         If WorkOrdersRecordCount = 0 Then
-            CurrentWorkOrderItemID = -1
+            CurrentWorkOrderID = -1
             FillWorkOrderConcernsDataGridView()
         End If
     End Sub
@@ -585,10 +585,10 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
 
     Private Sub SaveNewWorkOrderConcern()
         If CurrentConcernID > 0 Then
-            WorkOrderConcernsSelectionFilter = " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderItemID.ToString &
+            WorkOrderConcernsSelectionFilter = " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString &
                                             " AND ConcernID_LongInteger = " & CurrentConcernID.ToString
         Else
-            WorkOrderConcernsSelectionFilter = " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderItemID.ToString &
+            WorkOrderConcernsSelectionFilter = " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString &
                                             " AND ConcernLongTextCodeID_LongInteger = " & CurrentLongTextConcernID.ToString
         End If
 
@@ -607,7 +607,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
                              " WorkOrderConcernStatusID_LongInteger, " &
                              " ConcernLongTextCodeID_LongInteger"
 
-        Dim FieldsData = Str(CurrentWorkOrderItemID) & ",  " &
+        Dim FieldsData = Str(CurrentWorkOrderID) & ",  " &
                          Str(1) & ",  " &
                          CurrentConcernID.ToString & ",  " &
                          GetStatusIdFor("WorkOrderConcernsTable").ToString & ",  " &
@@ -621,7 +621,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
     End Sub
     Private Sub AssignThisWorkOrder()
 
-        WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
+        WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
         Select Case CurrentUserGroup
             Case "Customer Relations Specialist"
                 MsgBox("note WorkOrderStatus_Byte was DELETED, BREAK ")
@@ -644,7 +644,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
 
     Private Sub AddToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddWorkOrderToolStripMenuItem.Click
         PurposeOfEntry = "ADD"
-        CurrentWorkOrderItemID = -1
+        CurrentWorkOrderID = -1
         WorkOrderDetailsGroup.Visible = True
     End Sub
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditWorkOrderToolStripMenuItem.Click
@@ -667,7 +667,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
             WorkOrderDetailsGroup.Visible = False
             Exit Sub
         End If
-        MySelection = "DELETE FROM WorkOrdersTable WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
+        MySelection = "DELETE FROM WorkOrdersTable WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
 
         JustExecuteMySelection()
         WorkOrderDetailsGroup.Visible = False
@@ -840,7 +840,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
 
         Else
             ' SHOWN
-            If CurrentWorkOrderItemID > 0 Then
+            If CurrentWorkOrderID > 0 Then
                 LoadWorkOrderDetails()
             End If
             WorkOrdersDataGridView.Enabled = False
@@ -917,7 +917,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
     End Sub
     Private Sub UpdateThisWorkOrderRecord()
 
-        WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
+        WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
         WorkOrderNumberTextBox.Text = GetNewWorkOrderID(Convert.ToDateTime(Trim(ServiceDate_DateTimeTextBox.Text)), Trim(MilageMaskedTextBox.Text))
         WorkOrdersFieldsToSelect = " UPDATE WorkOrdersTable  SET " &
                     "  WorkOrderNumber_ShortText12 = " & InQuotes(WorkOrderNumberTextBox.Text) & ", " &
@@ -947,7 +947,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
     Public Sub RegisterNewWorkOrder()
         AddAWorkOrderRecord()
         Dim DataRowIndex As DataRow = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-        CurrentWorkOrderItemID = DataRowIndex("WorkOrderID_AutoNumber")
+        CurrentWorkOrderID = DataRowIndex("WorkOrderID_AutoNumber")
         WorkOrderConcernsDataGridView.Visible = True
         AddWorkOrderConcernToolStripMenuItem.Visible = True
         RemoveConcernOrJobToolStripMenuItem.Visible = True
@@ -981,7 +981,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
                     GetStatusIdFor("WorkOrdersTable")
 
 
-        CurrentWorkOrderItemID = InsertNewRecord("WorkOrdersTable", FieldsToUpdate, FieldsData)
+        CurrentWorkOrderID = InsertNewRecord("WorkOrdersTable", FieldsToUpdate, FieldsData)
 
         JustExecuteMySelection()
 
@@ -1011,7 +1011,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
             Exit Sub
         End If
 
-        WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
+        WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
         WorkOrdersFieldsToSelect = " UPDATE WorkOrdersTable  SET " &
                     " WorkOrderStatusID_LongInteger =  " & GetStatusIdFor("WorkOrdersTable", "For Analysis")
         MySelection = WorkOrdersFieldsToSelect & WorkOrdersSelectionFilter
@@ -1045,7 +1045,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
     End Sub
 
     Private Sub PrintBillToolStripMenu_Click(sender As Object, e As EventArgs) Handles PrintBillToolStripMenu.Click
-        Tunnel1 = CurrentWorkOrderItemID
+        Tunnel1 = CurrentWorkOrderID
         ShowCalledForm(Me, PrintBillsForm)
     End Sub
 End Class

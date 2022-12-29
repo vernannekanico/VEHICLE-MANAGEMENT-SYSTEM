@@ -736,7 +736,7 @@ WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger IS NOT NULL "
         CurrentlyWorkingOn = "VehicleInformationsTable"
         ProductsPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         For WorkOrderConcernJobsIndex = 0 To RecordCount - 1
-            CurrentWorkOrderItemID = ProductsPartsDataGridView.Item("WorkOrderID_LongInteger", WorkOrderConcernJobsIndex).Value
+            CurrentWorkOrderID = ProductsPartsDataGridView.Item("WorkOrderID_LongInteger", WorkOrderConcernJobsIndex).Value
             WorkOrderConcernJobID = ProductsPartsDataGridView.Item("WorkOrderConcernJobID_AutoNumber", WorkOrderConcernJobsIndex).Value
             CurrentInformationsHeaderID = ProductsPartsDataGridView.Item("InformationsHeaderID_LongInteger", WorkOrderConcernJobsIndex).Value
             SetVehicleInformations()

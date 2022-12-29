@@ -823,7 +823,6 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         PartNumberSpecificationTextBox.SelectAll()
         SaveToolStripMenuItem.Visible = True
     End Sub
-
     Private Sub EditPartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPartNumberToolStripMenuItem.Click
         PartNumberSpecificationTextBox.ReadOnly = False
         PartNumberSpecificationTextBox.SelectAll()
@@ -841,5 +840,4 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         My.Computer.Clipboard.Clear()
         My.Computer.Clipboard.SetText(CodeVehiclePartsSpecificationsDataGridView.Item("PartsSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value)
     End Sub
-
 End Class
