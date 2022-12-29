@@ -887,6 +887,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         PartDescriptionSearchTextBox.Select()
         FiltersGroupBox.Visible = True
         FiltersGroupBox.BringToFront()
+        MsgBox("something is wrong with filtyering")
     End Sub
     Private Sub EditPackingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPackingToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartID"

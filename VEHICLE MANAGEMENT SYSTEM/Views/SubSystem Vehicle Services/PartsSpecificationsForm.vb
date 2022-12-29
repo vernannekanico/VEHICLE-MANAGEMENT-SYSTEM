@@ -549,13 +549,15 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
             End If
         End If
 
-        MySelection = " SELECT * FROM PartsSpecificationsTable WHERE PartSpecifications_ShortText255 = " & InQuotes(PartSpecificationsTextBox.Text)
+        MySelection = " SELECT * FROM PartsSpecificationsTable WHERE PartSpecifications_ShortText255 = " & InQuotes(PartSpecificationsTextBox.Text) &
+            " AND MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
         JustExecuteMySelection()
         If RecordCount > 0 Then
             UpdatePartsSpecifications()
         Else
             InsertNewPartsSpecification()
         End If
+
         FillPartsSpecificationsDataGridView()
     End Sub
     Private Sub UpdatePartsSpecifications()
