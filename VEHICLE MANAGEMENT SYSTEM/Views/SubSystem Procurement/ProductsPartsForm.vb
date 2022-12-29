@@ -25,6 +25,18 @@ Public Class ProductsPartsForm
     Private SavedCallingForm As Form
     Private BackToEditMode = False
     Private CurrentProductSpecificationID = -1
+
+    Private HistoriesFieldsToSelect = ""
+    Private HistoriesSelectionFilter = ""
+    Private HistoriesSelectionOrder = ""
+    Private HistoriesRecordCount As Integer = -1
+    Private CurrentHistoriesRow As Integer = -1
+    Private CurrentWorkOrderPartID = -1
+    Private CurrentPurchaseOrderItemID = -1
+    Private CurrentWorkOrderPartStatus As String
+    Private HistoriesDataGridViewAlreadyFormated = False
+    Private HistoryMode = 1
+
     Public CurrentVehicleID = -1
     Private ForDeletionRecord_YesNo As Boolean
 
@@ -36,6 +48,7 @@ Public Class ProductsPartsForm
         HorizontalCenter(FiltersGroupBox, Me)
         VerticalCenter(ProductDetailsGroup, Me)
         HorizontalCenter(ProductDetailsGroup, Me)
+        '  VerticalCenter(HistoriesGroupBox, Me)
         ProductSpecificationTextBox.Enabled = True
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top +
                 VehicleManagementSystemForm.VehicleManagementMenuStrip.Height
@@ -247,7 +260,8 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         Else
             SelectToolStripMenuItem.Visible = False
         End If
-
+        'DISPLAY HISTORY FOR THIS PRODUCT BASED ON THE MODE
+        If HistoriesGroupBox.Visible = True Then SetFilterAndDisplayRequesteHistory()
     End Sub
     Private Sub FillProductsPartsPackingsDataGridView()
 
@@ -306,6 +320,108 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
 
         CurrentProductsPartsPackingsRow = e.RowIndex
         CurrentProductsPartsPackingID = ProductsPartsPackingsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentProductsPartsPackingsRow).Value
+
+    End Sub
+    Private Sub FillHistoriesDataGridView()
+        '  HistoryMode will be used to indicate what records are to displayed in the HistoriesDataGridView
+        '  where Work Order Items = 1, Purchases = 2, others to develop
+        Select Case HistoryMode
+            Case 1 ' Work Order Items
+                HistoriesSelectionOrder = " ORDER BY  ServiceDate_DateTime"
+                HistoriesFieldsToSelect = "
+SELECT WorkOrderPartsTable.WorkOrderPartID_AutoNumber, WorkOrderPartsTable.ProductPartID_LongInteger, WorkOrderPartsTable.Quantity_Integer, WorkOrderPartsTable.Unit_ShortText3, WorkOrdersTable.WorkOrderNumber_ShortText12, WorkOrdersTable.ServiceDate_DateTime, VehicleModels.VehicleModel
+FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN CodeVehiclesTable ON WorkOrderPartsTable.CodeVehicleID_LongInteger = CodeVehiclesTable.CodeVehicleID_AutoNumber) LEFT JOIN (ServicedVehiclesTable LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber) ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber
+"
+            Case 2 ' Purchases
+                HistoriesSelectionOrder = " ORDER BY  "
+                HistoriesFieldsToSelect = " "
+        End Select
+
+        MySelection = HistoriesFieldsToSelect & HistoriesSelectionFilter & HistoriesSelectionOrder
+
+        JustExecuteMySelection()
+        HistoriesRecordCount = RecordCount
+
+        HistoriesDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        If HistoriesRecordCount = 0 Then
+            MsgBox("No History of usage found")
+            CurrentWorkOrderPartID = -1
+            CurrentPurchaseOrderItemID = 1
+            Exit Sub
+        Else
+            HistoriesGroupBox.Visible = True
+            ProductsPartsMenuStrip.Visible = False
+        End If
+
+        ' HERE AT ROW_ENTER, FillMyStandardConcernsDataGridView is called and MyStandardConcernsbOX IS ALREADY FORMATTED
+        If Not HistoriesDataGridViewAlreadyFormated Then
+            FormatHistoriesDataGridView()
+            SetFormWidthAndGroupBoxLeft(Me,
+                                        ProductsPartsMenuStrip,
+                                        ProductsPartsGroupBox,
+                                        ProductsPartsPackingsGroupBox,
+                                        HistoriesGroupBox,
+                                        HistoriesGroupBox)
+        End If
+
+        SetGroupBoxHeight(15, HistoriesRecordCount, HistoriesGroupBox, HistoriesDataGridView)
+        HistoriesGroupBox.Top = BottomOf(ProductsPartsMenuStrip)
+    End Sub
+    Private Sub FormatHistoriesDataGridView()
+        HistoriesDataGridViewAlreadyFormated = True
+        HistoriesGroupBox.Width = 0
+        For i = 0 To HistoriesDataGridView.Columns.GetColumnCount(0) - 1
+            HistoriesDataGridView.Columns.Item(i).Visible = False
+            Select Case HistoryMode
+                Case 1
+                    Select Case HistoriesDataGridView.Columns.Item(i).Name
+                        Case "Quantity_Integer"
+                            HistoriesDataGridView.Columns.Item(i).HeaderText = "Quantity"
+                            HistoriesDataGridView.Columns.Item(i).Width = 120
+                            HistoriesDataGridView.Columns.Item(i).Visible = True
+                        Case "Unit_ShortText3"
+                            HistoriesDataGridView.Columns.Item(i).HeaderText = "Original unit"
+                            HistoriesDataGridView.Columns.Item(i).Width = 80
+                            HistoriesDataGridView.Columns.Item(i).Visible = True
+                        Case "WorkOrderNumber_ShortText12"
+                            HistoriesDataGridView.Columns.Item(i).HeaderText = "Work Order #"
+                            HistoriesDataGridView.Columns.Item(i).Width = 120
+                            HistoriesDataGridView.Columns.Item(i).Visible = True
+                        Case "ServiceDate_DateTime"
+                            HistoriesDataGridView.Columns.Item(i).HeaderText = "Service Date"
+                            HistoriesDataGridView.Columns.Item(i).Width = 70
+                            HistoriesDataGridView.Columns(i).DefaultCellStyle.Format = "yy-MM-dd"
+                            HistoriesDataGridView.Columns.Item(i).Visible = True
+                        Case "VehicleModel"
+                            HistoriesDataGridView.Columns.Item(i).HeaderText = "Model"
+                            HistoriesDataGridView.Columns.Item(i).Width = 200
+                            HistoriesDataGridView.Columns.Item(i).Visible = True
+                    End Select
+                Case 2
+                    Select Case HistoriesDataGridView.Columns.Item(i).Name
+                    End Select
+            End Select
+            If HistoriesDataGridView.Columns.Item(i).Visible = True Then
+                HistoriesGroupBox.Width = HistoriesGroupBox.Width + HistoriesDataGridView.Columns.Item(i).Width
+            End If
+        Next
+        If HistoriesGroupBox.Width > VehicleManagementSystemForm.Width Then
+            HistoriesGroupBox.Width = VehicleManagementSystemForm.Width - 4
+        Else
+            HorizontalCenter(HistoriesGroupBox, Me)
+        End If
+    End Sub
+    Private Sub HistoriesDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles HistoriesDataGridView.RowEnter
+        If ShowInTaskbarFlag Then Exit Sub
+        If e.RowIndex < 0 Then Exit Sub
+        If HistoriesRecordCount = 0 Then Exit Sub
+
+        CurrentHistoriesRow = e.RowIndex
+        Select Case HistoryMode
+            Case 1
+                CurrentWorkOrderPartID = HistoriesDataGridView.Item("WorkOrderPartID_AutoNumber", CurrentHistoriesRow).Value
+        End Select
+
 
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
@@ -678,6 +794,11 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         ManufacturerPartNoTextBox.Select()
     End Sub
     Private Sub CancelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelToolStripMenuItem.Click
+        If HistoriesGroupBox.Visible = True Then
+            HistoriesGroupBox.Visible = False
+            ProductsPartsMenuStrip.Visible = True
+            Exit Sub
+        End If
         If SavedCallingForm.Name = "InventoriesForm" Then
             Tunnel1 = "Tunnel2IsProductPartID"
             Tunnel2 = CurrentProductPartID
@@ -797,8 +918,35 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         End If
         FillProductsPartsDataGridView()
     End Sub
+    Private Sub MarkAllRecordsAsForDeletionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkAllRecordsAsForDeletionToolStripMenuItem.Click
+        MsgBox("This has been Done")
+        Exit Sub
+        UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = TRUE", "")
+    End Sub
 
-    Private Sub ReIDSelectedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReIDSelectedToolStripMenuItem.Click
+    Private Sub SetToFalseForAllRecordsWithUnitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetToFalseForAllRecordsWithUnitToolStripMenuItem.Click
+        MsgBox("REMOVE THE FIELD WorkOrderItemID_LongInteger FROM THE FILLPARTS")
+        For i = 0 To ProductsPartsRecordCount - 1
+            Dim SetToFalseForDeletion = False
+            Dim CurrentProductPartID2 = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value
+            If IsNotEmpty(ProductsPartsDataGridView.Item("Unit_ShortText3", i).Value) Then SetToFalseForDeletion = True
+            If IsNotEmpty(ProductsPartsDataGridView.Item("WorkOrderItemID_LongInteger", i).Value) Then SetToFalseForDeletion = True
+            If SetToFalseForDeletion Then
+                UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = FALSE", "WHERE ProductsPartID_Autonumber = " & CurrentProductPartID2)
+            End If
+        Next
+    End Sub
+    Private Sub ToggleFilterToForDeletionOnOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleFilterToForDeletionOnOffToolStripMenuItem.Click
+        If ForDeletionRecord_YesNo Then
+            ForDeletionRecord_YesNo = False
+            ProductsPartsSelectionFilter = " WHERE ForDeletionRecord_YesNo = false "
+        Else
+            ForDeletionRecord_YesNo = True
+            ProductsPartsSelectionFilter = " WHERE ForDeletionRecord_YesNo = true "
+        End If
+        FillProductsPartsDataGridView()
+    End Sub
+    Private Sub ReIDSelectedToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ReIDSelectedToolStripMenuItem.Click
         If Not ProductsPartsDataGridView.MultiSelect Then
             ProductsPartsDataGridView.MultiSelect = True
             MsgBox("Multi Select has been enabled, Please Select your records")
@@ -838,35 +986,19 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
             FillProductsPartsDataGridView()
         End If
     End Sub
-
-    Private Sub MarkAllRecordsAsForDeletionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkAllRecordsAsForDeletionToolStripMenuItem.Click
-        MsgBox("This has been Done")
-        Exit Sub
-        UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = TRUE", "")
+    Private Sub WorkOrderPartsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WorkOrderPartsToolStripMenuItem.Click
+        HistoryMode = 1
+        SetFilterAndDisplayRequesteHistory()
     End Sub
 
-    Private Sub SetToFalseForAllRecordsWithUnitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetToFalseForAllRecordsWithUnitToolStripMenuItem.Click
-        MsgBox("REMOVE THE FIELD WorkOrderItemID_LongInteger FROM THE FILLPARTS")
-        For i = 0 To ProductsPartsRecordCount - 1
-            Dim SetToFalseForDeletion = False
-            Dim CurrentProductPartID2 = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value
-            If IsNotEmpty(ProductsPartsDataGridView.Item("Unit_ShortText3", i).Value) Then SetToFalseForDeletion = True
-            If IsNotEmpty(ProductsPartsDataGridView.Item("WorkOrderItemID_LongInteger", i).Value) Then SetToFalseForDeletion = True
-            If SetToFalseForDeletion Then
-                UpdateTable("ProductsPartsTable", " SET ForDeletionRecord_YesNo = FALSE", "WHERE ProductsPartID_Autonumber = " & CurrentProductPartID2)
-            End If
-        Next
-    End Sub
+    Private Sub SetFilterAndDisplayRequesteHistory()
 
-    Private Sub ToggleFilterToForDeletionOnOffToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleFilterToForDeletionOnOffToolStripMenuItem.Click
-        If ForDeletionRecord_YesNo Then
-            ForDeletionRecord_YesNo = False
-            ProductsPartsSelectionFilter = " WHERE ForDeletionRecord_YesNo = false "
-        Else
-            ForDeletionRecord_YesNo = True
-            ProductsPartsSelectionFilter = " WHERE ForDeletionRecord_YesNo = true "
-        End If
-        FillProductsPartsDataGridView()
-
+        Select Case HistoryMode
+            Case 1
+                HistoriesGroupBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value &
+                                     Space(1) & "P/N " & ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
+                HistoriesSelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartID
+        End Select
+        FillHistoriesDataGridView()
     End Sub
 End Class

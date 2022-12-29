@@ -202,7 +202,7 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
         CurrentWorkOrderRequestedPartsHeaderID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderRequestedPartsHeaderID_AutoNumber", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         Dim CurrentWorkOrderRequestedPartsHeaderstatusSequence = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         WorkOrderRequestedPartsHeaderStatus = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
-        CurrentWorkOrderID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        CurrentWorkOrderItemID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         VehicleModelTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("VehicleDescription", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         EditPartDetailsToolStripMenuItem.Visible = False
         DeleteProductToolStripMenuItem.Visible = False
@@ -218,13 +218,13 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
 
 
         '' SETUP CURRENT VEHICLE INFORMATIONS
-        SetVehicleInformations()    'REQUIRES CurrentWorkOrderID
+        SetVehicleInformations()    'REQUIRES CurrentWorkOrderItemID
 
         WorkOrderRequestedPartsSelectionFilter = " WHERE WorkOrderRequestedPartsHeaderID_AutoNumber = " & CurrentWorkOrderRequestedPartsHeaderID.ToString
         FillWorkOrderRequestedPartsDataGridView()
         'FOLLOWING COMMENTED LINES SET RequisitionsItemsSelectionFilter REMAINED = ""
         'SOLUTION: MOVED TO WorkOrderRequestedPartsDataGridView.RowEnter
-        RequisitionsItemsSelectionFilter = " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderID
+        RequisitionsItemsSelectionFilter = " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderItemID
         FillRequisitionsItemsDataGridView()
 
     End Sub

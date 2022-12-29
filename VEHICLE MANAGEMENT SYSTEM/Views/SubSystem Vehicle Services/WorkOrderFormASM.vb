@@ -128,7 +128,7 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
         End If
         WorkOrdersDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If WorkOrdersRecordCount = 0 Then
-            CurrentWorkOrderID = -1
+            CurrentWorkOrderItemID = -1
             PrintWorkOrderDetailsToolStripMenuItem.Visible = False
             AddJobToolStripMenuItem.Visible = False
             RemoveJobToolStripMenuItem.Visible = False
@@ -214,7 +214,7 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
         If WorkOrdersRecordCount = 0 Then Exit Sub
 
         CurrentWorkOrdersRow = e.RowIndex
-        CurrentWorkOrderID = WorkOrdersDataGridView.Item("WorkOrderID_AutoNumber", CurrentWorkOrdersRow).Value
+        CurrentWorkOrderItemID = WorkOrdersDataGridView.Item("WorkOrderID_AutoNumber", CurrentWorkOrdersRow).Value
         SetVehicleInformations()
 
         FillField(CurrentWorkOrderStatus, WorkOrdersDataGridView.Item("WorkOrderStatus", CurrentWorkOrdersRow).Value)
@@ -245,7 +245,7 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
         WorkOrderPartsPerJobGroupBox.Visible = False
         ReceivepartsfromtheCustomerToolStripMenuItem.Visible = False
         ' NOTE THIS IS A CASE OF FROm WORK ORDER TO JOBS
-        WorkOrderConcernsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString
+        WorkOrderConcernsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & CurrentWorkOrderItemID.ToString
         FillWorkOrderConcernsDataGridView()
 
     End Sub
@@ -409,8 +409,8 @@ ConcernAssignedServiceSpecialist &
         AssignJobToolStripMenuItem.Visible = False
 
         If CurrentUserGroup = "Automotive Service Specialist" Then
-            CurrentWorkOrderID = WorkOrderConcernsDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderConcernsRow).Value
-            WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
+            CurrentWorkOrderItemID = WorkOrderConcernsDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderConcernsRow).Value
+            WorkOrdersSelectionFilter = " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
             FillWorkOrdersDataGridView()
             Exit Sub
         End If
@@ -462,9 +462,9 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
 
         Select Case CurrentUserGroup
             Case "Customer Service Specialist"
-                WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & Str(CurrentWorkOrderID)
+                WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & Str(CurrentWorkOrderItemID)
             Case "Assistant Service Manager"
-                WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & Str(CurrentWorkOrderID) &
+                WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernsTable.WorkOrderID_LongInteger = " & Str(CurrentWorkOrderItemID) &
                                                         " And WorkOrderConcernID_LongInteger = " & Str(CurrentWorkOrderConcernID)
             Case "Lead Service Specialist"
                 WorkOrderConcernJobsSelectionFilter = " WHERE WorkOrderConcernID_LongInteger = " & Str(CurrentWorkOrderConcernID)
@@ -718,7 +718,7 @@ FROM ((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderPartsTa
                                 ' SET WORK STATUS  TO "Assigned"	For job fixing, outstanding for ASS
                                 MySelection = " UPDATE WorkOrdersTable SET " &
                                               " WorkOrderStatusID_LongInteger = " & GetStatusIdFor("WorkOrdersTable", "Assigned") &
-                                                 " WHERE  WorkOrderID_AutoNumber = " & CurrentWorkOrderID
+                                                 " WHERE  WorkOrderID_AutoNumber = " & CurrentWorkOrderItemID
                                 JustExecuteMySelection()
                                 AssignThisConcern()
                             Case "CONCERN"
@@ -731,7 +731,7 @@ FROM ((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderPartsTa
                         MySelection = " UPDATE WorkOrdersTable  SET " &
                                     " WorkOrderStatusID_LongInteger = " & GetStatusIdFor(" WorkOrdersTable", "For Assignment") & " , " & ' for lead mechanic to re assign jobs to specialists
                                     " AssignedLeadMechanic_longInteger = " & AssignedPersonnelID &
-                                    " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
+                                    " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
                         JustExecuteMySelection()
                     Case Else
                         MsgBox("BREAK DEBUGGER HERE, UNDETERMINED CALLED FORM")
@@ -750,7 +750,7 @@ FROM ((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderPartsTa
 
     End Sub
     Private Sub SaveNewWorkOrderConcernJob()
-        MySelection = "Select top 1 * from WorkOrderConcernJobsTable where WorkOrderID_LongInteger = " & Str(CurrentWorkOrderID) &
+        MySelection = "Select top 1 * from WorkOrderConcernJobsTable where WorkOrderID_LongInteger = " & Str(CurrentWorkOrderItemID) &
                         " AND WorkOrderConcernID_LongInteger  = " & Str(CurrentWorkOrderConcernID) &
                         " AND InformationsHeaderID_LongInteger = " & Str(CurrentJobID)
         If RecordIsFound() Then
@@ -767,7 +767,7 @@ WorkOrderConcernJobStatusID_LongInteger
 "
 
         Dim FieldsData =
-Str(CurrentWorkOrderID) & ",  " &
+Str(CurrentWorkOrderItemID) & ",  " &
 Str(CurrentWorkOrderConcernID) & ",  " &
 Str(CurrentConcernAssignedServiceSpecialistID) & ",  " &
 Str(CurrentJobID) & ",  " &
@@ -855,7 +855,7 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
             Exit Sub
         End If
 
-        RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderStatusSequence, CurrentWorkOrderID)
+        RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderStatusSequence, CurrentWorkOrderItemID)
 
         CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderConcernsRow).Value
         RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderConcernStatusSequence, CurrentWorkOrderConcernID)
@@ -955,7 +955,7 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
         MySelection = " UPDATE WorkOrdersTable  SET " &
                                     " WorkOrderNumber_ShortText12 = " & WorkOrderNumber &
                                     ", VehicleMilage_Integer = " & Val(MilageMaskedTextBox.Text) &
-                                    " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderID)
+                                    " WHERE WorkOrderID_AutoNumber = " & Str(CurrentWorkOrderItemID)
         JustExecuteMySelection()
         FillWorkOrdersDataGridView()
     End Sub
@@ -1004,7 +1004,7 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
         JustExecuteMySelection()
     End Sub
     Private Sub UpdateWorkOrderStatus()
-        MySelection = " Select * From WorkOrderConcernsTable WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString
+        MySelection = " Select * From WorkOrderConcernsTable WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderItemID.ToString
         JustExecuteMySelection()
 
         'TEMPORARILY USING WorkOrdersDataGridView
@@ -1020,7 +1020,7 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
         'NOW RESTORE WorkOrdersDataGridView TO ITS ORIGINAL CONTENTS
         MySelection = " UPDATE WorkOrdersTable SET " &
                           " WorkOrderStatusID_LongInteger = " & GetStatusIdFor("WorkOrdersTable", "For Billing") &
-                          " WHERE  WorkOrderID_AutoNumber = " & CurrentWorkOrderID
+                          " WHERE  WorkOrderID_AutoNumber = " & CurrentWorkOrderItemID
 
         JustExecuteMySelection()
     End Sub

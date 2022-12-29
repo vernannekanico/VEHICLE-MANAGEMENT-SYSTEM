@@ -487,7 +487,7 @@
     End Sub
     Public Sub SetVehicleInformations()
 
-        SetParentRecordReference("WorkOrdersTable", "WorkOrderID_AutoNumber", CurrentWorkOrderID)
+        SetParentRecordReference("WorkOrdersTable", "WorkOrderID_AutoNumber", CurrentWorkOrderItemID)
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
         Dim xxServicedVehicleID_LongInteger = r("ServicedVehicleID_LongInteger")
         If xxServicedVehicleID_LongInteger < 1 Then Exit Sub

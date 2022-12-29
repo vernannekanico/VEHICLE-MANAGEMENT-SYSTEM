@@ -154,7 +154,7 @@
             'RecordType Number                          1 -header 2-job 3-part of OriginalExcelRecordTable
             CurrentOriginalExcelRecordID = OriginalExcelRecordsDataGridView("OriginalID_AutoNumber", CurrentOriginalExcelRecordRow).Value
 
-            CurrentWorkOrderID = -1
+            MyGlobalDeclarations.CurrentWorkOrderItemID = -1
             CurrentConcernID = -1
             CurrentJobID = -1
             CurrentProductPartID = -1
@@ -203,7 +203,7 @@
                 NewWorkOrderID = NewWorkOrderID.Substring(0, 6) & OriginalExcelRecordsDataGridView("VehicleCode", CurrentOriginalExcelRecordRow).Value & NewWorkOrderID.Substring(6)
             End If
             InsertNewWorkOrder()
-            InsertNewWorkOrderItem() ' CurrentWorkOrderID is now available for others to use 
+            InsertNewWorkOrderItem() ' CurrentWorkOrderItemID is now available for others to use 
             ' THEN UPDATE THIS TABLE AT THE END
 
 
@@ -253,7 +253,7 @@
         MySelection = " UPDATE originalExcelRecordTable SET " &
                      "  WorkOrderNumber_ShortText12 = " & Chr(34) & NewWorkOrderID & Chr(34) & ", " &
                      "  RecordType = " & TypeOfThisRecord.ToString & ", " &
-                     " WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString & ", " &
+                     " WorkOrderID_LongInteger = " & MyGlobalDeclarations.CurrentWorkOrderItemID.ToString & ", " &
                      " ProductPartID_LongInteger = " & CurrentProductPartID.ToString & ", " &
                       " WorkOrderItemID_LongInteger = " & CurrentWorkOrderItemID.ToString & ", " &
                       " SupplierID_LongInteger = " & currentSupplierID.ToString &
@@ -269,7 +269,7 @@
         Dim r As DataRow
         If Not NoRecordFound() Then
             r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-            CurrentWorkOrderID = r("WorkOrderID_AutoNumber")
+            MyGlobalDeclarations.CurrentWorkOrderItemID = r("WorkOrderID_AutoNumber")
             Exit Sub
         End If
 
@@ -326,7 +326,7 @@
 
         If NoRecordFound() Then Dim CurrentWorkOrderID = -1
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-        CurrentWorkOrderID = r("WorkOrderID_AutoNumber")
+        MyGlobalDeclarations.CurrentWorkOrderItemID = r("WorkOrderID_AutoNumber")
     End Sub
 
     Private Sub InsertNewWorkOrderItem()
@@ -341,7 +341,7 @@
 
         MySelection = "SELECT * " &
                       " FROM WorkOrderRelationsTable " &
-                      " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString &
+                      " WHERE WorkOrderID_LongInteger = " & MyGlobalDeclarations.CurrentWorkOrderItemID.ToString &
                       " AND ProductPartID_LongInteger = " & CurrentProductPartID.ToString &
                       " AND Price_Currency = " & tmpPrice_Currency.ToString &
                       " AND SupplierID_LongInteger = " & currentSupplierID.ToString &
@@ -366,7 +366,7 @@
                     ") "
 
         Dim ReplacementData = "(" &
-                    CurrentWorkOrderID.ToString & ", " &      '1   
+                    MyGlobalDeclarations.CurrentWorkOrderItemID.ToString & ", " &      '1   
                     CurrentConcernID.ToString & ", " &        '2
                     CurrentJobID.ToString & ", " &            '3
                     CurrentProductPartID.ToString & ", " &    '4
@@ -382,7 +382,7 @@
 
         MySelection = "SELECT * " &
                       " FROM WorkOrderRelationsTable " &
-                      " WHERE WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString &
+                      " WHERE WorkOrderID_LongInteger = " & MyGlobalDeclarations.CurrentWorkOrderItemID.ToString &
                       " AND ProductPartID_LongInteger = " & CurrentProductPartID.ToString &
                       " AND Qty_Integer = " & tmpQty_Integer.ToString &
                       " AND Price_Currency = " & tmpPrice_Currency.ToString &
@@ -396,7 +396,7 @@
     Private Sub UpdateWorkOrderRelations()
 
         MySelection = " UPDATE WorkOrderRelationsTable SET " &
-                     "  WorkOrderID_LongInteger = " & CurrentWorkOrderID.ToString & ", " &
+                     "  WorkOrderID_LongInteger = " & MyGlobalDeclarations.CurrentWorkOrderItemID.ToString & ", " &
                      " ConcernID_LongInteger = " & CurrentConcernID.ToString & ", " &
                      " InformationsHeaderID_LongInteger = " & CurrentJobID.ToString & ", " &
                      " ProductPartID_LongInteger = " & CurrentProductPartID.ToString & ", " &
@@ -761,7 +761,7 @@
             tmpUnit_ShortText3 = OriginalExcelRecordsDataGridView.Item("UnitName", CurrentOriginalExcelRecordRow).Value
         End If
 
-        Dim tmpWorkOrderItemID_LongInteger = CurrentWorkOrderID
+        Dim tmpWorkOrderItemID_LongInteger = MyGlobalDeclarations.CurrentWorkOrderItemID
         Dim tmpBrandID_LongInteger = -1
         Dim tmpMainSystemCode_ShortText1 = ""
         Dim tmpMasterCodeBookID_LongInteger = -1

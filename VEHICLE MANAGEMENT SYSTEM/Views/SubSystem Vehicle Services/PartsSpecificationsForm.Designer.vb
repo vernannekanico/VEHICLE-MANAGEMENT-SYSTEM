@@ -22,6 +22,7 @@ Partial Class PartsSpecificationsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -45,6 +46,7 @@ Partial Class PartsSpecificationsForm
         Me.AddPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemovePartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.QuantitySpecificationsToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartSpecificationsDetailsGroup = New System.Windows.Forms.GroupBox()
@@ -61,6 +63,7 @@ Partial Class PartsSpecificationsForm
         Me.ServiceToPerformTextBox = New System.Windows.Forms.TextBox()
         Me.PartDescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.PartsSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.SpecificationsContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.VehicleModelTextBox = New System.Windows.Forms.TextBox()
         Me.VehicleLabel = New System.Windows.Forms.Label()
         Me.QuantitySpecificationsDataGridView = New System.Windows.Forms.DataGridView()
@@ -74,9 +77,12 @@ Partial Class PartsSpecificationsForm
         Me.PartNumberSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.JobLabel = New System.Windows.Forms.Label()
+        Me.CopySpecificationToolStripComboBox = New System.Windows.Forms.ToolStripComboBox()
+        Me.SaveSpecificationToolStripComboBox = New System.Windows.Forms.ToolStripComboBox()
         Me.SpecificationsMenuStrip.SuspendLayout()
         Me.PartSpecificationsDetailsGroup.SuspendLayout()
         CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SpecificationsContextMenuStrip.SuspendLayout()
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CodeVehiclePartsSpecificationsGroupBox.SuspendLayout()
@@ -151,7 +157,7 @@ Partial Class PartsSpecificationsForm
         '
         'PartsSpecificationsHeaderMenuToolStripMenuItem
         '
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem})
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem, Me.CopyToolStripMenuItem})
         Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Name = "PartsSpecificationsHeaderMenuToolStripMenuItem"
         Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Size = New System.Drawing.Size(189, 29)
@@ -185,6 +191,12 @@ Partial Class PartsSpecificationsForm
         Me.RemovePartSpecificationsToolStripMenuItem.Name = "RemovePartSpecificationsToolStripMenuItem"
         Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.RemovePartSpecificationsToolStripMenuItem.Text = "Remove"
+        '
+        'CopyToolStripMenuItem
+        '
+        Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
+        Me.CopyToolStripMenuItem.Text = "Copy"
         '
         'QuantitySpecificationsToolStripTextBox
         '
@@ -367,6 +379,7 @@ Partial Class PartsSpecificationsForm
         Me.PartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.PartsSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
         Me.PartsSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.PartsSpecificationsDataGridView.ContextMenuStrip = Me.SpecificationsContextMenuStrip
         Me.PartsSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PartsSpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
         Me.PartsSpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
@@ -380,6 +393,12 @@ Partial Class PartsSpecificationsForm
         Me.PartsSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.PartsSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
         Me.PartsSpecificationsDataGridView.TabIndex = 108
+        '
+        'SpecificationsContextMenuStrip
+        '
+        Me.SpecificationsContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopySpecificationToolStripComboBox, Me.SaveSpecificationToolStripComboBox})
+        Me.SpecificationsContextMenuStrip.Name = "SpecificationsContextMenuStrip"
+        Me.SpecificationsContextMenuStrip.Size = New System.Drawing.Size(182, 58)
         '
         'VehicleModelTextBox
         '
@@ -590,6 +609,18 @@ Partial Class PartsSpecificationsForm
         Me.JobLabel.TabIndex = 120
         Me.JobLabel.Text = "Job:"
         '
+        'CopySpecificationToolStripComboBox
+        '
+        Me.CopySpecificationToolStripComboBox.Name = "CopySpecificationToolStripComboBox"
+        Me.CopySpecificationToolStripComboBox.Size = New System.Drawing.Size(121, 23)
+        Me.CopySpecificationToolStripComboBox.Text = "Copy"
+        '
+        'SaveSpecificationToolStripComboBox
+        '
+        Me.SaveSpecificationToolStripComboBox.Name = "SaveSpecificationToolStripComboBox"
+        Me.SaveSpecificationToolStripComboBox.Size = New System.Drawing.Size(121, 23)
+        Me.SaveSpecificationToolStripComboBox.Text = "Save"
+        '
         'PartsSpecificationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -615,6 +646,7 @@ Partial Class PartsSpecificationsForm
         Me.PartSpecificationsDetailsGroup.ResumeLayout(False)
         Me.PartSpecificationsDetailsGroup.PerformLayout()
         CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SpecificationsContextMenuStrip.ResumeLayout(False)
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CodeVehiclePartsSpecificationsGroupBox.ResumeLayout(False)
@@ -670,4 +702,8 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents PartNumberSpecificationsDataGridView As DataGridView
     Friend WithEvents Label2 As Label
     Friend WithEvents JobLabel As Label
+    Friend WithEvents CopyToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SpecificationsContextMenuStrip As ContextMenuStrip
+    Friend WithEvents CopySpecificationToolStripComboBox As ToolStripComboBox
+    Friend WithEvents SaveSpecificationToolStripComboBox As ToolStripComboBox
 End Class

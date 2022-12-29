@@ -520,6 +520,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SubSystem Vehicle Services\PartsSpecificationsForm.resx">
       <DependentUpon>PartsSpecificationsForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SubSystem Procurement\ProductPartsPackingRelationsForm.resx">
       <DependentUpon>ProductPartsPackingRelationsForm.vb</DependentUpon>

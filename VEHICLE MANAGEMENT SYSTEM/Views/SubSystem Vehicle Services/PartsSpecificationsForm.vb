@@ -771,9 +771,6 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         PartSpecificationsDetailsGroup.Visible = True
     End Sub
 
-    Private Sub EditPartsSpecificationsToolStripMenuItem_Click_2(sender As Object, e As EventArgs) Handles EditPartSpecificationsToolStripMenuItem.Click
-
-    End Sub
 
     Private Sub RemovePartsSpecificationsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles RemovePartSpecificationsToolStripMenuItem.Click
         If MsgBox("Are sure you want unlink this specification ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
@@ -839,4 +836,10 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     Private Sub DeletePartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
     End Sub
+
+    Private Sub CopyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyToolStripMenuItem.Click
+        My.Computer.Clipboard.Clear()
+        My.Computer.Clipboard.SetText(CodeVehiclePartsSpecificationsDataGridView.Item("PartsSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value)
+    End Sub
+
 End Class
