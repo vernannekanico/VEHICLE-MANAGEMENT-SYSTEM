@@ -1499,4 +1499,10 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     Private Sub SearchMasterCodeBookTextBox_Click(sender As Object, e As EventArgs) Handles SearchMasterCodeBookTextBox.Click
         SearchMasterCodeBookTextBox.SelectAll()
     End Sub
+    Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
+        Clipboard.SetText(SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value)
+    End Sub
+    Private Sub PasteDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteDescriptionToolStripTextBox.Click
+        SystemNameTextBox.Text = Clipboard.GetText()
+    End Sub
 End Class

@@ -22,11 +22,14 @@ Partial Class MasterCodeBookForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainSystemCodeDataGridView = New System.Windows.Forms.DataGridView()
         Me.SubSystemCodeDataGridView = New System.Windows.Forms.DataGridView()
+        Me.SubSystemContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CopyDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.SearchGroupBox = New System.Windows.Forms.GroupBox()
         Me.SearchButton = New System.Windows.Forms.Button()
@@ -54,6 +57,7 @@ Partial Class MasterCodeBookForm
         Me.ReturnButton = New System.Windows.Forms.Button()
         Me.ChangeVehicleDefaults = New System.Windows.Forms.Button()
         Me.InformationsHeadersGroupBox = New System.Windows.Forms.GroupBox()
+        Me.SetDefaultVehicleLabel = New System.Windows.Forms.Label()
         Me.CodeInformationsHeaderRelationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductDetailsGroup = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -83,9 +87,11 @@ Partial Class MasterCodeBookForm
         Me.EditInformationDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DefaultVehicleModelTextBox = New System.Windows.Forms.TextBox()
         Me.DefaultVehicleModelRepairRangeTextBox = New System.Windows.Forms.TextBox()
-        Me.SetDefaultVehicleLabel = New System.Windows.Forms.Label()
+        Me.SystemNameContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PasteDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         CType(Me.MainSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SubSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SubSystemContextMenuStrip.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SearchGroupBox.SuspendLayout()
         Me.MasterCodeBookDetailsGroup.SuspendLayout()
@@ -94,6 +100,7 @@ Partial Class MasterCodeBookForm
         CType(Me.CodeInformationsHeaderRelationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ProductDetailsGroup.SuspendLayout()
         Me.MasterCodeBookMenuStrip.SuspendLayout()
+        Me.SystemNameContextMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainSystemCodeDataGridView
@@ -108,13 +115,12 @@ Partial Class MasterCodeBookForm
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.MainSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.MainSystemCodeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.MainSystemCodeDataGridView.Location = New System.Drawing.Point(8, 11)
-        Me.MainSystemCodeDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MainSystemCodeDataGridView.Location = New System.Drawing.Point(6, 9)
         Me.MainSystemCodeDataGridView.Name = "MainSystemCodeDataGridView"
         Me.MainSystemCodeDataGridView.ReadOnly = True
         Me.MainSystemCodeDataGridView.RowHeadersWidth = 51
         Me.MainSystemCodeDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.MainSystemCodeDataGridView.Size = New System.Drawing.Size(767, 363)
+        Me.MainSystemCodeDataGridView.Size = New System.Drawing.Size(575, 295)
         Me.MainSystemCodeDataGridView.TabIndex = 0
         '
         'SubSystemCodeDataGridView
@@ -129,15 +135,28 @@ Partial Class MasterCodeBookForm
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.SubSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.SubSystemCodeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.SubSystemCodeDataGridView.Location = New System.Drawing.Point(0, 417)
-        Me.SubSystemCodeDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SubSystemCodeDataGridView.ContextMenuStrip = Me.SubSystemContextMenuStrip
+        Me.SubSystemCodeDataGridView.Location = New System.Drawing.Point(0, 339)
         Me.SubSystemCodeDataGridView.MultiSelect = False
         Me.SubSystemCodeDataGridView.Name = "SubSystemCodeDataGridView"
         Me.SubSystemCodeDataGridView.ReadOnly = True
         Me.SubSystemCodeDataGridView.RowHeadersWidth = 51
         Me.SubSystemCodeDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.SubSystemCodeDataGridView.Size = New System.Drawing.Size(767, 326)
+        Me.SubSystemCodeDataGridView.Size = New System.Drawing.Size(575, 265)
         Me.SubSystemCodeDataGridView.TabIndex = 1
+        '
+        'SubSystemContextMenuStrip
+        '
+        Me.SubSystemContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopyDescriptionToolStripTextBox})
+        Me.SubSystemContextMenuStrip.Name = "SpecificationsContextMenuStrip"
+        Me.SubSystemContextMenuStrip.Size = New System.Drawing.Size(161, 29)
+        '
+        'CopyDescriptionToolStripTextBox
+        '
+        Me.CopyDescriptionToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CopyDescriptionToolStripTextBox.Name = "CopyDescriptionToolStripTextBox"
+        Me.CopyDescriptionToolStripTextBox.Size = New System.Drawing.Size(100, 23)
+        Me.CopyDescriptionToolStripTextBox.Text = "Copy Description"
         '
         'GroupBox1
         '
@@ -151,11 +170,9 @@ Partial Class MasterCodeBookForm
         Me.GroupBox1.Controls.Add(Me.ReturnButton)
         Me.GroupBox1.Controls.Add(Me.MainSystemCodeDataGridView)
         Me.GroupBox1.Controls.Add(Me.SubSystemCodeDataGridView)
-        Me.GroupBox1.Location = New System.Drawing.Point(16, 92)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 75)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.GroupBox1.Size = New System.Drawing.Size(836, 815)
+        Me.GroupBox1.Size = New System.Drawing.Size(627, 662)
         Me.GroupBox1.TabIndex = 3
         Me.GroupBox1.TabStop = False
         '
@@ -164,31 +181,27 @@ Partial Class MasterCodeBookForm
         Me.SearchGroupBox.Controls.Add(Me.SearchButton)
         Me.SearchGroupBox.Controls.Add(Me.SearchMasterCodeBookTextBox)
         Me.SearchGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SearchGroupBox.Location = New System.Drawing.Point(121, 391)
-        Me.SearchGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SearchGroupBox.Location = New System.Drawing.Point(91, 400)
         Me.SearchGroupBox.Name = "SearchGroupBox"
-        Me.SearchGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.SearchGroupBox.Size = New System.Drawing.Size(527, 143)
+        Me.SearchGroupBox.Size = New System.Drawing.Size(395, 116)
         Me.SearchGroupBox.TabIndex = 86
         Me.SearchGroupBox.TabStop = False
         Me.SearchGroupBox.Visible = False
         '
         'SearchButton
         '
-        Me.SearchButton.Location = New System.Drawing.Point(17, 85)
-        Me.SearchButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SearchButton.Location = New System.Drawing.Point(13, 69)
         Me.SearchButton.Name = "SearchButton"
-        Me.SearchButton.Size = New System.Drawing.Size(477, 44)
+        Me.SearchButton.Size = New System.Drawing.Size(358, 36)
         Me.SearchButton.TabIndex = 4
         Me.SearchButton.Text = "SEARCH"
         Me.SearchButton.UseVisualStyleBackColor = True
         '
         'SearchMasterCodeBookTextBox
         '
-        Me.SearchMasterCodeBookTextBox.Location = New System.Drawing.Point(17, 31)
-        Me.SearchMasterCodeBookTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SearchMasterCodeBookTextBox.Location = New System.Drawing.Point(13, 25)
         Me.SearchMasterCodeBookTextBox.Name = "SearchMasterCodeBookTextBox"
-        Me.SearchMasterCodeBookTextBox.Size = New System.Drawing.Size(476, 34)
+        Me.SearchMasterCodeBookTextBox.Size = New System.Drawing.Size(358, 29)
         Me.SearchMasterCodeBookTextBox.TabIndex = 3
         '
         'MasterCodeBookDetailsGroup
@@ -204,11 +217,9 @@ Partial Class MasterCodeBookForm
         Me.MasterCodeBookDetailsGroup.Controls.Add(Me.SystemNameTextBox)
         Me.MasterCodeBookDetailsGroup.Controls.Add(Me.ParentSystemCodeTextBox)
         Me.MasterCodeBookDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MasterCodeBookDetailsGroup.Location = New System.Drawing.Point(676, 122)
-        Me.MasterCodeBookDetailsGroup.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MasterCodeBookDetailsGroup.Location = New System.Drawing.Point(507, 99)
         Me.MasterCodeBookDetailsGroup.Name = "MasterCodeBookDetailsGroup"
-        Me.MasterCodeBookDetailsGroup.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.MasterCodeBookDetailsGroup.Size = New System.Drawing.Size(968, 308)
+        Me.MasterCodeBookDetailsGroup.Size = New System.Drawing.Size(726, 250)
         Me.MasterCodeBookDetailsGroup.TabIndex = 80
         Me.MasterCodeBookDetailsGroup.TabStop = False
         Me.MasterCodeBookDetailsGroup.Visible = False
@@ -218,10 +229,9 @@ Partial Class MasterCodeBookForm
         Me.ChildSystemNameLabel.AutoSize = True
         Me.ChildSystemNameLabel.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.ChildSystemNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ChildSystemNameLabel.Location = New System.Drawing.Point(344, 133)
-        Me.ChildSystemNameLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.ChildSystemNameLabel.Location = New System.Drawing.Point(258, 108)
         Me.ChildSystemNameLabel.Name = "ChildSystemNameLabel"
-        Me.ChildSystemNameLabel.Size = New System.Drawing.Size(253, 31)
+        Me.ChildSystemNameLabel.Size = New System.Drawing.Size(200, 25)
         Me.ChildSystemNameLabel.TabIndex = 18
         Me.ChildSystemNameLabel.Text = "Child System Name"
         '
@@ -229,11 +239,10 @@ Partial Class MasterCodeBookForm
         '
         Me.SubSystemLabel.AutoSize = True
         Me.SubSystemLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SubSystemLabel.Location = New System.Drawing.Point(12, 133)
-        Me.SubSystemLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.SubSystemLabel.Location = New System.Drawing.Point(9, 108)
         Me.SubSystemLabel.Name = "SubSystemLabel"
         Me.SubSystemLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.SubSystemLabel.Size = New System.Drawing.Size(175, 31)
+        Me.SubSystemLabel.Size = New System.Drawing.Size(139, 25)
         Me.SubSystemLabel.TabIndex = 17
         Me.SubSystemLabel.Text = "Sub System :"
         '
@@ -242,20 +251,18 @@ Partial Class MasterCodeBookForm
         Me.SubSystemPrefixLabel.AutoSize = True
         Me.SubSystemPrefixLabel.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.SubSystemPrefixLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SubSystemPrefixLabel.Location = New System.Drawing.Point(17, 188)
-        Me.SubSystemPrefixLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.SubSystemPrefixLabel.Location = New System.Drawing.Point(13, 153)
         Me.SubSystemPrefixLabel.Name = "SubSystemPrefixLabel"
-        Me.SubSystemPrefixLabel.Size = New System.Drawing.Size(53, 31)
+        Me.SubSystemPrefixLabel.Size = New System.Drawing.Size(43, 25)
         Me.SubSystemPrefixLabel.TabIndex = 16
         Me.SubSystemPrefixLabel.Text = "00-"
         '
         'ChildSystemCodeTextBox
         '
         Me.ChildSystemCodeTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ChildSystemCodeTextBox.Location = New System.Drawing.Point(351, 177)
-        Me.ChildSystemCodeTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ChildSystemCodeTextBox.Location = New System.Drawing.Point(263, 144)
         Me.ChildSystemCodeTextBox.Name = "ChildSystemCodeTextBox"
-        Me.ChildSystemCodeTextBox.Size = New System.Drawing.Size(193, 37)
+        Me.ChildSystemCodeTextBox.Size = New System.Drawing.Size(146, 31)
         Me.ChildSystemCodeTextBox.TabIndex = 15
         Me.ChildSystemCodeTextBox.Text = "Next SubCode"
         '
@@ -264,10 +271,9 @@ Partial Class MasterCodeBookForm
         Me.ParentSystemNameLabel.AutoSize = True
         Me.ParentSystemNameLabel.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.ParentSystemNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ParentSystemNameLabel.Location = New System.Drawing.Point(344, 20)
-        Me.ParentSystemNameLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.ParentSystemNameLabel.Location = New System.Drawing.Point(258, 16)
         Me.ParentSystemNameLabel.Name = "ParentSystemNameLabel"
-        Me.ParentSystemNameLabel.Size = New System.Drawing.Size(271, 31)
+        Me.ParentSystemNameLabel.Size = New System.Drawing.Size(214, 25)
         Me.ParentSystemNameLabel.TabIndex = 14
         Me.ParentSystemNameLabel.Text = "Parent System Name"
         '
@@ -275,10 +281,9 @@ Partial Class MasterCodeBookForm
         '
         Me.MainSystemLabel.AutoSize = True
         Me.MainSystemLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainSystemLabel.Location = New System.Drawing.Point(12, 20)
-        Me.MainSystemLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.MainSystemLabel.Location = New System.Drawing.Point(9, 16)
         Me.MainSystemLabel.Name = "MainSystemLabel"
-        Me.MainSystemLabel.Size = New System.Drawing.Size(185, 31)
+        Me.MainSystemLabel.Size = New System.Drawing.Size(148, 25)
         Me.MainSystemLabel.TabIndex = 13
         Me.MainSystemLabel.Text = "Main System :"
         '
@@ -287,10 +292,9 @@ Partial Class MasterCodeBookForm
         Me.MainSystemPrefixLabel.AutoSize = True
         Me.MainSystemPrefixLabel.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.MainSystemPrefixLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MainSystemPrefixLabel.Location = New System.Drawing.Point(17, 75)
-        Me.MainSystemPrefixLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.MainSystemPrefixLabel.Location = New System.Drawing.Point(13, 61)
         Me.MainSystemPrefixLabel.Name = "MainSystemPrefixLabel"
-        Me.MainSystemPrefixLabel.Size = New System.Drawing.Size(53, 31)
+        Me.MainSystemPrefixLabel.Size = New System.Drawing.Size(43, 25)
         Me.MainSystemPrefixLabel.TabIndex = 11
         Me.MainSystemPrefixLabel.Text = "00-"
         '
@@ -299,30 +303,28 @@ Partial Class MasterCodeBookForm
         Me.SystemNameTextBox.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.SystemNameTextBox.ContextMenuStrip = Me.SystemNameContextMenuStrip
         Me.SystemNameTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SystemNameTextBox.Location = New System.Drawing.Point(24, 251)
-        Me.SystemNameTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SystemNameTextBox.Location = New System.Drawing.Point(18, 204)
         Me.SystemNameTextBox.Name = "SystemNameTextBox"
-        Me.SystemNameTextBox.Size = New System.Drawing.Size(791, 37)
+        Me.SystemNameTextBox.Size = New System.Drawing.Size(594, 31)
         Me.SystemNameTextBox.TabIndex = 9
         Me.SystemNameTextBox.Text = "new sub system name"
         '
         'ParentSystemCodeTextBox
         '
         Me.ParentSystemCodeTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ParentSystemCodeTextBox.Location = New System.Drawing.Point(351, 68)
-        Me.ParentSystemCodeTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ParentSystemCodeTextBox.Location = New System.Drawing.Point(263, 55)
         Me.ParentSystemCodeTextBox.Name = "ParentSystemCodeTextBox"
-        Me.ParentSystemCodeTextBox.Size = New System.Drawing.Size(193, 37)
+        Me.ParentSystemCodeTextBox.Size = New System.Drawing.Size(146, 31)
         Me.ParentSystemCodeTextBox.TabIndex = 8
         Me.ParentSystemCodeTextBox.Text = "Next SubCode"
         '
         'IncludeGrandChildrenButton
         '
-        Me.IncludeGrandChildrenButton.Location = New System.Drawing.Point(219, 382)
-        Me.IncludeGrandChildrenButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.IncludeGrandChildrenButton.Location = New System.Drawing.Point(164, 310)
         Me.IncludeGrandChildrenButton.Name = "IncludeGrandChildrenButton"
-        Me.IncludeGrandChildrenButton.Size = New System.Drawing.Size(345, 28)
+        Me.IncludeGrandChildrenButton.Size = New System.Drawing.Size(259, 23)
         Me.IncludeGrandChildrenButton.TabIndex = 87
         Me.IncludeGrandChildrenButton.Text = "INCLUDE GRANDCHILDREN"
         Me.IncludeGrandChildrenButton.UseVisualStyleBackColor = True
@@ -335,69 +337,61 @@ Partial Class MasterCodeBookForm
         Me.RenumberGroupBox.Controls.Add(Me.Label4)
         Me.RenumberGroupBox.Controls.Add(Me.Label3)
         Me.RenumberGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RenumberGroupBox.Location = New System.Drawing.Point(92, 190)
-        Me.RenumberGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.RenumberGroupBox.Location = New System.Drawing.Point(69, 154)
         Me.RenumberGroupBox.Name = "RenumberGroupBox"
-        Me.RenumberGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.RenumberGroupBox.Size = New System.Drawing.Size(527, 143)
+        Me.RenumberGroupBox.Size = New System.Drawing.Size(395, 116)
         Me.RenumberGroupBox.TabIndex = 85
         Me.RenumberGroupBox.TabStop = False
         Me.RenumberGroupBox.Visible = False
         '
         'GoRenumberButton
         '
-        Me.GoRenumberButton.Location = New System.Drawing.Point(445, 12)
-        Me.GoRenumberButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GoRenumberButton.Location = New System.Drawing.Point(334, 10)
         Me.GoRenumberButton.Name = "GoRenumberButton"
-        Me.GoRenumberButton.Size = New System.Drawing.Size(49, 117)
+        Me.GoRenumberButton.Size = New System.Drawing.Size(37, 95)
         Me.GoRenumberButton.TabIndex = 4
         Me.GoRenumberButton.Text = "GO"
         Me.GoRenumberButton.UseVisualStyleBackColor = True
         '
         'NewNumberTextBox
         '
-        Me.NewNumberTextBox.Location = New System.Drawing.Point(173, 73)
-        Me.NewNumberTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NewNumberTextBox.Location = New System.Drawing.Point(130, 59)
         Me.NewNumberTextBox.Name = "NewNumberTextBox"
-        Me.NewNumberTextBox.Size = New System.Drawing.Size(240, 34)
+        Me.NewNumberTextBox.Size = New System.Drawing.Size(181, 29)
         Me.NewNumberTextBox.TabIndex = 3
         '
         'OldNumberTextBox
         '
-        Me.OldNumberTextBox.Location = New System.Drawing.Point(173, 27)
-        Me.OldNumberTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.OldNumberTextBox.Location = New System.Drawing.Point(130, 22)
         Me.OldNumberTextBox.Name = "OldNumberTextBox"
         Me.OldNumberTextBox.ReadOnly = True
-        Me.OldNumberTextBox.Size = New System.Drawing.Size(240, 34)
+        Me.OldNumberTextBox.Size = New System.Drawing.Size(181, 29)
         Me.OldNumberTextBox.TabIndex = 2
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(24, 30)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Location = New System.Drawing.Point(18, 24)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(141, 29)
+        Me.Label4.Size = New System.Drawing.Size(114, 24)
         Me.Label4.TabIndex = 1
         Me.Label4.Text = "Renumber "
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(107, 76)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Location = New System.Drawing.Point(80, 62)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(45, 29)
+        Me.Label3.Size = New System.Drawing.Size(35, 24)
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "To"
         '
         'ChildrenButton
         '
         Me.ChildrenButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ChildrenButton.Location = New System.Drawing.Point(791, 495)
-        Me.ChildrenButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ChildrenButton.Location = New System.Drawing.Point(593, 402)
         Me.ChildrenButton.Name = "ChildrenButton"
-        Me.ChildrenButton.Size = New System.Drawing.Size(37, 28)
+        Me.ChildrenButton.Size = New System.Drawing.Size(28, 23)
         Me.ChildrenButton.TabIndex = 11
         Me.ChildrenButton.Text = "↓"
         Me.ChildrenButton.UseVisualStyleBackColor = True
@@ -405,30 +399,27 @@ Partial Class MasterCodeBookForm
         'UpButton
         '
         Me.UpButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.UpButton.Location = New System.Drawing.Point(791, 459)
-        Me.UpButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.UpButton.Location = New System.Drawing.Point(593, 373)
         Me.UpButton.Name = "UpButton"
-        Me.UpButton.Size = New System.Drawing.Size(37, 28)
+        Me.UpButton.Size = New System.Drawing.Size(28, 23)
         Me.UpButton.TabIndex = 10
         Me.UpButton.Text = "↑"
         Me.UpButton.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(-340, 560)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button2.Location = New System.Drawing.Point(-255, 455)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(176, 28)
+        Me.Button2.Size = New System.Drawing.Size(132, 23)
         Me.Button2.TabIndex = 5
         Me.Button2.Text = "<--"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'ReturnButton
         '
-        Me.ReturnButton.Location = New System.Drawing.Point(-537, 560)
-        Me.ReturnButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ReturnButton.Location = New System.Drawing.Point(-403, 455)
         Me.ReturnButton.Name = "ReturnButton"
-        Me.ReturnButton.Size = New System.Drawing.Size(176, 28)
+        Me.ReturnButton.Size = New System.Drawing.Size(132, 23)
         Me.ReturnButton.TabIndex = 2
         Me.ReturnButton.Text = "<--"
         Me.ReturnButton.UseVisualStyleBackColor = True
@@ -436,10 +427,9 @@ Partial Class MasterCodeBookForm
         'ChangeVehicleDefaults
         '
         Me.ChangeVehicleDefaults.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ChangeVehicleDefaults.Location = New System.Drawing.Point(16, 47)
-        Me.ChangeVehicleDefaults.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ChangeVehicleDefaults.Location = New System.Drawing.Point(12, 38)
         Me.ChangeVehicleDefaults.Name = "ChangeVehicleDefaults"
-        Me.ChangeVehicleDefaults.Size = New System.Drawing.Size(167, 37)
+        Me.ChangeVehicleDefaults.Size = New System.Drawing.Size(125, 30)
         Me.ChangeVehicleDefaults.TabIndex = 20
         Me.ChangeVehicleDefaults.Text = "Change vehicle"
         Me.ChangeVehicleDefaults.UseVisualStyleBackColor = True
@@ -450,36 +440,44 @@ Partial Class MasterCodeBookForm
         Me.InformationsHeadersGroupBox.Controls.Add(Me.CodeInformationsHeaderRelationsDataGridView)
         Me.InformationsHeadersGroupBox.Controls.Add(Me.ProductDetailsGroup)
         Me.InformationsHeadersGroupBox.Controls.Add(Me.InfoDetailsTextBox)
-        Me.InformationsHeadersGroupBox.Location = New System.Drawing.Point(905, 92)
-        Me.InformationsHeadersGroupBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.InformationsHeadersGroupBox.Location = New System.Drawing.Point(679, 75)
         Me.InformationsHeadersGroupBox.Name = "InformationsHeadersGroupBox"
-        Me.InformationsHeadersGroupBox.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.InformationsHeadersGroupBox.Size = New System.Drawing.Size(1064, 865)
+        Me.InformationsHeadersGroupBox.Size = New System.Drawing.Size(798, 703)
         Me.InformationsHeadersGroupBox.TabIndex = 4
         Me.InformationsHeadersGroupBox.TabStop = False
+        '
+        'SetDefaultVehicleLabel
+        '
+        Me.SetDefaultVehicleLabel.AutoSize = True
+        Me.SetDefaultVehicleLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SetDefaultVehicleLabel.Location = New System.Drawing.Point(134, 428)
+        Me.SetDefaultVehicleLabel.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.SetDefaultVehicleLabel.Name = "SetDefaultVehicleLabel"
+        Me.SetDefaultVehicleLabel.Size = New System.Drawing.Size(412, 24)
+        Me.SetDefaultVehicleLabel.TabIndex = 85
+        Me.SetDefaultVehicleLabel.Text = "Set Default Vehicle to ENABLE this window"
         '
         'CodeInformationsHeaderRelationsDataGridView
         '
         Me.CodeInformationsHeaderRelationsDataGridView.AllowUserToResizeColumns = False
         Me.CodeInformationsHeaderRelationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.CodeInformationsHeaderRelationsDataGridView.Location = New System.Drawing.Point(29, 11)
-        Me.CodeInformationsHeaderRelationsDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CodeInformationsHeaderRelationsDataGridView.Location = New System.Drawing.Point(22, 9)
         Me.CodeInformationsHeaderRelationsDataGridView.MultiSelect = False
         Me.CodeInformationsHeaderRelationsDataGridView.Name = "CodeInformationsHeaderRelationsDataGridView"
         Me.CodeInformationsHeaderRelationsDataGridView.ReadOnly = True
         Me.CodeInformationsHeaderRelationsDataGridView.RowHeadersWidth = 51
         Me.CodeInformationsHeaderRelationsDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.CodeInformationsHeaderRelationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.CodeInformationsHeaderRelationsDataGridView.Size = New System.Drawing.Size(761, 308)
+        Me.CodeInformationsHeaderRelationsDataGridView.Size = New System.Drawing.Size(571, 250)
         Me.CodeInformationsHeaderRelationsDataGridView.TabIndex = 83
         '
         'ProductDetailsGroup
@@ -488,11 +486,9 @@ Partial Class MasterCodeBookForm
         Me.ProductDetailsGroup.Controls.Add(Me.Label2)
         Me.ProductDetailsGroup.Controls.Add(Me.TextBox1)
         Me.ProductDetailsGroup.Controls.Add(Me.TextBox2)
-        Me.ProductDetailsGroup.Location = New System.Drawing.Point(45, 368)
-        Me.ProductDetailsGroup.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ProductDetailsGroup.Location = New System.Drawing.Point(34, 299)
         Me.ProductDetailsGroup.Name = "ProductDetailsGroup"
-        Me.ProductDetailsGroup.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.ProductDetailsGroup.Size = New System.Drawing.Size(968, 155)
+        Me.ProductDetailsGroup.Size = New System.Drawing.Size(726, 126)
         Me.ProductDetailsGroup.TabIndex = 81
         Me.ProductDetailsGroup.TabStop = False
         Me.ProductDetailsGroup.Visible = False
@@ -501,10 +497,9 @@ Partial Class MasterCodeBookForm
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(8, 92)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Location = New System.Drawing.Point(6, 75)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(125, 31)
+        Me.Label1.Size = New System.Drawing.Size(100, 25)
         Me.Label1.TabIndex = 12
         Me.Label1.Text = "SYSTEM"
         '
@@ -512,10 +507,9 @@ Partial Class MasterCodeBookForm
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(17, 31)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Location = New System.Drawing.Point(13, 25)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(79, 31)
+        Me.Label2.Size = New System.Drawing.Size(63, 25)
         Me.Label2.TabIndex = 11
         Me.Label2.Text = "Code"
         '
@@ -525,42 +519,38 @@ Partial Class MasterCodeBookForm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(172, 91)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox1.Location = New System.Drawing.Point(129, 74)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(572, 37)
+        Me.TextBox1.Size = New System.Drawing.Size(430, 31)
         Me.TextBox1.TabIndex = 9
         '
         'TextBox2
         '
         Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(172, 23)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox2.Location = New System.Drawing.Point(129, 19)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(132, 37)
+        Me.TextBox2.Size = New System.Drawing.Size(100, 31)
         Me.TextBox2.TabIndex = 8
         '
         'InfoDetailsTextBox
         '
         Me.InfoDetailsTextBox.AcceptsReturn = True
         Me.InfoDetailsTextBox.AcceptsTab = True
-        Me.InfoDetailsTextBox.Location = New System.Drawing.Point(29, 337)
-        Me.InfoDetailsTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.InfoDetailsTextBox.Location = New System.Drawing.Point(22, 274)
         Me.InfoDetailsTextBox.Multiline = True
         Me.InfoDetailsTextBox.Name = "InfoDetailsTextBox"
         Me.InfoDetailsTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.InfoDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.InfoDetailsTextBox.Size = New System.Drawing.Size(760, 405)
+        Me.InfoDetailsTextBox.Size = New System.Drawing.Size(571, 330)
         Me.InfoDetailsTextBox.TabIndex = 84
         Me.InfoDetailsTextBox.Text = "Information Header Details"
         '
         'Button5
         '
         Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button5.Location = New System.Drawing.Point(0, -5)
-        Me.Button5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button5.Location = New System.Drawing.Point(0, -4)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(40, 41)
+        Me.Button5.Size = New System.Drawing.Size(30, 33)
         Me.Button5.TabIndex = 9
         Me.Button5.Text = "<--"
         Me.Button5.UseVisualStyleBackColor = True
@@ -572,15 +562,15 @@ Partial Class MasterCodeBookForm
         Me.MasterCodeBookMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartToolStripLabel, Me.SelectMasterCodeToolStripMenuItem, Me.AddMasterCodeToolStripMenuItem, Me.EditTMasterCodeToolStripMenuItem, Me.DeleteMasterCodeToolStripMenuItem, Me.SaveMasterCodeToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.SearchToolStripMenuItem, Me.RenumberToolStripMenuItem, Me.CodeInformationsHeaderRelationsToolStripLabel, Me.EditCodeInformationsHeaderRelationsToolStripMenuItem, Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem, Me.AddCodeInformationsHeaderRelationsToolStripMenuItem, Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem, Me.InformationDetailsToolStripLabel})
         Me.MasterCodeBookMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MasterCodeBookMenuStrip.Name = "MasterCodeBookMenuStrip"
-        Me.MasterCodeBookMenuStrip.Padding = New System.Windows.Forms.Padding(13, 4, 0, 4)
-        Me.MasterCodeBookMenuStrip.Size = New System.Drawing.Size(1713, 40)
+        Me.MasterCodeBookMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
+        Me.MasterCodeBookMenuStrip.Size = New System.Drawing.Size(1031, 31)
         Me.MasterCodeBookMenuStrip.TabIndex = 79
         Me.MasterCodeBookMenuStrip.Text = "MenuStrip"
         '
         'CancelToolStripMenuItem
         '
         Me.CancelToolStripMenuItem.Name = "CancelToolStripMenuItem"
-        Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(48, 32)
+        Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(40, 25)
         Me.CancelToolStripMenuItem.Text = "◄ "
         '
         'PartToolStripLabel
@@ -588,105 +578,105 @@ Partial Class MasterCodeBookForm
         Me.PartToolStripLabel.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.PartToolStripLabel.Font = New System.Drawing.Font("Arial", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PartToolStripLabel.Name = "PartToolStripLabel"
-        Me.PartToolStripLabel.Size = New System.Drawing.Size(63, 29)
+        Me.PartToolStripLabel.Size = New System.Drawing.Size(52, 22)
         Me.PartToolStripLabel.Text = "PART"
         '
         'SelectMasterCodeToolStripMenuItem
         '
         Me.SelectMasterCodeToolStripMenuItem.Name = "SelectMasterCodeToolStripMenuItem"
-        Me.SelectMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(78, 32)
+        Me.SelectMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
         Me.SelectMasterCodeToolStripMenuItem.Text = "Select"
         '
         'AddMasterCodeToolStripMenuItem
         '
         Me.AddMasterCodeToolStripMenuItem.Name = "AddMasterCodeToolStripMenuItem"
-        Me.AddMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(63, 32)
+        Me.AddMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
         Me.AddMasterCodeToolStripMenuItem.Text = "Add"
         '
         'EditTMasterCodeToolStripMenuItem
         '
         Me.EditTMasterCodeToolStripMenuItem.Name = "EditTMasterCodeToolStripMenuItem"
-        Me.EditTMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(60, 32)
+        Me.EditTMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
         Me.EditTMasterCodeToolStripMenuItem.Text = "Edit"
         '
         'DeleteMasterCodeToolStripMenuItem
         '
         Me.DeleteMasterCodeToolStripMenuItem.Name = "DeleteMasterCodeToolStripMenuItem"
-        Me.DeleteMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(82, 32)
+        Me.DeleteMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(66, 25)
         Me.DeleteMasterCodeToolStripMenuItem.Text = "Delete"
         '
         'SaveMasterCodeToolStripMenuItem
         '
         Me.SaveMasterCodeToolStripMenuItem.Name = "SaveMasterCodeToolStripMenuItem"
-        Me.SaveMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(67, 32)
+        Me.SaveMasterCodeToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveMasterCodeToolStripMenuItem.Text = "Save"
         '
         'SpecificationsToolStripMenuItem
         '
         Me.SpecificationsToolStripMenuItem.Name = "SpecificationsToolStripMenuItem"
-        Me.SpecificationsToolStripMenuItem.Size = New System.Drawing.Size(146, 32)
+        Me.SpecificationsToolStripMenuItem.Size = New System.Drawing.Size(117, 25)
         Me.SpecificationsToolStripMenuItem.Text = "Specifications"
         '
         'SearchToolStripMenuItem
         '
         Me.SearchToolStripMenuItem.Name = "SearchToolStripMenuItem"
-        Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(84, 32)
+        Me.SearchToolStripMenuItem.Size = New System.Drawing.Size(69, 25)
         Me.SearchToolStripMenuItem.Text = "Search"
         '
         'RenumberToolStripMenuItem
         '
         Me.RenumberToolStripMenuItem.Name = "RenumberToolStripMenuItem"
-        Me.RenumberToolStripMenuItem.Size = New System.Drawing.Size(115, 32)
+        Me.RenumberToolStripMenuItem.Size = New System.Drawing.Size(95, 25)
         Me.RenumberToolStripMenuItem.Text = "Renumber"
         '
         'CodeInformationsHeaderRelationsToolStripLabel
         '
         Me.CodeInformationsHeaderRelationsToolStripLabel.Font = New System.Drawing.Font("Arial", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CodeInformationsHeaderRelationsToolStripLabel.Name = "CodeInformationsHeaderRelationsToolStripLabel"
-        Me.CodeInformationsHeaderRelationsToolStripLabel.Size = New System.Drawing.Size(174, 29)
+        Me.CodeInformationsHeaderRelationsToolStripLabel.Size = New System.Drawing.Size(141, 22)
         Me.CodeInformationsHeaderRelationsToolStripLabel.Text = "INFO HEADERS :"
         '
         'EditCodeInformationsHeaderRelationsToolStripMenuItem
         '
         Me.EditCodeInformationsHeaderRelationsToolStripMenuItem.Name = "EditCodeInformationsHeaderRelationsToolStripMenuItem"
-        Me.EditCodeInformationsHeaderRelationsToolStripMenuItem.Size = New System.Drawing.Size(60, 32)
+        Me.EditCodeInformationsHeaderRelationsToolStripMenuItem.Size = New System.Drawing.Size(48, 25)
         Me.EditCodeInformationsHeaderRelationsToolStripMenuItem.Text = "Edit"
         '
         'SelectCodeInformationsHeaderRelationsToolStripMenuItem
         '
         Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem.Name = "SelectCodeInformationsHeaderRelationsToolStripMenuItem"
-        Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem.Size = New System.Drawing.Size(78, 32)
+        Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
         Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem.Text = "Select"
         '
         'AddCodeInformationsHeaderRelationsToolStripMenuItem
         '
         Me.AddCodeInformationsHeaderRelationsToolStripMenuItem.Name = "AddCodeInformationsHeaderRelationsToolStripMenuItem"
-        Me.AddCodeInformationsHeaderRelationsToolStripMenuItem.Size = New System.Drawing.Size(63, 32)
+        Me.AddCodeInformationsHeaderRelationsToolStripMenuItem.Size = New System.Drawing.Size(50, 25)
         Me.AddCodeInformationsHeaderRelationsToolStripMenuItem.Text = "Add"
         '
         'RemoveCodeInformationsHeaderRelationToolStripMenuItem
         '
         Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem.Name = "RemoveCodeInformationsHeaderRelationToolStripMenuItem"
-        Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem.Size = New System.Drawing.Size(96, 32)
+        Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem.Size = New System.Drawing.Size(79, 25)
         Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem.Text = "Remove"
         '
         'InformationDetailsToolStripLabel
         '
         Me.InformationDetailsToolStripLabel.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CreateInformationDetailsToolStripMenuItem, Me.EditInformationDetailsToolStripMenuItem})
         Me.InformationDetailsToolStripLabel.Name = "InformationDetailsToolStripLabel"
-        Me.InformationDetailsToolStripLabel.Size = New System.Drawing.Size(153, 32)
+        Me.InformationDetailsToolStripLabel.Size = New System.Drawing.Size(123, 25)
         Me.InformationDetailsToolStripLabel.Text = "Header Details"
         '
         'CreateInformationDetailsToolStripMenuItem
         '
         Me.CreateInformationDetailsToolStripMenuItem.Name = "CreateInformationDetailsToolStripMenuItem"
-        Me.CreateInformationDetailsToolStripMenuItem.Size = New System.Drawing.Size(154, 32)
+        Me.CreateInformationDetailsToolStripMenuItem.Size = New System.Drawing.Size(125, 26)
         Me.CreateInformationDetailsToolStripMenuItem.Text = "Create"
         '
         'EditInformationDetailsToolStripMenuItem
         '
         Me.EditInformationDetailsToolStripMenuItem.Name = "EditInformationDetailsToolStripMenuItem"
-        Me.EditInformationDetailsToolStripMenuItem.Size = New System.Drawing.Size(154, 32)
+        Me.EditInformationDetailsToolStripMenuItem.Size = New System.Drawing.Size(125, 26)
         Me.EditInformationDetailsToolStripMenuItem.Text = "Edit"
         Me.EditInformationDetailsToolStripMenuItem.Visible = False
         '
@@ -694,10 +684,9 @@ Partial Class MasterCodeBookForm
         '
         Me.DefaultVehicleModelTextBox.Enabled = False
         Me.DefaultVehicleModelTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DefaultVehicleModelTextBox.Location = New System.Drawing.Point(191, 47)
-        Me.DefaultVehicleModelTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DefaultVehicleModelTextBox.Location = New System.Drawing.Point(143, 38)
         Me.DefaultVehicleModelTextBox.Name = "DefaultVehicleModelTextBox"
-        Me.DefaultVehicleModelTextBox.Size = New System.Drawing.Size(660, 37)
+        Me.DefaultVehicleModelTextBox.Size = New System.Drawing.Size(496, 31)
         Me.DefaultVehicleModelTextBox.TabIndex = 80
         Me.DefaultVehicleModelTextBox.Text = "Set Default Vehicle"
         '
@@ -705,27 +694,29 @@ Partial Class MasterCodeBookForm
         '
         Me.DefaultVehicleModelRepairRangeTextBox.Enabled = False
         Me.DefaultVehicleModelRepairRangeTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DefaultVehicleModelRepairRangeTextBox.Location = New System.Drawing.Point(935, 47)
-        Me.DefaultVehicleModelRepairRangeTextBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DefaultVehicleModelRepairRangeTextBox.Location = New System.Drawing.Point(701, 38)
         Me.DefaultVehicleModelRepairRangeTextBox.Name = "DefaultVehicleModelRepairRangeTextBox"
-        Me.DefaultVehicleModelRepairRangeTextBox.Size = New System.Drawing.Size(499, 37)
+        Me.DefaultVehicleModelRepairRangeTextBox.Size = New System.Drawing.Size(375, 31)
         Me.DefaultVehicleModelRepairRangeTextBox.TabIndex = 81
         '
-        'SetDefaultVehicleLabel
+        'SystemNameContextMenuStrip
         '
-        Me.SetDefaultVehicleLabel.AutoSize = True
-        Me.SetDefaultVehicleLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SetDefaultVehicleLabel.Location = New System.Drawing.Point(178, 527)
-        Me.SetDefaultVehicleLabel.Name = "SetDefaultVehicleLabel"
-        Me.SetDefaultVehicleLabel.Size = New System.Drawing.Size(515, 29)
-        Me.SetDefaultVehicleLabel.TabIndex = 85
-        Me.SetDefaultVehicleLabel.Text = "Set Default Vehicle to ENABLE this window"
+        Me.SystemNameContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteDescriptionToolStripTextBox})
+        Me.SystemNameContextMenuStrip.Name = "SpecificationsContextMenuStrip"
+        Me.SystemNameContextMenuStrip.Size = New System.Drawing.Size(161, 29)
+        '
+        'PasteDescriptionToolStripTextBox
+        '
+        Me.PasteDescriptionToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.PasteDescriptionToolStripTextBox.Name = "PasteDescriptionToolStripTextBox"
+        Me.PasteDescriptionToolStripTextBox.Size = New System.Drawing.Size(100, 23)
+        Me.PasteDescriptionToolStripTextBox.Text = "Paste Description"
         '
         'MasterCodeBookForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1713, 750)
+        Me.ClientSize = New System.Drawing.Size(1031, 727)
         Me.ControlBox = False
         Me.Controls.Add(Me.DefaultVehicleModelRepairRangeTextBox)
         Me.Controls.Add(Me.DefaultVehicleModelTextBox)
@@ -734,13 +725,14 @@ Partial Class MasterCodeBookForm
         Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.InformationsHeadersGroupBox)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "MasterCodeBookForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MasterCodeBookForm"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.MainSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SubSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SubSystemContextMenuStrip.ResumeLayout(False)
+        Me.SubSystemContextMenuStrip.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.SearchGroupBox.ResumeLayout(False)
         Me.SearchGroupBox.PerformLayout()
@@ -755,6 +747,8 @@ Partial Class MasterCodeBookForm
         Me.ProductDetailsGroup.PerformLayout()
         Me.MasterCodeBookMenuStrip.ResumeLayout(False)
         Me.MasterCodeBookMenuStrip.PerformLayout()
+        Me.SystemNameContextMenuStrip.ResumeLayout(False)
+        Me.SystemNameContextMenuStrip.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -819,4 +813,8 @@ Partial Class MasterCodeBookForm
     Friend WithEvents SearchButton As Button
     Friend WithEvents SearchMasterCodeBookTextBox As TextBox
     Friend WithEvents SetDefaultVehicleLabel As Label
+    Friend WithEvents SubSystemContextMenuStrip As ContextMenuStrip
+    Friend WithEvents CopyDescriptionToolStripTextBox As ToolStripTextBox
+    Friend WithEvents SystemNameContextMenuStrip As ContextMenuStrip
+    Friend WithEvents PasteDescriptionToolStripTextBox As ToolStripTextBox
 End Class

@@ -110,13 +110,13 @@ PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
+ProductsPartsTable.ProductDescription_ShortText250,
 ProductPartsPackingsTable.QuantityPerPack_Double, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
 ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
 " & UnitOfPacking &
 " 
 BrandsTable.BrandName_ShortText20, 
-ProductsPartsTable.ProductDescription_ShortText250,
 ProductsPartsTable.WorkOrderItemID_LongInteger,
 ProductsPartsTable.Unit_ShortText3, 
 BrandsTable.BrandID_Autonumber, 
@@ -501,9 +501,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             ProductsPartsSelectionFilter &= " OR  SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
             '            
         End If
-        If IsNotEmpty(CurrentMasterCodeBookID) Then
-            ProductsPartsSelectionFilter &= " OR ProductsPartsTable.MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
-        End If
         If ProductsPartsSelectionFilter <> " WHERE ( " Then
             ProductsPartsSelectionFilter += ") AND NOT ForDeletionRecord_YesNo "
         Else
@@ -540,24 +537,25 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
         Dim TablesToCheck = {
+                                             "CodeVehicleProductsPartsTable",
+                                             "DeliveryItemsTable",
+                                             "InventoryItemsTable",
                                              "WorkOrderPartsTable",
+                                             "WorkOrderPartsIssuedItemsTable",
                                              "WorkOrderReceivedPartsTable",
                                              "WorkOrderRequestedPartsTable",
+                                             "StocksTable",
                                              "StoreSuppliesRequisitionsItemsTable",
+                                             "ProductsPartsPackingRelationsTable",
                                              "PurchaseOrdersItemsTable",
                                              "RequisitionsItemsTable",
                                              "DeliveryItemsTable"
                                              }
 
         If Not LinkExistsIn(TablesToCheck, "ProductPartID_LongInteger", CurrentProductPartID) Then
-            MySelection = " DELETE FROM StocksTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
-            JustExecuteMySelection()
-            ' delete all related records in stokcstable and StocksTable (delete stocks record)
-            '           ProductPartsPackingsTable
-            MySelection = " DELETE FROM ProductPartsPackingsTable WHERE ProductPartID_LongInteger =  " & CurrentProductPartID
-            JustExecuteMySelection()
-            If MsgBox("Continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+            If MsgBox("No references has been found, continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             MySelection = " DELETE FROM ProductsPartsTable WHERE ProductsPartID_Autonumber =  " & CurrentProductPartID
+            Exit Sub
             JustExecuteMySelection()
             FillProductsPartsDataGridView()
         End If
@@ -887,7 +885,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         PartDescriptionSearchTextBox.Select()
         FiltersGroupBox.Visible = True
         FiltersGroupBox.BringToFront()
-        MsgBox("something is wrong with filtyering")
     End Sub
     Private Sub EditPackingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPackingToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartID"
@@ -1042,5 +1039,16 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                 HistoriesSelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartID
         End Select
         FillHistoriesDataGridView()
+    End Sub
+
+    Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
+        ManufacturerPartDescContextMenuStrip.Hide()
+        Clipboard.SetText(ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
+    End Sub
+
+    Private Sub PasteDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteDescriptionToolStripTextBox.Click
+        ManufacturerPartDescContextMenuStrip.Hide()
+        ManufacturerPartDescTextBox.Text = Clipboard.GetText()
+        ManufacturerPartDescTextBox.Refresh()
     End Sub
 End Class

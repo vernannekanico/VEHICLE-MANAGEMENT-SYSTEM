@@ -22,6 +22,7 @@ Partial Class ProductsPartsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.ProductsPartsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UpdateMasterCodeLinkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -52,6 +53,8 @@ Partial Class ProductsPartsForm
         Me.Label4 = New System.Windows.Forms.Label()
         Me.SystemPartDescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.ManufacturerPartDescTextBox = New System.Windows.Forms.TextBox()
+        Me.ManufacturerPartDescContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PasteDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.ManufacturerPartNoTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -77,16 +80,20 @@ Partial Class ProductsPartsForm
         Me.Label19 = New System.Windows.Forms.Label()
         Me.ProductsPartsGroupBox = New System.Windows.Forms.GroupBox()
         Me.ProductsPartsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.ProductsPartsDataGridViewContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CopyDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.HistoriesGroupBox = New System.Windows.Forms.GroupBox()
         Me.HistoriesDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
+        Me.ManufacturerPartDescContextMenuStrip.SuspendLayout()
         Me.ProductsPartsPackingsGroupBox.SuspendLayout()
         CType(Me.ProductsPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CancelMenuStrip.SuspendLayout()
         Me.FiltersGroupBox.SuspendLayout()
         Me.ProductsPartsGroupBox.SuspendLayout()
         CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ProductsPartsDataGridViewContextMenuStrip.SuspendLayout()
         Me.HistoriesGroupBox.SuspendLayout()
         CType(Me.HistoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -317,11 +324,25 @@ Partial Class ProductsPartsForm
         '
         'ManufacturerPartDescTextBox
         '
+        Me.ManufacturerPartDescTextBox.ContextMenuStrip = Me.ManufacturerPartDescContextMenuStrip
         Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(279, 125)
         Me.ManufacturerPartDescTextBox.Multiline = True
         Me.ManufacturerPartDescTextBox.Name = "ManufacturerPartDescTextBox"
         Me.ManufacturerPartDescTextBox.Size = New System.Drawing.Size(457, 68)
         Me.ManufacturerPartDescTextBox.TabIndex = 44
+        '
+        'ManufacturerPartDescContextMenuStrip
+        '
+        Me.ManufacturerPartDescContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteDescriptionToolStripTextBox})
+        Me.ManufacturerPartDescContextMenuStrip.Name = "SpecificationsContextMenuStrip"
+        Me.ManufacturerPartDescContextMenuStrip.Size = New System.Drawing.Size(161, 29)
+        '
+        'PasteDescriptionToolStripTextBox
+        '
+        Me.PasteDescriptionToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.PasteDescriptionToolStripTextBox.Name = "PasteDescriptionToolStripTextBox"
+        Me.PasteDescriptionToolStripTextBox.Size = New System.Drawing.Size(100, 23)
+        Me.PasteDescriptionToolStripTextBox.Text = "Paste Description"
         '
         'ManufacturerPartNoTextBox
         '
@@ -571,6 +592,7 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsDataGridView.AllowUserToOrderColumns = True
         Me.ProductsPartsDataGridView.AllowUserToResizeRows = False
         Me.ProductsPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ProductsPartsDataGridView.ContextMenuStrip = Me.ProductsPartsDataGridViewContextMenuStrip
         Me.ProductsPartsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ProductsPartsDataGridView.Location = New System.Drawing.Point(3, 16)
         Me.ProductsPartsDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
@@ -581,6 +603,19 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.ProductsPartsDataGridView.Size = New System.Drawing.Size(305, 66)
         Me.ProductsPartsDataGridView.TabIndex = 52
+        '
+        'ProductsPartsDataGridViewContextMenuStrip
+        '
+        Me.ProductsPartsDataGridViewContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopyDescriptionToolStripTextBox})
+        Me.ProductsPartsDataGridViewContextMenuStrip.Name = "SpecificationsContextMenuStrip"
+        Me.ProductsPartsDataGridViewContextMenuStrip.Size = New System.Drawing.Size(161, 29)
+        '
+        'CopyDescriptionToolStripTextBox
+        '
+        Me.CopyDescriptionToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.CopyDescriptionToolStripTextBox.Name = "CopyDescriptionToolStripTextBox"
+        Me.CopyDescriptionToolStripTextBox.Size = New System.Drawing.Size(100, 23)
+        Me.CopyDescriptionToolStripTextBox.Text = "Copy Description"
         '
         'HistoriesGroupBox
         '
@@ -629,6 +664,8 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.PerformLayout()
         Me.ProductDetailsGroup.ResumeLayout(False)
         Me.ProductDetailsGroup.PerformLayout()
+        Me.ManufacturerPartDescContextMenuStrip.ResumeLayout(False)
+        Me.ManufacturerPartDescContextMenuStrip.PerformLayout()
         Me.ProductsPartsPackingsGroupBox.ResumeLayout(False)
         CType(Me.ProductsPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CancelMenuStrip.ResumeLayout(False)
@@ -637,6 +674,8 @@ Partial Class ProductsPartsForm
         Me.FiltersGroupBox.PerformLayout()
         Me.ProductsPartsGroupBox.ResumeLayout(False)
         CType(Me.ProductsPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ProductsPartsDataGridViewContextMenuStrip.ResumeLayout(False)
+        Me.ProductsPartsDataGridViewContextMenuStrip.PerformLayout()
         Me.HistoriesGroupBox.ResumeLayout(False)
         CType(Me.HistoriesDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -700,4 +739,8 @@ Partial Class ProductsPartsForm
     Friend WithEvents ReIDSelectedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HistoriesGroupBox As GroupBox
     Friend WithEvents HistoriesDataGridView As DataGridView
+    Friend WithEvents ManufacturerPartDescContextMenuStrip As ContextMenuStrip
+    Friend WithEvents PasteDescriptionToolStripTextBox As ToolStripTextBox
+    Friend WithEvents ProductsPartsDataGridViewContextMenuStrip As ContextMenuStrip
+    Friend WithEvents CopyDescriptionToolStripTextBox As ToolStripTextBox
 End Class

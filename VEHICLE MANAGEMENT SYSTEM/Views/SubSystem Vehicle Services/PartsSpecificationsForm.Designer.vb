@@ -23,16 +23,16 @@ Partial Class PartsSpecificationsForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SpecificationsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartSpecificationsItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -46,7 +46,6 @@ Partial Class PartsSpecificationsForm
         Me.AddPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemovePartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.QuantitySpecificationsToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartSpecificationsDetailsGroup = New System.Windows.Forms.GroupBox()
@@ -59,11 +58,14 @@ Partial Class PartsSpecificationsForm
         Me.SpecifiedUnitTextBox = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.PartSpecificationsTextBox = New System.Windows.Forms.TextBox()
+        Me.PartSpecificationTextBoxContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PasteSpecificationToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.Specification = New System.Windows.Forms.Label()
         Me.ServiceToPerformTextBox = New System.Windows.Forms.TextBox()
         Me.PartDescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.PartsSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.SpecificationsContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CopySpecificationToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.VehicleModelTextBox = New System.Windows.Forms.TextBox()
         Me.VehicleLabel = New System.Windows.Forms.Label()
         Me.QuantitySpecificationsDataGridView = New System.Windows.Forms.DataGridView()
@@ -77,10 +79,10 @@ Partial Class PartsSpecificationsForm
         Me.PartNumberSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.JobLabel = New System.Windows.Forms.Label()
-        Me.CopySpecificationToolStripComboBox = New System.Windows.Forms.ToolStripComboBox()
-        Me.SaveSpecificationToolStripComboBox = New System.Windows.Forms.ToolStripComboBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SpecificationsMenuStrip.SuspendLayout()
         Me.PartSpecificationsDetailsGroup.SuspendLayout()
+        Me.PartSpecificationTextBoxContextMenuStrip.SuspendLayout()
         CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SpecificationsContextMenuStrip.SuspendLayout()
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -157,7 +159,7 @@ Partial Class PartsSpecificationsForm
         '
         'PartsSpecificationsHeaderMenuToolStripMenuItem
         '
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem, Me.CopyToolStripMenuItem})
+        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem})
         Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Name = "PartsSpecificationsHeaderMenuToolStripMenuItem"
         Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Size = New System.Drawing.Size(189, 29)
@@ -191,12 +193,6 @@ Partial Class PartsSpecificationsForm
         Me.RemovePartSpecificationsToolStripMenuItem.Name = "RemovePartSpecificationsToolStripMenuItem"
         Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.RemovePartSpecificationsToolStripMenuItem.Text = "Remove"
-        '
-        'CopyToolStripMenuItem
-        '
-        Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
-        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
-        Me.CopyToolStripMenuItem.Text = "Copy"
         '
         'QuantitySpecificationsToolStripTextBox
         '
@@ -325,6 +321,7 @@ Partial Class PartsSpecificationsForm
         '
         'PartSpecificationsTextBox
         '
+        Me.PartSpecificationsTextBox.ContextMenuStrip = Me.PartSpecificationTextBoxContextMenuStrip
         Me.PartSpecificationsTextBox.Enabled = False
         Me.PartSpecificationsTextBox.Location = New System.Drawing.Point(136, 155)
         Me.PartSpecificationsTextBox.Multiline = True
@@ -333,6 +330,19 @@ Partial Class PartsSpecificationsForm
         Me.PartSpecificationsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.PartSpecificationsTextBox.Size = New System.Drawing.Size(405, 73)
         Me.PartSpecificationsTextBox.TabIndex = 44
+        '
+        'PartSpecificationTextBoxContextMenuStrip
+        '
+        Me.PartSpecificationTextBoxContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteSpecificationToolStripTextBox})
+        Me.PartSpecificationTextBoxContextMenuStrip.Name = "SpecificationsContextMenuStrip"
+        Me.PartSpecificationTextBoxContextMenuStrip.Size = New System.Drawing.Size(161, 29)
+        '
+        'PasteSpecificationToolStripTextBox
+        '
+        Me.PasteSpecificationToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.PasteSpecificationToolStripTextBox.Name = "PasteSpecificationToolStripTextBox"
+        Me.PasteSpecificationToolStripTextBox.Size = New System.Drawing.Size(100, 23)
+        Me.PasteSpecificationToolStripTextBox.Text = "Paste Specification"
         '
         'Specification
         '
@@ -371,12 +381,12 @@ Partial Class PartsSpecificationsForm
         Me.PartsSpecificationsDataGridView.AllowUserToAddRows = False
         Me.PartsSpecificationsDataGridView.AllowUserToDeleteRows = False
         Me.PartsSpecificationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        Me.PartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        Me.PartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle11
         Me.PartsSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
         Me.PartsSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.PartsSpecificationsDataGridView.ContextMenuStrip = Me.SpecificationsContextMenuStrip
@@ -387,18 +397,24 @@ Partial Class PartsSpecificationsForm
         Me.PartsSpecificationsDataGridView.ReadOnly = True
         Me.PartsSpecificationsDataGridView.RowHeadersVisible = False
         Me.PartsSpecificationsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        Me.PartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        Me.PartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle12
         Me.PartsSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.PartsSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
         Me.PartsSpecificationsDataGridView.TabIndex = 108
         '
         'SpecificationsContextMenuStrip
         '
-        Me.SpecificationsContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopySpecificationToolStripComboBox, Me.SaveSpecificationToolStripComboBox})
+        Me.SpecificationsContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopySpecificationToolStripTextBox})
         Me.SpecificationsContextMenuStrip.Name = "SpecificationsContextMenuStrip"
-        Me.SpecificationsContextMenuStrip.Size = New System.Drawing.Size(182, 58)
+        Me.SpecificationsContextMenuStrip.Size = New System.Drawing.Size(161, 29)
+        '
+        'CopySpecificationToolStripTextBox
+        '
+        Me.CopySpecificationToolStripTextBox.Name = "CopySpecificationToolStripTextBox"
+        Me.CopySpecificationToolStripTextBox.Size = New System.Drawing.Size(100, 23)
+        Me.CopySpecificationToolStripTextBox.Text = "Copy Specification"
         '
         'VehicleModelTextBox
         '
@@ -426,12 +442,12 @@ Partial Class PartsSpecificationsForm
         Me.QuantitySpecificationsDataGridView.AllowUserToAddRows = False
         Me.QuantitySpecificationsDataGridView.AllowUserToDeleteRows = False
         Me.QuantitySpecificationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Navy
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        Me.QuantitySpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        Me.QuantitySpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.QuantitySpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
         Me.QuantitySpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.QuantitySpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
@@ -441,9 +457,9 @@ Partial Class PartsSpecificationsForm
         Me.QuantitySpecificationsDataGridView.ReadOnly = True
         Me.QuantitySpecificationsDataGridView.RowHeadersVisible = False
         Me.QuantitySpecificationsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        Me.QuantitySpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        Me.QuantitySpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle2
         Me.QuantitySpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.QuantitySpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
         Me.QuantitySpecificationsDataGridView.TabIndex = 111
@@ -453,12 +469,12 @@ Partial Class PartsSpecificationsForm
         Me.CodeVehiclePNSpecificationsDataGridView.AllowUserToAddRows = False
         Me.CodeVehiclePNSpecificationsDataGridView.AllowUserToDeleteRows = False
         Me.CodeVehiclePNSpecificationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Navy
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        Me.CodeVehiclePNSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        Me.CodeVehiclePNSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
         Me.CodeVehiclePNSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
         Me.CodeVehiclePNSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.CodeVehiclePNSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
@@ -468,9 +484,9 @@ Partial Class PartsSpecificationsForm
         Me.CodeVehiclePNSpecificationsDataGridView.ReadOnly = True
         Me.CodeVehiclePNSpecificationsDataGridView.RowHeadersVisible = False
         Me.CodeVehiclePNSpecificationsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        Me.CodeVehiclePNSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        Me.CodeVehiclePNSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle14
         Me.CodeVehiclePNSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.CodeVehiclePNSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
         Me.CodeVehiclePNSpecificationsDataGridView.TabIndex = 112
@@ -492,12 +508,12 @@ Partial Class PartsSpecificationsForm
         Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToAddRows = False
         Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToDeleteRows = False
         Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Navy
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        Me.CodeVehiclePartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        Me.CodeVehiclePartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle15
         Me.CodeVehiclePartsSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
         Me.CodeVehiclePartsSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.CodeVehiclePartsSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
@@ -507,9 +523,9 @@ Partial Class PartsSpecificationsForm
         Me.CodeVehiclePartsSpecificationsDataGridView.ReadOnly = True
         Me.CodeVehiclePartsSpecificationsDataGridView.RowHeadersVisible = False
         Me.CodeVehiclePartsSpecificationsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        Me.CodeVehiclePartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
+        Me.CodeVehiclePartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle16
         Me.CodeVehiclePartsSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.CodeVehiclePartsSpecificationsDataGridView.Size = New System.Drawing.Size(216, 69)
         Me.CodeVehiclePartsSpecificationsDataGridView.TabIndex = 114
@@ -567,12 +583,12 @@ Partial Class PartsSpecificationsForm
         Me.PartNumberSpecificationsDataGridView.AllowUserToAddRows = False
         Me.PartNumberSpecificationsDataGridView.AllowUserToDeleteRows = False
         Me.PartNumberSpecificationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Navy
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.White
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        Me.PartNumberSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Navy
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.Color.White
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
+        Me.PartNumberSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle17
         Me.PartNumberSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
         Me.PartNumberSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.PartNumberSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
@@ -582,9 +598,9 @@ Partial Class PartsSpecificationsForm
         Me.PartNumberSpecificationsDataGridView.ReadOnly = True
         Me.PartNumberSpecificationsDataGridView.RowHeadersVisible = False
         Me.PartNumberSpecificationsDataGridView.RowHeadersWidth = 51
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        Me.PartNumberSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
+        Me.PartNumberSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle18
         Me.PartNumberSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.PartNumberSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
         Me.PartNumberSpecificationsDataGridView.TabIndex = 112
@@ -609,17 +625,10 @@ Partial Class PartsSpecificationsForm
         Me.JobLabel.TabIndex = 120
         Me.JobLabel.Text = "Job:"
         '
-        'CopySpecificationToolStripComboBox
+        'ContextMenuStrip1
         '
-        Me.CopySpecificationToolStripComboBox.Name = "CopySpecificationToolStripComboBox"
-        Me.CopySpecificationToolStripComboBox.Size = New System.Drawing.Size(121, 23)
-        Me.CopySpecificationToolStripComboBox.Text = "Copy"
-        '
-        'SaveSpecificationToolStripComboBox
-        '
-        Me.SaveSpecificationToolStripComboBox.Name = "SaveSpecificationToolStripComboBox"
-        Me.SaveSpecificationToolStripComboBox.Size = New System.Drawing.Size(121, 23)
-        Me.SaveSpecificationToolStripComboBox.Text = "Save"
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
         'PartsSpecificationsForm
         '
@@ -645,8 +654,11 @@ Partial Class PartsSpecificationsForm
         Me.SpecificationsMenuStrip.PerformLayout()
         Me.PartSpecificationsDetailsGroup.ResumeLayout(False)
         Me.PartSpecificationsDetailsGroup.PerformLayout()
+        Me.PartSpecificationTextBoxContextMenuStrip.ResumeLayout(False)
+        Me.PartSpecificationTextBoxContextMenuStrip.PerformLayout()
         CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SpecificationsContextMenuStrip.ResumeLayout(False)
+        Me.SpecificationsContextMenuStrip.PerformLayout()
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CodeVehiclePartsSpecificationsGroupBox.ResumeLayout(False)
@@ -702,8 +714,9 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents PartNumberSpecificationsDataGridView As DataGridView
     Friend WithEvents Label2 As Label
     Friend WithEvents JobLabel As Label
-    Friend WithEvents CopyToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SpecificationsContextMenuStrip As ContextMenuStrip
-    Friend WithEvents CopySpecificationToolStripComboBox As ToolStripComboBox
-    Friend WithEvents SaveSpecificationToolStripComboBox As ToolStripComboBox
+    Friend WithEvents PartSpecificationTextBoxContextMenuStrip As ContextMenuStrip
+    Friend WithEvents PasteSpecificationToolStripTextBox As ToolStripTextBox
+    Friend WithEvents CopySpecificationToolStripTextBox As ToolStripTextBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
 End Class
