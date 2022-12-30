@@ -1500,9 +1500,11 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         SearchMasterCodeBookTextBox.SelectAll()
     End Sub
     Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
+        SystemNameContextMenuStrip.Visible = False
         Clipboard.SetText(SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value)
     End Sub
     Private Sub PasteDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteDescriptionToolStripTextBox.Click
+        SystemNameContextMenuStrip.Hide()
         SystemNameTextBox.Text = Clipboard.GetText()
     End Sub
 End Class

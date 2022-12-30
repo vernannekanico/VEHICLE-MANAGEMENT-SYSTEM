@@ -536,6 +536,16 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         BrandNameTextBox.Enabled = True
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteToolStripMenuItem.Click
+        If ProductIsNotYetUsed() Then
+            If MsgBox("No references has been found, continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+            MySelection = " DELETE FROM ProductsPartsTable WHERE ProductsPartID_Autonumber =  " & CurrentProductPartID
+            JustExecuteMySelection()
+            FillProductsPartsDataGridView()
+        Else
+            MsgBox("This Product is already used, can not delete")
+        End If
+    End Sub
+    Private Function ProductIsNotYetUsed()
         Dim TablesToCheck = {
                                              "CodeVehicleProductsPartsTable",
                                              "DeliveryItemsTable",
@@ -551,16 +561,9 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                                              "RequisitionsItemsTable",
                                              "DeliveryItemsTable"
                                              }
-
-        If Not LinkExistsIn(TablesToCheck, "ProductPartID_LongInteger", CurrentProductPartID) Then
-            If MsgBox("No references has been found, continue DELETE this record ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-            MySelection = " DELETE FROM ProductsPartsTable WHERE ProductsPartID_Autonumber =  " & CurrentProductPartID
-            Exit Sub
-            JustExecuteMySelection()
-            FillProductsPartsDataGridView()
-        End If
-
-    End Sub
+        If LinkExistsIn(TablesToCheck, "ProductPartID_LongInteger", CurrentProductPartID) Then Return False
+        Return True
+    End Function
     Private Sub LoadProductDetails()
         FillField(ProductSpecificationTextBox.Text, ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value)
         FillField(SystemPartDescriptionTextBox.Text, ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value)
@@ -750,6 +753,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     End Function
     Private Sub ProductDetailsGroup_VisibleChanged(sender As Object, e As EventArgs) Handles ProductDetailsGroup.VisibleChanged
         If ProductDetailsGroup.Visible = True Then
+            ProductsPartsGroupBox.Enabled = False
             If Not PurposeOfEntry = "ADD" Then LoadProductDetails()
             SaveToolStripMenuItem.Visible = True
             EditPackingToolStripMenuItem.Visible = True
@@ -761,6 +765,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             SearchToolStripMenuItem.Visible = False
             UpdateMasterCodeLinkToolStripMenuItem.Visible = False
         Else
+            ProductsPartsGroupBox.Enabled = True
             SaveToolStripMenuItem.Visible = False
             AddToolStripMenuItem.Visible = True
             EditToolStripMenuItem.Visible = True
@@ -900,30 +905,32 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         If ProductsPartsRecordCount < 1 Then Exit Sub
         Dim SetCommand = ""
         Dim RecordFilter = ""
-        If ProductsPartsDataGridView.MultiSelect Then
-            ' this option works only when not in multi selection mode
-            MsgBox("Multi Select has been enabled, now Disabled")
-            For i = 0 To ProductsPartsRecordCount - 1
-                ProductsPartsDataGridView.Rows(i).Selected = False
-            Next
-            MsgBox("Select the row you want to MARK SELECTED")
-            ProductsPartsDataGridView.MultiSelect = False
-        Else
-            If ProductsPartsDataGridView.Rows(CurrentProductsPartsRow).Selected = False Then
-                MsgBox("Please select the row to mark SELECTED")
-                Exit Sub
-            Else
-                If MsgBox("Do you want to unselect this product?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                    SetCommand = "Set Selected = false, ProductsPartID_Selected = -1 "
-                    RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
-                    UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
+        '     If ProductsPartsDataGridView.MultiSelect Then
+        '     ' this option works only when not in multi selection mode
+        '     MsgBox("Multi Select has been enabled, now Disabled")
+        '     For i = 0 To ProductsPartsRecordCount - 1
+        '     ProductsPartsDataGridView.Rows(i).Selected = False
+        '     Next
+        '     MsgBox("Select the row you want to MARK SELECTED")
+        '      ProductsPartsDataGridView.MultiSelect = False
+        '       Else
+        '     End If
+        'THIS GIVES THE OPTION TO UNSELECT THE RECORD IF THIS RECORD DOES NOT EXIST YET IN 
+        If ProductsPartsDataGridView.Item("Selected", CurrentProductsPartsRow).Value Then
+            If MsgBox("Do you want to de-select this product?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                If Not ProductIsNotYetUsed() Then
+                    MsgBox("references already exist in other tables, can not de-select this record ")
+                    Exit Sub
                 End If
+                SetCommand = "Set Selected = false  "
+                RecordFilter = "WHERE ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
+                UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
                 Exit Sub
             End If
-            SetCommand = "Set Selected = true "
-            RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
-            UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
         End If
+        SetCommand = "Set Selected = true "
+        RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
+        UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
         FillProductsPartsDataGridView()
     End Sub
     Private Sub MarkAllRecordsAsForDeletionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkAllRecordsAsForDeletionToolStripMenuItem.Click
@@ -997,8 +1004,8 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                     'PROCESS ONLY THE SELECTED
                     ' UPDATE CURRENT SELECTED RECORD
                     If Not ProductsPartsDataGridView.Item("Selected", i).Value Then
-                        SetCommand = "SET ProductsPartID_Selected = " & CurrentProductPartID.ToString & ", " &
-                                      "   ForDeletionRecord_YesNo = TRUE "
+                        SetCommand = "SET ProductsPartID_Selected = " & CurrentProductPartID.ToString &
+                                      ",   ForDeletionRecord_YesNo = TRUE "
                         RecordFilter = "where ProductsPartID_Autonumber = " & ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value.ToString
                         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
                     Else
@@ -1042,13 +1049,12 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     End Sub
 
     Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
-        ManufacturerPartDescContextMenuStrip.Hide()
+        ProductsPartsDataGridViewContextMenuStrip.Visible = False
         Clipboard.SetText(ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
     End Sub
 
     Private Sub PasteDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteDescriptionToolStripTextBox.Click
         ManufacturerPartDescContextMenuStrip.Hide()
         ManufacturerPartDescTextBox.Text = Clipboard.GetText()
-        ManufacturerPartDescTextBox.Refresh()
     End Sub
 End Class

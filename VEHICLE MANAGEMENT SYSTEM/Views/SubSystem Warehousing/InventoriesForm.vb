@@ -143,27 +143,43 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         Dim Packing = "str(ProductPartsPackingsTable.QuantityPerPack_Double) & ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3 & chr(47) & ProductPartsPackingsTable.UnitOfThePacking_ShortText3 as Packing,"
         InventoryItemsFieldsToSelect = " 
 SELECT 
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
+" & Packing & "
+ProductPartsPackingsTable.QuantityPerPack_Double, 
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3
+FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) LEFT JOIN ProductPartsPackingsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductPartsPackingsTable.ProductPartID_LongInteger
+"
+        InventoryItemsFieldsToSelect = " 
+SELECT 
+InventoryHeadersTable.InventoryHeaderID_AutoNumber,
+StocksTable.StockID_Autonumber, 
+ProductsPartsTable.ProductsPartID_Autonumber, 
+StocksLocationsTable.StocksLocationID_AutoNumber, 
 StocksLocationsTable.LocationCode_ShortText11,
-MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+MasterCodeBookTable.SystemDesc_ShortText100Fld,
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
 StocksTable.QuantityInStock_Double, 
 ProductsPartsTable.Unit_ShortText3, 
 StocksTable.BulkBalanceQuantity_Double,
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
 BrandsTable.BrandID_Autonumber, 
-BrandsTable.BrandName_ShortText20, 
-ProductPartsPackingsTable.QuantityPerPack_Double, 
-ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
-" & Packing & "
-ProductsPartsTable.ProductsPartID_Autonumber, 
-StocksTable.StockID_Autonumber, 
-StocksLocationsTable.StocksLocationID_AutoNumber, 
-InventoryItemsTable.InventoryHeaderID_LongInteger
-FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) LEFT JOIN ProductPartsPackingsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductPartsPackingsTable.ProductPartID_LongInteger
+BrandsTable.BrandName_ShortText20
+FROM (((InventoryItemsTable 
+        LEFT JOIN InventoryHeadersTable 
+               ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) 
+        LEFT JOIN (((ProductsPartsTable 
+                    LEFT JOIN MasterCodeBookTable 
+                           ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) 
+                    LEFT JOIN PartsSpecificationsTable 
+                           ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) 
+                    LEFT JOIN BrandsTable 
+                           ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) 
+                ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) 
+        LEFT JOIN (StocksTable 
+                    LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) 
+               ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) 
 "
-
         MySelection = InventoryItemsFieldsToSelect & InventoryItemsSelectionFilter & InventoryItemsSelectionOrder
 
         JustExecuteMySelection()
@@ -192,7 +208,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "SystemDesc_ShortText100Fld"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Product"
-                    InventoryItemsDataGridView.Columns.Item(i).Width = 200
+                    InventoryItemsDataGridView.Columns.Item(i).Width = 300
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "ManufacturerPartNo_ShortText30Fld"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Manufacturer Part no."
@@ -249,7 +265,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         If InventoryItemsRecordCount = 0 Then Exit Sub
 
         CurrentInventoryItemsRow = e.RowIndex
-        CurrentInventoryHeaderID = InventoryItemsDataGridView.Item("InventoryHeaderID_LongInteger", CurrentInventoryItemsRow).Value
+        FillField(CurrentInventoryHeaderID, InventoryItemsDataGridView.Item("InventoryHeaderID_Autonumber", CurrentInventoryItemsRow).Value)
         CurrentProductPartId = InventoryItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentInventoryItemsRow).Value
         FillField(CurrentlocationID, InventoryItemsDataGridView.Item("StocksLocationID_Autonumber", CurrentInventoryItemsRow).Value)
         If CurrentInventoryHeaderID = -1 Then
