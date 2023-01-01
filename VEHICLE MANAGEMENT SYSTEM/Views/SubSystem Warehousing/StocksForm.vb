@@ -24,9 +24,9 @@
     Private CurrentInventoryStatus As String
     Private InventoriesDataGridViewAlreadyFormated = False
     Private Property CurrentStockID As Object
-    Private SavedCallingForm As Form
     Private CurrentlocationID As Object
     Private Property SaveMessage As String
+    Private SavedCallingForm As Form
 
     Private Sub StocksForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SavedCallingForm = CallingForm
