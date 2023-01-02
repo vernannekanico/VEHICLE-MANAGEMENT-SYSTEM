@@ -61,7 +61,7 @@ Partial Class UpdateATableForm
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.PurchaseOrderItemsDataGridView.DefaultCellStyle = DataGridViewCellStyle2
-        Me.PurchaseOrderItemsDataGridView.Location = New System.Drawing.Point(650, 300)
+        Me.PurchaseOrderItemsDataGridView.Location = New System.Drawing.Point(31, 119)
         Me.PurchaseOrderItemsDataGridView.Name = "PurchaseOrderItemsDataGridView"
         Me.PurchaseOrderItemsDataGridView.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.PurchaseOrderItemsDataGridView.Size = New System.Drawing.Size(355, 101)

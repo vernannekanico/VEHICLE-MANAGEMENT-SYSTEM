@@ -12,7 +12,6 @@ Public Class UpdateATableForm
 
     Private PurchaseOrderItemsDataGridViewAlreadyFormated = False
     Private SavedCallingForm As Form
-    Private CurrentPurchaseOrderID = -1
     Private CurrentWorkOrderNumber_ShortText12 = ""
 
     Private Sub StartForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -25,16 +24,15 @@ Public Class UpdateATableForm
     Private Sub FillPurchaseOrderItemsDataGridView()
         PurchaseOrderItemsFieldsToSelect =
 "
-SELECT WorkOrderPartsTable.WorkOrderPartID_AutoNumber, 
-WorkOrdersTable.WorkOrderNumber_ShortText12, 
-SuppliersTable.SupplierName_ShortText35, 
+SELECT 
 PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber, 
-PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger, 
-PurchaseOrdersTable.PurchaseOrderID_AutoNumber, 
-PurchaseOrdersTable.WorkOrderNumber_Guide, WorkOrdersTable.ServiceDate_DateTime, OriginalExcelRecordTable.description, ProductsPartsTable.ManufacturerDescription_ShortText250, VehicleModels.VehicleModel, WorkOrdersTable.VehicleMilage_Integer, WorkOrdersTable.WorkOrderID_AutoNumber
-FROM ((((((OriginalExcelRecordTable LEFT JOIN PurchaseOrdersItemsTable ON OriginalExcelRecordTable.OriginalID_AutoNumber = PurchaseOrdersItemsTable.OriginalID_LongInteger) RIGHT JOIN WorkOrderPartsTable ON OriginalExcelRecordTable.OriginalID_AutoNumber = WorkOrderPartsTable.OriginalID_LongInteger) LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN SuppliersTable ON WorkOrderPartsTable.SupplierID_LongInteger = SuppliersTable.SupplierID_AutoNumber) LEFT JOIN (ServicedVehiclesTable LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber) ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber"
-        PurchaseOrderItemsSelectionOrder = " ORDER BY WorkOrdersTable.WorkOrderNumber_ShortText12 ASC, SupplierName_ShortText35 ASC  "
-        PurchaseOrderItemsSelectionFilter = " " 'WHERE trim(len(WorkOrdersTable.WorkOrderNumber_ShortText12)) > 0 "
+PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger,
+PurchaseOrdersTable.PurchaseOrderStatusID_LongInteger, 
+PurchaseOrdersTable.PurchaseOrderDate_ShortDate
+FROM PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber
+"
+        PurchaseOrderItemsSelectionOrder = "" 'ORDER BY last_service_date ASC "
+        PurchaseOrderItemsSelectionFilter = " WHERE PurchaseOrderStatusID_LongInteger = 35 "
 
         MySelection = PurchaseOrderItemsFieldsToSelect & PurchaseOrderItemsSelectionFilter & PurchaseOrderItemsSelectionOrder
         JustExecuteMySelection()
@@ -99,7 +97,17 @@ FROM ((((((OriginalExcelRecordTable LEFT JOIN PurchaseOrdersItemsTable ON Origin
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        MsgBox("re-code")
+
+        For i = 0 To PurchaseOrderItemsRecordCount - 1
+            Dim CurrentPurchaseOrderItemStatusID_LongInteger = -1
+            FillField(CurrentPurchaseOrderItemID, PurchaseOrderItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", i).Value)
+            Dim CurrentPurchaseOrderItemDate_ShortDate = PurchaseOrderItemsDataGridView.Item("PurchaseOrdersItemStatusID_LongIntegerr", i).Value
+            CurrentPurchaseOrderItemID = PurchaseOrderItemsDataGridView.Item("PurchaseOrdersItemID_AutoNumber", i).Value
+            Dim RecordFilter = "WHERE PurchaseOrdersItemID_AutoNumber = " & CurrentPurchaseOrderItemID
+            Dim SetCommand = "SET PurchaseOrdersItemStatusID_LongInteger = 127, 
+                                  PurchaseOrderItemDate_ShortDate = " & InQuotes(CurrentPurchaseOrderItemDate_ShortDate)
+            UpdateTable("PurchaseOrderItemsTable", SetCommand, RecordFilter)
+        Next
     End Sub
 
     Private Sub RefreshDataGridViewButton_Click(sender As Object, e As EventArgs) Handles RefreshDataGridViewButton.Click
