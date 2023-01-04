@@ -408,6 +408,7 @@
     End Sub
     Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, RecordFilter As String)
         MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
+        Exit Sub
         JustExecuteMySelection()
         If RecordCount = 0 Then
             MsgBox("Unable to Update " & TableToUpdate & " Table, NO MATCHING RECORD FOUND " & TableToUpdate & " FILTER: " & RecordFilter)

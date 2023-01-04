@@ -96,7 +96,7 @@ WorkOrdersTable.VehicleMilage_Integer,
 (VehiclesTable.YearManufactured_ShortText4 & space(1) & 
 Trim(VehicleTypeTable.VehicleType_ShortText20) & space(1) & 
 trim(VehicleModelsTable.VehicleModel_ShortText20) & space(1) & 
-trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription,
+trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleModels,
 (trim(OwnersTable.FirstName_ShortText30) & space(1) & 
 Trim(OwnersTable.LastName_ShortText30) & space(1) & 
 trim(OwnersTable.NamePrefix_ShortText3)) AS VehicleOwner,
@@ -173,9 +173,9 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
                     WorkOrdersDataGridView.Columns(i).DefaultCellStyle.Format = "###,###"
                     WorkOrdersDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                     WorkOrdersDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
-                    WorkOrdersDataGridView.Columns.Item("VehicleDescription").HeaderText = "VEHICLE"
-                    WorkOrdersDataGridView.Columns.Item("VehicleDescription").Width = 200
+                Case "VehicleModels"
+                    WorkOrdersDataGridView.Columns.Item("VehicleModels").HeaderText = "VEHICLE"
+                    WorkOrdersDataGridView.Columns.Item("VehicleModels").Width = 200
                     WorkOrdersDataGridView.Columns.Item(i).Visible = True
                 Case "OwnerName"
                     WorkOrdersDataGridView.Columns.Item(i).HeaderText = "OWNER"
@@ -929,7 +929,7 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
     Private Sub ShowRequestPartsForm()
         Tunnel1 = CurrentWorkOrderConcernID
         RequestPartsForm.WorkOrderConcernButton.Text = WorkOrderConcernsDataGridView.Item("CoinedConcern", CurrentWorkOrderConcernsRow).Value
-        If CurrentWorkOrdersRow <> -1 Then RequestPartsForm.VehicleNameButton.Text = WorkOrdersDataGridView.Item("VehicleDescription", CurrentWorkOrdersRow).Value
+        If CurrentWorkOrdersRow <> -1 Then RequestPartsForm.VehicleNameButton.Text = WorkOrdersDataGridView.Item("VehicleModels", CurrentWorkOrdersRow).Value
         ShowCalledForm(Me, RequestPartsForm)
 
     End Sub

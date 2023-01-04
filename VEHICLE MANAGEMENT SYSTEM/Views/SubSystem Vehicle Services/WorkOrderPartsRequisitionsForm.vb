@@ -115,9 +115,9 @@ WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate,
 WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger, 
 WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger, 
 WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber, 
-VehicleDescription.VehicleDescription,
+VehicleModels.VehicleModels,
 StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25
-FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleDescription ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber
+FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber
 "
         WorkOrderRequestedPartsHeadersSelectionOrder = " ORDER BY WorkOrderRequestedPartsHeaderID_AutoNumber DESC "
 
@@ -145,7 +145,7 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
 
             Select Case WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText
 
-                Case "VehicleDescription"
+                Case "VehicleModels"
                     WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Model"
                     WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 300
                     WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
@@ -203,7 +203,7 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
         Dim CurrentWorkOrderRequestedPartsHeaderstatusSequence = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         WorkOrderRequestedPartsHeaderStatus = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         CurrentWorkOrderID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
-        VehicleModelTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("VehicleDescription", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        VehicleModelTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("VehicleModels", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         EditPartDetailsToolStripMenuItem.Visible = False
         DeleteProductToolStripMenuItem.Visible = False
         SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False

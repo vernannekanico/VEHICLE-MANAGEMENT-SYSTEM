@@ -226,10 +226,10 @@
     <Compile Include="Views\SubSystem Vehicle Services\PartsSpecificationsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubSystem Vehicle Services\PurchaseOrdersForm.Designer.vb">
+    <Compile Include="Views\SubSystem Procurement\PurchaseOrdersForm.Designer.vb">
       <DependentUpon>PurchaseOrdersForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubSystem Vehicle Services\PurchaseOrdersForm.vb">
+    <Compile Include="Views\SubSystem Procurement\PurchaseOrdersForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\SubSystem Warehousing\StoreRequisitionsForm.Designer.vb">
@@ -525,7 +525,7 @@
     <EmbeddedResource Include="Views\SubSystem Procurement\ProductPartsPackingRelationsForm.resx">
       <DependentUpon>ProductPartsPackingRelationsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubSystem Vehicle Services\PurchaseOrdersForm.resx">
+    <EmbeddedResource Include="Views\SubSystem Procurement\PurchaseOrdersForm.resx">
       <DependentUpon>PurchaseOrdersForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SubSystem Warehousing\DeliveriesForm.resx">

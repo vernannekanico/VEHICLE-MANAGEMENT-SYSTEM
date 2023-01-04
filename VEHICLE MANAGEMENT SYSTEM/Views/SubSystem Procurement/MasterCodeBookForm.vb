@@ -583,7 +583,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
 
     End Sub
 
-    Private Sub originalFindSubCodeSelected(SavedCode)
+    Private Sub OriginalFindSubCodeSelected(SavedCode)
         FillSubSystemDataGridView()
         SubSystemCodeDataGridView.Rows(0).Selected = True
         Dim CurrentIndex = 0
@@ -1075,9 +1075,9 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         Clipboard.Clear()
 
         xlApp.Quit()
-        releaseObject(xlWorkSheet)
-        releaseObject(xlWorkBook)
-        releaseObject(xlApp)
+        ReleaseObject(xlWorkSheet)
+        ReleaseObject(xlWorkBook)
+        ReleaseObject(xlApp)
 
     End Sub
 
@@ -1110,12 +1110,12 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         Clipboard.Clear()
 
         xlApp.Quit()
-        releaseObject(xlWorkSheet)
-        releaseObject(xlWorkBook)
-        releaseObject(xlApp)
+        ReleaseObject(xlWorkSheet)
+        ReleaseObject(xlWorkBook)
+        ReleaseObject(xlApp)
 
     End Sub
-    Private Sub releaseObject(ByVal obj As Object)
+    Private Sub ReleaseObject(ByVal obj As Object)
         Try
             System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
             obj = Nothing
@@ -1500,11 +1500,6 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         SearchMasterCodeBookTextBox.SelectAll()
     End Sub
     Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
-        SystemNameContextMenuStrip.Visible = False
         Clipboard.SetText(SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value)
-    End Sub
-    Private Sub PasteDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteDescriptionToolStripTextBox.Click
-        SystemNameContextMenuStrip.Hide()
-        SystemNameTextBox.Text = Clipboard.GetText()
     End Sub
 End Class

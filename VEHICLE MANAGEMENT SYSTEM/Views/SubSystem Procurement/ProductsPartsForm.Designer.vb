@@ -53,8 +53,6 @@ Partial Class ProductsPartsForm
         Me.Label4 = New System.Windows.Forms.Label()
         Me.SystemPartDescriptionTextBox = New System.Windows.Forms.TextBox()
         Me.ManufacturerPartDescTextBox = New System.Windows.Forms.TextBox()
-        Me.ManufacturerPartDescContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PasteDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.ManufacturerPartNoTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -86,7 +84,6 @@ Partial Class ProductsPartsForm
         Me.HistoriesDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
-        Me.ManufacturerPartDescContextMenuStrip.SuspendLayout()
         Me.ProductsPartsPackingsGroupBox.SuspendLayout()
         CType(Me.ProductsPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CancelMenuStrip.SuspendLayout()
@@ -324,29 +321,14 @@ Partial Class ProductsPartsForm
         '
         'ManufacturerPartDescTextBox
         '
-        Me.ManufacturerPartDescTextBox.ContextMenuStrip = Me.ManufacturerPartDescContextMenuStrip
         Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(279, 125)
         Me.ManufacturerPartDescTextBox.Multiline = True
         Me.ManufacturerPartDescTextBox.Name = "ManufacturerPartDescTextBox"
         Me.ManufacturerPartDescTextBox.Size = New System.Drawing.Size(457, 68)
         Me.ManufacturerPartDescTextBox.TabIndex = 44
         '
-        'ManufacturerPartDescContextMenuStrip
-        '
-        Me.ManufacturerPartDescContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteDescriptionToolStripTextBox})
-        Me.ManufacturerPartDescContextMenuStrip.Name = "SpecificationsContextMenuStrip"
-        Me.ManufacturerPartDescContextMenuStrip.Size = New System.Drawing.Size(161, 29)
-        '
-        'PasteDescriptionToolStripTextBox
-        '
-        Me.PasteDescriptionToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.PasteDescriptionToolStripTextBox.Name = "PasteDescriptionToolStripTextBox"
-        Me.PasteDescriptionToolStripTextBox.Size = New System.Drawing.Size(100, 23)
-        Me.PasteDescriptionToolStripTextBox.Text = "Paste Description"
-        '
         'ManufacturerPartNoTextBox
         '
-        Me.ManufacturerPartNoTextBox.Enabled = False
         Me.ManufacturerPartNoTextBox.Location = New System.Drawing.Point(279, 94)
         Me.ManufacturerPartNoTextBox.Name = "ManufacturerPartNoTextBox"
         Me.ManufacturerPartNoTextBox.Size = New System.Drawing.Size(457, 26)
@@ -664,8 +646,6 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.PerformLayout()
         Me.ProductDetailsGroup.ResumeLayout(False)
         Me.ProductDetailsGroup.PerformLayout()
-        Me.ManufacturerPartDescContextMenuStrip.ResumeLayout(False)
-        Me.ManufacturerPartDescContextMenuStrip.PerformLayout()
         Me.ProductsPartsPackingsGroupBox.ResumeLayout(False)
         CType(Me.ProductsPartsPackingsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CancelMenuStrip.ResumeLayout(False)
@@ -739,8 +719,6 @@ Partial Class ProductsPartsForm
     Friend WithEvents ReIDSelectedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HistoriesGroupBox As GroupBox
     Friend WithEvents HistoriesDataGridView As DataGridView
-    Friend WithEvents ManufacturerPartDescContextMenuStrip As ContextMenuStrip
-    Friend WithEvents PasteDescriptionToolStripTextBox As ToolStripTextBox
     Friend WithEvents ProductsPartsDataGridViewContextMenuStrip As ContextMenuStrip
     Friend WithEvents CopyDescriptionToolStripTextBox As ToolStripTextBox
 End Class

@@ -12,8 +12,9 @@
     Private InventoryItemsSelectionOrder = ""
     Private CurrentInventoryItemsRow As Integer = -1
     Private InventoryItemsRecordCount As Integer = -1
-    Private InventoryItemsDataGridViewAlreadyFormated = False
 
+    Private InventoryItemsDataGridViewAlreadyFormated = False
+    Private CurrentProductsPartsPackingRelationID = -1
     Private SavedCallingForm As Form
     Private CurrentlocationID = -1
     Private CurrentStockID = -1
@@ -144,25 +145,8 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
                             ProductPartsPackingsTable.UnitOfThePacking_ShortText3 , 
                             str(Packings.QuantityPerPack_Double) & space(1) & ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3 & chr(47) & ProductPartsPackingsTable.UnitOfThePacking_ShortText3) as Packing,"
         InventoryItemsFieldsToSelect = "
-        Select 
-InventoryHeadersTable.InventoryHeaderID_AutoNumber,
-StocksTable.StockID_Autonumber, 
-ProductsPartsTable.ProductsPartID_Autonumber, 
-StocksLocationsTable.StocksLocationID_AutoNumber, 
-StocksLocationsTable.LocationCode_ShortText11,
-MasterCodeBookTable.SystemDesc_ShortText100Fld,
-PartsSpecificationsTable.PartSpecifications_ShortText255, 
-ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
-ProductsPartsTable.ManufacturerDescription_ShortText250, 
-StocksTable.QuantityInStock_Double, 
-Packings.UnitOfThePacking_ShortText3,
-ProductsPartsTable.Unit_ShortText3, 
-StocksTable.BulkBalanceQuantity_Double,
-BrandsTable.BrandID_Autonumber, 
-BrandsTable.BrandName_ShortText20, 
-Packings.Packing
-FROM ((((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) LEFT JOIN ProductsPartsPackingRelationsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductsPartsPackingRelationsTable.ProductPartID_LongInteger) 
-LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber
+SELECT InventoryHeadersTable.InventoryHeaderID_AutoNumber, StocksTable.StockID_Autonumber, ProductsPartsTable.ProductsPartID_Autonumber, StocksLocationsTable.StocksLocationID_AutoNumber, StocksLocationsTable.LocationCode_ShortText11, MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, StocksTable.QuantityInStock_Double, Packings.UnitOfThePacking_ShortText3, ProductsPartsTable.Unit_ShortText3, StocksTable.BulkBalanceQuantity_Double, BrandsTable.BrandID_Autonumber, BrandsTable.BrandName_ShortText20, Packings.ProductsPartsPackingRelationID_AutoNumber, Packings.Packing, InventoryItemsTable.InventoryQtyInStock_Double, InventoryItemsTable.InventoryBulkBalanceQty_Double
+FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) LEFT JOIN (ProductsPartsPackingRelationsTable LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber) ON InventoryItemsTable.ProductsPartsPackingRelationID_LongInteger = ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
 "
         MySelection = InventoryItemsFieldsToSelect & InventoryItemsSelectionFilter & InventoryItemsSelectionOrder
 
@@ -243,10 +227,11 @@ LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRel
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If InventoryItemsRecordCount = 0 Then Exit Sub
-
+        CurrentProductsPartsPackingRelationID = -1
         CurrentInventoryItemsRow = e.RowIndex
         FillField(CurrentInventoryHeaderID, InventoryItemsDataGridView.Item("InventoryHeaderID_Autonumber", CurrentInventoryItemsRow).Value)
         CurrentProductPartId = InventoryItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentInventoryItemsRow).Value
+        FillField(CurrentProductsPartsPackingRelationID, InventoryItemsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentInventoryItemsRow).Value)
         FillField(CurrentlocationID, InventoryItemsDataGridView.Item("StocksLocationID_Autonumber", CurrentInventoryItemsRow).Value)
         If CurrentInventoryHeaderID = -1 Then
             RegisterInventoryToolStripMenuItem.Visible = True
@@ -300,18 +285,11 @@ LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRel
         FillField(ManufacturerPartDescTextBox.Text, InventoryItemsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentInventoryItemsRow).Value)
         FillField(BrandNameTextBox.Text, InventoryItemsDataGridView.Item("BrandName_ShortText20", CurrentInventoryItemsRow).Value)
         FillField(UnitTextBox.Text, InventoryItemsDataGridView.Item("Unit_ShortText3", CurrentInventoryItemsRow).Value)
-        FillField(QtyInBasicUnitTextBox.Text, InventoryItemsDataGridView.Item("QuantityInStock_Double", CurrentInventoryItemsRow).Value)
+        FillField(QtyInBasicUnitTextBox.Text, InventoryItemsDataGridView.Item("InventoryQtyInStock_Double", CurrentInventoryItemsRow).Value)
+        FillField(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("BulkBalanceQuantity_Double", CurrentInventoryItemsRow).Value)
         FillField(LocationTextBox.Text, InventoryItemsDataGridView.Item("LocationCode_ShortText11", CurrentInventoryItemsRow).Value)
-        If IsNotEmpty(InventoryItemsDataGridView.Item("QuantityPerPack_Double", CurrentInventoryItemsRow).Value) Then
-            PackingTextBox.Text = InventoryItemsDataGridView.Item("QuantityPerPack_Double", CurrentInventoryItemsRow).Value.ToString & Space(1) &
-                                      InventoryItemsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentInventoryItemsRow).Value.ToString &
-                                        " / " &
-                                      InventoryItemsDataGridView.Item("Unit_ShortText3", CurrentInventoryItemsRow).Value.ToString
-            PackingTextBox.Visible = True
-        Else
-            PackingTextBox.Text = ""
-            PackingTextBox.Visible = False
-        End If
+        FillField(PackingTextBox.Text, InventoryItemsDataGridView.Item("Packing", CurrentInventoryItemsRow).Value)
+
     End Sub
     Private Sub InventoriesForm_EnabledChanged(sender As Object, e As EventArgs) Handles MyBase.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -366,6 +344,7 @@ LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRel
             End If
             RegisterDetailsOfThisStockInventoryChanges()
         End If
+
     End Sub
 
     Private Sub UpdateStocksTable(Mode As Integer)
@@ -425,14 +404,14 @@ LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRel
         Else
             AddNewInventoryItem()
         End If
+        FillInventoryItemsDataGridView()
     End Sub
     Private Sub UpdateCurrentInventoryItemId()
-        Dim SetCommand = " SET StocksLocationID_LongInteger = " & CurrentlocationID.ToString & ", " &
-                                "StockID_LongInteger = " & CurrentProductPartId.ToString
-        Dim RecordFilter = " WHERE InventoryHeaderID_LongInteger = -1 AND " & CurrentProductPartId.ToString
+        Dim SetCommand = " SET InventoryQtyInStock_Double = " & QtyInBasicUnitTextBox.Text & ", " &
+                               " AND InventoryBulkBalanceQty_Double = " & Val(BulkBalanceTextBox.Text)
+        Dim RecordFilter = " WHERE InventoryHeaderID_LongInteger = -1 AND ProductPartID_LongInteger = " & CurrentProductPartId.ToString
 
-        UpdateTable("StocksTable", SetCommand, RecordFilter)
-
+        UpdateTable("InventoryItemsTable", SetCommand, RecordFilter)
     End Sub
     Private Sub AddNewInventoryItem()
         Dim FieldsToUpdate = " ProductPartID_LongInteger, 

@@ -72,11 +72,11 @@
 
     Private Sub FillWorkOrdersDataGridView()
         WorkOrdersSelectionOrder = " ORDER BY WorkOrderID_AutoNumber DESC "
-        Dim VehicleDescription = " 
+        Dim VehicleModels = " 
 (VehiclesTable.YearManufactured_ShortText4 & space(1) & 
 Trim(VehicleTypeTable.VehicleType_ShortText20) & space(1) & 
 trim(VehicleModelsTable.VehicleModel_ShortText20) & space(1) & 
-trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription,
+trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleModels,
 "
         Dim CustomerServiceSpecialist = "
 (trim(CSSTable.FirstName_ShortText30) & space(1) & Trim(CSSTable.LastName_ShortText30)) AS CustomerServiceSpecialist, 
@@ -99,7 +99,7 @@ WorkOrdersTable.WorkOrderNumber_ShortText12,
 WorkOrdersTable.ServiceDate_DateTime,
 WorkOrdersTable.ReleaseDate_DateTime,
 WorkOrdersTable.VehicleMilage_Integer,
-" & VehicleDescription & OwnerName & " 
+" & VehicleModels & OwnerName & " 
 OwnersTable.TelNo_ShortText10, 
 " &
 CustomerServiceSpecialist &
@@ -166,9 +166,9 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
                     WorkOrdersDataGridView.Columns(i).DefaultCellStyle.Format = "###,###"
                     WorkOrdersDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                     WorkOrdersDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
-                    WorkOrdersDataGridView.Columns.Item("VehicleDescription").HeaderText = "VEHICLE"
-                    WorkOrdersDataGridView.Columns.Item("VehicleDescription").Width = 200
+                Case "VehicleModels"
+                    WorkOrdersDataGridView.Columns.Item("VehicleModels").HeaderText = "VEHICLE"
+                    WorkOrdersDataGridView.Columns.Item("VehicleModels").Width = 200
                     WorkOrdersDataGridView.Columns.Item(i).Visible = True
                 Case "OwnerName"
                     WorkOrdersDataGridView.Columns.Item(i).HeaderText = "OWNER"
@@ -544,7 +544,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
         If IsNotEmpty(WorkOrdersDataGridView("VinNo_ShortText20", CurrentWorkOrderRow).Value) Then
             VINTextBox.Text = WorkOrdersDataGridView("VinNo_ShortText20", CurrentWorkOrderRow).Value
         End If
-        VehicleDetailsTextBox.Text = WorkOrdersDataGridView.Item("VehicleDescription", CurrentWorkOrderRow).Value
+        VehicleDetailsTextBox.Text = WorkOrdersDataGridView.Item("VehicleModels", CurrentWorkOrderRow).Value
 
     End Sub
     Private Sub LoadConcerns()

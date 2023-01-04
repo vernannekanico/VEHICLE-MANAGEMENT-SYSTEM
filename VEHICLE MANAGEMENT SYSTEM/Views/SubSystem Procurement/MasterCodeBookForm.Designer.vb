@@ -23,9 +23,9 @@ Partial Class MasterCodeBookForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainSystemCodeDataGridView = New System.Windows.Forms.DataGridView()
         Me.SubSystemCodeDataGridView = New System.Windows.Forms.DataGridView()
         Me.SubSystemContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -87,8 +87,6 @@ Partial Class MasterCodeBookForm
         Me.EditInformationDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DefaultVehicleModelTextBox = New System.Windows.Forms.TextBox()
         Me.DefaultVehicleModelRepairRangeTextBox = New System.Windows.Forms.TextBox()
-        Me.SystemNameContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PasteDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         CType(Me.MainSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SubSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SubSystemContextMenuStrip.SuspendLayout()
@@ -100,20 +98,19 @@ Partial Class MasterCodeBookForm
         CType(Me.CodeInformationsHeaderRelationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ProductDetailsGroup.SuspendLayout()
         Me.MasterCodeBookMenuStrip.SuspendLayout()
-        Me.SystemNameContextMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainSystemCodeDataGridView
         '
         Me.MainSystemCodeDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MainSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.MainSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.MainSystemCodeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.MainSystemCodeDataGridView.Location = New System.Drawing.Point(6, 9)
         Me.MainSystemCodeDataGridView.Name = "MainSystemCodeDataGridView"
@@ -126,14 +123,14 @@ Partial Class MasterCodeBookForm
         'SubSystemCodeDataGridView
         '
         Me.SubSystemCodeDataGridView.AllowUserToAddRows = False
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.SubSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.SubSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.SubSystemCodeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.SubSystemCodeDataGridView.ContextMenuStrip = Me.SubSystemContextMenuStrip
         Me.SubSystemCodeDataGridView.Location = New System.Drawing.Point(0, 339)
@@ -303,7 +300,6 @@ Partial Class MasterCodeBookForm
         Me.SystemNameTextBox.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SystemNameTextBox.ContextMenuStrip = Me.SystemNameContextMenuStrip
         Me.SystemNameTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SystemNameTextBox.Location = New System.Drawing.Point(18, 204)
         Me.SystemNameTextBox.Name = "SystemNameTextBox"
@@ -461,14 +457,14 @@ Partial Class MasterCodeBookForm
         '
         Me.CodeInformationsHeaderRelationsDataGridView.AllowUserToResizeColumns = False
         Me.CodeInformationsHeaderRelationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.CodeInformationsHeaderRelationsDataGridView.Location = New System.Drawing.Point(22, 9)
         Me.CodeInformationsHeaderRelationsDataGridView.MultiSelect = False
@@ -699,19 +695,6 @@ Partial Class MasterCodeBookForm
         Me.DefaultVehicleModelRepairRangeTextBox.Size = New System.Drawing.Size(375, 31)
         Me.DefaultVehicleModelRepairRangeTextBox.TabIndex = 81
         '
-        'SystemNameContextMenuStrip
-        '
-        Me.SystemNameContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteDescriptionToolStripTextBox})
-        Me.SystemNameContextMenuStrip.Name = "SpecificationsContextMenuStrip"
-        Me.SystemNameContextMenuStrip.Size = New System.Drawing.Size(161, 29)
-        '
-        'PasteDescriptionToolStripTextBox
-        '
-        Me.PasteDescriptionToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.PasteDescriptionToolStripTextBox.Name = "PasteDescriptionToolStripTextBox"
-        Me.PasteDescriptionToolStripTextBox.Size = New System.Drawing.Size(100, 23)
-        Me.PasteDescriptionToolStripTextBox.Text = "Paste Description"
-        '
         'MasterCodeBookForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -747,8 +730,6 @@ Partial Class MasterCodeBookForm
         Me.ProductDetailsGroup.PerformLayout()
         Me.MasterCodeBookMenuStrip.ResumeLayout(False)
         Me.MasterCodeBookMenuStrip.PerformLayout()
-        Me.SystemNameContextMenuStrip.ResumeLayout(False)
-        Me.SystemNameContextMenuStrip.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -815,6 +796,4 @@ Partial Class MasterCodeBookForm
     Friend WithEvents SetDefaultVehicleLabel As Label
     Friend WithEvents SubSystemContextMenuStrip As ContextMenuStrip
     Friend WithEvents CopyDescriptionToolStripTextBox As ToolStripTextBox
-    Friend WithEvents SystemNameContextMenuStrip As ContextMenuStrip
-    Friend WithEvents PasteDescriptionToolStripTextBox As ToolStripTextBox
 End Class

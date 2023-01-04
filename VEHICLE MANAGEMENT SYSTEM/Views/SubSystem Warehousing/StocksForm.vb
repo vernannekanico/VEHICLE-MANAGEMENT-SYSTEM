@@ -144,10 +144,6 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
                     StocksDataGridView.Columns.Item(i).HeaderText = "RepairClassID"
                     StocksDataGridView.Columns.Item(i).Width = 70
                     StocksDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
-                    StocksDataGridView.Columns.Item(i).HeaderText = "Vehicle model"
-                    StocksDataGridView.Columns.Item(i).Width = 180
-                    StocksDataGridView.Columns.Item(i).Visible = True
                 Case "QuantityPerPack_Double"
                     StocksDataGridView.Columns.Item(i).HeaderText = "QtyPerPack"
                     StocksDataGridView.Columns.Item(i).Width = 70

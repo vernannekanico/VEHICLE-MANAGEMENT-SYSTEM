@@ -74,12 +74,12 @@ StoreSuppliesRequisitionsItemsTable.StoreSupplyRequisitionQuantity_Double,
 ProductsPartsTable.Unit_ShortText3, 
 BrandsTableRequested.BrandName_ShortText20, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
-VehicleDescription.VehicleDescription, 
+VehicleModels.VehicleModels, 
 StoreSuppliesRequisitionsItemsTable.RequisitionID_LongInteger,
 StatusesTable.StatusSequence_LongInteger, 
 StatusesTable.StatusText_ShortText25, 
 RequisitionsTable.RequisitionType_Byte
-FROM (((((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ProductsPartsTable ON StoreSuppliesRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN VehicleDescription ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) LEFT JOIN BrandsTable AS BrandsTableRequested ON ProductsPartsTable.BrandID_LongInteger = BrandsTableRequested.BrandID_Autonumber) LEFT JOIN StatusesTable ON StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN RequisitionsTable ON StoreSuppliesRequisitionsItemsTable.RequisitionID_LongInteger = RequisitionsTable.RequisitionID_AutoNumber
+FROM (((((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ProductsPartsTable ON StoreSuppliesRequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN VehicleModels ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber) LEFT JOIN BrandsTable AS BrandsTableRequested ON ProductsPartsTable.BrandID_LongInteger = BrandsTableRequested.BrandID_Autonumber) LEFT JOIN StatusesTable ON StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN RequisitionsTable ON StoreSuppliesRequisitionsItemsTable.RequisitionID_LongInteger = RequisitionsTable.RequisitionID_AutoNumber
 "
 
 
@@ -110,7 +110,7 @@ FROM (((((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON S
             StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = False
 
             Select Case StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Name
-                Case "VehicleDescription"
+                Case "VehicleModels"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).HeaderText = "For Vehicle"
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Width = 200
                     StoreSuppliesRequisitionsItemsDataGridView.Columns.Item(i).Visible = True
@@ -195,7 +195,7 @@ FROM (((((StoreSuppliesRequisitionsItemsTable LEFT JOIN MasterCodeBookTable ON S
     Public Sub FillRequisitionsDataGridView()
         RequisitionsSelectionOrder = " ORDER BY RequisitionID_AutoNumber DESC "
 
-        '        VehicleDescription.VehicleDescription,
+        '        VehicleModels.VehicleModels,
         RequisitionsFieldsToSelect =
 " 
 SELECT 

@@ -32,9 +32,9 @@ PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger,
 PurchaseOrdersTable.PurchaseOrderID_AutoNumber,
 PurchaseOrdersTable.PurchaseOrderRevision_Integer, 
 BrandsOrderedTable.BrandName_ShortText20, 
-VehicleDescription.VehicleDescription,
+VehicleModels.VehicleModels,
 PurchaseOrdersItemsTable.DeliveryMode_Byte
-FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsOrderedTable ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsOrderedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsOrderedTable ON ProductsPartsOrderedTable.BrandID_LongInteger = BrandsOrderedTable.BrandID_Autonumber) LEFT JOIN ((RequisitionsItemsTable LEFT JOIN RequisitionsTable ON RequisitionsItemsTable.RequisitionID_LongInteger = RequisitionsTable.RequisitionID_AutoNumber) LEFT JOIN VehicleDescription ON RequisitionsTable.VehicleID_LongInteger = VehicleDescription.VehicleID_AutoNumber) ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionID_LongInteger) LEFT JOIN PackagePricesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber = PackagePricesTable.PackagePriceID_LongInteger) LEFT JOIN MasterCodeBookTable ON ProductsPartsOrderedTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN StatusesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber
+FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable AS ProductsPartsOrderedTable ON PurchaseOrdersItemsTable.ProductPartID_LongInteger = ProductsPartsOrderedTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable AS BrandsOrderedTable ON ProductsPartsOrderedTable.BrandID_LongInteger = BrandsOrderedTable.BrandID_Autonumber) LEFT JOIN ((RequisitionsItemsTable LEFT JOIN RequisitionsTable ON RequisitionsItemsTable.RequisitionID_LongInteger = RequisitionsTable.RequisitionID_AutoNumber) LEFT JOIN VehicleModels ON RequisitionsTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber) ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionID_LongInteger) LEFT JOIN PackagePricesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemID_AutoNumber = PackagePricesTable.PackagePriceID_LongInteger) LEFT JOIN MasterCodeBookTable ON ProductsPartsOrderedTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN StatusesTable ON PurchaseOrdersItemsTable.PurchaseOrdersItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber
   "
 
         MySelection = PurchasedItemsFieldsToSelect '& PurchasedItemsSelectionFilter & PurchasedItemsSelectionOrder
@@ -108,7 +108,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
                     PurchasedItemsDataGridView.Columns.Item(i).HeaderText = "Delivery Mode"
                     PurchasedItemsDataGridView.Columns.Item(i).Width = 120
                     PurchasedItemsDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
+                Case "VehicleModels"
                     PurchasedItemsDataGridView.Columns.Item(i).HeaderText = " Vehicle Model"
                     PurchasedItemsDataGridView.Columns.Item(i).Width = 250
                     PurchasedItemsDataGridView.Columns.Item(i).Visible = True

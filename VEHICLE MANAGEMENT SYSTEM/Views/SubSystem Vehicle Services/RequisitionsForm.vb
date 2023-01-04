@@ -89,6 +89,7 @@
         Dim xxStoreOrder = " IIf(RequisitionsTable.RequisitionType_Byte = 2, " & Chr(34) & "Store Order" & Chr(34) & ","
         PartsRequisitionType = xxWorkOrder & xxStoreOrder & " )) AS PartsRequisitionType,  "
 
+
         RequisitionsFieldsToSelect =
 " 
 SELECT RequisitionsTable.RequisitionID_AutoNumber, 
@@ -110,6 +111,7 @@ AssignedTo.PersonnelFullName AS AssignedTo,
 RequestedBy.PersonnelFullName AS RequestedBy
 FROM (((((RequisitionsTable LEFT JOIN VehiclesTable ON RequisitionsTable.VehicleID_LongInteger = VehiclesTable.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsTable.RequisitionStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN DepartmentsTable ON RequisitionsTable.DepartmentID__LongInteger = DepartmentsTable.DepartmentID_AutoNumber) LEFT JOIN VehicleDescription ON VehiclesTable.VehicleID_AutoNumber = VehicleDescription.VehicleID_AutoNumber) LEFT JOIN PersonnelFullName AS AssignedTo ON RequisitionsTable.PurchaserID_LongInteger = AssignedTo.PersonnelID_AutoNumber) LEFT JOIN PersonnelFullName AS RequestedBy ON RequisitionsTable.RequestedByID_LongInteger = RequestedBy.PersonnelID_AutoNumber
 "
+
         MySelection = RequisitionsFieldsToSelect & RequisitionsSelectionFilter & RequisitionsSelectionOrder
         JustExecuteMySelection()
 
@@ -163,7 +165,7 @@ FROM (((((RequisitionsTable LEFT JOIN VehiclesTable ON RequisitionsTable.Vehicle
                     RequisitionsDataGridView.Columns.Item(i).HeaderText = "Requisition Type"
                     RequisitionsDataGridView.Columns.Item(i).Width = 300
                     RequisitionsDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
+                Case "VehicleModels"
                     RequisitionsDataGridView.Columns.Item(i).HeaderText = "For Vehicle"
                     RequisitionsDataGridView.Columns.Item(i).Width = 300
                     RequisitionsDataGridView.Columns.Item(i).Visible = True
@@ -211,15 +213,15 @@ FROM (((((RequisitionsTable LEFT JOIN VehiclesTable ON RequisitionsTable.Vehicle
     Private Sub FillRequisitionsItemsDataGridView()
 
         Dim xxMasterCodeBookID_LongInteger = "  "
-        Dim xxVehicleDescription = "  "
+        Dim xxVehicleModels = "  "
 
         Dim xxRequestedUnit = "  "
         Dim xxRequestedBrand = " "
         Dim RequisitionsItemstatus = " "
         If RequisitionsDataGridView.Item("RequisitionType_Byte", CurrentRequisitionsRow).Value = 1 Then ' 1- WorkOrder 2-Store
-            xxVehicleDescription = " VehicleDescriptionWorkOrder.VehicleDescription, "
+            xxVehicleModels = " VehicleModelsWorkOrder.VehicleModels, "
         Else
-            xxVehicleDescription = " VehicleDescriptionStoreSupplies.VehicleDescription, "
+            xxVehicleModels = " VehicleModelsStoreSupplies.VehicleModels, "
         End If
 
         RequisitionsItemsFieldsToSelect =
@@ -241,10 +243,10 @@ PurchaseOrdersTable.PurchaseOrderDate_ShortDate,
 RequisitionsItemsTable.RequisitionsItemID_AutoNumber,
 RequisitionsItemsTable.RequisitionID_LongInteger,
 RequisitionsItemsTable.ProductPartID_LongInteger,
-VehicleDescriptionStoreSupplies.VehicleDescription,
-VehicleDescriptionWorkOrder.VehicleDescription,
+VehicleModelsStoreSupplies.VehicleModels,
+VehicleModelsWorkOrder.VehicleModels,
 StatusesTable.StatusText_ShortText25
-FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable RIGHT JOIN RequisitionsItemsTable ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionsItemID_AutoNumber) LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable ON RequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN WorkOrderRequestedPartsTable ON RequisitionsItemsTable.[WorkOrderRequestedPartID_LongInteger] = WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber) LEFT JOIN WorkOrderPartsTable ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN StoreSuppliesRequisitionsItemsTable ON RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger = StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemID_AutoNumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableWorkOrder ON WorkOrderPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTableWorkOrder.MasterCodeBookID_Autonumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableStoreSupplies ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTableStoreSupplies.MasterCodeBookID_Autonumber) LEFT JOIN VehicleDescription AS VehicleDescriptionStoreSupplies ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleDescriptionStoreSupplies.VehicleID_AutoNumber) LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehicleDescription AS VehicleDescriptionWorkOrder ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleDescriptionWorkOrder.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsItemsTable.RequisitionItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
+FROM ProductPartsPackingsTable RIGHT JOIN ((((((((((((((PurchaseOrdersItemsTable RIGHT JOIN RequisitionsItemsTable ON PurchaseOrdersItemsTable.RequisitionsItemID_LongInteger = RequisitionsItemsTable.RequisitionsItemID_AutoNumber) LEFT JOIN PurchaseOrdersTable ON PurchaseOrdersItemsTable.PurchaseOrderID_LongInteger = PurchaseOrdersTable.PurchaseOrderID_AutoNumber) LEFT JOIN ProductsPartsTable ON RequisitionsItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN WorkOrderRequestedPartsTable ON RequisitionsItemsTable.[WorkOrderRequestedPartID_LongInteger] = WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber) LEFT JOIN WorkOrderPartsTable ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN StoreSuppliesRequisitionsItemsTable ON RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger = StoreSuppliesRequisitionsItemsTable.StoreSuppliesRequisitionsItemID_AutoNumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableWorkOrder ON WorkOrderPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTableWorkOrder.MasterCodeBookID_Autonumber) LEFT JOIN MasterCodeBookTable AS MasterCodeBookTableStoreSupplies ON StoreSuppliesRequisitionsItemsTable.MasterCodeBookID_LongInteger = MasterCodeBookTableStoreSupplies.MasterCodeBookID_Autonumber) LEFT JOIN VehicleModels AS VehicleModelsStoreSupplies ON StoreSuppliesRequisitionsItemsTable.VehicleID_LongInteger = VehicleModelsStoreSupplies.VehicleID_AutoNumber) LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN VehicleModels AS VehicleModelsWorkOrder ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModelsWorkOrder.VehicleID_AutoNumber) LEFT JOIN StatusesTable ON RequisitionsItemsTable.RequisitionItemStatusID_LongInteger = StatusesTable.StatusID_Autonumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
 "
         MySelection = RequisitionsItemsFieldsToSelect & RequisitionsItemsSelectionFilter & RequisitionsItemsSelectionOrder
         JustExecuteMySelection()

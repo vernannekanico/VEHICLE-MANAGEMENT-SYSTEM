@@ -75,6 +75,7 @@ Partial Class PurchaseOrdersForm
         Me.SavePurchaseOrderToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SubmitForApprovalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ApproveStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SentToSupplierToolStripMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.PODetailsOFFToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseOrderItemsToolStripMenus = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeliveredToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -135,7 +136,6 @@ Partial Class PurchaseOrdersForm
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.SentToSupplierToolStripMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.PurchaseOrderDetailsGroupBox.SuspendLayout()
         Me.PurchaseOrdersSearchToolStrip.SuspendLayout()
         Me.PurchaseOrdersMenuStrip.SuspendLayout()
@@ -556,6 +556,13 @@ Partial Class PurchaseOrdersForm
         Me.ApproveStripMenuItem.Size = New System.Drawing.Size(81, 25)
         Me.ApproveStripMenuItem.Text = "Approve"
         Me.ApproveStripMenuItem.Visible = False
+        '
+        'SentToSupplierToolStripMenu
+        '
+        Me.SentToSupplierToolStripMenu.Name = "SentToSupplierToolStripMenu"
+        Me.SentToSupplierToolStripMenu.Size = New System.Drawing.Size(133, 25)
+        Me.SentToSupplierToolStripMenu.Text = "Sent to Supplier"
+        Me.SentToSupplierToolStripMenu.Visible = False
         '
         'PODetailsOFFToolStripMenuItem
         '
@@ -1182,13 +1189,6 @@ Partial Class PurchaseOrdersForm
         Me.Label22.Size = New System.Drawing.Size(68, 20)
         Me.Label22.TabIndex = 85
         Me.Label22.Text = "Quantity"
-        '
-        'SentToSupplierToolStripMenu
-        '
-        Me.SentToSupplierToolStripMenu.Name = "SentToSupplierToolStripMenu"
-        Me.SentToSupplierToolStripMenu.Size = New System.Drawing.Size(133, 25)
-        Me.SentToSupplierToolStripMenu.Text = "Sent to Supplier"
-        Me.SentToSupplierToolStripMenu.Visible = False
         '
         'PurchaseOrdersForm
         '

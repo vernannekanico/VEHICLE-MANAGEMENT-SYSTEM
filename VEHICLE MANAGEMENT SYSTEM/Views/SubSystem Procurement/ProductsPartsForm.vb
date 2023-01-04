@@ -81,7 +81,6 @@ Public Class ProductsPartsForm
         CallingForm = SavedCallingForm
 
         ' GET RETURNED DATA HERE
-
         Select Case Tunnel1
             Case "Tunnel2IsPartsSpecificationsID"
                 CurrentProductSpecificationID = Tunnel2
@@ -93,6 +92,7 @@ Public Class ProductsPartsForm
                 ProductDetailsGroup.Visible = True
                 ProductDetailsGroup.BringToFront()
                 CurrentMasterCodeBookID = Tunnel2
+                SelectToolStripMenuItem.Visible = True
                 SystemPartDescriptionTextBox.Text = Tunnel3
             Case "Tunnel2IsProductPartsPackingID"
                 CurrentProductsPartsPackingID = Tunnel2
@@ -105,6 +105,7 @@ Public Class ProductsPartsForm
 SELECT 
 ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
+MasterCodeBookTable.SubSystemCode_ShortText24Fld,
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 PartsSpecificationsTable.PartsSpecificationID_AutoNumber, 
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
@@ -439,6 +440,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
+        Tunnel3 = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
         Select Case SavedCallingForm.Name
             Case "InventoriesForm"
                 Dim Packing = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & " " &
@@ -583,7 +585,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         End If
         'VALIDATIONS
         If Trim(ManufacturerPartNoTextBox.Text) = "" Then
-            If MsgBox("Leave the PART NUMBER blank ? ", MsgBoxStyle.YesNo) = vbYesNo Then
+            If MsgBox("Leave the PART NUMBER blank ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then
                 ManufacturerPartNoTextBox.Select()
                 Exit Sub
             End If
@@ -801,10 +803,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             HistoriesGroupBox.Visible = False
             ProductsPartsMenuStrip.Visible = True
             Exit Sub
-        End If
-        If SavedCallingForm.Name = "InventoriesForm" Then
-            Tunnel1 = "Tunnel2IsProductPartID"
-            Tunnel2 = CurrentProductPartID
         End If
         If ProductDetailsGroup.Visible = True Then
             If IsNotEmpty(ManufacturerPartDescTextBox.Text) Then
@@ -1053,8 +1051,4 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         Clipboard.SetText(ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
     End Sub
 
-    Private Sub PasteDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteDescriptionToolStripTextBox.Click
-        ManufacturerPartDescContextMenuStrip.Hide()
-        ManufacturerPartDescTextBox.Text = Clipboard.GetText()
-    End Sub
 End Class

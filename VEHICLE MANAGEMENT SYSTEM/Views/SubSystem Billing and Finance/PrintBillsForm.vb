@@ -79,7 +79,7 @@ WorkOrdersTable.VehicleMilage_Integer,
 (VehiclesTable.YearManufactured_ShortText4 & space(1) & 
 Trim(VehicleTypeTable.VehicleType_ShortText20) & space(1) & 
 trim(VehicleModelsTable.VehicleModel_ShortText20) & space(1) & 
-trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleDescription,
+trim(VehicleTrimTable.VehicleTrimName_ShortText25)) AS VehicleModels,
 (trim(OwnersTable.FirstName_ShortText30) & space(1) & 
 Trim(OwnersTable.LastName_ShortText30) & space(1) & 
 trim(OwnersTable.NamePrefix_ShortText3)) AS VehicleOwner,
@@ -141,9 +141,9 @@ FROM ((((((((((WorkOrdersTable LEFT JOIN ServicedVehiclesTable ON WorkOrdersTabl
                     WorkOrdersDataGridView.Columns(i).DefaultCellStyle.Format = "###,###"
                     WorkOrdersDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                     WorkOrdersDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
-                    WorkOrdersDataGridView.Columns.Item("VehicleDescription").HeaderText = "VEHICLE"
-                    WorkOrdersDataGridView.Columns.Item("VehicleDescription").Width = 200
+                Case "VehicleModels"
+                    WorkOrdersDataGridView.Columns.Item("VehicleModels").HeaderText = "VEHICLE"
+                    WorkOrdersDataGridView.Columns.Item("VehicleModels").Width = 200
                     WorkOrdersDataGridView.Columns.Item(i).Visible = True
                 Case "VehicleOwner"
                     WorkOrdersDataGridView.Columns.Item(i).HeaderText = "OWNER"
@@ -523,7 +523,7 @@ FROM ((WorkOrderReceivedPartsTable RIGHT JOIN (((((WorkOrderPartsTable LEFT JOIN
         e.Graphics.DrawString("for relatives and friends only", F10, Brushes.Black, CenterMargin, 25, CenterStringFormat)
         e.Graphics.DrawString("La Puente ", F14, Brushes.Black, CenterMargin, 40, CenterStringFormat)
 
-        Dim xxVehicleDescription = WorkOrdersDataGridView.Item("VehicleDescription", CurrentWorkOrdersRow).Value
+        Dim xxVehicleModels = WorkOrdersDataGridView.Item("VehicleModels", CurrentWorkOrdersRow).Value
         Dim xxVinNo = WorkOrdersDataGridView.Item("VinNo_ShortText20", CurrentWorkOrdersRow).Value
         Dim xxCustomer = WorkOrdersDataGridView.Item("VehicleOwner", CurrentWorkOrdersRow).Value
         Dim xxServiceDate = WorkOrdersDataGridView.Item("ServiceDate_DateTime", CurrentWorkOrdersRow).Value
@@ -546,7 +546,7 @@ FROM ((WorkOrderReceivedPartsTable RIGHT JOIN (((((WorkOrderPartsTable LEFT JOIN
         e.Graphics.DrawString(xxServiceDate, F10, Brushes.Black, 130, FormHeight + 15)
 
         e.Graphics.DrawString("Vehicle : ", F10, Brushes.Black, 0, FormHeight + 30)
-        e.Graphics.DrawString(xxVehicleDescription, F10, Brushes.Black, 130, FormHeight + 30)
+        e.Graphics.DrawString(xxVehicleModels, F10, Brushes.Black, 130, FormHeight + 30)
 
         e.Graphics.DrawString("Milage In : ", F10, Brushes.Black, 0, FormHeight + 45)
         e.Graphics.DrawString(Format(xxVehicleMilage, "#,###,##0"), F10, Brushes.Black, 130, FormHeight + 45)

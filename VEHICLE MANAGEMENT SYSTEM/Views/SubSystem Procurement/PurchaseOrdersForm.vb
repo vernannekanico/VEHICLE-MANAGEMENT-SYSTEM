@@ -218,7 +218,7 @@ FROM (PurchaseOrdersTable LEFT JOIN SuppliersTable ON PurchaseOrdersTable.Suppli
             SupplierNameTextBox.Select()
         End If
         PurchaseOrderDetailsGroupBox.Visible = False
-        DeletePurchaseOrderToolStripMenuItem.Visible = False
+        '      DeletePurchaseOrderToolStripMenuItem.Visible = False
         SubmitForApprovalToolStripMenuItem.Visible = False
         ApproveStripMenuItem.Visible = False
         SentToSupplierToolStripMenu.Visible = False
@@ -307,7 +307,7 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
             FormatPurchaseOrdersItemsDataGridView()
         End If
 
-        SetGroupBoxHeight(10, PurchaseOrdersItemsRecordCount, PurchaseOrdersItemsGroupBox, PurchaseOrdersItemsDataGridView)
+        SetGroupBoxHeight(15, PurchaseOrdersItemsRecordCount, PurchaseOrdersItemsGroupBox, PurchaseOrdersItemsDataGridView)
 
         Dim RowsHeight = 0
         For i = 0 To PurchaseOrdersItemsRecordCount - 1
@@ -514,7 +514,6 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         PurchaseOrderDetailsGroupBox.Visible = True
     End Sub
     Private Sub DeleteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeletePurchaseOrderToolStripMenuItem.Click
-        PurposeOfEntry = "DELETE"
         '      LoadPurchaseOrderDetails()
         If PurchaseOrdersItemsRecordCount > 0 Then
             MsgBox("Unable to delete this Work Order." & vbCrLf & "delete first all PurchaseOrders items attached")
@@ -535,8 +534,23 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
         Else
             MsgBox("UnSuccessfuly deleted the record, ????????")
         End If
-        FillPurchaseOrdersDataGridView()
-
+        Dim SavedPurchaseOrdersSelectionFilter = PurchaseOrdersSelectionFilter
+        Do While True
+            PurchaseOrdersSelectionFilter = PurchaseOrdersSelectionFilter &
+                    " AND PurchaseOrderID_AutoNumber <  " & Str(CurrentPurchaseOrderID)
+            FillPurchaseOrdersDataGridView()
+            If PurchaseOrdersRecordCount = 0 Then
+                CurrentPurchaseOrderID = 1000
+                Exit Do
+                Continue Do
+            End If
+            If PurchaseOrdersItemsRecordCount = 0 Then
+                Exit Do
+            Else
+                CurrentPurchaseOrderID = CurrentPurchaseOrderID - 1
+            End If
+        Loop
+        PurchaseOrdersSelectionFilter = SavedPurchaseOrdersSelectionFilter
     End Sub
     Private Function ThisRecordNotYetExistsInThePurchaseOrdersTable()
         MySelection = "SELECT * " &
@@ -709,8 +723,10 @@ FROM ((((((PurchaseOrdersItemsTable LEFT JOIN PurchaseOrdersTable ON PurchaseOrd
     End Sub
     Private Sub PurchaseOrderDetailsGroupBox_EnabledChanged(sender As Object, e As EventArgs) Handles PurchaseOrderDetailsGroupBox.EnabledChanged
         'only draft status can be modified
-        If CurrentPurchaseOrdersDataGridViewRow > -1 Then
-            If CurrentPOStatus <> "Draft" Then Exit Sub
+        If IsNotEmpty(CurrentPOStatus) Then
+            If CurrentPurchaseOrdersDataGridViewRow > -1 Then
+                If CurrentPOStatus <> "Draft" Then Exit Sub
+            End If
         End If
         If PurchaseOrderDetailsGroupBox.Enabled = True Then
             PurchaseOrderDetailsGroupBox.Visible = True

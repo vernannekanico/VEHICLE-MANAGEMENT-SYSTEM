@@ -74,7 +74,7 @@
                     MyStandardsDataGridView.Columns(i).DefaultCellStyle.Format = "###,###"
                     MyStandardsDataGridView.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                     MyStandardsDataGridView.Columns.Item(i).Visible = True
-                Case "VehicleDescription"
+                Case "VehicleModels"
                     MyStandardsDataGridView.Columns.Item(i).HeaderText = "VEHICLE"
                     MyStandardsDataGridView.Columns.Item(i).Width = 200
                     MyStandardsDataGridView.Columns.Item(i).Visible = True
