@@ -25,6 +25,9 @@
                                       ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value.ToString &
                                         " / " &
                                       ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value.ToString
+        If ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value = "" Then
+            Tunnel3 = ""
+        End If
         Select Case SavedCallingForm.Name
             Case "ProductPartsPackingRelationsForm"
         End Select
@@ -143,18 +146,20 @@ SELECT * FROM ProductPartsPackingsTable "
     End Sub
     Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
         SaveChanges()
-        PackingDetailsGroupBox.Visible = False
     End Sub
     Private Sub SaveChanges()
-        If IsEmpty(QuantityPerPackTextBox.Text) Then
-            QuantityPerPackTextBox.Select()
-            Exit Sub
-        End If
-        If IsEmpty(UnitOfTheQuantityTextBox.Text) Then
-            UnitOfTheQuantityTextBox.Select()
-            Exit Sub
-        End If
         If AChangeInProductPartsPackingsOccured() Then
+            If IsEmpty(QuantityPerPackTextBox.Text) Then
+                QuantityPerPackTextBox.Select()
+                Exit Sub
+            End If
+            If IsEmpty(UnitOfTheQuantityTextBox.Text) Then
+                If QuantityPerPackTextBox.Text <> 1 Then
+                    QuantityPerPackTextBox.Select()
+                    MsgBox("To make this as the base unit (smallest unit) for this Product QuantityPerPack should be 1, otherwise ")
+                    Exit Sub
+                End If
+            End If
             Dim xxmsgResult = MsgBox("Save Changes?", MsgBoxStyle.YesNoCancel)
             If xxmsgResult = vbNo Then
                 PackingDetailsGroupBox.Visible = False
@@ -164,6 +169,7 @@ SELECT * FROM ProductPartsPackingsTable "
             End If
             RegisterProductPartsPackingsChanges()
         End If
+        PackingDetailsGroupBox.Visible = False
         FillProductPartsPackingsDataGridView()
     End Sub
     Private Function AChangeInProductPartsPackingsOccured()
@@ -192,9 +198,6 @@ SELECT * FROM ProductPartsPackingsTable "
             Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
             CurrentProductsPartsPackingID = r("ProductPartsPackingID_Autonumber")
         End If
-        'NOTE IF THE IS A LINK IN THE ProductsPartsPackingRelationsTable THEN YOU CAN NOT UPDATE
-
-        UpdateProductPartsPackings()
     End Sub
     Private Sub InsertProductPartsPacking()
         'modify this ProductPartID_LongInteger has been deleted

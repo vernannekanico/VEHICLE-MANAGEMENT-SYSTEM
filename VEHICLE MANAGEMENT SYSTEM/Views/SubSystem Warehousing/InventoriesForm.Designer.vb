@@ -45,7 +45,6 @@ Partial Class InventoriesForm
         Me.BulkBalanceTextBox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
-        Me.PackingButton = New System.Windows.Forms.Button()
         Me.PackingTextBox = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.LocationTextBox = New System.Windows.Forms.TextBox()
@@ -64,6 +63,7 @@ Partial Class InventoriesForm
         Me.ManufacturerPartNoLabel = New System.Windows.Forms.Label()
         Me.InventoryItemsGroupBox = New System.Windows.Forms.GroupBox()
         Me.InventoryItemsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.InventoriesGroupBox.SuspendLayout()
         CType(Me.InventoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SearchToolStrip.SuspendLayout()
@@ -207,12 +207,12 @@ Partial Class InventoriesForm
         '
         Me.StockDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.StockDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.StockDetailsGroup.Controls.Add(Me.Label3)
         Me.StockDetailsGroup.Controls.Add(Me.BulkBalanceUnitTextBox)
         Me.StockDetailsGroup.Controls.Add(Me.Label2)
         Me.StockDetailsGroup.Controls.Add(Me.BulkBalanceTextBox)
         Me.StockDetailsGroup.Controls.Add(Me.Label1)
         Me.StockDetailsGroup.Controls.Add(Me.ProductSpecificationTextBox)
-        Me.StockDetailsGroup.Controls.Add(Me.PackingButton)
         Me.StockDetailsGroup.Controls.Add(Me.PackingTextBox)
         Me.StockDetailsGroup.Controls.Add(Me.Label4)
         Me.StockDetailsGroup.Controls.Add(Me.LocationTextBox)
@@ -231,7 +231,7 @@ Partial Class InventoriesForm
         Me.StockDetailsGroup.Controls.Add(Me.ManufacturerPartNoLabel)
         Me.StockDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.StockDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StockDetailsGroup.Location = New System.Drawing.Point(415, 100)
+        Me.StockDetailsGroup.Location = New System.Drawing.Point(380, 88)
         Me.StockDetailsGroup.Name = "StockDetailsGroup"
         Me.StockDetailsGroup.Size = New System.Drawing.Size(773, 417)
         Me.StockDetailsGroup.TabIndex = 99
@@ -240,7 +240,7 @@ Partial Class InventoriesForm
         '
         'BulkBalanceUnitTextBox
         '
-        Me.BulkBalanceUnitTextBox.Location = New System.Drawing.Point(393, 364)
+        Me.BulkBalanceUnitTextBox.Location = New System.Drawing.Point(383, 330)
         Me.BulkBalanceUnitTextBox.Name = "BulkBalanceUnitTextBox"
         Me.BulkBalanceUnitTextBox.ReadOnly = True
         Me.BulkBalanceUnitTextBox.Size = New System.Drawing.Size(98, 26)
@@ -249,7 +249,7 @@ Partial Class InventoriesForm
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(34, 338)
+        Me.Label2.Location = New System.Drawing.Point(24, 304)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(248, 20)
@@ -258,7 +258,7 @@ Partial Class InventoriesForm
         '
         'BulkBalanceTextBox
         '
-        Me.BulkBalanceTextBox.Location = New System.Drawing.Point(289, 363)
+        Me.BulkBalanceTextBox.Location = New System.Drawing.Point(279, 329)
         Me.BulkBalanceTextBox.Name = "BulkBalanceTextBox"
         Me.BulkBalanceTextBox.Size = New System.Drawing.Size(98, 26)
         Me.BulkBalanceTextBox.TabIndex = 126
@@ -266,7 +266,7 @@ Partial Class InventoriesForm
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(34, 366)
+        Me.Label1.Location = New System.Drawing.Point(24, 332)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(204, 20)
@@ -281,31 +281,20 @@ Partial Class InventoriesForm
         Me.ProductSpecificationTextBox.Size = New System.Drawing.Size(353, 26)
         Me.ProductSpecificationTextBox.TabIndex = 124
         '
-        'PackingButton
-        '
-        Me.PackingButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PackingButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.PackingButton.Location = New System.Drawing.Point(11, 212)
-        Me.PackingButton.Name = "PackingButton"
-        Me.PackingButton.Size = New System.Drawing.Size(131, 40)
-        Me.PackingButton.TabIndex = 120
-        Me.PackingButton.Text = "Packing"
-        Me.PackingButton.UseVisualStyleBackColor = True
-        '
         'PackingTextBox
         '
-        Me.PackingTextBox.Location = New System.Drawing.Point(279, 218)
+        Me.PackingTextBox.Location = New System.Drawing.Point(279, 363)
         Me.PackingTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.PackingTextBox.Name = "PackingTextBox"
         Me.PackingTextBox.ReadOnly = True
-        Me.PackingTextBox.Size = New System.Drawing.Size(176, 26)
+        Me.PackingTextBox.Size = New System.Drawing.Size(202, 26)
         Me.PackingTextBox.TabIndex = 119
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Britannic Bold", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(294, 294)
+        Me.Label4.Location = New System.Drawing.Point(7, 263)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(102, 21)
         Me.Label4.TabIndex = 60
@@ -313,9 +302,9 @@ Partial Class InventoriesForm
         '
         'LocationTextBox
         '
-        Me.LocationTextBox.Location = New System.Drawing.Point(279, 252)
+        Me.LocationTextBox.Location = New System.Drawing.Point(279, 216)
         Me.LocationTextBox.Name = "LocationTextBox"
-        Me.LocationTextBox.Size = New System.Drawing.Size(202, 26)
+        Me.LocationTextBox.Size = New System.Drawing.Size(220, 26)
         Me.LocationTextBox.TabIndex = 58
         '
         'Label8
@@ -331,7 +320,7 @@ Partial Class InventoriesForm
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 258)
+        Me.Label6.Location = New System.Drawing.Point(7, 222)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(70, 20)
@@ -340,7 +329,7 @@ Partial Class InventoriesForm
         '
         'QtyInBasicUnitTextBox
         '
-        Me.QtyInBasicUnitTextBox.Location = New System.Drawing.Point(289, 332)
+        Me.QtyInBasicUnitTextBox.Location = New System.Drawing.Point(279, 298)
         Me.QtyInBasicUnitTextBox.Name = "QtyInBasicUnitTextBox"
         Me.QtyInBasicUnitTextBox.Size = New System.Drawing.Size(98, 26)
         Me.QtyInBasicUnitTextBox.TabIndex = 55
@@ -348,7 +337,7 @@ Partial Class InventoriesForm
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(16, 318)
+        Me.Label7.Location = New System.Drawing.Point(6, 284)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(156, 20)
@@ -365,7 +354,7 @@ Partial Class InventoriesForm
         '
         'UnitTextBox
         '
-        Me.UnitTextBox.Location = New System.Drawing.Point(393, 332)
+        Me.UnitTextBox.Location = New System.Drawing.Point(383, 298)
         Me.UnitTextBox.Name = "UnitTextBox"
         Me.UnitTextBox.ReadOnly = True
         Me.UnitTextBox.Size = New System.Drawing.Size(98, 26)
@@ -464,6 +453,16 @@ Partial Class InventoriesForm
         Me.InventoryItemsDataGridView.Size = New System.Drawing.Size(302, 69)
         Me.InventoryItemsDataGridView.TabIndex = 52
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(7, 363)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(106, 20)
+        Me.Label3.TabIndex = 129
+        Me.Label3.Text = "Unit / Packing"
+        '
         'InventoriesForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -508,7 +507,6 @@ Partial Class InventoriesForm
     Friend WithEvents RegisterInventoryToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StockDetailsGroup As GroupBox
     Friend WithEvents ProductSpecificationTextBox As TextBox
-    Friend WithEvents PackingButton As Button
     Friend WithEvents PackingTextBox As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents LocationTextBox As TextBox
@@ -534,4 +532,5 @@ Partial Class InventoriesForm
     Friend WithEvents BulkBalanceTextBox As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents BulkBalanceUnitTextBox As TextBox
+    Friend WithEvents Label3 As Label
 End Class

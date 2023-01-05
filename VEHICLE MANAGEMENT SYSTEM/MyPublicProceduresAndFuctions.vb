@@ -1,15 +1,17 @@
 ﻿Module MyPublicProceduresAndFuctions
     Public Function IsEmpty(PassedObject)
         If PassedObject Is Nothing Then Return True
+        If IsDBNull(PassedObject) Then Return True
         If PassedObject.GetType.Name = "DateTime" Then Return False
-        If PassedObject Is Nothing Then Return True
-        If IsDBNull(PassedObject) Then
-            Return True
-        ElseIf Trim(PassedObject.ToString) = "" Then
-            Return True
-        ElseIf PassedObject = "0" Then
-            Return True
-        ElseIf Val(PassedObject) < 0 Then
+        If PassedObject.GetType.Name = "String" Then
+            If Trim(PassedObject.ToString) = "" Then Return True
+            If PassedObject = "0" Then Return True
+            If Val(PassedObject) < 0 Then Return True
+        End If
+        If PassedObject.GetType.Name = "Int32" Then
+            If PassedObject < 0 Then Return True
+        Else
+            MsgBox("in Function IsEmpty(PassedObject) Type of Object Passed is " & PassedObject.GetType.Name)
             Return True
         End If
         Return False
@@ -408,7 +410,6 @@
     End Sub
     Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, RecordFilter As String)
         MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
-        Exit Sub
         JustExecuteMySelection()
         If RecordCount = 0 Then
             MsgBox("Unable to Update " & TableToUpdate & " Table, NO MATCHING RECORD FOUND " & TableToUpdate & " FILTER: " & RecordFilter)

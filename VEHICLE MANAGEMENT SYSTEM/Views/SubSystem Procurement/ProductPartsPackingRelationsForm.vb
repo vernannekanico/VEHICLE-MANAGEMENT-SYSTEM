@@ -37,14 +37,20 @@
         Me.Close()
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
-        Tunnel1 = "Tunnel2IsProductPartsPackingID"
+        Tunnel1 = "Tunnel2IsProductsPartsPackingRelationID"
         Tunnel2 = CurrentProductsPartsPackingRelationID
-        Tunnel3 = ProductPartsPackingRelationsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingRelationsRow).Value.ToString & Space(1) &
+        If ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value = "" Then
+            Tunnel3 = ""
+        Else
+            Tunnel3 = ProductPartsPackingRelationsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingRelationsRow).Value.ToString & Space(1) &
                                       ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value.ToString &
                                         " / " &
                                       ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value.ToString
+        End If
+        Tunnel4 = ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value
         Select Case SavedCallingForm.Name
-            Case "ProductsPartsForm"
+            Case "InventoriesForm"
+                InventoriesForm.UnitTextBox.Text = ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value
         End Select
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
@@ -70,7 +76,7 @@ FROM ProductsPartsPackingRelationsTable LEFT JOIN ProductPartsPackingsTable ON P
             FormatProductPartsPackingRelationsDataGridView()
         End If
 
-        Dim RecordsToDisplay = 25
+        Dim RecordsToDisplay = 24
         SetGroupBoxHeight(RecordsToDisplay, ProductPartsPackingRelationsRecordCount, ProductPartsPackingRelationsGroupBox, ProductPartsPackingRelationsDataGridView)
         ProductPartsPackingRelationsGroupBox.Top = ProductsPartsPackingMenuStrip.Top + ProductsPartsPackingMenuStrip.Height
         Me.Height = ProductPartsPackingRelationsGroupBox.Top + ProductPartsPackingRelationsGroupBox.Height + 50
@@ -91,15 +97,15 @@ FROM ProductsPartsPackingRelationsTable LEFT JOIN ProductPartsPackingsTable ON P
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).Visible = True
                 Case "QuantityPerPack_Double"
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).HeaderText = "Quantity Per Pack"
-                    ProductPartsPackingRelationsDataGridView.Columns.Item(i).Width = 80
+                    ProductPartsPackingRelationsDataGridView.Columns.Item(i).Width = 120
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfTheQuantity_ShortText3"
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).HeaderText = "Quantity Unit"
-                    ProductPartsPackingRelationsDataGridView.Columns.Item(i).Width = 80
+                    ProductPartsPackingRelationsDataGridView.Columns.Item(i).Width = 120
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfThePacking_ShortText3"
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).HeaderText = "Packing Unit"
-                    ProductPartsPackingRelationsDataGridView.Columns.Item(i).Width = 80
+                    ProductPartsPackingRelationsDataGridView.Columns.Item(i).Width = 120
                     ProductPartsPackingRelationsDataGridView.Columns.Item(i).Visible = True
             End Select
 

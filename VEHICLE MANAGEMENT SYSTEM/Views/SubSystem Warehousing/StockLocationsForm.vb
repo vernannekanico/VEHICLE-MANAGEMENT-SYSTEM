@@ -370,9 +370,7 @@ FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_Lon
             Case "Stocks Location"
                 Tunnel1 = "Tunnel2IsStocksLocationID"
                 Tunnel2 = CurrentStocksLocationID
-                If SavedCallingForm.Name = "InventoriesForm" Then
-                    InventoriesForm.LocationTextBox.Text = CurrentStocksLocationCode_ShortText11
-                End If
+                Tunnel3 = CurrentStocksLocationCode_ShortText11
                 DoCommonHouseKeeping(Me, SavedCallingForm)
             Case "Storage Location"
                 FillField(StorageLocationTextBox.Text, StoragesLocationsDataGridView.Item("StoragesLocation_ShortText200", CurrentStoragesLocationsRow).Value)

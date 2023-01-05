@@ -12,7 +12,7 @@
     Private InventoryItemsSelectionOrder = ""
     Private CurrentInventoryItemsRow As Integer = -1
     Private InventoryItemsRecordCount As Integer = -1
-
+    Private CurrentInventoryItemID = -1
     Private InventoryItemsDataGridViewAlreadyFormated = False
     Private CurrentProductsPartsPackingRelationID = -1
     Private SavedCallingForm As Form
@@ -110,6 +110,7 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
 
         CurrentInventoriesRow = e.RowIndex
         CurrentInventoryHeaderID = InventoriesDataGridView.Item("ProductsPartID_Autonumber", CurrentInventoriesRow).Value
+
         If IsEmpty(InventoriesDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentInventoriesRow).Value) Then
             MsgBox("Part/Product Specification is missing, " & vbLf & "need to update, " & vbLf &
                    "required to determine available quantities")
@@ -141,11 +142,28 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         RegisterInventoryToolStripMenuItem.Visible = False
         PrintInventoryToolStripMenuItem.Visible = False
         InventoryItemsSelectionOrder = " ORDER BY LocationCode_ShortText11, PartSpecifications_ShortText255, SystemDesc_ShortText100Fld DESC "
-        Dim Packing = "iif(Packings.QuantityPerPack_Double = 0, 
-                            ProductPartsPackingsTable.UnitOfThePacking_ShortText3 , 
-                            str(Packings.QuantityPerPack_Double) & space(1) & ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3 & chr(47) & ProductPartsPackingsTable.UnitOfThePacking_ShortText3) as Packing,"
         InventoryItemsFieldsToSelect = "
-SELECT InventoryHeadersTable.InventoryHeaderID_AutoNumber, StocksTable.StockID_Autonumber, ProductsPartsTable.ProductsPartID_Autonumber, StocksLocationsTable.StocksLocationID_AutoNumber, StocksLocationsTable.LocationCode_ShortText11, MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, StocksTable.QuantityInStock_Double, Packings.UnitOfThePacking_ShortText3, ProductsPartsTable.Unit_ShortText3, StocksTable.BulkBalanceQuantity_Double, BrandsTable.BrandID_Autonumber, BrandsTable.BrandName_ShortText20, Packings.ProductsPartsPackingRelationID_AutoNumber, Packings.Packing, InventoryItemsTable.InventoryQtyInStock_Double, InventoryItemsTable.InventoryBulkBalanceQty_Double
+SELECT 
+InventoryItemsTable.InventoryItemID_Autonumber,
+InventoryHeadersTable.InventoryHeaderID_AutoNumber, 
+StocksTable.StockID_Autonumber, 
+ProductsPartsTable.ProductsPartID_Autonumber, 
+StocksLocationsTable.StocksLocationID_AutoNumber, 
+StocksLocationsTable.LocationCode_ShortText11, 
+MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+PartsSpecificationsTable.PartSpecifications_ShortText255, 
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
+ProductsPartsTable.ManufacturerDescription_ShortText250, 
+StocksTable.QuantityInStock_Double, 
+InventoryItemsTable.InventoryQtyInStock_Double, 
+Packings.UnitOfThePacking_ShortText3, 
+InventoryItemsTable.InventoryBulkBalanceQty_Double,
+StocksTable.BulkBalanceQuantity_Double, 
+Packings.UnitOfTheQuantity_ShortText3,
+BrandsTable.BrandID_Autonumber, 
+BrandsTable.BrandName_ShortText20, 
+Packings.ProductsPartsPackingRelationID_AutoNumber, 
+Packings.Packing
 FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) LEFT JOIN (ProductsPartsPackingRelationsTable LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber) ON InventoryItemsTable.ProductsPartsPackingRelationID_LongInteger = ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
 "
         MySelection = InventoryItemsFieldsToSelect & InventoryItemsSelectionFilter & InventoryItemsSelectionOrder
@@ -182,7 +200,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Manufacturer Part no."
                     InventoryItemsDataGridView.Columns.Item(i).Width = 150
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "QuantityInStock_Double"
+                Case "InventoryQtyInStock_Double"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Qty in Stock"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 70
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
@@ -190,8 +208,12 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Unit"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 70
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "BulkBalanceQuantity_Double"
+                Case "InventoryBulkBalanceQty_Double"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Bulk balance"
+                    InventoryItemsDataGridView.Columns.Item(i).Width = 70
+                    InventoryItemsDataGridView.Columns.Item(i).Visible = True
+                Case "UnitOfTheQuantity_ShortText3"
+                    InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Unit"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 70
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "BrandName_ShortText20"
@@ -227,12 +249,14 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If InventoryItemsRecordCount = 0 Then Exit Sub
-        CurrentProductsPartsPackingRelationID = -1
         CurrentInventoryItemsRow = e.RowIndex
+
+        FillField(CurrentInventoryItemID, InventoryItemsDataGridView.Item("InventoryItemID_Autonumber", CurrentInventoryItemsRow).Value)
         FillField(CurrentInventoryHeaderID, InventoryItemsDataGridView.Item("InventoryHeaderID_Autonumber", CurrentInventoryItemsRow).Value)
         CurrentProductPartId = InventoryItemsDataGridView.Item("ProductsPartID_Autonumber", CurrentInventoryItemsRow).Value
         FillField(CurrentProductsPartsPackingRelationID, InventoryItemsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentInventoryItemsRow).Value)
         FillField(CurrentlocationID, InventoryItemsDataGridView.Item("StocksLocationID_Autonumber", CurrentInventoryItemsRow).Value)
+        FillField(CurrentStockID, InventoryItemsDataGridView.Item("StockID_AutoNumber", CurrentInventoryItemsRow).Value)
         If CurrentInventoryHeaderID = -1 Then
             RegisterInventoryToolStripMenuItem.Visible = True
             PrintInventoryToolStripMenuItem.Visible = True
@@ -284,12 +308,16 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         FillField(ManufacturerPartNoTextBox.Text, InventoryItemsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentInventoryItemsRow).Value)
         FillField(ManufacturerPartDescTextBox.Text, InventoryItemsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentInventoryItemsRow).Value)
         FillField(BrandNameTextBox.Text, InventoryItemsDataGridView.Item("BrandName_ShortText20", CurrentInventoryItemsRow).Value)
-        FillField(UnitTextBox.Text, InventoryItemsDataGridView.Item("Unit_ShortText3", CurrentInventoryItemsRow).Value)
+        FillField(UnitTextBox.Text, InventoryItemsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentInventoryItemsRow).Value)
         FillField(QtyInBasicUnitTextBox.Text, InventoryItemsDataGridView.Item("InventoryQtyInStock_Double", CurrentInventoryItemsRow).Value)
         FillField(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("BulkBalanceQuantity_Double", CurrentInventoryItemsRow).Value)
         FillField(LocationTextBox.Text, InventoryItemsDataGridView.Item("LocationCode_ShortText11", CurrentInventoryItemsRow).Value)
         FillField(PackingTextBox.Text, InventoryItemsDataGridView.Item("Packing", CurrentInventoryItemsRow).Value)
-
+        PackingTextBox.Visible = True
+        If PackingTextBox.Text = " /" Then
+            PackingTextBox.Visible = False
+            Label3.Visible = False
+        End If
     End Sub
     Private Sub InventoriesForm_EnabledChanged(sender As Object, e As EventArgs) Handles MyBase.EnabledChanged
         If Me.Enabled = False Then Exit Sub
@@ -297,29 +325,49 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
 
         Select Case Tunnel1
             Case "Tunnel2IsStocksLocationID"
-                If TheseAreNotEqual(SavedLocation, LocationTextBox.Text) Then
-                    If MsgBox("Location Code has been changed, continue changing it ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                        '                CurrentlocationID = Tunnel2
-                        UpdateStocksTable(1)
-                    Else
-                        LocationTextBox.Text = InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value
-                        FillField(CurrentlocationID, InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value)
+                CurrentlocationID = Tunnel2
+                Dim PreviousLocationID = -1
+                FillField(PreviousLocationID, InventoryItemsDataGridView.Item("StocksLocationID_AutoNumber", CurrentInventoryItemsRow).Value)
+                If TheseAreNotEqual(CurrentlocationID, PreviousLocationID) Then
+                    If IsNotEmpty(PreviousLocationID) Then
+                        If MsgBox("Location has been changed, " & vbCrLf & vbCrLf &
+                                  "continue UPDATE the stocks record ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                        Else
+                            'RESTORE ORIGINAL LOCATION DISPLAYED
+                            LocationTextBox.Text = InventoriesDataGridView.Item("LocationCode_ShortText11", CurrentInventoriesRow).Value
+                            Exit Sub
+                        End If
                     End If
+                    UpdateStocksTable(1)
+                    LocationTextBox.Text = Tunnel3
+                    Dim SavedRow = CurrentInventoryItemsRow
+                    FillInventoryItemsDataGridView()
+                    InventoryItemsDataGridView.Rows(CurrentInventoryItemsRow).Selected = False
+                    InventoryItemsDataGridView.Rows(SavedRow).Selected = True
+                    CurrentInventoryItemsRow = SavedRow
                 End If
             Case "Tunnel2IsProductPartID"
                 CurrentProductPartId = Tunnel2
                 StockDetailsGroup.Visible = True
-            Case "Tunnel2IsStocksLocationID"
+                CurrentProductsPartsPackingRelationID = Tunnel4
+            Case "Tunnel2IsProductsPartsPackingRelationID"
+                CurrentProductsPartsPackingRelationID = Tunnel2
+                If Val(BulkBalanceTextBox.Text) > 0 Then
+                    BulkBalanceUnitTextBox.Text = Tunnel4
+                End If
+                If IsNotEmpty(Tunnel3) Then
+                    PackingTextBox.Text = Tunnel3
+                    PackingTextBox.Visible = True
+                    Label3.Visible = True
+                End If
+
         End Select
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         If StockDetailsGroup.Visible = True Then
-            SaveMessage = "There are new entries made, save your changes ?"
-            If AllEntriesOfThisStockInventoryDetailsAreValid() Then
-                SaveChanges()
-                StockDetailsGroup.Visible = False
-                Exit Sub
-            End If
+            SaveMessage = "There are changes made, save your changes ?"
+            SaveChanges()
+            Exit Sub
         End If
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
@@ -338,6 +386,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         '   StocksTable.StocksLocationID_LongInteger
 
         If AChangeInThisStockInventoryDetailsOccurred() Then
+            If Not AllEntriesOfThisStockInventoryDetailsAreValid() Then Exit Sub
             If MsgBox(SaveMessage, MsgBoxStyle.YesNo) = vbNo Then
                 StockDetailsGroup.Visible = False
                 Exit Sub
@@ -348,38 +397,39 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     End Sub
 
     Private Sub UpdateStocksTable(Mode As Integer)
-        MySelection = "SELECT TOP 1  ProductPartID_LongInteger from StocksTable WHERE ProductPartID_LongInteger = " & CurrentProductPartId
+        MySelection = "SELECT TOP 1  ProductPartID_LongInteger from StocksTable WHERE ProductPartID_LongInteger = " & CurrentProductPartId &
+                        " AND ProductsPartsPackingRelationID_LongInteger = " & CurrentProductsPartsPackingRelationID
         JustExecuteMySelection()
         If RecordCount = 0 Then
             'Insert a new Stock record for this product
-            InsertNewRecord("StocksTable", "ProductPartID_LongInteger", CurrentProductPartId.ToString)
+            CurrentStockID = InsertNewRecord("StocksTable", "ProductPartID_LongInteger", CurrentProductPartId.ToString)
         End If
+        Dim SetCommand = ""
+        Dim RecordFilter = ""
         Select Case Mode
             Case 1
-                'update the location code' this occurs when during entry the location code is changed
-                Dim SetCommand = " SET StocksLocationID_LongInteger = " & CurrentlocationID.ToString
-                Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductPartId
+                'update the location code' this occurs when  data in the location code is changed
 
-                UpdateTable("StocksTable", SetCommand, RecordFilter)
+                SetCommand = " SET StocksLocationID_LongInteger = " & CurrentlocationID.ToString
             Case 2
                 'update the quantities  this occurs during batch update
-                Dim SetCommand = " SET QuantityInStock_Double = " & QtyInBasicUnitTextBox.Text & ", " &
+                SetCommand = " SET QuantityInStock_Double = " & QtyInBasicUnitTextBox.Text & ", " &
                                 "BulkBalanceQuantity_Double = " & BulkBalanceTextBox.Text
-                Dim RecordFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductPartId
-
-                UpdateTable("StocksTable", SetCommand, RecordFilter)
             Case Else
-                Exit Select
+                Exit Sub
         End Select
+        RecordFilter = " WHERE StockID_Autonumber = " & CurrentStockID
+        UpdateTable("StocksTable", SetCommand, RecordFilter)
+
     End Sub
 
     Private Function AChangeInThisStockInventoryDetailsOccurred()
         '*******************************************************
         'Test 1st if a Part/Product is selected and this is the 1st entry in the list
         If CurrentProductPartId > 0 And CurrentInventoriesRow = -1 Then Return True
-        ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD OR EDIT
+        ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD Or EDIT
         If TheseAreNotEqual(QtyInBasicUnitTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value) Then Return True
-        If TheseAreNotEqual(BulkBalanceTextBox.Text, InventoriesDataGridView.Item("MinimumQuantityPerSpecs_Double", CurrentInventoriesRow).Value) Then Return True
+        If TheseAreNotEqual(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("BulkBalanceQuantity_Double", CurrentInventoryItemsRow).Value) Then Return True
         Return False
     End Function
     Private Function AllEntriesOfThisStockInventoryDetailsAreValid()
@@ -408,21 +458,23 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     End Sub
     Private Sub UpdateCurrentInventoryItemId()
         Dim SetCommand = " SET InventoryQtyInStock_Double = " & QtyInBasicUnitTextBox.Text & ", " &
-                               " AND InventoryBulkBalanceQty_Double = " & Val(BulkBalanceTextBox.Text)
-        Dim RecordFilter = " WHERE InventoryHeaderID_LongInteger = -1 AND ProductPartID_LongInteger = " & CurrentProductPartId.ToString
+                         " InventoryBulkBalanceQty_Double = " & Val(BulkBalanceTextBox.Text) & ", " &
+                         " ProductsPartsPackingRelationID_LongInteger = " & CurrentProductsPartsPackingRelationID.ToString
+        Dim RecordFilter = " WHERE InventoryItemID_Autonumber = " & CurrentInventoryItemID.ToString
 
         UpdateTable("InventoryItemsTable", SetCommand, RecordFilter)
     End Sub
     Private Sub AddNewInventoryItem()
         Dim FieldsToUpdate = " ProductPartID_LongInteger, 
                                 InventoryQtyInStock_Double, 
-                                InventoryBulkBalanceQty_Double "
+                                InventoryBulkBalanceQty_Double,
+                                ProductsPartsPackingRelationID_LongInteger"
 
         Dim FieldsData = CurrentProductPartId.ToString & ", " &
                              Val(QtyInBasicUnitTextBox.Text).ToString & ", " &
-                             Val(BulkBalanceTextBox.Text).ToString
-
-        Dim XXXdUMMY = InsertNewRecord("InventoryItemsTable", FieldsToUpdate, FieldsData)
+                             Val(BulkBalanceTextBox.Text).ToString & ", " &
+                            CurrentProductsPartsPackingRelationID.ToString()
+        CurrentInventoryItemID = InsertNewRecord("InventoryItemsTable", FieldsToUpdate, FieldsData)
     End Sub
     Private Sub AddInventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddInventoryToolStripMenuItem.Click
         ShowProductsForm()
@@ -445,4 +497,12 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         ShowCalledForm(Me, StockLocationsForm)
     End Sub
 
+    Private Sub UnitTextBox_Click(sender As Object, e As EventArgs) Handles UnitTextBox.Click
+        If IsNotEmpty(UnitTextBox.Text) Then
+            If MsgBox("Would you like to replace the unit ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        End If
+        Tunnel1 = "Tunnel2IsProductPartID"
+        Tunnel2 = CurrentProductPartId
+            ShowCalledForm(Me, ProductPartsPackingRelationsForm)
+    End Sub
 End Class
