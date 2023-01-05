@@ -111,7 +111,7 @@
             BrandNameTextBox.Text = ""
             CurrentBrandID = -1
         Else
-            BrandNameTextBox.Text = BrandDataGridView.Item("BrandName_ShortText35", CurrentBrandRow).Value
+            BrandNameTextBox.Text = BrandDataGridView.Item("BrandName_ShortText20", CurrentBrandRow).Value
         End If
     End Sub
     Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem.Click
@@ -150,7 +150,7 @@
                 Dim yyyyy = ""
 
                 BrandFieldsToSelect = " UPDATE BrandsTable  SET " &
-                    " BrandName_ShortText35 = " & Chr(34) & BrandNameTextBox.Text & Chr(34)
+                    " BrandName_ShortText20 = " & Chr(34) & BrandNameTextBox.Text & Chr(34)
                 MySelection = BrandFieldsToSelect & BrandFilter
                 If NoRecordFound() Then Dim dummy = 1
             Case Else

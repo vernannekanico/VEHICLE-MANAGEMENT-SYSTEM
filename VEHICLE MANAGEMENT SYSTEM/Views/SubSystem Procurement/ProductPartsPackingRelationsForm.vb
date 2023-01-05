@@ -39,19 +39,8 @@
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductsPartsPackingRelationID"
         Tunnel2 = CurrentProductsPartsPackingRelationID
-        If ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value = "" Then
-            Tunnel3 = ""
-        Else
-            Tunnel3 = ProductPartsPackingRelationsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingRelationsRow).Value.ToString & Space(1) &
-                                      ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value.ToString &
-                                        " / " &
-                                      ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value.ToString
-        End If
+        Tunnel3 = ProductPartsPackingRelationsDataGridView.Item("Packing", CurrentProductPartsPackingRelationsRow).Value.ToString
         Tunnel4 = ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value
-        Select Case SavedCallingForm.Name
-            Case "InventoriesForm"
-                InventoriesForm.UnitTextBox.Text = ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value
-        End Select
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub FillProductPartsPackingRelationsDataGridView()

@@ -16,6 +16,7 @@ Public Class ProductsPartsForm
     Private CurrentProductsPartsPackingsRow As Integer = -1
     Private CurrentProductsPartsPackingID = -1
     Private ProductsPartsPackingsDataGridViewAlreadyFormated = False
+    Private CurrentProductsPartsPackingRelationID = -1
 
     Private CleanedManufacturerPartNo = ""
     Private PurposeOfEntry As String
@@ -94,37 +95,44 @@ Public Class ProductsPartsForm
                 CurrentMasterCodeBookID = Tunnel2
                 SelectToolStripMenuItem.Visible = True
                 SystemPartDescriptionTextBox.Text = Tunnel3
-            Case "Tunnel2IsProductPartsPackingID"
-                CurrentProductsPartsPackingID = Tunnel2
+            Case "Tunnel2IsProductsPartsPackingRelationID"
+                CurrentProductsPartsPackingRelationID = Tunnel2
+                If IsNotEmpty(Tunnel3) Then
+                    PackingTextBox.Text = Tunnel3
+                    PackingTextBox.Visible = True
+                    Label3.Visible = True
+                Else
+                    PackingTextBox.Visible = False
+                    Label3.Visible = False
+                End If
+
         End Select
 
     End Sub
     Private Sub FillProductsPartsDataGridView()
-        Dim UnitOfPacking As String = " IIf(ProductPartsPackingsTable.UnitOfThePacking_ShortText3 <> null,ProductsPartsTable.Unit_ShortText3,ProductPartsPackingsTable.UnitOfThePacking_ShortText3) AS UnitOfPacking, "
+
         ProductsPartsFieldsToSelect = "
-SELECT 
-ProductsPartsTable.Selected, 
+SELECT ProductsPartsTable.Selected, 
 ProductsPartsTable.MasterCodeBookID_LongInteger, 
-MasterCodeBookTable.SubSystemCode_ShortText24Fld,
+MasterCodeBookTable.SubSystemCode_ShortText24Fld, 
 MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 PartsSpecificationsTable.PartsSpecificationID_AutoNumber, 
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
-ProductsPartsTable.ProductDescription_ShortText250,
-ProductPartsPackingsTable.QuantityPerPack_Double, 
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
-ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
-" & UnitOfPacking &
-" 
+Packings.QuantityPerPack_Double, 
+Packings.UnitOfTheQuantity_ShortText3, 
+Packings.UnitOfThePacking_ShortText3, 
+Packings.Packing,
+ProductsPartsTable.ProductDescription_ShortText250, 
 BrandsTable.BrandName_ShortText20, 
-ProductsPartsTable.WorkOrderItemID_LongInteger,
+ProductsPartsTable.WorkOrderItemID_LongInteger, 
 ProductsPartsTable.Unit_ShortText3, 
 BrandsTable.BrandID_Autonumber, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
-FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN ProductsPartsPackingRelationsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductsPartsPackingRelationsTable.ProductPartID_LongInteger) LEFT JOIN ProductPartsPackingsTable ON ProductsPartsPackingRelationsTable.ProductPartsPackingID_LongInteger = ProductPartsPackingsTable.ProductPartsPackingID_Autonumber
-"
+FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN ProductsPartsPackingRelationsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductsPartsPackingRelationsTable.ProductPartID_LongInteger) LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber"
+
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
         JustExecuteMySelection()
         ProductsPartsRecordCount = RecordCount
@@ -200,23 +208,11 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "excel Desc"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 400
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "QuantityPerPack_Double"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "QtyPerPack"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
-                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "UnitOfTheQuantity_ShortText3"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "UnitOfTheQuantity"
+                Case "Packing"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Packing"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 70
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfThePacking_ShortText3"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "UnitOfThePacking_ShortText3"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
-                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "UnitOfPacking"
-                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "UnitOfPacking"
-                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
-                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
-                Case "Unit_ShortText3"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Unit"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 70
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
@@ -246,13 +242,13 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
         Me.Left = VehicleManagementSystemForm.Left
     End Sub
     Private Sub ProductsPartsDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles ProductsPartsDataGridView.RowEnter
-
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If ProductsPartsRecordCount = 0 Then Exit Sub
         CurrentProductsPartsRow = e.RowIndex
         CurrentProductPartID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
         FillField(CurrentProductSpecificationID, ProductsPartsDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsPartsRow).Value)
+        FillField(CurrentProductsPartsPackingRelationID, ProductsPartsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentProductsPartsRow).Value)
         CurrentMasterCodeBookID = ProductsPartsDataGridView.Item("MasterCodeBookID_LongInteger", CurrentProductsPartsRow).Value
         CurrentBrandID = ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentProductsPartsRow).Value
         SelectToolStripMenuItem.Visible = True
@@ -441,7 +437,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
         Tunnel3 = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
-        Tunnel4 = ProductsPartsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentProductsPartsRow).Value
+        FillField(Tunnel4, ProductsPartsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentProductsPartsRow).Value)
         Select Case SavedCallingForm.Name
             Case "InventoriesForm"
                 Dim Packing = ProductsPartsDataGridView.Item("QuantityPerPack_Double", CurrentProductsPartsRow).Value.ToString & " " &
@@ -450,12 +446,11 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                 InventoriesForm.SystemPartDescriptionTextBox.Text = ProductsPartsDataGridView.Item("SystemDesc_ShortText100Fld", CurrentProductsPartsRow).Value
                 InventoriesForm.ManufacturerPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 InventoriesForm.ManufacturerPartDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
-                InventoriesForm.UnitTextBox.Text = ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value
+                FillField(InventoriesForm.UnitTextBox.Text, ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value)
                 InventoriesForm.PackingTextBox.Text = Packing
                 InventoriesForm.BulkBalanceUnitTextBox.Text = ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString()
                 InventoriesForm.BrandNameTextBox.Text = ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value
-                MsgBox(" fix this InventoriesForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item(PartSpecifications_ShortText255, CurrentProductsPartsRow).Value")
-'                FillField(InventoriesForm.LocationTextBox.Text, ProductsPartsDataGridView.Item("LocationCode_ShortText11", CurrentProductsPartsRow).Value)
+                InventoriesForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value
 
             Case "PurchaseOrdersForm"
                 PurchaseOrdersForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
@@ -574,6 +569,8 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         FillField(ManufacturerPartDescTextBox.Text, ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
         FillField(BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value)
         FillField(CurrentBrandID, ProductsPartsDataGridView.Item("BrandID_Autonumber", CurrentProductsPartsRow).Value)
+        FillField(UnitTextBox.Text, ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value)
+        FillField(PackingTextBox.Text, ProductsPartsDataGridView.Item("Packing", CurrentProductsPartsRow).Value)
         ProductsPartsPackingsSelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartID
         FillProductsPartsPackingsDataGridView()
     End Sub
@@ -682,15 +679,14 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                     Str(CurrentBrandID)
 
         CurrentProductPartID = InsertNewRecord("ProductsPartsTable", FieldsToUpdate, ReplacementData)
-        If CurrentProductsPartsPackingID > -1 Then
-            'update new packing record with with the currentproduct
-            Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductsPartsPackingID.ToString
-            Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
-            UpdateTable("ProductsPartsPackingsTable", SetCommand, RecordFilter)
-
-            'UPDATE ProductsPartTable AND MARK FIELD Selected true
-            UpdateTable("ProductsPartsTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
-        End If
+        MsgBox("COMMENTED COMMANDS SHOULD BE ENABLED TO ALLOW ADDING PACKINGS OF PRODUCTS/PARTS")
+        '       If CurrentProductsPartsPackingID > -1 Then
+        '       'update new packing record with the currentproduct
+        '       Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductsPartsPackingID.ToString
+        '       Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
+        '       UpdateTable("ProductsPartsPackingsTable", SetCommand, RecordFilter)
+        '
+        '       End If
     End Sub
     Private Sub UpdateProductsPartChanges()
         Dim RecordFilter = " WHERE ProductsPartID_Autonumber = " & Str(CurrentProductPartID)
@@ -778,6 +774,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             SearchToolStripMenuItem.Visible = True
             UpdateMasterCodeLinkToolStripMenuItem.Visible = True
             EditPackingToolStripMenuItem.Visible = False
+            ProductsPartsPackingsGroupBox.Visible = False
         End If
     End Sub
     Private Sub BrandNameTextBox_GotFocus(sender As Object, e As EventArgs) Handles BrandNameTextBox.Click
@@ -1037,7 +1034,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     End Sub
 
     Private Sub SetFilterAndDisplayRequesteHistory()
-
         Select Case HistoryMode
             Case 1
                 HistoriesGroupBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value &
@@ -1046,10 +1042,17 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         End Select
         FillHistoriesDataGridView()
     End Sub
-
     Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
         ProductsPartsDataGridViewContextMenuStrip.Visible = False
         Clipboard.SetText(ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value)
+    End Sub
+    Private Sub UnitTextBox_Click(sender As Object, e As EventArgs) Handles UnitTextBox.Click
+        If IsNotEmpty(UnitTextBox.Text) Then
+            If MsgBox("Would you like to replace the unit ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        End If
+        Tunnel1 = "Tunnel2IsProductPartID"
+        Tunnel2 = CurrentProductPartID
+        ShowCalledForm(Me, ProductPartsPackingRelationsForm)
     End Sub
 
 End Class

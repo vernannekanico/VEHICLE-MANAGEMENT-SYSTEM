@@ -82,6 +82,10 @@ Partial Class ProductsPartsForm
         Me.CopyDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.HistoriesGroupBox = New System.Windows.Forms.GroupBox()
         Me.HistoriesDataGridView = New System.Windows.Forms.DataGridView()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.PackingTextBox = New System.Windows.Forms.TextBox()
+        Me.UnitTextBox = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
         Me.ProductsPartsPackingsGroupBox.SuspendLayout()
@@ -235,6 +239,10 @@ Partial Class ProductsPartsForm
         '
         Me.ProductDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.ProductDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.ProductDetailsGroup.Controls.Add(Me.Label6)
+        Me.ProductDetailsGroup.Controls.Add(Me.Label1)
+        Me.ProductDetailsGroup.Controls.Add(Me.PackingTextBox)
+        Me.ProductDetailsGroup.Controls.Add(Me.UnitTextBox)
         Me.ProductDetailsGroup.Controls.Add(Me.ProductSpecificationTextBox)
         Me.ProductDetailsGroup.Controls.Add(Me.Label10)
         Me.ProductDetailsGroup.Controls.Add(Me.PartSpecificationTextBox)
@@ -249,9 +257,9 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.Controls.Add(Me.ManufacturerPartNoLabel)
         Me.ProductDetailsGroup.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.ProductDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ProductDetailsGroup.Location = New System.Drawing.Point(463, 70)
+        Me.ProductDetailsGroup.Location = New System.Drawing.Point(293, 59)
         Me.ProductDetailsGroup.Name = "ProductDetailsGroup"
-        Me.ProductDetailsGroup.Size = New System.Drawing.Size(742, 290)
+        Me.ProductDetailsGroup.Size = New System.Drawing.Size(730, 337)
         Me.ProductDetailsGroup.TabIndex = 89
         Me.ProductDetailsGroup.TabStop = False
         Me.ProductDetailsGroup.Text = "Product Details"
@@ -259,7 +267,7 @@ Partial Class ProductsPartsForm
         '
         'ProductSpecificationTextBox
         '
-        Me.ProductSpecificationTextBox.Location = New System.Drawing.Point(279, 201)
+        Me.ProductSpecificationTextBox.Location = New System.Drawing.Point(242, 201)
         Me.ProductSpecificationTextBox.Name = "ProductSpecificationTextBox"
         Me.ProductSpecificationTextBox.ReadOnly = True
         Me.ProductSpecificationTextBox.Size = New System.Drawing.Size(457, 26)
@@ -278,7 +286,7 @@ Partial Class ProductsPartsForm
         'PartSpecificationTextBox
         '
         Me.PartSpecificationTextBox.Enabled = False
-        Me.PartSpecificationTextBox.Location = New System.Drawing.Point(279, 49)
+        Me.PartSpecificationTextBox.Location = New System.Drawing.Point(242, 49)
         Me.PartSpecificationTextBox.Name = "PartSpecificationTextBox"
         Me.PartSpecificationTextBox.ReadOnly = True
         Me.PartSpecificationTextBox.Size = New System.Drawing.Size(457, 26)
@@ -296,7 +304,7 @@ Partial Class ProductsPartsForm
         '
         'BrandNameTextBox
         '
-        Me.BrandNameTextBox.Location = New System.Drawing.Point(279, 236)
+        Me.BrandNameTextBox.Location = New System.Drawing.Point(242, 236)
         Me.BrandNameTextBox.Name = "BrandNameTextBox"
         Me.BrandNameTextBox.Size = New System.Drawing.Size(220, 26)
         Me.BrandNameTextBox.TabIndex = 53
@@ -313,7 +321,7 @@ Partial Class ProductsPartsForm
         '
         'SystemPartDescriptionTextBox
         '
-        Me.SystemPartDescriptionTextBox.Location = New System.Drawing.Point(279, 16)
+        Me.SystemPartDescriptionTextBox.Location = New System.Drawing.Point(242, 16)
         Me.SystemPartDescriptionTextBox.Name = "SystemPartDescriptionTextBox"
         Me.SystemPartDescriptionTextBox.ReadOnly = True
         Me.SystemPartDescriptionTextBox.Size = New System.Drawing.Size(457, 26)
@@ -321,7 +329,7 @@ Partial Class ProductsPartsForm
         '
         'ManufacturerPartDescTextBox
         '
-        Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(279, 125)
+        Me.ManufacturerPartDescTextBox.Location = New System.Drawing.Point(242, 125)
         Me.ManufacturerPartDescTextBox.Multiline = True
         Me.ManufacturerPartDescTextBox.Name = "ManufacturerPartDescTextBox"
         Me.ManufacturerPartDescTextBox.Size = New System.Drawing.Size(457, 68)
@@ -329,7 +337,7 @@ Partial Class ProductsPartsForm
         '
         'ManufacturerPartNoTextBox
         '
-        Me.ManufacturerPartNoTextBox.Location = New System.Drawing.Point(279, 94)
+        Me.ManufacturerPartNoTextBox.Location = New System.Drawing.Point(242, 94)
         Me.ManufacturerPartNoTextBox.Name = "ManufacturerPartNoTextBox"
         Me.ManufacturerPartNoTextBox.Size = New System.Drawing.Size(457, 26)
         Me.ManufacturerPartNoTextBox.TabIndex = 43
@@ -436,7 +444,7 @@ Partial Class ProductsPartsForm
         Me.FiltersGroupBox.Controls.Add(Me.Label19)
         Me.FiltersGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.FiltersGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FiltersGroupBox.Location = New System.Drawing.Point(31, 259)
+        Me.FiltersGroupBox.Location = New System.Drawing.Point(31, 335)
         Me.FiltersGroupBox.Name = "FiltersGroupBox"
         Me.FiltersGroupBox.Size = New System.Drawing.Size(742, 244)
         Me.FiltersGroupBox.TabIndex = 92
@@ -628,11 +636,48 @@ Partial Class ProductsPartsForm
         Me.HistoriesDataGridView.Size = New System.Drawing.Size(305, 66)
         Me.HistoriesDataGridView.TabIndex = 52
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(4, 302)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(65, 20)
+        Me.Label1.TabIndex = 138
+        Me.Label1.Text = "Packing"
+        '
+        'PackingTextBox
+        '
+        Me.PackingTextBox.Location = New System.Drawing.Point(242, 302)
+        Me.PackingTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.PackingTextBox.Name = "PackingTextBox"
+        Me.PackingTextBox.ReadOnly = True
+        Me.PackingTextBox.Size = New System.Drawing.Size(202, 26)
+        Me.PackingTextBox.TabIndex = 133
+        '
+        'UnitTextBox
+        '
+        Me.UnitTextBox.Location = New System.Drawing.Point(242, 268)
+        Me.UnitTextBox.Name = "UnitTextBox"
+        Me.UnitTextBox.ReadOnly = True
+        Me.UnitTextBox.Size = New System.Drawing.Size(98, 26)
+        Me.UnitTextBox.TabIndex = 130
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(4, 275)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(38, 20)
+        Me.Label6.TabIndex = 139
+        Me.Label6.Text = "Unit"
+        '
         'ProductsPartsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1275, 577)
+        Me.ClientSize = New System.Drawing.Size(1275, 729)
         Me.Controls.Add(Me.HistoriesGroupBox)
         Me.Controls.Add(Me.ProductsPartsPackingsGroupBox)
         Me.Controls.Add(Me.ProductDetailsGroup)
@@ -721,4 +766,8 @@ Partial Class ProductsPartsForm
     Friend WithEvents HistoriesDataGridView As DataGridView
     Friend WithEvents ProductsPartsDataGridViewContextMenuStrip As ContextMenuStrip
     Friend WithEvents CopyDescriptionToolStripTextBox As ToolStripTextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents PackingTextBox As TextBox
+    Friend WithEvents UnitTextBox As TextBox
 End Class

@@ -314,7 +314,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         FillField(LocationTextBox.Text, InventoryItemsDataGridView.Item("LocationCode_ShortText11", CurrentInventoryItemsRow).Value)
         FillField(PackingTextBox.Text, InventoryItemsDataGridView.Item("Packing", CurrentInventoryItemsRow).Value)
         PackingTextBox.Visible = True
-        If PackingTextBox.Text = " /" Then
+        If PackingTextBox.Text = "" Then
             PackingTextBox.Visible = False
             Label3.Visible = False
         End If
@@ -350,16 +350,6 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                 CurrentProductPartId = Tunnel2
                 StockDetailsGroup.Visible = True
                 CurrentProductsPartsPackingRelationID = Tunnel4
-            Case "Tunnel2IsProductsPartsPackingRelationID"
-                CurrentProductsPartsPackingRelationID = Tunnel2
-                If Val(BulkBalanceTextBox.Text) > 0 Then
-                    BulkBalanceUnitTextBox.Text = Tunnel4
-                End If
-                If IsNotEmpty(Tunnel3) Then
-                    PackingTextBox.Text = Tunnel3
-                    PackingTextBox.Visible = True
-                    Label3.Visible = True
-                End If
 
         End Select
     End Sub
@@ -498,11 +488,6 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     End Sub
 
     Private Sub UnitTextBox_Click(sender As Object, e As EventArgs) Handles UnitTextBox.Click
-        If IsNotEmpty(UnitTextBox.Text) Then
-            If MsgBox("Would you like to replace the unit ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        End If
-        Tunnel1 = "Tunnel2IsProductPartID"
-        Tunnel2 = CurrentProductPartId
-        ShowCalledForm(Me, ProductPartsPackingRelationsForm)
+        MsgBox("DELETE THIS ROUTINE")
     End Sub
 End Class
