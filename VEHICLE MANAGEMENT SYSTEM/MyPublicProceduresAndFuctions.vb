@@ -7,12 +7,13 @@
             If Trim(PassedObject.ToString) = "" Then Return True
             If PassedObject = "0" Then Return True
             If Val(PassedObject) < 0 Then Return True
-        End If
-        If PassedObject.GetType.Name = "Int32" Then
-            If PassedObject < 0 Then Return True
         Else
-            MsgBox("in Function IsEmpty(PassedObject) Type of Object Passed is " & PassedObject.GetType.Name)
-            Return True
+            If PassedObject.GetType.Name = "Int32" Then
+                If PassedObject < 0 Then Return True
+            Else
+                MsgBox("in Function IsEmpty(PassedObject) Type of Object Passed is " & PassedObject.GetType.Name)
+                Return True
+            End If
         End If
         Return False
     End Function

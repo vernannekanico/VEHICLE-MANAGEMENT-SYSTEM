@@ -310,7 +310,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         FillField(BrandNameTextBox.Text, InventoryItemsDataGridView.Item("BrandName_ShortText20", CurrentInventoryItemsRow).Value)
         FillField(UnitTextBox.Text, InventoryItemsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentInventoryItemsRow).Value)
         FillField(QtyInBasicUnitTextBox.Text, InventoryItemsDataGridView.Item("InventoryQtyInStock_Double", CurrentInventoryItemsRow).Value)
-        FillField(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("BulkBalanceQuantity_Double", CurrentInventoryItemsRow).Value)
+        FillField(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("InventoryBulkBalanceQty_Double", CurrentInventoryItemsRow).Value)
         FillField(LocationTextBox.Text, InventoryItemsDataGridView.Item("LocationCode_ShortText11", CurrentInventoryItemsRow).Value)
         FillField(PackingTextBox.Text, InventoryItemsDataGridView.Item("Packing", CurrentInventoryItemsRow).Value)
         PackingTextBox.Visible = True
@@ -428,8 +428,8 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         'Test 1st if a Part/Product is selected and this is the 1st entry in the list
         If CurrentProductPartId > 0 And CurrentInventoriesRow = -1 Then Return True
         ' THIS ROUTINE DETERMINES ALSO IF THE PURPOSE OF ENTRY = "ADD Or EDIT
-        If TheseAreNotEqual(QtyInBasicUnitTextBox.Text, InventoriesDataGridView.Item("QuantityInStock_Double", CurrentInventoriesRow).Value) Then Return True
-        If TheseAreNotEqual(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("BulkBalanceQuantity_Double", CurrentInventoryItemsRow).Value) Then Return True
+        If TheseAreNotEqual(QtyInBasicUnitTextBox.Text, InventoriesDataGridView.Item("InventoryQtyInStock_Double", CurrentInventoriesRow).Value) Then Return True
+        If TheseAreNotEqual(BulkBalanceTextBox.Text, InventoryItemsDataGridView.Item("InventoryBulkBalanceQty_Double", CurrentInventoryItemsRow).Value) Then Return True
         Return False
     End Function
     Private Function AllEntriesOfThisStockInventoryDetailsAreValid()
@@ -503,6 +503,6 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         End If
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartId
-            ShowCalledForm(Me, ProductPartsPackingRelationsForm)
+        ShowCalledForm(Me, ProductPartsPackingRelationsForm)
     End Sub
 End Class
