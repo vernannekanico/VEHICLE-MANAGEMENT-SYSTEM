@@ -128,7 +128,11 @@ FROM ((StocksLocationsTable
         Me.Top = VehicleManagementSystemForm.VehicleManagementMenuStrip.Top + VehicleManagementSystemForm.VehicleManagementMenuStrip.Height + 20
         Me.Left = VehicleManagementSystemForm.Left
         Me.Height = VehicleManagementSystemForm.Height - Me.Top
-        StocksLocationsGroupBox.Top = StocksLocationsMainMenuStrip.Top + StocksLocationsMainMenuStrip.Height
+
+        StocksLocationsGroupBox.Top = BottomOf(StockLOcationSearchToolStrip)
+        StocksGroupBox.Top = BottomOf(StockLOcationSearchToolStrip)
+        StocksGroupBox.Left = StocksLocationsGroupBox.Left + StocksLocationsGroupBox.Width
+        Me.Width = VehicleManagementSystemForm.Width
     End Sub
     Private Sub FormatStocksLocationsDataGridView()
         StocksLocationsDataGridViewAlreadyFormated = True
@@ -208,9 +212,7 @@ FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_Lon
             FormatStocksDataGridView()
         End If
 
-        SetGroupBoxHeight(15, StocksRecordCount, StocksGroupBox, StocksDataGridView)
-        VerticalCenter(StocksGroupBox, Me)
-        HorizontalCenter(StocksGroupBox, Me)
+        SetGroupBoxHeight(24, StocksRecordCount, StocksGroupBox, StocksDataGridView)
     End Sub
     Private Sub FormatStocksDataGridView()
         StocksDataGridViewAlreadyFormated = True

@@ -23,19 +23,24 @@
     Private Property SaveMessage As String
 
     Private Sub InventoriesForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Upon entry systems checks if there outstanding Inventory entry
+        ' Inventory entry will marked with InventoryHeaderID_LongInteger = -1
+        ' Register Inventory will create a new Header for all the outstanding Iventory entries
+        ' updating all InventoryHeaderID_LongInteger with the newly created InventoryHeaderID_Autonumber
+        ' If there is no outstanding Inventory entry then view will display all the records 
         SavedCallingForm = CallingForm
-        InventoriesSelectionFilter = "WHERE InventoryHeaderID_AutoNumber - 1"
-        FillInventoriesDataGridView()
-        If InventoriesRecordCount = 0 Then
-            InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = -1 "
-            InventoriesGroupBox.Visible = False
-            InventoryItemsGroupBox.Top = BottomOf(SearchToolStrip)
-            FillInventoryItemsDataGridView()
-            VerticalCenter(InventoryItemsGroupBox, Me)
-        Else
+        InventoriesGroupBox.Visible = False
+        InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = -1 "
+        InventoryItemsGroupBox.Top = BottomOf(SearchToolStrip)
+        FillInventoryItemsDataGridView()
+        If InventoryItemsRecordCount = 0 Then
+            FillInventoriesDataGridView()
             InventoryItemsGroupBox.Top = BottomOf(InventoriesGroupBox)
             InventoryItemsGroupBox.Left = InventoriesGroupBox.Left + InventoriesGroupBox.Width
         End If
+
+
+
         InventoriesGroupBox.Top = BottomOf(SearchToolStrip)
         InventoriesGroupBox.Left = Me.Left
         HorizontalCenter(StockDetailsGroup, Me)
@@ -46,11 +51,10 @@
 
     End Sub
     Private Sub FillInventoriesDataGridView()
-
         InventoriesSelectionOrder = " ORDER BY InventoryDate_ShortDate DESC"
         InventoriesFieldsToSelect =
 " 
-SELECT InventoryHeadersTable.InventoryHeaderID_AutoNumber, 
+Select Case InventoryHeadersTable.InventoryHeaderID_AutoNumber, 
 InventoryHeadersTable.InventoryDate_ShortDate, 
 StatusesTable.StatusText_ShortText25, PersonnelFullName.PersonnelFullName
 FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.InventoryStatus_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN PersonnelFullName ON InventoryHeadersTable.StoreKeeperID_LongInteger = PersonnelFullName.PersonnelID_AutoNumber
@@ -160,10 +164,10 @@ Packings.UnitOfThePacking_ShortText3,
 InventoryItemsTable.InventoryBulkBalanceQty_Double,
 StocksTable.BulkBalanceQuantity_Double, 
 Packings.UnitOfTheQuantity_ShortText3,
-BrandsTable.BrandID_Autonumber, 
 BrandsTable.BrandName_ShortText20, 
 Packings.ProductsPartsPackingRelationID_AutoNumber, 
-Packings.Packing
+Packings.Packing,
+BrandsTable.BrandID_Autonumber
 FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTable.InventoryHeaderID_LongInteger = InventoryHeadersTable.InventoryHeaderID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON InventoryItemsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) ON ProductsPartsTable.ProductsPartID_Autonumber = StocksTable.ProductPartID_LongInteger) LEFT JOIN (ProductsPartsPackingRelationsTable LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber) ON InventoryItemsTable.ProductsPartsPackingRelationID_LongInteger = ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
 "
         MySelection = InventoryItemsFieldsToSelect & InventoryItemsSelectionFilter & InventoryItemsSelectionOrder
@@ -178,7 +182,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
             FormatInventoryItemsDataGridView()
         End If
 
-        SetGroupBoxHeight(5, InventoryItemsRecordCount, InventoryItemsGroupBox, InventoryItemsDataGridView)
+        SetGroupBoxHeight(24, InventoryItemsRecordCount, InventoryItemsGroupBox, InventoryItemsDataGridView)
 
     End Sub
     Private Sub FormatInventoryItemsDataGridView()
@@ -192,7 +196,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "location"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 120
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
-                Case "SystemDesc_ShortText100Fld"
+                Case "ManufacturerDescription_ShortText250"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Product"
                     InventoryItemsDataGridView.Columns.Item(i).Width = 350
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
@@ -387,12 +391,15 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     End Sub
 
     Private Sub UpdateStocksTable(Mode As Integer)
+        'CHECK IF THIS PRODUCT PART EXISTS IN THE StocksTable
         MySelection = "SELECT TOP 1  ProductPartID_LongInteger from StocksTable WHERE ProductPartID_LongInteger = " & CurrentProductPartId &
                         " AND ProductsPartsPackingRelationID_LongInteger = " & CurrentProductsPartsPackingRelationID
         JustExecuteMySelection()
         If RecordCount = 0 Then
             'Insert a new Stock record for this product
-            CurrentStockID = InsertNewRecord("StocksTable", "ProductPartID_LongInteger", CurrentProductPartId.ToString)
+            Dim FieldsToUpdate = " ProductPartID_LongInteger, ProductsPartsPackingRelationID_LongInteger "
+            Dim FieldsData = CurrentProductPartId.ToString & ", " & CurrentProductsPartsPackingRelationID.ToString
+            CurrentStockID = InsertNewRecord("StocksTable", FieldsToUpdate, FieldsData)
         End If
         Dim SetCommand = ""
         Dim RecordFilter = ""
@@ -436,13 +443,10 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         FillInventoryItemsDataGridView()
     End Sub
     Private Sub SaveThisStockInventoryDetailsChanges()
-        MySelection = " SELECT TOP 1 InventoryHeaderID_LongInteger FROM InventoryItemsTable WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString &
-                            " AND ProductPartID_LongInteger = " & CurrentProductPartId.ToString
-        JustExecuteMySelection()
-        If RecordCount > 0 Then
-            UpdateCurrentInventoryItemId()
-        Else
+        If CurrentInventoryItemID = -1 Then
             AddNewInventoryItem()
+        Else
+            UpdateCurrentInventoryItemId()
         End If
         FillInventoryItemsDataGridView()
     End Sub
@@ -468,6 +472,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     End Sub
     Private Sub AddInventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddInventoryToolStripMenuItem.Click
         ShowProductsForm()
+        CurrentInventoryItemID = -1
     End Sub
     Private Sub ShowProductsForm()
         ShowCalledForm(Me, ProductsPartsForm)
