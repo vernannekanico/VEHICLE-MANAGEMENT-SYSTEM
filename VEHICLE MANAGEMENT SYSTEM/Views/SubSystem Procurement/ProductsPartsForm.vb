@@ -97,6 +97,7 @@ Public Class ProductsPartsForm
                 SystemPartDescriptionTextBox.Text = Tunnel3
             Case "Tunnel2IsProductsPartsPackingRelationID"
                 CurrentProductsPartsPackingRelationID = Tunnel2
+                UnitTextBox.Text = Tunnel4
                 If IsNotEmpty(Tunnel3) Then
                     PackingTextBox.Text = Tunnel3
                     PackingTextBox.Visible = True
@@ -105,7 +106,8 @@ Public Class ProductsPartsForm
                     PackingTextBox.Visible = False
                     Label3.Visible = False
                 End If
-
+                '                Tunnel3 = ProductPartsPackingRelationsDataGridView.Item("Packing", CurrentProductPartsPackingRelationsRow).Value.ToString
+                '               Tunnel4 = ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value
         End Select
 
     End Sub
@@ -120,6 +122,7 @@ PartsSpecificationsTable.PartsSpecificationID_AutoNumber,
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
+Packings.ProductsPartsPackingRelationID_AutoNumber,
 Packings.QuantityPerPack_Double, 
 Packings.UnitOfTheQuantity_ShortText3, 
 Packings.UnitOfThePacking_ShortText3, 
@@ -129,8 +132,11 @@ BrandsTable.BrandName_ShortText20,
 ProductsPartsTable.WorkOrderItemID_LongInteger, 
 ProductsPartsTable.Unit_ShortText3, 
 BrandsTable.BrandID_Autonumber, 
-ProductsPartsTable.ProductsPartID_Autonumber, 
-ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
+ProductsPartsTable.ProductsPartID_Autonumber
+FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN ProductsPartsPackingRelationsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductsPartsPackingRelationsTable.ProductPartID_LongInteger) LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber"
+        ProductsPartsFieldsToSelect = 
+"
+        Select ProductsPartsTable.Selected, ProductsPartsTable.MasterCodeBookID_LongInteger, MasterCodeBookTable.SubSystemCode_ShortText24Fld, MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartsSpecificationID_AutoNumber, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, ProductsPartsTable.ProductDescription_ShortText250, BrandsTable.BrandName_ShortText20, ProductsPartsTable.WorkOrderItemID_LongInteger, ProductsPartsTable.Unit_ShortText3, BrandsTable.BrandID_Autonumber, ProductsPartsTable.ProductsPartID_Autonumber, Packings.QuantityPerPack_Double, Packings.UnitOfTheQuantity_ShortText3, Packings.UnitOfThePacking_ShortText3, Packings.Packing, Packings.ProductsPartsPackingRelationID_AutoNumber
 FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN ProductsPartsPackingRelationsTable ON ProductsPartsTable.ProductsPartID_Autonumber = ProductsPartsPackingRelationsTable.ProductPartID_LongInteger) LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber"
 
         MySelection = ProductsPartsFieldsToSelect & ProductsPartsSelectionFilter & ProductsPartsSelectionOrder
@@ -214,6 +220,10 @@ FROM ((((ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfThePacking_ShortText3"
                     ProductsPartsDataGridView.Columns.Item(i).HeaderText = "Unit"
+                    ProductsPartsDataGridView.Columns.Item(i).Width = 70
+                    ProductsPartsDataGridView.Columns.Item(i).Visible = True
+                Case "ProductsPartsPackingRelationID_AutoNumber"
+                    ProductsPartsDataGridView.Columns.Item(i).HeaderText = "RelationID"
                     ProductsPartsDataGridView.Columns.Item(i).Width = 70
                     ProductsPartsDataGridView.Columns.Item(i).Visible = True
 
@@ -434,6 +444,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             SetupEditMode()
             Exit Sub
         End If
+
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
         Tunnel3 = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
@@ -448,10 +459,9 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                 InventoriesForm.ManufacturerPartDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
                 FillField(InventoriesForm.UnitTextBox.Text, ProductsPartsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductsPartsRow).Value)
                 InventoriesForm.PackingTextBox.Text = Packing
-                InventoriesForm.BulkBalanceUnitTextBox.Text = ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString()
-                InventoriesForm.BrandNameTextBox.Text = ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value
-                InventoriesForm.ProductSpecificationTextBox.Text = ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value
-
+                FillField(InventoriesForm.BulkBalanceUnitTextBox.Text, ProductsPartsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductsPartsRow).Value.ToString())
+                FillField(InventoriesForm.BrandNameTextBox.Text, ProductsPartsDataGridView.Item("BrandName_ShortText20", CurrentProductsPartsRow).Value)
+                FillField(InventoriesForm.ProductSpecificationTextBox.Text, ProductsPartsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsRow).Value)
             Case "PurchaseOrdersForm"
                 PurchaseOrdersForm.POItemProductPartNoTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentProductsPartsRow).Value
                 PurchaseOrdersForm.POItemProductDescTextBox.Text = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
@@ -680,13 +690,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
 
         CurrentProductPartID = InsertNewRecord("ProductsPartsTable", FieldsToUpdate, ReplacementData)
         MsgBox("COMMENTED COMMANDS SHOULD BE ENABLED TO ALLOW ADDING PACKINGS OF PRODUCTS/PARTS")
-        '       If CurrentProductsPartsPackingID > -1 Then
-        '       'update new packing record with the currentproduct
-        '       Dim RecordFilter = " WHERE ProductPartsPackingID_Autonumber = " & CurrentProductsPartsPackingID.ToString
-        '       Dim SetCommand = " SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
-        '       UpdateTable("ProductsPartsPackingsTable", SetCommand, RecordFilter)
-        '
-        '       End If
     End Sub
     Private Sub UpdateProductsPartChanges()
         Dim RecordFilter = " WHERE ProductsPartID_Autonumber = " & Str(CurrentProductPartID)
@@ -883,9 +886,10 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     End Sub
 
     Private Sub SearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchToolStripMenuItem.Click
-        PartDescriptionSearchTextBox.Select()
+        If FiltersGroupBox.Visible Then Exit Sub
         FiltersGroupBox.Visible = True
         FiltersGroupBox.BringToFront()
+        PartDescriptionSearchTextBox.Select()
     End Sub
     Private Sub EditPackingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPackingToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartID"

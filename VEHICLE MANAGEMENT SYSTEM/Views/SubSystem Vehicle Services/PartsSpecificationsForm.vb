@@ -762,6 +762,10 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     End Sub
 
     Private Sub AddPartsSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPartSpecificationsToolStripMenuItem.Click
+
+        If PartsSpecificationsGroupBox.Visible = False Then
+            PartsSpecificationsGroupBox.Visible = True
+        End If
         CurrentPartsSpecificationsID = -1
         PartSpecificationsTextBox.Text = "type new specifications"
         PartSpecificationsTextBox.ReadOnly = False
@@ -838,5 +842,17 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     Private Sub PasteSpecificationToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteSpecificationToolStripTextBox.Click
         PartSpecificationTextBoxContextMenuStrip.Hide()
         PartSpecificationsTextBox.Text = Clipboard.GetText()
+    End Sub
+
+    Private Sub EditPartSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPartSpecificationsToolStripMenuItem.Click
+        If MsgBox("Are you sure you want to change description ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        PartSpecificationsTextBox.Text = PartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value
+        If PartsSpecificationsGroupBox.Visible = False Then
+            PartsSpecificationsGroupBox.Visible = True
+        End If
+        PartSpecificationsTextBox.ReadOnly = False
+        PartSpecificationsTextBox.SelectAll()
+        SaveToolStripMenuItem.Visible = True
+        PartSpecificationsDetailsGroup.Visible = True
     End Sub
 End Class

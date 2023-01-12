@@ -61,7 +61,10 @@ StocksTable.StockID_Autonumber,
 StocksLocationsTable.StocksLocationID_AutoNumber
 FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) LEFT JOIN ProductPartsPackingsTable ON StocksTable.ProductPartID_LongInteger = ProductPartsPackingsTable.ProductPartID_LongInteger) LEFT JOIN StocksQuantitiesPerSpecsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = StocksQuantitiesPerSpecsTable.PartsSpecificationID_LongInteger
 "
-
+        ProductsInventoriesFieldsToSelect = " 
+SELECT StocksTable.StockID_Autonumber, ProductsPartsTable.ProductsPartID_Autonumber, StocksLocationsTable.StocksLocationID_AutoNumber, StocksLocationsTable.LocationCode_ShortText11, MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, StocksTable.QuantityInStock_Double, Packings.UnitOfThePacking_ShortText3, ProductsPartsTable.Unit_ShortText3, StocksTable.BulkBalanceQuantity_Double, BrandsTable.BrandID_Autonumber, BrandsTable.BrandName_ShortText20, Packings.ProductsPartsPackingRelationID_AutoNumber, Packings.Packing, PartsSpecificationsTable.PartsSpecificationID_AutoNumber
+FROM ((StocksTable LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber) LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTable ON ProductsPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN (ProductsPartsPackingRelationsTable LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber) ON StocksTable.ProductsPartsPackingRelationID_LongInteger = ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
+"
         MySelection = ProductsInventoriesFieldsToSelect & ProductsInventoriesSelectionFilter & ProductsInventoriesSelectionOrder
 
         JustExecuteMySelection()
@@ -181,12 +184,12 @@ FROM (((StocksTable LEFT JOIN (((ProductsPartsTable LEFT JOIN MasterCodeBookTabl
         CurrentlocationID = StocksDataGridView.Item("StocksLocationID_AutoNumber", CurrentProductsInventoriesRow).Value
         If IsEmpty(StocksDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value) Then
             MsgBox("Part/Product Specification is missing, " & vbLf & "need to update, " & vbLf &
-                   "required to determine available quantities")
+                             "required to determine available quantities")
             SpecificationInventoriesGroupBox.Visible = False
             Exit Sub
         End If
         SpecificationsInventoriesSelectionFilter = "WHERE PartsSpecificationID_AutoNumber = " &
-                                                StocksDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value
+             StocksDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsInventoriesRow).Value
         FillSpecificationsInventoriesDataGridView()
         Dim AvailableQuantities = 0
         For i = 0 To SpecificationsInventoriesRecordCount - 1

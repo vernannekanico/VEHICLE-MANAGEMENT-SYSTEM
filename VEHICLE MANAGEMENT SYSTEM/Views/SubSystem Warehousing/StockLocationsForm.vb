@@ -64,6 +64,9 @@ Public Class StockLocationsForm
         StorageTypesGroupBox.Left = StocksLocationsGroupBox.Left
         StocksLocationsGroupBox.Enabled = True
         StockLocationDetailsGroupBox.Enabled = False
+        Me.Width = VehicleManagementSystemForm.Width
+        StocksGroupBox.Left = StocksLocationsGroupBox.Left + StocksLocationsGroupBox.Width
+
     End Sub
     Private Sub FillStocksLocationsDataGridView()
         Dim LocationDescription = " StoragesLocationsTable.StoragesLocation_ShortText200 & chr(45) &
@@ -131,8 +134,6 @@ FROM ((StocksLocationsTable
 
         StocksLocationsGroupBox.Top = BottomOf(StockLOcationSearchToolStrip)
         StocksGroupBox.Top = BottomOf(StockLOcationSearchToolStrip)
-        StocksGroupBox.Left = StocksLocationsGroupBox.Left + StocksLocationsGroupBox.Width
-        Me.Width = VehicleManagementSystemForm.Width
     End Sub
     Private Sub FormatStocksLocationsDataGridView()
         StocksLocationsDataGridViewAlreadyFormated = True
@@ -147,7 +148,7 @@ FROM ((StocksLocationsTable
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
                 Case "LocationDescription"
                     StocksLocationsDataGridView.Columns.Item(i).HeaderText = "Location Description"
-                    StocksLocationsDataGridView.Columns.Item(i).Width = 400
+                    StocksLocationsDataGridView.Columns.Item(i).Width = 300
                     StocksLocationsDataGridView.Columns.Item(i).Visible = True
             End Select
 
@@ -235,11 +236,11 @@ FROM ((StocksTable LEFT JOIN ProductsPartsTable ON StocksTable.ProductPartID_Lon
                     StocksDataGridView.Columns.Item(i).Visible = True
                 Case "QuantityInStock_Double"
                     StocksDataGridView.Columns.Item(i).HeaderText = "Quantity"
-                    StocksDataGridView.Columns.Item(i).Width = 120
+                    StocksDataGridView.Columns.Item(i).Width = 70
                     StocksDataGridView.Columns.Item(i).Visible = True
                 Case "BulkBalanceQuantity_Double"
                     StocksDataGridView.Columns.Item(i).HeaderText = "Bulk Balance"
-                    StocksDataGridView.Columns.Item(i).Width = 120
+                    StocksDataGridView.Columns.Item(i).Width = 70
                     StocksDataGridView.Columns.Item(i).Visible = True
                 Case "Unit_ShortText3"
                     StocksDataGridView.Columns.Item(i).HeaderText = "Unit"

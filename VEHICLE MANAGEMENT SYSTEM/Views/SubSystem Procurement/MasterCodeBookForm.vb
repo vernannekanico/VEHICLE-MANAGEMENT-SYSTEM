@@ -1,4 +1,5 @@
-﻿Imports excel = Microsoft.Office.Interop.Excel
+﻿Imports System.Data.SqlClient
+Imports excel = Microsoft.Office.Interop.Excel
 Public Class MasterCodeBookForm
     Private CurrentSubSystemCodeBookID As Integer
     Public CurrentMainSystemCode As String
@@ -236,13 +237,13 @@ Public Class MasterCodeBookForm
             '   SavedCode does not exist, missing link
             CurrentSubSystemCode = ParentCode
             CurrentSubSystemName = "missing link"
-            MsgBox(CurrentSubSystemCode & "allow adding missing link")
+            MsgBox(CurrentSubSystemCode & " allow adding missing link")
             If Not SuccessfullyAddingThisMasterCodeBookRecord() Then
                 MsgBox("UNSECCESSFULL INSERT!!!! Of missing link record")
+            Else
+                MsgBox("missing link record inserted")
+                MsgBox("missing link record insertion was temporarily removed, no action was done here")
             End If
-
-            MsgBox("missing link record inserted")
-
             Exit Sub
         End If
 
@@ -1181,99 +1182,75 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
 
     Private Sub GoRenumberButton_Click(sender As Object, e As EventArgs) Handles GoRenumberButton.Click
-        ' CHECK 1ST IF NEW CODE ALREADY EXIST
-        '       SubSystemCode_ShortText24Fld
+        ' CHECK 1ST IF THE NEW CODE ALREADY EXISTs using SubSystemCode_ShortText24Fld
 
-        Dim RecordFilter = ""
-        Dim UpdateFieldsToSelect = ""
-
-        ' check how may records will be affected
-
-        RecordFilter = " WHERE mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text))
-
+        Dim SavedSubSystemCodeFieldsToSelect = SubSystemCodeFieldsToSelect
 
         ' CHECK THAT THE NEW CODE DOES EXIST
 
+        MySelection = " SELECT SubSystemCode_ShortText24Fld,  SystemDesc_ShortText100Fld FROM MasterCodeBookTable 
+                                        WHERE mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(NewNumberTextBox.Text))) & ") = " & InQuotes(Trim(NewNumberTextBox.Text)) &
+                                        SubSystemCodeSelectionOrder
+        JustExecuteMySelection()
+        If RecordCount > 0 Then
+            If RecordCount > 0 Then
+                MsgBox("That number already exist")
+                Exit Sub
+            End If
+        End If
 
-        UpdateFieldsToSelect = " SELECT * from MasterCodeBookTable "
+        ' now SELECT ALL records  TO BE REPLACED
+        ' STARTING FROM THE GIVEN BASE CODES AND ITS CHILDREN
 
-        MySelection = UpdateFieldsToSelect & RecordFilter
-        If NoRecordFound() Then Dim dummy = 1
+        MySelection = " SELECT MasterCodeBookID_Autonumber, SubSystemCode_ShortText24Fld,  SystemDesc_ShortText100Fld FROM MasterCodeBookTable 
+                                        WHERE mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text)) &
+                                        SubSystemCodeSelectionOrder
+        JustExecuteMySelection()
+
+        ' THEN LOAD THE RECORDS IN THE SubSystemCodeDataGridView
+        SubSystemCodeDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+
         Dim ThisThese = ""
         Dim ThereIsThereAre = ""
         Dim ARecords = ""
         If RecordCount = 1 Then
             ThisThese = "this record ?"
-            ThereIsThereAre = "There is a "
-            ARecords = "record"
+            ThereIsThereAre = "There is "
+            ARecords = " record"
         Else
             ThisThese = "these records ?"
             ThereIsThereAre = "There are "
-            ARecords = "records"
+            ARecords = " records"
         End If
         ' CHECK HOW MANY InfoPerVehicle WILL BE RENUMBERED
-        Dim NoOfConnectedInfoPerVehicle = ""
-
-        ' this is tyemporary to simulate presumed record count using datagridview 
-        'fix this
-
         Dim InfoPerVehicleRecordCount = 0
 
-
-
-
-
-        If InfoPerVehicleRecordCount > 0 Then
-            NoOfConnectedInfoPerVehicle = " AND " & Str(InfoPerVehicleRecordCount) & " related part(s) "
-        End If
-        If MsgBox(ThereIsThereAre & Str(RecordCount) & ARecords & " found to be renumbered, " & NoOfConnectedInfoPerVehicle & " CONTINUE renumbering " & ThisThese, vbYesNo) = vbNo Then
-            Dim xxx = 1
+        If MsgBox(ThereIsThereAre & Str(RecordCount) & ARecords & " found to be renumbered, " & " CONTINUE renumbering " & ThisThese, vbYesNo) = vbNo Then
             Exit Sub
         End If
-        If Not Mid(NewNumberTextBox.Text, 1, Len(Trim(OldNumberTextBox.Text))) = Trim(OldNumberTextBox.Text) Then
-            ' check for records that have the same code, if exists, determine if it is a child of the code to renumber
 
-            RecordFilter = " WHERE mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(NewNumberTextBox.Text))) & ") = " & InQuotes(Trim(NewNumberTextBox.Text))
+        'UPDATE NOW, DO CHANGES HERE FOR ALL SELECTED RECORDS IN THE SubSystemCodeDataGridView
+        For I = 0 To RecordCount - 1
+            CurrentSubSystemCodeBookID = SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", I).Value
+            CurrentSubSystemCode = SubSystemCodeDataGridView.Item("SubSystemCode_ShortText24Fld", I).Value
 
+            Dim RecordFilter = " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID
+            Dim ReplacementCode = Replace(CurrentSubSystemCode, OldNumberTextBox.Text, NewNumberTextBox.Text)
+            Dim SetCommand = " SET SubSystemCode_ShortText24Fld  = " & ReplacementCode
 
-            ' CHECK THAT THE NEW CODE DOES EXIST
-
-
-            UpdateFieldsToSelect = " SELECT * from MasterCodeBookTable "
-
-            MySelection = UpdateFieldsToSelect & RecordFilter
-            If NoRecordFound() Then Dim dummy = 1
-
-            ' TEST IF CODE ALREADY EXISTS
-
-            If RecordCount > 0 Then
-
-                MsgBox("NEWCODE ALREADY EXISTS, FOUND " & Str(RecordCount) & " records")
-                ResetMasterCodeBookForm()
-                Exit Sub
-            End If
-            If MsgBox("Are you sure you want to CHANGE CODE " & OldNumberTextBox.Text & " TO " & NewNumberTextBox.Text, vbYesNo) = vbNo Then
-                Dim xxx = 1
-                Exit Sub
-            End If
-            RecordFilter = " WHERE mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text))
-            UpdateFieldsToSelect = " UPDATE MasterCodeBookTable  SET SubSystemCode_ShortText24Fld  = " & "(" & Chr(34) &
-                                    Trim(NewNumberTextBox.Text) & Chr(34) & " & Mid(SubSystemCode_ShortText24Fld," & Str(1 + Len(Trim(OldNumberTextBox.Text))) &
-                                    "," & Str(100 - Len(Trim(NewNumberTextBox.Text))) & "))"
-
-            MySelection = UpdateFieldsToSelect & RecordFilter
-            If NoRecordFound() Then Dim dummy = 1
-
+            UpdateTable("MasterCodeBookTable", SetCommand, RecordFilter)
+            MsgBox("recover following process, break the progrm")
+            Exit Sub
             ' RENUMBER THE InfoPerVehicle TOO if exist(s)
             If InfoPerVehicleRecordCount > 0 Then
 
-                UpdateFieldsToSelect = " UPDATE InfoPerVehiclePartsTable  SET InfoPerVehicleCode_ShortText20Fld  = " & "(" & InQuotes(Trim(NewNumberTextBox.Text)) &
+                Dim UpdateFieldsToSelect = " UPDATE InfoPerVehiclePartsTable  Set InfoPerVehicleCode_ShortText20Fld  = " & "(" & InQuotes(Trim(NewNumberTextBox.Text)) &
                                                                             " & Mid(InfoPerVehicleCode_ShortText20Fld," & Str(1 + Len(Trim(OldNumberTextBox.Text))) &
                                                                              "," & Str(100 - Len(Trim(NewNumberTextBox.Text))) & "))"
 
-                RecordFilter = " WHERE mid(InfoPerVehicleCode_ShortText20Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text))
+                RecordFilter = " " 'WHERE mid(InfoPerVehicleCode_ShortText20Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text))
 
-                MySelection = UpdateFieldsToSelect & RecordFilter
+                '            MySelection = UpdateFieldsToSelect & RecordFilter
                 If NoRecordFound() Then Dim dummy = 1
             End If
 
@@ -1312,13 +1289,9 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
             ResetMasterCodeBookForm()
             CurrentSubSystemCode = Trim(NewNumberTextBox.Text)
             FindSubCodeSelected()
-
-        Else
-            MsgBox("New code exists as a child code, ")
-            ' the new code is a child code
-            Dim xxccn = 1
-        End If
-
+        Next
+        RenumberGroupBox.Visible = False
+        FillSubSystemDataGridView()
     End Sub
     Private Sub ResetMasterCodeBookForm()
         EnableAddEditDeleteMasterCodeMenuItems()

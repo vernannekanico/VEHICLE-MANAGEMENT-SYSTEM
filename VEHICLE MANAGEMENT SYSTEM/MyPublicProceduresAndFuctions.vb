@@ -168,18 +168,17 @@
         If Variable1 = variable2 Then Return False
         Return True
     End Function
-    Public Function InsertNewRecord(SubjectTable As String, FieldsToUpdate As String, FieldsData As String)
-
+    Public Function InsertNewRecord(SubjectTable As String, FieldsToUpdate As String, FieldsData As String, Optional DisregardThis As Boolean = -1)
         MySelection = " SELECT * FROM " & SubjectTable
         JustExecuteMySelection()
         Dim TotalRecord = RecordCount
-
         MySelection = " INSERT INTO " & SubjectTable & " (" & FieldsToUpdate & ") VALUES (" & FieldsData & ")"
         JustExecuteMySelection()
 
         MySelection = " SELECT * FROM " & SubjectTable
         JustExecuteMySelection()
         If TotalRecord = RecordCount Then
+            If DisregardThis Then Return -1
             MsgBox("Unsuccesful insert")
             Return -1
         End If

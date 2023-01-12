@@ -37,19 +37,30 @@
         Me.Close()
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
+
         Tunnel1 = "Tunnel2IsProductsPartsPackingRelationID"
         Tunnel2 = CurrentProductsPartsPackingRelationID
+        If CurrentProductPartsPackingRelationsRow = -1 Then
+            If ProductPartsPackingRelationsRecordCount = 1 Then
+                CurrentProductPartsPackingRelationsRow = 0
+            End If
+        End If
         Tunnel3 = ProductPartsPackingRelationsDataGridView.Item("Packing", CurrentProductPartsPackingRelationsRow).Value.ToString
-        Tunnel4 = ProductPartsPackingRelationsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingRelationsRow).Value
+        Tunnel4 = ProductPartsPackingRelationsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingRelationsRow).Value
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub FillProductPartsPackingRelationsDataGridView()
 
         ProductPartsPackingRelationsFieldsToSelect =
 " 
-SELECT ProductPartsPackingsTable.QuantityPerPack_Double, ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, ProductPartsPackingsTable.UnitOfThePacking_ShortText3, ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber, ProductsPartsPackingRelationsTable.ProductPartID_LongInteger
-FROM ProductsPartsPackingRelationsTable LEFT JOIN ProductPartsPackingsTable ON ProductsPartsPackingRelationsTable.ProductPartsPackingID_LongInteger = ProductPartsPackingsTable.ProductPartsPackingID_Autonumber
-"
+SELECT 
+ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber, 
+ProductsPartsPackingRelationsTable.ProductPartID_LongInteger, 
+Packings.QuantityPerPack_Double, 
+Packings.UnitOfTheQuantity_ShortText3, 
+Packings.UnitOfThePacking_ShortText3, 
+Packings.Packing
+FROM ProductsPartsPackingRelationsTable LEFT JOIN Packings ON ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber = Packings.ProductsPartsPackingRelationID_AutoNumber"
 
 
         MySelection = ProductPartsPackingRelationsFieldsToSelect & ProductPartsPackingRelationsSelectionFilter & ProductPartsPackingRelationsSelectionOrder
