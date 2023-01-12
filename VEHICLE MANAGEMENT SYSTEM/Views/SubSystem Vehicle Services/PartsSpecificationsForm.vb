@@ -762,9 +762,6 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     End Sub
 
     Private Sub AddPartsSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPartSpecificationsToolStripMenuItem.Click
-        If PartsSpecificationsGroupBox.Visible = False Then
-            PartsSpecificationsGroupBox.Visible = True
-        End If
         CurrentPartsSpecificationsID = -1
         PartSpecificationsTextBox.Text = "type new specifications"
         PartSpecificationsTextBox.ReadOnly = False
