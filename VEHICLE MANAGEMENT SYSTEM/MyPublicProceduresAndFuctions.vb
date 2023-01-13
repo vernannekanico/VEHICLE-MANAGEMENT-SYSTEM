@@ -3,18 +3,21 @@
         If PassedObject Is Nothing Then Return True
         If IsDBNull(PassedObject) Then Return True
         If PassedObject.GetType.Name = "DateTime" Then Return False
-        If PassedObject.GetType.Name = "String" Then
-            If Trim(PassedObject.ToString) = "" Then Return True
-            If PassedObject = "0" Then Return True
-            If Val(PassedObject) < 0 Then Return True
-        Else
-            If PassedObject.GetType.Name = "Int32" Then
+        Select Case PassedObject.GetType.Name
+            Case "Double"
                 If PassedObject < 0 Then Return True
-            Else
-                MsgBox("in Function IsEmpty(PassedObject) Type of Object Passed is " & PassedObject.GetType.Name)
-                Return True
-            End If
-        End If
+            Case "Int32"
+                If PassedObject < 0 Then Return True
+            Case "String"
+                If Trim(PassedObject.ToString) = "" Then Return True
+                If PassedObject = "0" Then Return True
+                If Val(PassedObject) < 0 Then Return True
+            Case Else
+                MsgBox("Type of Object you Passed is " & PassedObject.GetType.Name &
+                       vbCrLf &
+                       "program wiil stop, update Function IsEmpty(PassedObject) ")
+                Stop
+        End Select
         Return False
     End Function
     Public Function IsNotEmpty(PassedObject)
@@ -177,10 +180,13 @@
 
         MySelection = " SELECT * FROM " & SubjectTable
         JustExecuteMySelection()
-        If TotalRecord = RecordCount Then
-            If DisregardThis Then Return -1
-            MsgBox("Unsuccesful insert")
-            Return -1
+        If TotalRecord = RecordCount Then 'THERE IS NO INSERTION  DONE
+            If DisregardThis Then
+            Else
+                MsgBox("Unsuccesful insert")
+                r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
+                Return r(0)
+            End If
         End If
         Dim SortField As String
         If InStr(SubjectTable, "iesTable") > 0 Then

@@ -43,7 +43,6 @@ Partial Class StocksForm
         Me.StocksGroupBox = New System.Windows.Forms.GroupBox()
         Me.StockDetailsGroup = New System.Windows.Forms.GroupBox()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
-        Me.PackingButton = New System.Windows.Forms.Button()
         Me.PackingTextBox = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.MinimumQuantityTextBox = New System.Windows.Forms.TextBox()
@@ -222,7 +221,6 @@ Partial Class StocksForm
         Me.StockDetailsGroup.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.StockDetailsGroup.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.StockDetailsGroup.Controls.Add(Me.ProductSpecificationTextBox)
-        Me.StockDetailsGroup.Controls.Add(Me.PackingButton)
         Me.StockDetailsGroup.Controls.Add(Me.PackingTextBox)
         Me.StockDetailsGroup.Controls.Add(Me.Label4)
         Me.StockDetailsGroup.Controls.Add(Me.MinimumQuantityTextBox)
@@ -258,17 +256,6 @@ Partial Class StocksForm
         Me.ProductSpecificationTextBox.ReadOnly = True
         Me.ProductSpecificationTextBox.Size = New System.Drawing.Size(353, 26)
         Me.ProductSpecificationTextBox.TabIndex = 124
-        '
-        'PackingButton
-        '
-        Me.PackingButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PackingButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.PackingButton.Location = New System.Drawing.Point(11, 212)
-        Me.PackingButton.Name = "PackingButton"
-        Me.PackingButton.Size = New System.Drawing.Size(131, 40)
-        Me.PackingButton.TabIndex = 120
-        Me.PackingButton.Text = "Packing"
-        Me.PackingButton.UseVisualStyleBackColor = True
         '
         'PackingTextBox
         '
@@ -506,7 +493,6 @@ Partial Class StocksForm
     Friend WithEvents StocksGroupBox As GroupBox
     Friend WithEvents StockDetailsGroup As GroupBox
     Friend WithEvents ProductSpecificationTextBox As TextBox
-    Friend WithEvents PackingButton As Button
     Friend WithEvents PackingTextBox As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents MinimumQuantityTextBox As TextBox

@@ -137,7 +137,7 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         EditInventoryDetailsToolStripMenuItem.Visible = False
         DeleteInventoryItemToolStripMenuItem.Visible = False
         SaveInventoryDetailsToolStripMenuItem.Visible = False
-        ForApprovalToolStripMenuItem.Visible = False
+        SubmitForApprovalToolStripMenuItem.Visible = False
         ApproveToolStripMenuItem.Visible = False
         RegisterInventoryToolStripMenuItem.Visible = False
         If Mode = 2 Then
@@ -516,12 +516,28 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     Private Sub UnitTextBox_Click(sender As Object, e As EventArgs) Handles UnitTextBox.Click
         MsgBox("DELETE THIS ROUTINE")
     End Sub
-    Private Sub ForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ForApprovalToolStripMenuItem.Click
+    Private Sub SubmitForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitForApprovalToolStripMenuItem.Click
+        ' UPDATE ALL THE OUTSTANDING InventoryItems with the CurrentInventoryHeaderID
+        Dim SetCommand = " SET InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString &
+                            GetStatusIdFor("InventoryHeadersTable", "For Approval").ToString()
+        Dim Recordfilter = " WHERE InventoryHeaderID_LongInteger = -1 " & CurrentInventoryHeaderID
+        UpdateTable("InventoryItemsTable", SetCommand, Recordfilter)
+        FillInventoryHeadersDataGridView()
+        Exit Sub
+
         If MsgBox("Setting status FOR APPROVAL will not allow editing of this list anymore," & vbCrLf & vbCrLf &
                "Continue ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        ' CREATE THE HEADER RECORDS FOR THE WHOLE OUTSTANDING INVENTORY
         Dim FieldsToUpdate = " StoreKeeperID_LongInteger, InventoryStatus_Integer "
         Dim FieldsData = CurrentPersonelID.ToString & ", " & GetStatusIdFor("InventoryHeadersTable").ToString
         CurrentInventoryHeaderID = InsertNewRecord("InventoryHeadersTable", FieldsToUpdate, FieldsData)
+
+
+
+
+
+
+
         FillInventoryHeadersDataGridView()
     End Sub
     Private Sub ApproveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApproveToolStripMenuItem.Click
@@ -533,6 +549,7 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
 
     Private Sub RegisterInventoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RegisterInventoryToolStripMenuItem.Click
         ' check if list is not empty
+        FillInventoryItemsDataGridView()
         If InventoryItemsRecordCount < 1 Then Exit Sub
         Dim FieldsToUpdate = ""
         Dim FieldsData = ""
@@ -543,9 +560,12 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
 
         'DESELECT CURRENTLY SELECTED InventoryItemsDataGridView ROW
         InventoryItemsDataGridView.Rows(CurrentInventoryHeadersRow).Selected = False
-        For CurrentInventoryItemsRecordCount = 0 To InventoryItemsRecordCount - 1
+        For CurrentInventoryItemsRow = 0 To InventoryItemsRecordCount - 1
+            'NOTE YOU CAN USE A LOCAL VARIABLE AS VARIABLE NAME FOR THE COUNTER
+            'BECAUSE THE LOOP INCREMENTS ONLY ITS OWN CREATE LOCAL VARIABLE WITH THE SAME NAME
+            'OUTSIDE THE LOOP THE VARIABLE WITH THE SAME NAME WILL REFERERENCE THE ORIGINAL VARIABLE
             'all needed informations here will be updated in the DataGrid.rows(selected)
-            InventoryItemsDataGridView.Rows(CurrentInventoryHeadersRow).Selected = True
+            InventoryItemsDataGridView.Rows(CurrentInventoryItemsRow).Selected = True
             SelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartId.ToString &
                               "   AND ProductsPartsPackingRelationID_LongInteger = " & CurrentProductsPartsPackingRelationID.ToString
             MySelection = " SELECT * FROM StocksTAble " & SelectionFilter
@@ -560,40 +580,55 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                          CurrentProductsPartsPackingRelationID.ToString & ", " &
                          CurrentInventoryQtyInStock.ToString & ", " &
                          CurrentInventoryBulkBalanceQty.ToString
+
+
+                'SINCE FUNCTION InsertNewRecord() ALWAYS RETURNS THE CURRENTLY INSERTED RECORD
+                Dim SavedStockID = CurrentStockID
                 CurrentStockID = InsertNewRecord("StocksTable", FieldsToUpdate, FieldsData, True)
-                ThereAreNewStocksRecords = True
-                'NOW SET POINTER TO THE STOCKSTABLE TO THE NEWLY CREATED RECORD
-                SelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartId.ToString &
-                              "   AND ProductsPartsPackingRelationID_LongInteger = " & CurrentProductsPartsPackingRelationID.ToString
-                MySelection = " SELECT * FROM StocksTAble " & SelectionFilter
-                JustExecuteMySelection()
-                If RecordCount = 0 Then
-                    MsgBox("Something is wrong")
+                If CurrentStockID <> CurrentStockID Then
+                    CurrentStockID = SavedStockID
                 End If
             End If
+
             'HERE REGISTER THE OLD QUANTITIES FIRST
-            Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
-            Dim SetCommand = " SET ReplacedQtyInStock_Double = " & r("QuantityInStock_Double").ToString & ", " &
-                         " ReplacedBulkBalanceQty_Double = " & r("BulkBalanceQuantity_Double").ToString
+
+            Dim SetCommand = " SET ReplacedQtyInStock_Double = " & CurrentInventoryQtyInStock.ToString & ", " &
+                         " ReplacedBulkBalanceQty_Double = " & CurrentInventoryBulkBalanceQty.ToString
             Dim RecordFilter = " WHERE InventoryItemID_Autonumber = " & CurrentInventoryItemID.ToString
 
             UpdateTable("InventoryItemsTable", SetCommand, RecordFilter)
 
-            'NOW UPDATE THE STOCKSTABLE
+            'NOW UPDATE THE STOCKSTABLE QUANTITIES
+
+            GetCurrentStockID()
+            FillField(CurrentInventoryQtyInStock, InventoryItemsDataGridView.Item("InventoryQtyInStock_Double", CurrentInventoryItemsRow).Value)
+            FillField(CurrentInventoryBulkBalanceQty, InventoryItemsDataGridView.Item("InventoryBulkBalanceQty_Double", CurrentInventoryItemsRow).Value)
+
+
             SetCommand = " SET QuantityInStock_Double = " & CurrentInventoryQtyInStock.ToString & ", " &
                          " BulkBalanceQuantity_Double = " & CurrentInventoryBulkBalanceQty.ToString
             RecordFilter = " WHERE StockID_Autonumber = " & CurrentStockID.ToString
-
             UpdateTable("StocksTable", SetCommand, RecordFilter)
+            'AND THEN THE 
         Next
-        'UPDATING OF QUANTITIES IS DONE
-        'UPDATE ALSO THOSE NEW PRODUCTS INSERTED THAT HAS NO LOCATION CODE
-        'Make the sTOCKSfORM insure that all records have location upon entry
-        If ThereAreNewStocksRecords Then
-            ShowCalledForm(Me, StocksForm)
-        End If
-
     End Sub
+    Private Function GetCurrentStockID()
+        Dim SelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartId.ToString &
+                              "   AND ProductsPartsPackingRelationID_LongInteger = " & CurrentProductsPartsPackingRelationID.ToString
+        MySelection = " SELECT * FROM StocksTAble " & SelectionFilter
+        JustExecuteMySelection()
+
+        If RecordCount = 0 Then
+            MsgBox("Something is wrong")
+            Return -1
+        Else
+            Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
+            CurrentStockID = r("StockID_Autonumber")
+            CurrentInventoryQtyInStock = r("QuantityInStock_Double")
+            CurrentInventoryBulkBalanceQty = r("BulkBalanceQuantity_Double")
+        End If
+        Return CurrentStockID
+    End Function
 
     Private Sub ResetForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetForApprovalToolStripMenuItem.Click
         If MsgBox("Are you sure you want to reset for editing ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
@@ -614,8 +649,6 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
             FillField(CurrentProductsPartsPackingRelationID, InventoryItemsDataGridView.Item("ProductsPartsPackingRelationID_AutoNumber", CurrentInventoryItemsRow).Value)
             FillField(CurrentlocationID, InventoryItemsDataGridView.Item("StocksLocationID_Autonumber", CurrentInventoryItemsRow).Value)
             FillField(CurrentStockID, InventoryItemsDataGridView.Item("StockID_AutoNumber", CurrentInventoryItemsRow).Value)
-            FillField(CurrentInventoryQtyInStock , InventoryItemsDataGridView.Item("InventoryQtyInStock_Double", CurrentInventoryHeadersRow).Value)
-            FillField(CurrentInventoryBulkBalanceQty, InventoryItemsDataGridView.Item("InventoryBulkBalanceQty_Double", CurrentInventoryHeadersRow).Value)
         Catch ex As Exception
             If ex.Message = "Index was out of range. Must be non-negative and less than the size of the collection.
 Parameter name: index" Then

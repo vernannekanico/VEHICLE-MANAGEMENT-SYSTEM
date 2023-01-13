@@ -37,7 +37,7 @@ Partial Class InventoriesForm
         Me.EditInventoryDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteInventoryItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveInventoryDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ForApprovalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SubmitForApprovalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ApproveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegisterInventoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PrintInventoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -131,7 +131,7 @@ Partial Class InventoriesForm
         'InventoriesFormMenuStrip
         '
         Me.InventoriesFormMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.InventoriesFormMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ViewInventoriesToolStripMenuItem, Me.INVENTORYLISTToolStripMenuItem, Me.AddInventoryToolStripMenuItem, Me.EditInventoryDetailsToolStripMenuItem, Me.DeleteInventoryItemToolStripMenuItem, Me.SaveInventoryDetailsToolStripMenuItem, Me.ForApprovalToolStripMenuItem, Me.ApproveToolStripMenuItem, Me.RegisterInventoryToolStripMenuItem, Me.PrintInventoryToolStripMenuItem, Me.ResetForApprovalToolStripMenuItem})
+        Me.InventoriesFormMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReturnToolStripMenuItem, Me.ViewInventoriesToolStripMenuItem, Me.INVENTORYLISTToolStripMenuItem, Me.AddInventoryToolStripMenuItem, Me.EditInventoryDetailsToolStripMenuItem, Me.DeleteInventoryItemToolStripMenuItem, Me.SaveInventoryDetailsToolStripMenuItem, Me.SubmitForApprovalToolStripMenuItem, Me.ApproveToolStripMenuItem, Me.RegisterInventoryToolStripMenuItem, Me.PrintInventoryToolStripMenuItem, Me.ResetForApprovalToolStripMenuItem})
         Me.InventoriesFormMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.InventoriesFormMenuStrip.Name = "InventoriesFormMenuStrip"
         Me.InventoriesFormMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -194,11 +194,11 @@ Partial Class InventoriesForm
         Me.SaveInventoryDetailsToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveInventoryDetailsToolStripMenuItem.Text = "Save"
         '
-        'ForApprovalToolStripMenuItem
+        'SubmitForApprovalToolStripMenuItem
         '
-        Me.ForApprovalToolStripMenuItem.Name = "ForApprovalToolStripMenuItem"
-        Me.ForApprovalToolStripMenuItem.Size = New System.Drawing.Size(112, 25)
-        Me.ForApprovalToolStripMenuItem.Text = "For Approval"
+        Me.SubmitForApprovalToolStripMenuItem.Name = "SubmitForApprovalToolStripMenuItem"
+        Me.SubmitForApprovalToolStripMenuItem.Size = New System.Drawing.Size(166, 25)
+        Me.SubmitForApprovalToolStripMenuItem.Text = "Submit For Approval"
         '
         'ApproveToolStripMenuItem
         '
@@ -555,7 +555,7 @@ Partial Class InventoriesForm
     Friend WithEvents Label1 As Label
     Friend WithEvents BulkBalanceUnitTextBox As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents ForApprovalToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SubmitForApprovalToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ApproveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetForApprovalToolStripMenuItem As ToolStripMenuItem
 End Class
