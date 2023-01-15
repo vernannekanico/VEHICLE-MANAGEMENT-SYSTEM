@@ -30,13 +30,24 @@ Public Class InventoriesForm
     Private Sub InventoryHeadersForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' SEE FORM InventoriesForm DOCUMENTATION
         SavedCallingForm = CallingForm
-        InventoryHeadersSelectionFilter = "  WHERE StatusText_ShortText25 <> " & InQuotes("Registered")
-        FillInventoryHeadersDataGridView()
-        InventoryHeadersGroupBox.Top = BottomOf(SearchToolStrip)
-        InventoryHeadersGroupBox.Left = Me.Left
+        InventoryHeadersGroupBox.Visible = False
+        InventoryDetailsGroup.Visible = False
+        InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = -1 "
+        FillInventoryItemsDataGridView()
         HorizontalCenter(InventoryDetailsGroup, Me)
         VerticalCenter(InventoryDetailsGroup, Me)
-        InventoryDetailsGroup.Visible = False
+        If InventoryItemsRecordCount = 0 Then
+            InventoryHeadersGroupBox.Visible = True
+            InventoryHeadersSelectionFilter = "  WHERE StatusText_ShortText25 <> " & InQuotes("Registered")
+            FillInventoryHeadersDataGridView()
+        End If
+        If InventoryItemsRecordCount = 0 Then
+            InventoryHeadersGroupBox.Visible = True
+            InventoryHeadersSelectionFilter = "  WHERE StatusText_ShortText25 = " & InQuotes("Registered")
+            FillInventoryHeadersDataGridView()
+        End If
+        InventoryHeadersGroupBox.Top = BottomOf(SearchToolStrip)
+        InventoryHeadersGroupBox.Left = Me.Left
 
     End Sub
     Private Sub FillInventoryHeadersDataGridView()
@@ -54,21 +65,11 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
 
         JustExecuteMySelection()
         InventoryHeadersRecordCount = RecordCount
-        If InventoryHeadersRecordCount = 0 Then
-            CurrentInventoryHeaderID = -1
-            InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = -1 "
-            FillInventoryItemsDataGridView()
-        End If
-        If InventoryHeadersRecordCount < 2 Then
-            InventoryHeadersDataGridView.Visible = False
-            InventoryItemsGroupBox.Top = BottomOf(SearchToolStrip)
-            InventoryItemsGroupBox.Left = 2
-        Else
-            InventoryHeadersDataGridView.Visible = False
-            InventoryItemsGroupBox.Top = BottomOf(InventoryHeadersGroupBox)
-            InventoryItemsGroupBox.Left = InventoryHeadersGroupBox.Left + InventoryHeadersGroupBox.Width
-        End If
         InventoryHeadersDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
+        CurrentInventoryStatus = InventoryHeadersDataGridView.Item("StatusText_ShortText25", CurrentInventoryHeadersRow).Value
+        InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString
+        InventoryItemsGroupBox.Top = BottomOf(SearchToolStrip)
+        InventoryItemsGroupBox.Left = InventoryHeadersGroupBox.Width
 
 
         If Not InventoryHeadersDataGridViewAlreadyFormated Then
@@ -116,21 +117,21 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         CurrentInventoryHeadersRow = e.RowIndex
         CurrentInventoryHeaderID = InventoryHeadersDataGridView.Item("InventoryHeaderID_AutoNumber", CurrentInventoryHeadersRow).Value
         CurrentInventoryStatus = InventoryHeadersDataGridView.Item("StatusText_ShortText25", CurrentInventoryHeadersRow).Value
-        InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = -1 "
+        InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString
         Select Case CurrentInventoryStatus
             Case "Registered"
                 SetOptions(1)
-                InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = -1 " & CurrentInventoryHeaderID.ToString
             Case "For Approval"
                 SetOptions(2)
             Case "Approved"
                 SetOptions(3)
 
         End Select
+        InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString
         FillInventoryItemsDataGridView()
     End Sub
     Private Sub SetOptions(Mode)
-        '1 - Registered Status
+        '1 - Registered
         '2 - For Approval
         '3 - Approved
         AddInventoryToolStripMenuItem.Visible = False
@@ -144,7 +145,6 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
             If CurrentUserGroup = "Warehouse Manager" Then
                 ApproveToolStripMenuItem.Visible = True
             Else
-
                 MsgBox("Change this when there is already a Warehouse Manager user")
                 MsgBox("ApproveToolStripMenuItem.Visible = False")
                 ApproveToolStripMenuItem.Visible = True
@@ -518,26 +518,19 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
     End Sub
     Private Sub SubmitForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SubmitForApprovalToolStripMenuItem.Click
         ' UPDATE ALL THE OUTSTANDING InventoryItems with the CurrentInventoryHeaderID
-        Dim SetCommand = " SET InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString &
-                            GetStatusIdFor("InventoryHeadersTable", "For Approval").ToString()
-        Dim Recordfilter = " WHERE InventoryHeaderID_LongInteger = -1 " & CurrentInventoryHeaderID
-        UpdateTable("InventoryItemsTable", SetCommand, Recordfilter)
-        FillInventoryHeadersDataGridView()
-        Exit Sub
 
         If MsgBox("Setting status FOR APPROVAL will not allow editing of this list anymore," & vbCrLf & vbCrLf &
                "Continue ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
         ' CREATE THE HEADER RECORDS FOR THE WHOLE OUTSTANDING INVENTORY
         Dim FieldsToUpdate = " StoreKeeperID_LongInteger, InventoryStatus_Integer "
-        Dim FieldsData = CurrentPersonelID.ToString & ", " & GetStatusIdFor("InventoryHeadersTable").ToString
+        Dim FieldsData = CurrentPersonelID.ToString & ", " & GetStatusIdFor("InventoryHeadersTable", "For Approval").ToString()
         CurrentInventoryHeaderID = InsertNewRecord("InventoryHeadersTable", FieldsToUpdate, FieldsData)
 
+        'NOW UPDATE THE ITEMS WITH THE NEW HEADER I  
 
-
-
-
-
-
+        Dim SetCommand = " SET InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString
+        Dim Recordfilter = " WHERE InventoryHeaderID_LongInteger = -1 "
+        UpdateTable("InventoryItemsTable", SetCommand, Recordfilter)
         FillInventoryHeadersDataGridView()
     End Sub
     Private Sub ApproveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApproveToolStripMenuItem.Click
@@ -557,6 +550,8 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         Dim OldInventoryQtyInStock = -1
         Dim OldInventoryBulkBalanceQty = -1
         Dim ThereAreNewStocksRecords = False
+        Dim SetCommand = ""
+        Dim RecordFilter = ""
 
         'DESELECT CURRENTLY SELECTED InventoryItemsDataGridView ROW
         InventoryItemsDataGridView.Rows(CurrentInventoryHeadersRow).Selected = False
@@ -592,9 +587,9 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
 
             'HERE REGISTER THE OLD QUANTITIES FIRST
 
-            Dim SetCommand = " SET ReplacedQtyInStock_Double = " & CurrentInventoryQtyInStock.ToString & ", " &
+            SetCommand = " SET ReplacedQtyInStock_Double = " & CurrentInventoryQtyInStock.ToString & ", " &
                          " ReplacedBulkBalanceQty_Double = " & CurrentInventoryBulkBalanceQty.ToString
-            Dim RecordFilter = " WHERE InventoryItemID_Autonumber = " & CurrentInventoryItemID.ToString
+            RecordFilter = " WHERE InventoryItemID_Autonumber = " & CurrentInventoryItemID.ToString
 
             UpdateTable("InventoryItemsTable", SetCommand, RecordFilter)
 
@@ -611,6 +606,13 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
             UpdateTable("StocksTable", SetCommand, RecordFilter)
             'AND THEN THE 
         Next
+        ' now set the header to "registered" status
+        SetCommand = " SET InventoryStatus_Integer  = " & GetStatusIdFor("InventoryHeadersTable", "Registered").ToString() &
+                        ", InventoryDate_ShortDate = " & Today()
+        RecordFilter = " WHERE InventoryHeaderID_AutoNumber = " & CurrentInventoryHeaderID
+        UpdateTable("InventoryHeadersTable", SetCommand, Recordfilter)
+        FillInventoryHeadersDataGridView()
+
     End Sub
     Private Function GetCurrentStockID()
         Dim SelectionFilter = "WHERE ProductPartID_LongInteger = " & CurrentProductPartId.ToString &
@@ -632,8 +634,16 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
 
     Private Sub ResetForApprovalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetForApprovalToolStripMenuItem.Click
         If MsgBox("Are you sure you want to reset for editing ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+        'DELETE THE CURRENT HEADER
+        ' THEN RESET ALL InventoryHeaderID_LongInteger TO -1
+
         MySelection = "DELETE FROM InventoryHeadersTable WHERE InventoryHeaderID_AutoNumber = " & CurrentInventoryHeaderID.ToString
         JustExecuteMySelection()
+        'NOW RESET THE ITEMS
+
+        Dim SetCommand = " InventoryHeaderID_LongInteger = -1 "
+        Dim RecordFilter = " WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryItemID.ToString
+        UpdateTable("InventoryItemsTable", SetCommand, RecordFilter)
         FillInventoryHeadersDataGridView()
     End Sub
 
@@ -657,5 +667,10 @@ Parameter name: index" Then
             MsgBox(ex.Message)
             Stop
         End Try
+    End Sub
+
+    Private Sub AllInventoriesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AllInventoriesToolStripMenuItem.Click
+        InventoryHeadersSelectionFilter = ""
+        FillInventoryHeadersDataGridView()
     End Sub
 End Class
