@@ -562,9 +562,11 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
             Case "Tunnel2IsConcernID"
                 CurrentConcernID = Tunnel2
                 SaveNewWorkOrderConcern()
+                FillWorkOrderConcernsDataGridView()
             Case "Tunnel2IsLongTextConcernID"
                 CurrentLongTextConcernID = Tunnel2
                 SaveNewWorkOrderConcern()
+                FillWorkOrderConcernsDataGridView()
             Case "Tunnel2IsCustomerID"
                 AddWorkOrderToolStripMenuItem.Visible = False
                 EditWorkOrderToolStripMenuItem.Visible = False
@@ -617,7 +619,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
         CurrentWorkOrderConcernID = InsertNewRecord("WorkOrderConcernsTable", FieldsToUpdate, FieldsData)
 
         FillWorkOrdersDataGridView()
-
     End Sub
     Private Sub AssignThisWorkOrder()
 
@@ -913,7 +914,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderPartsTable.P
         End Select
         WorkOrdersSelectionFilter = SavedWorkOrderSelectionFilter
         WorkOrderDetailsGroup.Visible = False
-        FillWorkOrdersDataGridView()
+        SetupWorkOrderSelection(0)
     End Sub
     Private Sub UpdateThisWorkOrderRecord()
 

@@ -45,7 +45,6 @@ Public Class MyDbControls
         Catch ex As Exception
             Exception = ex.Message
             MsgBox(Exception)
-            Dim pause = ""
         End Try
 
         ' CLOSE YOUR CONNECTION

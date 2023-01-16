@@ -27,7 +27,6 @@
     Public Function ThereIsARecord()
         RecordFinderDbControls.MyDbCommand(MySelection)
         If Not String.IsNullOrEmpty(RecordFinderDbControls.Exception) Then
-            MsgBox(RecordFinderDbControls.Exception)
             Return False
         End If
 
@@ -403,7 +402,11 @@
         ObjectToCenter.left = (FormToCenterIn.width - ObjectToCenter.width) / 2
     End Sub
     Public Sub JustExecuteMySelection()
-        If NoRecordFound() Then Exit Sub
+        If NoRecordFound() Then Dim XXX = 1
+        'FOLLOWING CHECK ENABLES THE PROGRAM TO STOP WHEN THERE OCCURS AN ERROR IN THE DATABASE ACTION
+        If Not String.IsNullOrEmpty(RecordFinderDbControls.Exception) Then
+            Stop
+        End If
     End Sub
     Public Sub EnAbleAccess(MenuOption As ToolStripMenuItem)
         MenuOption.Enabled = True

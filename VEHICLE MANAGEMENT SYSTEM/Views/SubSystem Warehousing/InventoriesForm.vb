@@ -47,8 +47,9 @@ Public Class InventoriesForm
             FillInventoryHeadersDataGridView()
         End If
         InventoryHeadersGroupBox.Top = BottomOf(SearchToolStrip)
+        Me.Left = 0
+        Me.Width = VehicleManagementSystemForm.Width
         InventoryHeadersGroupBox.Left = Me.Left
-
     End Sub
     Private Sub FillInventoryHeadersDataGridView()
         InventoryHeadersSelectionOrder = " ORDER BY InventoryDate_ShortDate DESC"
@@ -66,7 +67,6 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         JustExecuteMySelection()
         InventoryHeadersRecordCount = RecordCount
         InventoryHeadersDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        CurrentInventoryStatus = InventoryHeadersDataGridView.Item("StatusText_ShortText25", CurrentInventoryHeadersRow).Value
         InventoryItemsSelectionFilter = "WHERE InventoryHeaderID_LongInteger = " & CurrentInventoryHeaderID.ToString
         InventoryItemsGroupBox.Top = BottomOf(SearchToolStrip)
         InventoryItemsGroupBox.Left = InventoryHeadersGroupBox.Width
@@ -77,7 +77,7 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         End If
 
         SetGroupBoxHeight(25, InventoryHeadersRecordCount, InventoryHeadersGroupBox, InventoryHeadersDataGridView)
-
+        InventoryItemsGroupBox.Width = Me.Width - InventoryHeadersGroupBox.Width + 40
     End Sub
     Private Sub FormatInventoryHeadersDataGridView()
         InventoryHeadersDataGridViewAlreadyFormated = True
@@ -88,11 +88,11 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
             Select Case InventoryHeadersDataGridView.Columns.Item(i).Name
                 Case "InventoryDate_ShortDate"
                     InventoryHeadersDataGridView.Columns.Item(i).HeaderText = "Date"
-                    InventoryHeadersDataGridView.Columns.Item(i).Width = 100
+                    InventoryHeadersDataGridView.Columns.Item(i).Width = 85
                     InventoryHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "StatusText_ShortText25"
                     InventoryHeadersDataGridView.Columns.Item(i).HeaderText = "Status"
-                    InventoryHeadersDataGridView.Columns.Item(i).Width = 150
+                    InventoryHeadersDataGridView.Columns.Item(i).Width = 114
                     InventoryHeadersDataGridView.Columns.Item(i).Visible = True
                 Case "PersonnelFullName"
                     InventoryHeadersDataGridView.Columns.Item(i).HeaderText = "Store Keeper"
@@ -141,6 +141,7 @@ FROM (InventoryHeadersTable LEFT JOIN StatusesTable ON InventoryHeadersTable.Inv
         SubmitForApprovalToolStripMenuItem.Visible = False
         ApproveToolStripMenuItem.Visible = False
         RegisterInventoryToolStripMenuItem.Visible = False
+        ResetForApprovalToolStripMenuItem.Visible = False
         If Mode = 2 Then
             If CurrentUserGroup = "Warehouse Manager" Then
                 ApproveToolStripMenuItem.Visible = True
@@ -217,19 +218,19 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "InventoryQtyInStock_Double"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Qty in Stock"
-                    InventoryItemsDataGridView.Columns.Item(i).Width = 70
+                    InventoryItemsDataGridView.Columns.Item(i).Width = 60
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfThePacking_ShortText3"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Unit"
-                    InventoryItemsDataGridView.Columns.Item(i).Width = 70
+                    InventoryItemsDataGridView.Columns.Item(i).Width = 60
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "InventoryBulkBalanceQty_Double"
-                    InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Bulk balance"
-                    InventoryItemsDataGridView.Columns.Item(i).Width = 70
+                    InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Bulk bal"
+                    InventoryItemsDataGridView.Columns.Item(i).Width = 60
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "UnitOfTheQuantity_ShortText3"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Unit"
-                    InventoryItemsDataGridView.Columns.Item(i).Width = 70
+                    InventoryItemsDataGridView.Columns.Item(i).Width = 60
                     InventoryItemsDataGridView.Columns.Item(i).Visible = True
                 Case "BrandName_ShortText20"
                     InventoryItemsDataGridView.Columns.Item(i).HeaderText = "Brand"
@@ -608,9 +609,11 @@ FROM (((InventoryItemsTable LEFT JOIN InventoryHeadersTable ON InventoryItemsTab
         Next
         ' now set the header to "registered" status
         SetCommand = " SET InventoryStatus_Integer  = " & GetStatusIdFor("InventoryHeadersTable", "Registered").ToString() &
-                        ", InventoryDate_ShortDate = " & Today()
+                        ", InventoryDate_ShortDate = " & Today().ToShortDateString
+        MsgBox("CHECK ABOVE CONVERSION Today().ToShortDateString")
         RecordFilter = " WHERE InventoryHeaderID_AutoNumber = " & CurrentInventoryHeaderID
         UpdateTable("InventoryHeadersTable", SetCommand, Recordfilter)
+        Stop
         FillInventoryHeadersDataGridView()
 
     End Sub

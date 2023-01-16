@@ -394,9 +394,15 @@ ConcernAssignedServiceSpecialist &
         If ShowInTaskbarFlag Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
         If WorkOrderConcernsRecordCount = 0 Then Exit Sub
-
         CurrentWorkOrderConcernsRow = e.RowIndex
-        CurrentWorkOrderConcernID = WorkOrderConcernsDataGridView.Item("WorkOrderConcernID_AutoNumber", CurrentWorkOrderConcernsRow).Value
+    End Sub
+
+    Private Sub WorkOrderConcernsDataGridView_SelectionChanged(sender As Object, e As EventArgs) Handles WorkOrderConcernsDataGridView.SelectionChanged
+        Try
+            CurrentWorkOrderConcernID = WorkOrderConcernsDataGridView.Item("WorkOrderConcernID_AutoNumber", CurrentWorkOrderConcernsRow).Value
+        Catch ex As Exception
+            Exit Sub
+        End Try
         CurrentConcernID = WorkOrderConcernsDataGridView.Item("ConcernID_LongInteger", CurrentWorkOrderConcernsRow).Value
         CurrentLongTextConcernID = WorkOrderConcernsDataGridView.Item("ConcernLongTextCodeID_LongInteger", CurrentWorkOrderConcernsRow).Value
         CurrentConcernAssignedServiceSpecialistID = WorkOrderConcernsDataGridView.Item("AssignedServiceSpecialist_LongInteger", CurrentWorkOrderConcernsRow).Value
@@ -428,8 +434,6 @@ ConcernAssignedServiceSpecialist &
             End If
         End If
     End Sub
-
-
 
 
     Private Sub FillWorkOrderConcernJobsTable()
@@ -1026,6 +1030,14 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
     End Sub
 
     Private Sub AssignWorkOrderToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AssignWorkOrderToolStripMenuItem.Click
+        For I = 0 To WorkOrderConcernsRecordCount - 1
+            WorkOrderConcernsDataGridView.Rows(I).Selected = True
+            If WorkOrderConcernJobsRecordCount = 0 Then
+                Dim Concern = WorkOrderConcernsDataGridView.Item("CoinedConcern", CurrentWorkOrderConcernsRow).Value
+                MsgBox("Create job(s) first for " & Concern & " before you can assign the work order")
+                Exit Sub
+            End If
+        Next
         AssignmentIsFor = "WORKORDER"
         ShowPersonnelForm()
     End Sub
