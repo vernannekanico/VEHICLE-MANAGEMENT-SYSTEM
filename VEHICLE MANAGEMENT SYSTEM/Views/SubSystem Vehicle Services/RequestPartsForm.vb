@@ -9,6 +9,7 @@
     Private CurrentWorkOrderPartID As Integer = -1
     Private WorkOrderPartsRecordCount As Integer = 0
     Private WorkOrderPartsGridViewAlreadyFormated = False
+    Private CurrentCodeVehiclePartsSpecificationsRelationID = -1
 
     Private WorkOrderRequestedPartsFieldsToSelect = ""
     Private WorkOrderRequestedPartsSelectionFilter = ""
@@ -572,7 +573,6 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         SaveChanges()
     End Sub
     Private Sub SaveChanges()
-
         If AChangeInSpecificationsOccured() Then
             RegisterSpecificationsChanges()
         End If
@@ -929,7 +929,8 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                 Exit Sub
             Case "Tunnel2IsCodeVehiclePNSpecificationID"
                 PartDetailsGroupBox.Visible = False
-
+            Case "CodeVehiclePartsSpecificationsRelationID"
+                CurrentCodeVehiclePartsSpecificationsRelationID = Tunnel2
         End Select
         FillWorkOrderPartsDataGridView()
     End Sub
@@ -1254,10 +1255,12 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
                 Exit Sub
             End If
         End If
-        ProductsPartsForm.PartNoSearchTextBox.Text = PartNumberTextBox.Text
-        ProductsPartsForm.PartDescriptionSearchTextBox.Text = PartDescriptionTextBox.Text
-        ProductsPartsForm.ProductSpecificationSearchTextBox.Text = PartNumberSpecificationTextBox.Text
-
+        If IsNotEmpty(SpecificationsTextBox.Text) Then
+            ProductsPartsForm.ProductSpecificationSearchTextBox.Text = SpecificationsTextBox.Text
+        Else
+            ProductsPartsForm.PartNoSearchTextBox.Text = PartNumberTextBox.Text
+            ProductsPartsForm.PartDescriptionSearchTextBox.Text = PartDescriptionTextBox.Text
+        End If
         ShowCalledForm(Me, ProductsPartsForm)
 
     End Sub

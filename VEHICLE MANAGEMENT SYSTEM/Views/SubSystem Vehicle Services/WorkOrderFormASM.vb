@@ -314,7 +314,7 @@ MasterCodeBookTable.SystemDesc_ShortText100Fld,
 LongTextConcern_LongText, " &
 ConcernAssignedServiceSpecialist &
 " 
-    StatusesTable.StatusText_ShortText25,
+    StatusesTable.StatusSequence_LongInteger,
     StatusesTable.StatusText_ShortText25,
     OriginalExcelRecordTable.description
     FROM ((((((WorkOrderConcernsTable LEFT JOIN ConcernsTable ON WorkOrderConcernsTable.ConcernID_LongInteger = ConcernsTable.ConcernID_AutoNumber) LEFT JOIN InformationsHeadersTypeTable ON ConcernsTable.InformationsHeadersTypeID_LongInteger = InformationsHeadersTypeTable.InformationsHeadersTypeID_AutoNumber) LEFT JOIN MasterCodeBookTable ON ConcernsTable.MasterCodeBookId_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) LEFT JOIN ConcernAsIsByClientTable ON WorkOrderConcernsTable.ConcernLongTextCodeID_LongInteger = ConcernAsIsByClientTable.LongTextConcernID_Autonumber) LEFT JOIN OriginalExcelRecordTable ON WorkOrderConcernsTable.OriginalID_LongInteger = OriginalExcelRecordTable.OriginalID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderConcernsTable.AssignedServiceSpecialist_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderConcernsTable.WorkOrderConcernStatusID_LongInteger = StatusesTable.StatusID_Autonumber
@@ -577,23 +577,37 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
             End If
         End If
         If CurrentPersonelID = CurrentAssignedServiceSpecialistID Then
-            If XXCurrentJobStatus = "Repair Ongoing" Then
-                JobDoneToolStripMenuItem.Visible = True
-            ElseIf XXCurrentJobStatus = "All Parts Received" Then
-                ProcessJobToolStripMenuItem.Visible = True
-            ElseIf InStr("No Part Needed/Parts From Customer/Assigned", XXCurrentJobStatus) Then
-                RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-            ElseIf InStr("No Action Yet/Draft Requisition//Assigned", XXCurrentJobStatus) Then
-                RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                RequestPartsFromWarehouseToolStripMenuItem.Visible = True
-                ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
-            End If
+            Select Case XXCurrentJobStatus
+                Case "Assigned" 'newly assigned
+                    RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    RequestPartsFromWarehouseToolStripMenuItem.Visible = True
+                    ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
+                Case "Repair Ongoing"
+                    JobDoneToolStripMenuItem.Visible = True
+                Case "All Parts Received"
+                    ProcessJobToolStripMenuItem.Visible = True
+                Case "No Part Needed"
+                    RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    ReceivepartsfromtheCustomerToolStripMenuItem.Visible = False
+                Case "Parts From Customer"
+                    RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                Case "No Action Yet"
+                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    RequestPartsFromWarehouseToolStripMenuItem.Visible = True
+                    ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
+                Case "Draft Requisition"
+                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
+                    RequestPartsFromWarehouseToolStripMenuItem.Visible = True
+                    ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
+            End Select
         End If
         WorkOrderPartsPerJobSelectionFilter = " WHERE WorkOrderConcernJobID_AutoNumber = " & CurrentWorkOrderConcernJobID
 
-        FillWorkOrderPartsPerJobDataGridView()
+            FillWorkOrderPartsPerJobDataGridView()
 
         If CurrentUserGroup = "Automotive Service Specialist" Then
             ' SHOWING FROM JOBS TO CONCERNS BACKWARDS
@@ -818,7 +832,7 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
                 Dim xxUserFilter = " AssignedLeadMechanic_longInteger= " & CurrentPersonelID.ToString
                 WorkOrdersSelectionFilter = SetupTableSelectionFilter(GetStatusIdFor("WorkOrdersTable", "Repair Ongoing", 1), 1, Me, "Outstanding", xxUserFilter)
             Case Else
-                MsgBox("usergrop not i select case ")
+                MsgBox("usergrop not in select case ")
         End Select
         FillWorkOrdersDataGridView()
     End Sub
@@ -835,6 +849,9 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
         End If
     End Sub
     Private Sub AddJobToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddJobToolStripMenuItem.Click
+        If GetStandardJobForThisConcernToolStripMenuItem.Visible Then
+            If MsgBox("Would you like to try to get standard Job(s) for this concern under the CONCERN MENU ?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then Exit Sub
+        End If
         Tunnel1 = "ADD"
         ShowInformationsHeadersForm()
     End Sub
@@ -860,7 +877,6 @@ GetStatusIdFor("WorkOrderConcernJobsTable")
         End If
 
         RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderStatusSequence, CurrentWorkOrderID)
-
         CurrentWorkOrderConcernStatusSequence = WorkOrderConcernsDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderConcernsRow).Value
         RevertCurrentStatusOf("WorkOrdersTable", CurrentWorkOrderConcernStatusSequence, CurrentWorkOrderConcernID)
         For i = 0 To WorkOrderConcernJobsRecordCount - 1

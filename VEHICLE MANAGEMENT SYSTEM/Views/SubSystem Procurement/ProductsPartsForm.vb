@@ -71,7 +71,8 @@ Public Class ProductsPartsForm
             End If
             Exit Sub
         End If
-        If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Then
+        If IsNotEmpty(PartDescriptionSearchTextBox.Text) Or Tunnel2 > -1 Or IsNotEmpty(PartNoSearchTextBox.Text) Or
+            IsNotEmpty(ProductSpecificationSearchTextBox.Text) Then
             SetSearchParameters()
             FillProductsPartsDataGridView()
         End If
@@ -508,6 +509,9 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             ProductsPartsSelectionFilter &= " OR  ManufacturerDescription_ShortText250 Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
             ProductsPartsSelectionFilter &= " OR  SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
             '            
+        End If
+        If IsNotEmpty(ProductSpecificationSearchTextBox.Text) Then
+            ProductsPartsSelectionFilter &= xxOR & " PartSpecifications_ShortText255 = " & InQuotes(ProductSpecificationSearchTextBox.Text)
         End If
         If ProductsPartsSelectionFilter <> " WHERE ( " Then
             ProductsPartsSelectionFilter += ") AND NOT ForDeletionRecord_YesNo "

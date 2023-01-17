@@ -35,7 +35,7 @@ Partial Class PartsSpecificationsForm
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SpecificationsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.CancelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PartSpecificationsItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PartNoSpecificationsItemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -70,8 +70,8 @@ Partial Class PartsSpecificationsForm
         Me.VehicleLabel = New System.Windows.Forms.Label()
         Me.QuantitySpecificationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.CodeVehiclePNSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
-        Me.CodeVehiclePartsSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.CodeVehiclePartsSpecificationsDataGridView = New System.Windows.Forms.DataGridView()
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView = New System.Windows.Forms.DataGridView()
         Me.PartsSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.QuantitySpecificationsGroupBox = New System.Windows.Forms.GroupBox()
         Me.CodeVehiclePNSpecificationsGroupBox = New System.Windows.Forms.GroupBox()
@@ -87,8 +87,8 @@ Partial Class PartsSpecificationsForm
         Me.SpecificationsContextMenuStrip.SuspendLayout()
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.CodeVehiclePartsSpecificationsGroupBox.SuspendLayout()
-        CType(Me.CodeVehiclePartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.SuspendLayout()
+        CType(Me.CodeVehiclePartsSpecificationsRelationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PartsSpecificationsGroupBox.SuspendLayout()
         Me.QuantitySpecificationsGroupBox.SuspendLayout()
         Me.CodeVehiclePNSpecificationsGroupBox.SuspendLayout()
@@ -100,7 +100,7 @@ Partial Class PartsSpecificationsForm
         '
         Me.SpecificationsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SpecificationsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.SpecificationsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartSpecificationsItemToolStripMenuItem, Me.ToolStripMenuItem1, Me.PartsSpecificationsHeaderMenuToolStripMenuItem, Me.QuantitySpecificationsToolStripTextBox, Me.SaveToolStripMenuItem})
+        Me.SpecificationsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartNoSpecificationsItemToolStripMenuItem, Me.ToolStripMenuItem1, Me.PartsSpecificationsHeaderMenuToolStripMenuItem, Me.QuantitySpecificationsToolStripTextBox, Me.SaveToolStripMenuItem})
         Me.SpecificationsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.SpecificationsMenuStrip.Name = "SpecificationsMenuStrip"
         Me.SpecificationsMenuStrip.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
@@ -114,41 +114,41 @@ Partial Class PartsSpecificationsForm
         Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(40, 29)
         Me.CancelToolStripMenuItem.Text = "◄ "
         '
-        'PartSpecificationsItemToolStripMenuItem
+        'PartNoSpecificationsItemToolStripMenuItem
         '
-        Me.PartSpecificationsItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartNumberToolStripMenuItem, Me.AddPartNumberToolStripMenuItem, Me.EditPartNumberToolStripMenuItem, Me.RemovePartNumberToolStripMenuItem})
-        Me.PartSpecificationsItemToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PartSpecificationsItemToolStripMenuItem.Name = "PartSpecificationsItemToolStripMenuItem"
-        Me.PartSpecificationsItemToolStripMenuItem.Size = New System.Drawing.Size(210, 29)
-        Me.PartSpecificationsItemToolStripMenuItem.Text = "PART # SPECIFICATIONS :"
-        Me.PartSpecificationsItemToolStripMenuItem.Visible = False
+        Me.PartNoSpecificationsItemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartNumberToolStripMenuItem, Me.AddPartNumberToolStripMenuItem, Me.EditPartNumberToolStripMenuItem, Me.RemovePartNumberToolStripMenuItem})
+        Me.PartNoSpecificationsItemToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PartNoSpecificationsItemToolStripMenuItem.Name = "PartNoSpecificationsItemToolStripMenuItem"
+        Me.PartNoSpecificationsItemToolStripMenuItem.Size = New System.Drawing.Size(210, 29)
+        Me.PartNoSpecificationsItemToolStripMenuItem.Text = "PART # SPECIFICATIONS :"
+        Me.PartNoSpecificationsItemToolStripMenuItem.Visible = False
         '
         'SelectPartNumberToolStripMenuItem
         '
         Me.SelectPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SelectPartNumberToolStripMenuItem.Name = "SelectPartNumberToolStripMenuItem"
-        Me.SelectPartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.SelectPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.SelectPartNumberToolStripMenuItem.Text = "Select"
         '
         'AddPartNumberToolStripMenuItem
         '
         Me.AddPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AddPartNumberToolStripMenuItem.Name = "AddPartNumberToolStripMenuItem"
-        Me.AddPartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.AddPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.AddPartNumberToolStripMenuItem.Text = "Add"
         '
         'EditPartNumberToolStripMenuItem
         '
         Me.EditPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.EditPartNumberToolStripMenuItem.Name = "EditPartNumberToolStripMenuItem"
-        Me.EditPartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.EditPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.EditPartNumberToolStripMenuItem.Text = "Edit"
         '
         'RemovePartNumberToolStripMenuItem
         '
         Me.RemovePartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RemovePartNumberToolStripMenuItem.Name = "RemovePartNumberToolStripMenuItem"
-        Me.RemovePartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.RemovePartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.RemovePartNumberToolStripMenuItem.Text = "Remove"
         Me.RemovePartNumberToolStripMenuItem.Visible = False
         '
@@ -492,44 +492,43 @@ Partial Class PartsSpecificationsForm
         Me.CodeVehiclePNSpecificationsDataGridView.Size = New System.Drawing.Size(219, 69)
         Me.CodeVehiclePNSpecificationsDataGridView.TabIndex = 112
         '
-        'CodeVehiclePartsSpecificationsGroupBox
+        'CodeVehiclePartsSpecificationsRelationsGroupBox
         '
-        Me.CodeVehiclePartsSpecificationsGroupBox.Controls.Add(Me.CodeVehiclePartsSpecificationsDataGridView)
-        Me.CodeVehiclePartsSpecificationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CodeVehiclePartsSpecificationsGroupBox.Location = New System.Drawing.Point(60, 136)
-        Me.CodeVehiclePartsSpecificationsGroupBox.Name = "CodeVehiclePartsSpecificationsGroupBox"
-        Me.CodeVehiclePartsSpecificationsGroupBox.Size = New System.Drawing.Size(222, 94)
-        Me.CodeVehiclePartsSpecificationsGroupBox.TabIndex = 114
-        Me.CodeVehiclePartsSpecificationsGroupBox.TabStop = False
-        Me.CodeVehiclePartsSpecificationsGroupBox.Text = "Part Specifications for "
-        Me.CodeVehiclePartsSpecificationsGroupBox.Visible = False
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.Controls.Add(Me.CodeVehiclePartsSpecificationsRelationsDataGridView)
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.Location = New System.Drawing.Point(68, 153)
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.Name = "CodeVehiclePartsSpecificationsRelationsGroupBox"
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.Size = New System.Drawing.Size(222, 94)
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.TabIndex = 114
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.TabStop = False
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.Text = "Part Specifications for "
         '
-        'CodeVehiclePartsSpecificationsDataGridView
+        'CodeVehiclePartsSpecificationsRelationsDataGridView
         '
-        Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToAddRows = False
-        Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToDeleteRows = False
-        Me.CodeVehiclePartsSpecificationsDataGridView.AllowUserToResizeRows = False
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.AllowUserToAddRows = False
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.AllowUserToDeleteRows = False
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.AllowUserToResizeRows = False
         DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Navy
         DataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White
         DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        Me.CodeVehiclePartsSpecificationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
-        Me.CodeVehiclePartsSpecificationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
-        Me.CodeVehiclePartsSpecificationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.CodeVehiclePartsSpecificationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CodeVehiclePartsSpecificationsDataGridView.Location = New System.Drawing.Point(3, 22)
-        Me.CodeVehiclePartsSpecificationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
-        Me.CodeVehiclePartsSpecificationsDataGridView.Name = "CodeVehiclePartsSpecificationsDataGridView"
-        Me.CodeVehiclePartsSpecificationsDataGridView.ReadOnly = True
-        Me.CodeVehiclePartsSpecificationsDataGridView.RowHeadersVisible = False
-        Me.CodeVehiclePartsSpecificationsDataGridView.RowHeadersWidth = 51
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.Location = New System.Drawing.Point(3, 22)
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.Margin = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.Name = "CodeVehiclePartsSpecificationsRelationsDataGridView"
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.ReadOnly = True
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.RowHeadersVisible = False
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.RowHeadersWidth = 51
         DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        Me.CodeVehiclePartsSpecificationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle8
-        Me.CodeVehiclePartsSpecificationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.CodeVehiclePartsSpecificationsDataGridView.Size = New System.Drawing.Size(216, 69)
-        Me.CodeVehiclePartsSpecificationsDataGridView.TabIndex = 114
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.RowsDefaultCellStyle = DataGridViewCellStyle8
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.Size = New System.Drawing.Size(216, 69)
+        Me.CodeVehiclePartsSpecificationsRelationsDataGridView.TabIndex = 114
         '
         'PartsSpecificationsGroupBox
         '
@@ -636,13 +635,13 @@ Partial Class PartsSpecificationsForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(963, 574)
+        Me.Controls.Add(Me.CodeVehiclePartsSpecificationsRelationsGroupBox)
         Me.Controls.Add(Me.JobLabel)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.PartNumberSpecificationsGroupBox)
         Me.Controls.Add(Me.CodeVehiclePNSpecificationsGroupBox)
         Me.Controls.Add(Me.QuantitySpecificationsGroupBox)
         Me.Controls.Add(Me.PartsSpecificationsGroupBox)
-        Me.Controls.Add(Me.CodeVehiclePartsSpecificationsGroupBox)
         Me.Controls.Add(Me.VehicleLabel)
         Me.Controls.Add(Me.VehicleModelTextBox)
         Me.Controls.Add(Me.PartDescriptionTextBox)
@@ -662,8 +661,8 @@ Partial Class PartsSpecificationsForm
         Me.SpecificationsContextMenuStrip.PerformLayout()
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CodeVehiclePNSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.CodeVehiclePartsSpecificationsGroupBox.ResumeLayout(False)
-        CType(Me.CodeVehiclePartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CodeVehiclePartsSpecificationsRelationsGroupBox.ResumeLayout(False)
+        CType(Me.CodeVehiclePartsSpecificationsRelationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PartsSpecificationsGroupBox.ResumeLayout(False)
         Me.QuantitySpecificationsGroupBox.ResumeLayout(False)
         Me.CodeVehiclePNSpecificationsGroupBox.ResumeLayout(False)
@@ -675,7 +674,7 @@ Partial Class PartsSpecificationsForm
     End Sub
     Friend WithEvents SpecificationsMenuStrip As MenuStrip
     Friend WithEvents CancelToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PartSpecificationsItemToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PartNoSpecificationsItemToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents PartsSpecificationsHeaderMenuToolStripMenuItem As ToolStripMenuItem
@@ -698,8 +697,8 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents QuantitySpecificationsDataGridView As DataGridView
     Friend WithEvents QuantitySpecificationsToolStripTextBox As ToolStripTextBox
     Friend WithEvents CodeVehiclePNSpecificationsDataGridView As DataGridView
-    Friend WithEvents CodeVehiclePartsSpecificationsGroupBox As GroupBox
-    Friend WithEvents CodeVehiclePartsSpecificationsDataGridView As DataGridView
+    Friend WithEvents CodeVehiclePartsSpecificationsRelationsGroupBox As GroupBox
+    Friend WithEvents CodeVehiclePartsSpecificationsRelationsDataGridView As DataGridView
     Friend WithEvents PartsSpecificationsGroupBox As GroupBox
     Friend WithEvents QuantitySpecificationsGroupBox As GroupBox
     Friend WithEvents CodeVehiclePNSpecificationsGroupBox As GroupBox
