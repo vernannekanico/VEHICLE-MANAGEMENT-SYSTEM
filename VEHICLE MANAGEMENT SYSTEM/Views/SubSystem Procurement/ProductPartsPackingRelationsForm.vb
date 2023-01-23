@@ -11,12 +11,17 @@
     Private CurrentProductPartID = Tunnel2
     Private SavedCallingForm As Form
     Private Sub ProductPartsPackingRelationsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'Upon entry if requesting for a relation id, calling program should provide Product Id in tunnel 1
         SavedCallingForm = CallingForm
         MsgBox("CLEAR ALL PROCEDURES Not USED")
-        If Tunnel1 = "Tunnel2IsProductPartID" Then
-            CurrentProductPartID = Tunnel2
-            ProductPartsPackingRelationsSelectionFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductPartID.ToString
+        If IsEmpty(Tunnel2) Then
+            MsgBox("if requesting for a relation id, calling program should provide Product Id in tunnel 1" & vbCrLf &
+                      "and the Product description in tunnel 3 ", MsgBoxStyle.YesNo)
+            Exit Sub
         End If
+        CurrentProductPartID = Tunnel2
+        Me.Text = Tunnel3
+        ProductPartsPackingRelationsSelectionFilter = " WHERE ProductPartID_LongInteger = " & CurrentProductPartID.ToString
         FillProductPartsPackingRelationsDataGridView()
     End Sub
     Private Sub ProductPartsPackingRelationsForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
@@ -34,13 +39,14 @@
         FillProductPartsPackingRelationsDataGridView()
     End Sub
     Private Sub CancelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelToolStripMenuItem.Click
-        Me.Close()
+        DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
 
         Tunnel1 = "Tunnel2IsProductsPartsPackingRelationID"
         Tunnel2 = CurrentProductsPartsPackingRelationID
-        If CurrentProductPartsPackingRelationsRow = -1 Then
+        If CurrentProductPartsPackingRelationsRow = -1 Then 'for some reasons after adding CurrentProductPartsPackingRelationsRow
+            ' does not trigger rowenter
             If ProductPartsPackingRelationsRecordCount = 1 Then
                 CurrentProductPartsPackingRelationsRow = 0
             End If
@@ -148,6 +154,7 @@ FROM ProductsPartsPackingRelationsTable LEFT JOIN Packings ON ProductsPartsPacki
                          CurrentProductPartsPackingID.ToString
 
         CurrentProductsPartsPackingRelationID = InsertNewRecord("ProductsPartsPackingRelationsTable", FieldsToUpdate, FieldsData)
+        FillProductPartsPackingRelationsDataGridView()
     End Sub
 
 End Class

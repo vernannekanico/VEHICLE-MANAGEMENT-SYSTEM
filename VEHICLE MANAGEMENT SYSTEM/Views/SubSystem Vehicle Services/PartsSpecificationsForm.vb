@@ -110,6 +110,7 @@
             CodeVehiclePNSpecificationsGroupBox.Visible = True
             CodeVehiclePNSpecificationsGroupBox.Enabled = True
             MsgBox("following filter was not yet tested just modified to copy above filter of type specification")
+            Stop
             CodeVehiclePNSpecificationsSelectionFilter = " WHERE CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString &
                                                                     " AND MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookID.ToString
             FillCodeVehiclePNSpecificationsRelations()

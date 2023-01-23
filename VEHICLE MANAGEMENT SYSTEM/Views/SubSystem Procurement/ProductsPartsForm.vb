@@ -445,7 +445,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             SetupEditMode()
             Exit Sub
         End If
-
+        MarkSelected()
         Tunnel1 = "Tunnel2IsProductPartID"
         Tunnel2 = CurrentProductPartID
         Tunnel3 = ProductsPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentProductsPartsRow).Value
@@ -502,7 +502,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         If IsNotEmpty(PartNoSearchTextBox.Text) Then
             ProductsPartsSelectionFilter &= " ManufacturerPartNo_ShortText30Fld Like " & InQuotes("%" & Trim(PartNoSearchTextBox.Text) & "%")
             ProductsPartsSelectionFilter &= " OR ManufacturerPartNoClean_ShortText30Fld Like " & InQuotes("%" & GetCleanedManufacturerPartNo(PartNoSearchTextBox.Text) & "%")
-            xxOR = " OR "
         End If
         If IsNotEmpty(PartDescriptionSearchTextBox.Text) Then
             ProductsPartsSelectionFilter &= xxOR & " ProductDescription_ShortText250 Like " & InQuotes("%" & Trim(PartDescriptionSearchTextBox.Text) & "%")
@@ -511,6 +510,11 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
             '            
         End If
         If IsNotEmpty(ProductSpecificationSearchTextBox.Text) Then
+            If ProductsPartsSelectionFilter = " WHERE ( " Then
+                xxOR = ""
+            Else
+                xxOR = " OR "
+            End If
             ProductsPartsSelectionFilter &= xxOR & " PartSpecifications_ShortText255 = " & InQuotes(ProductSpecificationSearchTextBox.Text)
         End If
         If ProductsPartsSelectionFilter <> " WHERE ( " Then
@@ -906,20 +910,14 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
     End Sub
 
     Private Sub MarkSeletedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkSeletedToolStripMenuItem.Click
+        MarkSelected()
+        FillProductsPartsDataGridView()
+    End Sub
+    Private Sub MarkSelected()
+
         If ProductsPartsRecordCount < 1 Then Exit Sub
         Dim SetCommand = ""
         Dim RecordFilter = ""
-        '     If ProductsPartsDataGridView.MultiSelect Then
-        '     ' this option works only when not in multi selection mode
-        '     MsgBox("Multi Select has been enabled, now Disabled")
-        '     For i = 0 To ProductsPartsRecordCount - 1
-        '     ProductsPartsDataGridView.Rows(i).Selected = False
-        '     Next
-        '     MsgBox("Select the row you want to MARK SELECTED")
-        '      ProductsPartsDataGridView.MultiSelect = False
-        '       Else
-        '     End If
-        'THIS GIVES THE OPTION TO UNSELECT THE RECORD IF THIS RECORD DOES NOT EXIST YET IN 
         If ProductsPartsDataGridView.Item("Selected", CurrentProductsPartsRow).Value Then
             If MsgBox("Do you want to de-select this product?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                 If Not ProductIsNotYetUsed() Then
@@ -935,7 +933,6 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         SetCommand = "Set Selected = true "
         RecordFilter = "where ProductsPartID_Autonumber = " & CurrentProductPartID.ToString
         UpdateTable("ProductsPartsTable", SetCommand, RecordFilter)
-        FillProductsPartsDataGridView()
     End Sub
     Private Sub MarkAllRecordsAsForDeletionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MarkAllRecordsAsForDeletionToolStripMenuItem.Click
         MsgBox("This has been Done, no need to do")

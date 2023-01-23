@@ -365,7 +365,7 @@ Partial Class RequestPartsForm
         Me.PartDetailsGroupBox.Controls.Add(Me.Label20)
         Me.PartDetailsGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PartDetailsGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.PartDetailsGroupBox.Location = New System.Drawing.Point(300, 141)
+        Me.PartDetailsGroupBox.Location = New System.Drawing.Point(300, 154)
         Me.PartDetailsGroupBox.Name = "PartDetailsGroupBox"
         Me.PartDetailsGroupBox.Size = New System.Drawing.Size(746, 499)
         Me.PartDetailsGroupBox.TabIndex = 124
@@ -773,7 +773,7 @@ Partial Class RequestPartsForm
         Me.WorkOrderPartsGroupBox.Size = New System.Drawing.Size(240, 67)
         Me.WorkOrderPartsGroupBox.TabIndex = 130
         Me.WorkOrderPartsGroupBox.TabStop = False
-        Me.WorkOrderPartsGroupBox.Text = "Required Parts for this job"
+        Me.WorkOrderPartsGroupBox.Text = "REQUIRED PARTS FOR THE JOB / REQUESTED"
         '
         'WorkOrderPartsDataGridView
         '
@@ -869,7 +869,7 @@ Partial Class RequestPartsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1099, 609)
+        Me.ClientSize = New System.Drawing.Size(1099, 634)
         Me.Controls.Add(Me.PartDetailsGroupBox)
         Me.Controls.Add(Me.WorkOrderConcernJobsGroupBox)
         Me.Controls.Add(Me.WorkOrderPartsGroupBox)

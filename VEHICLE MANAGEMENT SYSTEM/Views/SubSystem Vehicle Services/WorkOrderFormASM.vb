@@ -60,6 +60,7 @@
     Private CurrentWorkOrderStatusSequence = -1
     Private CurrentConcernStatus = ""
     Private CurrentConcernJobStatusID = -1
+    Private CurrentJobStatus = ""
 
     Public OutstandingForThisUserFilter = ""
     Private AssignmentIsFor = ""
@@ -411,7 +412,6 @@ ConcernAssignedServiceSpecialist &
         ConcernMenusToolStripMenuItem.Visible = False
         GetStandardJobForThisConcernToolStripMenuItem.Visible = False
         EditJobToolStripMenuItem.Visible = False
-        RemoveJobToolStripMenuItem.Visible = False
         AssignJobToolStripMenuItem.Visible = False
 
         If CurrentUserGroup = "Automotive Service Specialist" Then
@@ -552,7 +552,6 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
         If e.RowIndex < 0 Then Exit Sub
         If WorkOrderConcernJobsRecordCount = 0 Then Exit Sub
 
-        Dim XXCurrentJobStatus = ""
         Dim CurrentAssignedServiceSpecialistID = -1
         CurrentWorkOrderConcernJobsRow = e.RowIndex
         JobDoneToolStripMenuItem.Visible = False
@@ -562,7 +561,7 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
         CurrentJobMasterCodeID = WorkOrderConcernJobsDataGridView.Item("MasterCodeBookId_LongInteger", CurrentWorkOrderConcernJobsRow).Value
         CurrentConcernJobStatusID = WorkOrderConcernJobsDataGridView.Item("WorkOrderConcernJobStatusID_LongInteger", CurrentWorkOrderConcernJobsRow).Value
         FillField(CurrentAssignedServiceSpecialistID, WorkOrderConcernJobsDataGridView.Item("AssignedServiceSpecialist_LongInteger", CurrentWorkOrderConcernJobsRow).Value)
-        FillField(XXCurrentJobStatus, WorkOrderConcernJobsDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderConcernJobsRow).Value)
+        FillField(CurrentJobStatus, WorkOrderConcernJobsDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderConcernJobsRow).Value)
         AssignJobToolStripMenuItem.Visible = False
         RemoveJobToolStripMenuItem.Visible = False
         RequestPartsFromWarehouseToolStripMenuItem.Visible = False
@@ -570,17 +569,16 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
         'ADDING JOB DEPENDS ON THE STATUS OF THE CONCERN
 
         If CurrentUserGroup = "Lead Service Specialist" Then
-            If InStr("No Action Yet/Assigned/", XXCurrentJobStatus) Then
+            If InStr("No Action Yet/Assigned/", CurrentJobStatus) Then
                 AssignJobToolStripMenuItem.Visible = True
                 RemoveJobToolStripMenuItem.Visible = True
                 EditJobToolStripMenuItem.Visible = True
             End If
         End If
         If CurrentPersonelID = CurrentAssignedServiceSpecialistID Then
-            Select Case XXCurrentJobStatus
+            Select Case CurrentJobStatus
                 Case "Assigned" 'newly assigned
                     RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                    EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                     EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                     RequestPartsFromWarehouseToolStripMenuItem.Visible = True
                     ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
@@ -597,9 +595,9 @@ FROM (((((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOr
                     EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                 Case "No Action Yet"
                     EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
-                    RequestPartsFromWarehouseToolStripMenuItem.Visible = True
                     ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True
                 Case "Draft Requisition"
+                    RemoveJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                     EditJobToolStripMenuItem.Visible = True ' though attached part(s) should be removed 1st
                     RequestPartsFromWarehouseToolStripMenuItem.Visible = True
                     ReceivepartsfromtheCustomerToolStripMenuItem.Visible = True

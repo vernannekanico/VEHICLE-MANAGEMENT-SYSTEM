@@ -21,12 +21,13 @@
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
         Tunnel1 = "Tunnel2IsProductPartsPackingID"
         Tunnel2 = CurrentProductsPartsPackingID
-        Tunnel3 = ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value.ToString & Space(1) &
+        If IsEmpty(ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value) Then
+            Tunnel3 = ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value
+        Else
+            Tunnel3 = ProductPartsPackingsDataGridView.Item("QuantityPerPack_Double", CurrentProductPartsPackingsRow).Value.ToString & Space(1) &
                                       ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value.ToString &
                                         " / " &
                                       ProductPartsPackingsDataGridView.Item("UnitOfThePacking_ShortText3", CurrentProductPartsPackingsRow).Value.ToString
-        If ProductPartsPackingsDataGridView.Item("UnitOfTheQuantity_ShortText3", CurrentProductPartsPackingsRow).Value = "" Then
-            Tunnel3 = ""
         End If
         Select Case SavedCallingForm.Name
             Case "ProductPartsPackingRelationsForm"
