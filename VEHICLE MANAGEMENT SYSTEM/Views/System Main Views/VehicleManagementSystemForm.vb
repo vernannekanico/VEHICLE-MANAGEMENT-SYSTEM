@@ -239,4 +239,5 @@ FROM (((PermissionsTable LEFT JOIN SystemMenusTable ON PermissionsTable.SystemMe
     Private Sub InventoriesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InventoriesToolStripMenuItem.Click
         ShowCalledForm(Me, InventoriesForm)
     End Sub
+
 End Class

@@ -1237,7 +1237,9 @@ FROM ((((WorkOrderConcernJobsTable LEFT JOIN WorkOrderConcernsTable ON WorkOrder
                              GetStatusIdFor("RequisitionsTable").ToString
 
         Dim CurrentPartsRequisitionID = InsertNewRecord("RequisitionsTable", FieldsToUpdate, FieldsData)
-
+        MsgBox("check documentation for flow to proceed")
+        Stop
+        Exit Sub
         'CREATE A job reference here
         FieldsToUpdate = " RequisitionsID_LongInteger, 
                            InformationsHeaderID_LongInteger "

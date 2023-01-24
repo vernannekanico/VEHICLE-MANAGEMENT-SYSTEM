@@ -104,8 +104,7 @@ Public Class WorkOrderPartsRequisitionsForm
     End Sub
 
     Private Sub FillWorkOrderRequestedPartsHeadersDataGridView()
-
-
+        MsgBox("delete this when working okay")
         WorkOrderRequestedPartsHeadersFieldsToSelect = "
 SELECT 
 WorkOrdersTable.WorkOrderNumber_ShortText12, 
@@ -119,6 +118,11 @@ VehicleModels.VehicleModels,
 StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25
 FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber
 "
+
+
+        WorkOrderRequestedPartsHeadersFieldsToSelect = "
+SELECT WorkOrdersTable.WorkOrderNumber_ShortText12, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderNumber_ShortText12, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderRevision_Integer, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate, WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger, WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber, StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, VehicleModels.VehicleModel
+FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber"
         WorkOrderRequestedPartsHeadersSelectionOrder = " ORDER BY WorkOrderRequestedPartsHeaderID_AutoNumber DESC "
 
         MySelection = WorkOrderRequestedPartsHeadersFieldsToSelect & WorkOrderRequestedPartsHeadersSelectionFilter & WorkOrderRequestedPartsHeadersSelectionOrder

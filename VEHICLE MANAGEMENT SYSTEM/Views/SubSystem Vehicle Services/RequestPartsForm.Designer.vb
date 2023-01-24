@@ -22,18 +22,15 @@ Partial Class RequestPartsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.RequestPartsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.ReturnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GetStandarPartsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -92,8 +89,6 @@ Partial Class RequestPartsForm
         Me.Label20 = New System.Windows.Forms.Label()
         Me.VehicleNameButton = New System.Windows.Forms.Button()
         Me.WorkOrderConcernButton = New System.Windows.Forms.Button()
-        Me.WorkOrderRequestedPartsGroupBox = New System.Windows.Forms.GroupBox()
-        Me.WorkOrderRequestedPartsDataGridView = New System.Windows.Forms.DataGridView()
         Me.CustomerSuppliedPartsGroupBox = New System.Windows.Forms.GroupBox()
         Me.CustomerSuppliedPartsDataGridView = New System.Windows.Forms.DataGridView()
         Me.WorkOrderPartsGroupBox = New System.Windows.Forms.GroupBox()
@@ -109,8 +104,6 @@ Partial Class RequestPartsForm
         Me.SpecificationsGroupBox.SuspendLayout()
         CType(Me.PartSpecificationsTableDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ProductDetailsGroupBox.SuspendLayout()
-        Me.WorkOrderRequestedPartsGroupBox.SuspendLayout()
-        CType(Me.WorkOrderRequestedPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CustomerSuppliedPartsGroupBox.SuspendLayout()
         CType(Me.CustomerSuppliedPartsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.WorkOrderPartsGroupBox.SuspendLayout()
@@ -661,57 +654,6 @@ Partial Class RequestPartsForm
         Me.WorkOrderConcernButton.TabIndex = 127
         Me.WorkOrderConcernButton.UseVisualStyleBackColor = True
         '
-        'WorkOrderRequestedPartsGroupBox
-        '
-        Me.WorkOrderRequestedPartsGroupBox.Controls.Add(Me.WorkOrderRequestedPartsDataGridView)
-        Me.WorkOrderRequestedPartsGroupBox.Location = New System.Drawing.Point(10, 276)
-        Me.WorkOrderRequestedPartsGroupBox.Margin = New System.Windows.Forms.Padding(2)
-        Me.WorkOrderRequestedPartsGroupBox.Name = "WorkOrderRequestedPartsGroupBox"
-        Me.WorkOrderRequestedPartsGroupBox.Padding = New System.Windows.Forms.Padding(2)
-        Me.WorkOrderRequestedPartsGroupBox.Size = New System.Drawing.Size(240, 67)
-        Me.WorkOrderRequestedPartsGroupBox.TabIndex = 128
-        Me.WorkOrderRequestedPartsGroupBox.TabStop = False
-        Me.WorkOrderRequestedPartsGroupBox.Text = "Requested Parts"
-        '
-        'WorkOrderRequestedPartsDataGridView
-        '
-        Me.WorkOrderRequestedPartsDataGridView.AllowUserToAddRows = False
-        Me.WorkOrderRequestedPartsDataGridView.AllowUserToDeleteRows = False
-        Me.WorkOrderRequestedPartsDataGridView.AllowUserToOrderColumns = True
-        Me.WorkOrderRequestedPartsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.WorkOrderRequestedPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
-        Me.WorkOrderRequestedPartsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderRequestedPartsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderRequestedPartsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle14
-        Me.WorkOrderRequestedPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderRequestedPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle15
-        Me.WorkOrderRequestedPartsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.WorkOrderRequestedPartsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
-        Me.WorkOrderRequestedPartsDataGridView.Location = New System.Drawing.Point(2, 15)
-        Me.WorkOrderRequestedPartsDataGridView.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.WorkOrderRequestedPartsDataGridView.Name = "WorkOrderRequestedPartsDataGridView"
-        Me.WorkOrderRequestedPartsDataGridView.ReadOnly = True
-        Me.WorkOrderRequestedPartsDataGridView.RowHeadersVisible = False
-        Me.WorkOrderRequestedPartsDataGridView.RowHeadersWidth = 51
-        Me.WorkOrderRequestedPartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.WorkOrderRequestedPartsDataGridView.Size = New System.Drawing.Size(236, 50)
-        Me.WorkOrderRequestedPartsDataGridView.TabIndex = 54
-        '
         'CustomerSuppliedPartsGroupBox
         '
         Me.CustomerSuppliedPartsGroupBox.Controls.Add(Me.CustomerSuppliedPartsDataGridView)
@@ -730,27 +672,27 @@ Partial Class RequestPartsForm
         Me.CustomerSuppliedPartsDataGridView.AllowUserToDeleteRows = False
         Me.CustomerSuppliedPartsDataGridView.AllowUserToOrderColumns = True
         Me.CustomerSuppliedPartsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.CustomerSuppliedPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.CustomerSuppliedPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.CustomerSuppliedPartsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.CustomerSuppliedPartsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.CustomerSuppliedPartsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CustomerSuppliedPartsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.CustomerSuppliedPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.CustomerSuppliedPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CustomerSuppliedPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle3
         Me.CustomerSuppliedPartsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CustomerSuppliedPartsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.CustomerSuppliedPartsDataGridView.Location = New System.Drawing.Point(2, 15)
@@ -781,27 +723,27 @@ Partial Class RequestPartsForm
         Me.WorkOrderPartsDataGridView.AllowUserToDeleteRows = False
         Me.WorkOrderPartsDataGridView.AllowUserToOrderColumns = True
         Me.WorkOrderPartsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.WorkOrderPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.WorkOrderPartsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.WorkOrderPartsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.WorkOrderPartsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle20.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderPartsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.WorkOrderPartsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.WorkOrderPartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle21.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.WorkOrderPartsDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.WorkOrderPartsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WorkOrderPartsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.WorkOrderPartsDataGridView.Location = New System.Drawing.Point(2, 15)
@@ -832,27 +774,27 @@ Partial Class RequestPartsForm
         Me.WorkOrderConcernJobsDataGridView.AllowUserToDeleteRows = False
         Me.WorkOrderConcernJobsDataGridView.AllowUserToOrderColumns = True
         Me.WorkOrderConcernJobsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.WorkOrderConcernJobsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.WorkOrderConcernJobsDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
         Me.WorkOrderConcernJobsDataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption
         Me.WorkOrderConcernJobsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        DataGridViewCellStyle23.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.Menu
-        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderConcernJobsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.Menu
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.WorkOrderConcernJobsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle8
         Me.WorkOrderConcernJobsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle24.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderConcernJobsDataGridView.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.WorkOrderConcernJobsDataGridView.DefaultCellStyle = DataGridViewCellStyle9
         Me.WorkOrderConcernJobsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.WorkOrderConcernJobsDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaption
         Me.WorkOrderConcernJobsDataGridView.Location = New System.Drawing.Point(2, 15)
@@ -874,7 +816,6 @@ Partial Class RequestPartsForm
         Me.Controls.Add(Me.WorkOrderConcernJobsGroupBox)
         Me.Controls.Add(Me.WorkOrderPartsGroupBox)
         Me.Controls.Add(Me.CustomerSuppliedPartsGroupBox)
-        Me.Controls.Add(Me.WorkOrderRequestedPartsGroupBox)
         Me.Controls.Add(Me.WorkOrderConcernButton)
         Me.Controls.Add(Me.RequisitionDetailsGroupBox)
         Me.Controls.Add(Me.VehicleNameButton)
@@ -899,8 +840,6 @@ Partial Class RequestPartsForm
         CType(Me.PartSpecificationsTableDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ProductDetailsGroupBox.ResumeLayout(False)
         Me.ProductDetailsGroupBox.PerformLayout()
-        Me.WorkOrderRequestedPartsGroupBox.ResumeLayout(False)
-        CType(Me.WorkOrderRequestedPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CustomerSuppliedPartsGroupBox.ResumeLayout(False)
         CType(Me.CustomerSuppliedPartsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.WorkOrderPartsGroupBox.ResumeLayout(False)
@@ -967,8 +906,6 @@ Partial Class RequestPartsForm
     Friend WithEvents PartSpecificationsTableDataGridView As DataGridView
     Friend WithEvents RequestedUnitTextBox As TextBox
     Friend WithEvents Label12 As Label
-    Friend WithEvents WorkOrderRequestedPartsGroupBox As GroupBox
-    Friend WithEvents WorkOrderRequestedPartsDataGridView As DataGridView
     Friend WithEvents CustomerSuppliedPartsGroupBox As GroupBox
     Friend WithEvents CustomerSuppliedPartsDataGridView As DataGridView
     Friend WithEvents WorkOrderPartsGroupBox As GroupBox
