@@ -105,6 +105,7 @@ Public Class WorkOrderPartsRequisitionsForm
 
     Private Sub FillWorkOrderRequestedPartsHeadersDataGridView()
         MsgBox("delete this when working okay")
+        Stop
         WorkOrderRequestedPartsHeadersFieldsToSelect = "
 SELECT 
 WorkOrdersTable.WorkOrderNumber_ShortText12, 
@@ -121,7 +122,15 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
 
 
         WorkOrderRequestedPartsHeadersFieldsToSelect = "
-SELECT WorkOrdersTable.WorkOrderNumber_ShortText12, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderNumber_ShortText12, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderRevision_Integer, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate, WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger, WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger, WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber, StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, VehicleModels.VehicleModel
+SELECT WorkOrdersTable.WorkOrderNumber_ShortText12, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderNumber_ShortText12, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderRevision_Integer, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate, 
+WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger, 
+WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber, 
+StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25, 
+VehicleModels.VehicleModel
 FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber"
         WorkOrderRequestedPartsHeadersSelectionOrder = " ORDER BY WorkOrderRequestedPartsHeaderID_AutoNumber DESC "
 
@@ -207,7 +216,7 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
         Dim CurrentWorkOrderRequestedPartsHeaderstatusSequence = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusSequence_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         WorkOrderRequestedPartsHeaderStatus = WorkOrderRequestedPartsHeadersDataGridView.Item("StatusText_ShortText25", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         CurrentWorkOrderID = WorkOrderRequestedPartsHeadersDataGridView.Item("WorkOrderID_LongInteger", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
-        VehicleModelTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("VehicleModels", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
+        VehicleModelTextBox.Text = WorkOrderRequestedPartsHeadersDataGridView.Item("VehicleModel", CurrentWorkOrderRequestedPartsHeadersDataGridViewRow).Value
         EditPartDetailsToolStripMenuItem.Visible = False
         DeleteProductToolStripMenuItem.Visible = False
         SubmitRequisitionsForPurchaseToolStripMenuItem.Visible = False
@@ -253,8 +262,30 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
 
         WorkOrderRequestedPartsFieldsToSelect =
 "
-SELECT MasterCodeBookTable.SystemDesc_ShortText100Fld, PartsSpecificationsTable.PartSpecifications_ShortText255, ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, ProductsPartsTable.ManufacturerDescription_ShortText250, StocksTable.QuantityInStock_Double, WorkOrderRequestedPartsTable.RequestedQuantity_Double, RequisitionsItemsTable.RequisitionQuantity_Double, BrandsTable.BrandName_ShortText20, StocksTable.Location_ShortText10, ProductsPartsTable.ProductDescription_ShortText250, WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger, WorkOrderRequestedPartsTable.ProductPartID_LongInteger, RequisitionsItemsTable.RequisitionsItemID_AutoNumber, RequisitionsItemsTable.RequisitionItemStatusID_LongInteger, WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber, WorkOrderRequestedPartsTable.WorkOrderRequestedPartsHeaderID_LongInteger, MasterCodeBookTable.MasterCodeBookID_Autonumber, WorkOrderPartsTable.WorkOrderPartID_AutoNumber, StatusesTable.StatusText_ShortText25, WorkOrderRequestedPartsTable.WorkOrderRequestedPartStatus_Integer, StatusesTable.StatusID_Autonumber, CodeVehiclePartsSpecificationsRelationsTable.CodeVehicleID_LongInteger, CodeVehiclePartsSpecificationsRelationsTable.PartsSpecificationID_LongInteger
-FROM ((((((WorkOrderRequestedPartsTable LEFT JOIN WorkOrderRequestedPartsHeadersTable ON WorkOrderRequestedPartsTable.[WorkOrderRequestedPartsHeaderID_LongInteger] = WorkOrderRequestedPartsHeadersTable.[WorkOrderRequestedPartsHeaderID_AutoNumber]) LEFT JOIN (WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN (StocksTable RIGHT JOIN (ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON WorkOrderRequestedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsTable.[WorkOrderRequestedPartStatus_Integer] = StatusesTable.StatusID_Autonumber) LEFT JOIN CodeVehiclePartsSpecificationsRelationsTable ON WorkOrderPartsTable.CodeVehicleID_LongInteger = CodeVehiclePartsSpecificationsRelationsTable.CodeVehicleID_LongInteger) LEFT JOIN PartsSpecificationsTable ON CodeVehiclePartsSpecificationsRelationsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN RequisitionsItemsTable ON WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber = RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger
+SELECT MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+PartsSpecificationsTable.PartSpecifications_ShortText255, 
+ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
+ProductsPartsTable.ManufacturerDescription_ShortText250, 
+StocksTable.QuantityInStock_Double, 
+WorkOrderRequestedPartsTable.RequestedQuantity_Double, 
+RequisitionsItemsTable.RequisitionQuantity_Double, 
+BrandsTable.BrandName_ShortText20, 
+ProductsPartsTable.ProductDescription_ShortText250, 
+WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger, 
+WorkOrderRequestedPartsTable.ProductPartID_LongInteger, 
+RequisitionsItemsTable.RequisitionsItemID_AutoNumber, 
+RequisitionsItemsTable.RequisitionItemStatusID_LongInteger, 
+WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber, 
+WorkOrderRequestedPartsTable.WorkOrderRequestedPartsHeaderID_LongInteger, 
+MasterCodeBookTable.MasterCodeBookID_Autonumber, 
+WorkOrderPartsTable.WorkOrderPartID_AutoNumber, 
+StatusesTable.StatusText_ShortText25, 
+WorkOrderRequestedPartsTable.WorkOrderRequestedPartStatus_Integer, 
+StatusesTable.StatusID_Autonumber, 
+CodeVehiclePartsSpecificationsRelationsTable.CodeVehicleID_LongInteger, 
+CodeVehiclePartsSpecificationsRelationsTable.PartsSpecificationID_LongInteger,
+StocksLocationsTable.LocationCode_ShortText11
+FROM (((((((WorkOrderRequestedPartsTable LEFT JOIN WorkOrderRequestedPartsHeadersTable ON WorkOrderRequestedPartsTable.[WorkOrderRequestedPartsHeaderID_LongInteger] = WorkOrderRequestedPartsHeadersTable.[WorkOrderRequestedPartsHeaderID_AutoNumber]) LEFT JOIN (WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderPartsTable.MasterCodeBookID_LongInteger = MasterCodeBookTable.MasterCodeBookID_Autonumber) ON WorkOrderRequestedPartsTable.WorkOrderPartID_LongInteger = WorkOrderPartsTable.WorkOrderPartID_AutoNumber) LEFT JOIN (StocksTable RIGHT JOIN (ProductsPartsTable LEFT JOIN BrandsTable ON ProductsPartsTable.BrandID_LongInteger = BrandsTable.BrandID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON WorkOrderRequestedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsTable.[WorkOrderRequestedPartStatus_Integer] = StatusesTable.StatusID_Autonumber) LEFT JOIN CodeVehiclePartsSpecificationsRelationsTable ON WorkOrderPartsTable.CodeVehicleID_LongInteger = CodeVehiclePartsSpecificationsRelationsTable.CodeVehicleID_LongInteger) LEFT JOIN PartsSpecificationsTable ON CodeVehiclePartsSpecificationsRelationsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) LEFT JOIN RequisitionsItemsTable ON WorkOrderRequestedPartsTable.WorkOrderRequestedPartID_AutoNumber = RequisitionsItemsTable.WorkOrderRequestedPartID_LongInteger) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber
 "
         MySelection = WorkOrderRequestedPartsFieldsToSelect & WorkOrderRequestedPartsSelectionFilter & WorkOrderRequestedPartsSelectionOrder
         JustExecuteMySelection()

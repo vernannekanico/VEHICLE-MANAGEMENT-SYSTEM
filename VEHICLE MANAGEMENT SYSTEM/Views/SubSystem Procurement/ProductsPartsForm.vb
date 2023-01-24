@@ -568,7 +568,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                                              "InventoryItemsTable",
                                              "WorkOrderPartsTable",
                                              "WorkOrderPartsIssuedItemsTable",
-                                             "WorkOrderReceivedPartsTable",
+                                             "WorkOrderIssuedPartsTable",
                                              "WorkOrderRequestedPartsTable",
                                              "StocksTable",
                                              "StoreSuppliesRequisitionsItemsTable",
@@ -1017,7 +1017,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
                     SetCommand = "SET ProductPartID_LongInteger = " & CurrentProductPartID.ToString
                     RecordFilter = "where ProductPartID_LongInteger = " & ProductsPartsDataGridView.Item("ProductsPartID_Autonumber", i).Value.ToString
                     UpdateTable("WorkOrderRequestedPartsTable", SetCommand, RecordFilter)
-                    UpdateTable("WorkOrderReceivedPartsTable", SetCommand, RecordFilter)
+                    UpdateTable("WorkOrderIssuedPartsTable", SetCommand, RecordFilter)
                     UpdateTable("WorkOrderPartsIssuedItemsTable", SetCommand, RecordFilter)
                     UpdateTable("StoreSuppliesRequisitionsItemsTable", SetCommand, RecordFilter)
                     UpdateTable("StocksTable", SetCommand, RecordFilter)
