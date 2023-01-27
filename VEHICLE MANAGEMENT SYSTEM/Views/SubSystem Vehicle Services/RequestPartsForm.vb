@@ -413,17 +413,17 @@ FROM ((((((((((WorkOrderPartsTable LEFT JOIN MasterCodeBookTable ON WorkOrderPar
         CustomerSuppliedPartsFieldsToSelect =
 "
 SELECT 
-WorkOrderReceivedPartsTable.WorkOrderPartID_LongInteger, 
-WorkOrderReceivedPartsTable.WorkOrderReceivedPartID_AutoNumber, 
+WorkOrderIssuedPartsTable.WorkOrderPartID_LongInteger, 
+WorkOrderIssuedPartsTable.WorkOrderIssuedPartID_AutoNumber, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
-WorkOrderReceivedPartsTable.ReceivedQuantity_Double, 
+WorkOrderIssuedPartsTable.ReceivedQuantity_Double, 
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartPackingsQuery.QuantityPerPack_Double, 
 ProductPartPackingsQuery.UnitOfTheQuantity_ShortText3,
 ProductPartPackingsQuery.UnitOfThePacking_ShortText3
-FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderReceivedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN ProductPartPackingsQuery ON ProductsPartsTable.ProductsPartID_Autonumber = ProductPartPackingsQuery.ProductPartID_LongInteger
+FROM (WorkOrderIssuedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderIssuedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN ProductPartPackingsQuery ON ProductsPartsTable.ProductsPartID_Autonumber = ProductPartPackingsQuery.ProductPartID_LongInteger
 "
         MySelection = CustomerSuppliedPartsFieldsToSelect & CustomerSuppliedPartsSelectionFilter
         JustExecuteMySelection()
@@ -487,7 +487,7 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         RemoveProductToolStripMenuItem.Text = "Remove Received Part"
         RemoveProductToolStripMenuItem.Visible = True
         CurrentCustomerSuppliedPartsRow = e.RowIndex
-        FillField(CurrentCustomerSuppliedPartID, NotNull(CustomerSuppliedPartsDataGridView.Item("WorkOrderReceivedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value))
+        FillField(CurrentCustomerSuppliedPartID, NotNull(CustomerSuppliedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value))
     End Sub
     Private Sub ReturnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReturnToolStripMenuItem.Click
         If SaveToolStripMenuItem.Visible = True Then
@@ -805,16 +805,16 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
                           "  ReceivedBy_LongInteger, " &
                                 " DateReceived_DateTime," &
                        "  ReceivedQuantity_Double ," &
-                       "  WorkOrderReceivedPartStatusID_LongInteger "
+                       "  WorkOrderIssuedPartStatusID_LongInteger "
 
         Dim FieldsData = CurrentWorkOrderPartID.ToString & ",  " &
                                   CurrentProductPartID.ToString & ",  " &
                                   CurrentPersonelID.ToString & ",  " &
                                   InQuotes(DateString) & ", " &
                                   Val(CustomerSuppliedQuantityTextBox.Text).ToString() & ", " &
-                                  GetStatusIdFor("WorkOrderReceivedPartsTable", "Draft from Customer").ToString()
+                                  GetStatusIdFor("WorkOrderIssuedPartsTable", "Draft from Customer").ToString()
 
-        CurrentCustomerSuppliedPartID = InsertNewRecord("WorkOrderReceivedPartsTable", FieldsToUpdate, FieldsData)
+        CurrentCustomerSuppliedPartID = InsertNewRecord("WorkOrderIssuedPartsTable", FieldsToUpdate, FieldsData)
 
         'UPDATE ProductsPartTable AND MARK FIELD Selected true
         UpdateTable("ProductsPartTable", "SET Selected = True", "WHERE ProductsPartID_AutoNumber = " & CurrentProductPartID.ToString)
@@ -834,9 +834,9 @@ FROM (WorkOrderReceivedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderRecei
         If MsgBox("About to replace RECEIVED PARTS informations, Continue ?", MsgBoxStyle.YesNo) = vbNo Then
             Exit Sub
         End If
-        Dim RecordFilter = " WHERE WorkOrderReceivedPartID_AutoNumber = " & CurrentCustomerSuppliedPartID.ToString
+        Dim RecordFilter = " WHERE WorkOrderIssuedPartID_AutoNumber = " & CurrentCustomerSuppliedPartID.ToString
         Dim SetCommand = " SET  ReceivedQuantity_Double = " & Val(CustomerSuppliedQuantityTextBox.Text).ToString
-        UpdateTable("WorkOrderReceivedPartsTable", SetCommand, RecordFilter)
+        UpdateTable("WorkOrderIssuedPartsTable", SetCommand, RecordFilter)
     End Sub
 
     Private Sub RequisitionForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
@@ -1158,13 +1158,13 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
             ' HERE the CUSTOMER SUPPLIED the PARTS
             MsgBox("work on the packing here")
             Stop
-            FillField(CurrentCustomerSuppliedPartID, CustomerSuppliedPartsDataGridView.Item("WorkOrderReceivedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value)
+            FillField(CurrentCustomerSuppliedPartID, CustomerSuppliedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value)
             FillField(CurrentProductPartID, CustomerSuppliedPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentCustomerSuppliedPartsRow).Value)
             FillField(CustomerSuppliedQuantityTextBox.Text, CustomerSuppliedPartsDataGridView.Item("ReceivedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value)
             FillField(CustomerSuppliedUnitTextBox.Text, CustomerSuppliedPartsDataGridView.Item("Unit_ShortText3", CurrentCustomerSuppliedPartsRow).Value)
             FillField(ProductTextBox.Text, CustomerSuppliedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentCustomerSuppliedPartsRow).Value)
             FillField(PartNumberTextBox.Text, CustomerSuppliedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentCustomerSuppliedPartsRow).Value)
-            FillField(CurrentCustomerSuppliedPartID, NotNull(CustomerSuppliedPartsDataGridView.Item("WorkOrderReceivedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value))
+            FillField(CurrentCustomerSuppliedPartID, NotNull(CustomerSuppliedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value))
 
             'HERE SYSTEM DEALS WITH DISPLAYING PACKING INFORMATIONS IF AVAILABLE
             If IsNotEmpty(CustomerSuppliedPartsDataGridView.Item("QuantityPerPack_Double", CurrentCustomerSuppliedPartsRow).Value) Then
@@ -1219,7 +1219,7 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
             JustExecuteMySelection()
             FillWorkOrderPartsDataGridView()
         Else
-            MySelection = "DELETE FROM WorkOrderReceivedPartsTable WHERE WorkOrderReceivedPartID_AutoNumber = " & Str(CurrentCustomerSuppliedPartID)
+            MySelection = "DELETE FROM WorkOrderIssuedPartsTable WHERE WorkOrderIssuedPartID_AutoNumber = " & Str(CurrentCustomerSuppliedPartID)
             JustExecuteMySelection()
             FillCustomerSuppliedPartsDataGridView()
         End If
@@ -1283,10 +1283,10 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
                 FillCustomerSuppliedPartsDataGridView()
                 If CustomerSuppliedPartsRecordCount > 0 Then
                     For k = 0 To CustomerSuppliedPartsRecordCount - 1
-                        FillField(CurrentCustomerSuppliedPartID, NotNull(CustomerSuppliedPartsDataGridView.Item("WorkOrderReceivedPartID_AutoNumber", k).Value))
-                        RecordFilter = " WHERE WorkOrderReceivedPartID_AutoNumber = " & CurrentCustomerSuppliedPartID.ToString
-                        SetCommand = " SET WorkOrderReceivedPartStatusID_LongInteger = " & GetStatusIdFor("WorkOrderReceivedPartsTable", "Received from Customer").ToString
-                        UpdateTable("WorkOrderReceivedPartsTable", SetCommand, RecordFilter)
+                        FillField(CurrentCustomerSuppliedPartID, NotNull(CustomerSuppliedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", k).Value))
+                        RecordFilter = " WHERE WorkOrderIssuedPartID_AutoNumber = " & CurrentCustomerSuppliedPartID.ToString
+                        SetCommand = " SET WorkOrderIssuedPartStatusID_LongInteger = " & GetStatusIdFor("WorkOrderIssuedPartsTable", "Received from Customer").ToString
+                        UpdateTable("WorkOrderIssuedPartsTable", SetCommand, RecordFilter)
                     Next
                     RecordFilter = " WHERE WorkOrderPartID_AutoNumber = " & CurrentWorkOrderPartID.ToString
                     SetCommand = " SET WorkOrderPartStatusID_LongInteger = " & GetStatusIdFor("WorkOrderPartsTable", "Received From Customer").ToString

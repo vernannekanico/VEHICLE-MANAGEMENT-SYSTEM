@@ -115,7 +115,7 @@ WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderDate_ShortDate,
 WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger, 
 WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger, 
 WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderID_AutoNumber, 
-VehicleModels.VehicleModels,
+VehicleModels.VehicleModel,
 StatusesTable.StatusSequence_LongInteger, StatusesTable.StatusText_ShortText25
 FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderID_LongInteger = WorkOrdersTable.WorkOrderID_AutoNumber) LEFT JOIN ServicedVehiclesTable ON WorkOrdersTable.ServicedVehicleID_LongInteger = ServicedVehiclesTable.ServicedVehicleID_AutoNumber) LEFT JOIN PersonnelTable ON WorkOrderRequestedPartsHeadersTable.RequestedByID_LongInteger = PersonnelTable.PersonnelID_AutoNumber) LEFT JOIN StatusesTable ON WorkOrderRequestedPartsHeadersTable.WorkOrderRequestedPartsHeaderStatusID_Integer = StatusesTable.StatusID_Autonumber) LEFT JOIN VehicleModels ON ServicedVehiclesTable.VehicleID_LongInteger = VehicleModels.VehicleID_AutoNumber
 "
@@ -158,7 +158,7 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
 
             Select Case WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText
 
-                Case "VehicleModels"
+                Case "VehicleModel"
                     WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).HeaderText = "Model"
                     WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Width = 300
                     WorkOrderRequestedPartsHeadersDataGridView.Columns.Item(i).Visible = True
@@ -262,7 +262,8 @@ FROM ((((WorkOrderRequestedPartsHeadersTable LEFT JOIN WorkOrdersTable ON WorkOr
 
         WorkOrderRequestedPartsFieldsToSelect =
 "
-SELECT MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+SELECT 
+MasterCodeBookTable.SystemDesc_ShortText100Fld, 
 PartsSpecificationsTable.PartSpecifications_ShortText255, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
@@ -491,9 +492,9 @@ StocksTable.QuantityInStock_Double,
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3, 
-ProductPartsPackingsTable.UnitOfThePacking_ShortText3, 
-StocksTable.Location_ShortText10
-FROM StocksTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN (ProductsPartsTable LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
+ProductPartsPackingsTable.UnitOfThePacking_ShortText3,
+StocksLocationsTable.LocationCode_ShortText11
+FROM (StocksTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN (ProductsPartsTable LEFT JOIN PartsSpecificationsTable ON ProductsPartsTable.PartsSpecificationID_LongInteger = PartsSpecificationsTable.PartsSpecificationID_AutoNumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN StocksLocationsTable ON StocksTable.StocksLocationID_LongInteger = StocksLocationsTable.StocksLocationID_AutoNumber
 "
 
         MySelection = AvailableStocksFieldsToSelect & AvailableStocksSelectionFilter & AvailableStocksSelectionOrder
@@ -684,17 +685,18 @@ FROM ((RequisitionsItemsTable LEFT JOIN (((WorkOrderRequestedPartsTable LEFT JOI
         WorkOrderIssuedPartsFieldsToSelect =
 " 
 SELECT 
-WorkOrderReceivedPartsTable.WorkOrderPartID_LongInteger, 
-WorkOrderReceivedPartsTable.WorkOrderReceivedPartID_AutoNumber, 
-WorkOrderReceivedPartsTable.WorkOrderReceivedPartStatusID_LongInteger, 
+WorkOrderIssuedPartsTable.WorkOrderPartID_LongInteger, 
+WorkOrderIssuedPartsTable.WorkOrderIssuedPartID_AutoNumber, 
+WorkOrderIssuedPartsTable.WorkOrderIssuedPartStatusID_LongInteger, 
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
-WorkOrderReceivedPartsTable.ReceivedQuantity_Double, 
+WorkOrderIssuedPartsTable.ReceivedQuantity_Double, 
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
-ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3
-FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN ProductsPartsTable ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON WorkOrderReceivedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber
+ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
+ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
+FROM (WorkOrderIssuedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN (StocksTable RIGHT JOIN ProductsPartsTable ON StocksTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON ProductPartsPackingsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) ON WorkOrderIssuedPartsTable.ProductPartID_LongInteger = ProductsPartsTable.ProductsPartID_Autonumber) LEFT JOIN ProductsPartsPackingRelationsTable ON WorkOrderIssuedPartsTable.ProductsPartsPackingRelationID_LongInteger = ProductsPartsPackingRelationsTable.ProductsPartsPackingRelationID_AutoNumber
 "
 
         MySelection = WorkOrderIssuedPartsFieldsToSelect & WorkOrderIssuedPartsSelectionFilter & WorkOrderIssuedPartsSelectionOrder
@@ -703,15 +705,12 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
         WorkOrderIssuedPartsRecordCount = RecordCount
 
         If WorkOrderIssuedPartsRecordCount > 0 Then
-            'why this
             CurrentWorkOrderIssuedPartID = -1
             WorkOrderIssuedPartsGroupBox.Visible = True
         Else
             WorkOrderIssuedPartsGroupBox.Visible = False
         End If
         WorkOrderIssuedPartsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If WorkOrderIssuedPartsRecordCount = 0 Then
-        End If
 
 
         ' HERE AT ROW_ENTER, FillWorkOrderIssuedPartConcernsDataGridView is called and WorkOrderIssuedPartConcernsbOX IS ALREADY FORMATTED
@@ -769,9 +768,9 @@ FROM WorkOrderReceivedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN
         If WorkOrderIssuedPartsRecordCount = 0 Then Exit Sub
 
         CurrentWorkOrderIssuedPartsRow = e.RowIndex
-        CurrentWorkOrderIssuedPartID = WorkOrderIssuedPartsDataGridView.Item("WorkOrderReceivedPartID_AutoNumber", CurrentWorkOrderIssuedPartsRow).Value
+        CurrentWorkOrderIssuedPartID = WorkOrderIssuedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", CurrentWorkOrderIssuedPartsRow).Value
 
-        FillField(CurrentWorkOrderIssuedPartStatus, WorkOrderIssuedPartsDataGridView.Item("WorkOrderReceivedPartStatusID_LongInteger", CurrentWorkOrderIssuedPartsRow).Value)
+        FillField(CurrentWorkOrderIssuedPartStatus, WorkOrderIssuedPartsDataGridView.Item("WorkOrderIssuedPartStatusID_LongInteger", CurrentWorkOrderIssuedPartsRow).Value)
 
         Select Case CurrentWorkOrderIssuedPartStatus
             Case ""

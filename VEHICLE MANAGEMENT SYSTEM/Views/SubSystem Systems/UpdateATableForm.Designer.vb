@@ -22,8 +22,8 @@ Partial Class UpdateATableForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.WorkOrderRequestedPartsTablesDataGridView = New System.Windows.Forms.DataGridView()
         Me.RowCountLabel = New System.Windows.Forms.Label()
         Me.MenuStrip2 = New System.Windows.Forms.MenuStrip()
@@ -38,6 +38,7 @@ Partial Class UpdateATableForm
         Me.RefreshDataGridViewButton = New System.Windows.Forms.Button()
         Me.EditWorkOrderRequestedPartsTableButton = New System.Windows.Forms.Button()
         Me.DeleteThisJobButton = New System.Windows.Forms.Button()
+        Me.UpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.WorkOrderRequestedPartsTablesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip2.SuspendLayout()
         Me.AddAProductdGroupBox.SuspendLayout()
@@ -46,23 +47,23 @@ Partial Class UpdateATableForm
         'WorkOrderRequestedPartsTablesDataGridView
         '
         Me.WorkOrderRequestedPartsTablesDataGridView.Anchor = System.Windows.Forms.AnchorStyles.Left
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.WorkOrderRequestedPartsTablesDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.WorkOrderRequestedPartsTablesDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.WorkOrderRequestedPartsTablesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.WorkOrderRequestedPartsTablesDataGridView.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.WorkOrderRequestedPartsTablesDataGridView.DefaultCellStyle = DataGridViewCellStyle6
         Me.WorkOrderRequestedPartsTablesDataGridView.Location = New System.Drawing.Point(31, 119)
         Me.WorkOrderRequestedPartsTablesDataGridView.MultiSelect = False
         Me.WorkOrderRequestedPartsTablesDataGridView.Name = "WorkOrderRequestedPartsTablesDataGridView"
@@ -84,7 +85,7 @@ Partial Class UpdateATableForm
         'MenuStrip2
         '
         Me.MenuStrip2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.ToolStripMenuItem1})
+        Me.MenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.ToolStripMenuItem1, Me.UpdateToolStripMenuItem})
         Me.MenuStrip2.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip2.Name = "MenuStrip2"
         Me.MenuStrip2.Size = New System.Drawing.Size(1284, 29)
@@ -158,7 +159,7 @@ Partial Class UpdateATableForm
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(121, 6)
+        Me.Button1.Location = New System.Drawing.Point(70, 35)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(111, 23)
         Me.Button1.TabIndex = 49
@@ -176,7 +177,7 @@ Partial Class UpdateATableForm
         '
         'EditWorkOrderRequestedPartsTableButton
         '
-        Me.EditWorkOrderRequestedPartsTableButton.Location = New System.Drawing.Point(352, 3)
+        Me.EditWorkOrderRequestedPartsTableButton.Location = New System.Drawing.Point(197, 37)
         Me.EditWorkOrderRequestedPartsTableButton.Name = "EditWorkOrderRequestedPartsTableButton"
         Me.EditWorkOrderRequestedPartsTableButton.Size = New System.Drawing.Size(125, 23)
         Me.EditWorkOrderRequestedPartsTableButton.TabIndex = 51
@@ -185,12 +186,18 @@ Partial Class UpdateATableForm
         '
         'DeleteThisJobButton
         '
-        Me.DeleteThisJobButton.Location = New System.Drawing.Point(494, 3)
+        Me.DeleteThisJobButton.Location = New System.Drawing.Point(302, 70)
         Me.DeleteThisJobButton.Name = "DeleteThisJobButton"
         Me.DeleteThisJobButton.Size = New System.Drawing.Size(125, 23)
         Me.DeleteThisJobButton.TabIndex = 52
         Me.DeleteThisJobButton.Text = "Delete This WO Request"
         Me.DeleteThisJobButton.UseVisualStyleBackColor = True
+        '
+        'UpdateToolStripMenuItem
+        '
+        Me.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem"
+        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(473, 25)
+        Me.UpdateToolStripMenuItem.Text = "Update ProductPackingRelation of the WorkOrderRequestedParts"
         '
         'UpdateATableForm
         '
@@ -232,4 +239,5 @@ Partial Class UpdateATableForm
     Friend WithEvents RefreshDataGridViewButton As Button
     Friend WithEvents EditWorkOrderRequestedPartsTableButton As Button
     Friend WithEvents DeleteThisJobButton As Button
+    Friend WithEvents UpdateToolStripMenuItem As ToolStripMenuItem
 End Class

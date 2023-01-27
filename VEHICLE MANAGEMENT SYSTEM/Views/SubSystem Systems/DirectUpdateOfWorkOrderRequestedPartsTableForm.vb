@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class UpdateATableForm
+Public Class DirectUpdateOfWorkOrderRequestedPartsTableForm
     Private CurrentWorkOrderRequestedPartID As Integer = -1
     Private CurrentWorkOrderRequestedPartsRow As Integer = -1
     Private WorkOrderRequestedPartsRecordCount As Integer = -1
@@ -223,9 +223,5 @@ FROM (((WorkOrderRequestedPartsTable LEFT JOIN WorkOrderPartsTable ON WorkOrderR
         WorkOrderRequestedPartsSelectionFilter = WorkOrderRequestedPartsSelectionFilter & " AND WorkOrderRequestedPartID_Autonumber => " & CurrentProductPartID
         FillWorkOrderRequestedPartsDataGridView()
         WorkOrderRequestedPartsSelectionFilter = SavedFilter
-    End Sub
-
-    Private Sub UpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateToolStripMenuItem.Click
-        ShowCalledForm(Me, DirectUpdateOfWorkOrderRequestedPartsTableForm)
     End Sub
 End Class
