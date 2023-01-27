@@ -25,7 +25,6 @@ Partial Class ProductsPartsForm
         Me.components = New System.ComponentModel.Container()
         Me.ProductsPartsMenuStrip = New System.Windows.Forms.MenuStrip()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UpdateMasterCodeLinkToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -39,12 +38,15 @@ Partial Class ProductsPartsForm
         Me.EditPackingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MarkSeletedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DirectUpdatingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MarkAllRecordsAsForDeletionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToggleFilterToForDeletionOnOffToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReIDSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UpdatePackingForAllRecordsToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteRelationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProductDetailsGroup = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.PackingTextBox = New System.Windows.Forms.TextBox()
+        Me.UnitTextBox = New System.Windows.Forms.TextBox()
         Me.ProductSpecificationTextBox = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.PartSpecificationTextBox = New System.Windows.Forms.TextBox()
@@ -82,10 +84,7 @@ Partial Class ProductsPartsForm
         Me.CopyDescriptionToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.HistoriesGroupBox = New System.Windows.Forms.GroupBox()
         Me.HistoriesDataGridView = New System.Windows.Forms.DataGridView()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.PackingTextBox = New System.Windows.Forms.TextBox()
-        Me.UnitTextBox = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.ScratchDataGridView = New System.Windows.Forms.DataGridView()
         Me.ProductsPartsMenuStrip.SuspendLayout()
         Me.ProductDetailsGroup.SuspendLayout()
         Me.ProductsPartsPackingsGroupBox.SuspendLayout()
@@ -97,6 +96,7 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsDataGridViewContextMenuStrip.SuspendLayout()
         Me.HistoriesGroupBox.SuspendLayout()
         CType(Me.HistoriesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ScratchDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ProductsPartsMenuStrip
@@ -104,11 +104,11 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsMenuStrip.Dock = System.Windows.Forms.DockStyle.None
         Me.ProductsPartsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ProductsPartsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.ProductsPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.UpdateMasterCodeLinkToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ProductDetailsToolStripMenuItem, Me.HistoryToolStripMenuItem, Me.SearchToolStripMenuItem, Me.EditPackingToolStripMenuItem, Me.MarkSeletedToolStripMenuItem, Me.DirectUpdatingToolStripMenuItem})
+        Me.ProductsPartsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.AddToolStripMenuItem, Me.EditToolStripMenuItem, Me.DeleteToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ProductDetailsToolStripMenuItem, Me.HistoryToolStripMenuItem, Me.SearchToolStripMenuItem, Me.EditPackingToolStripMenuItem, Me.MarkSeletedToolStripMenuItem, Me.DirectUpdatingToolStripMenuItem})
         Me.ProductsPartsMenuStrip.Location = New System.Drawing.Point(69, 0)
         Me.ProductsPartsMenuStrip.Name = "ProductsPartsMenuStrip"
         Me.ProductsPartsMenuStrip.Padding = New System.Windows.Forms.Padding(15, 5, 0, 5)
-        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(1037, 35)
+        Me.ProductsPartsMenuStrip.Size = New System.Drawing.Size(1065, 35)
         Me.ProductsPartsMenuStrip.TabIndex = 88
         Me.ProductsPartsMenuStrip.Text = "MenuStrip1"
         '
@@ -117,12 +117,6 @@ Partial Class ProductsPartsForm
         Me.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem"
         Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(63, 25)
         Me.SelectToolStripMenuItem.Text = "Select"
-        '
-        'UpdateMasterCodeLinkToolStripMenuItem
-        '
-        Me.UpdateMasterCodeLinkToolStripMenuItem.Name = "UpdateMasterCodeLinkToolStripMenuItem"
-        Me.UpdateMasterCodeLinkToolStripMenuItem.Size = New System.Drawing.Size(197, 25)
-        Me.UpdateMasterCodeLinkToolStripMenuItem.Text = "Update Master Code Link"
         '
         'AddToolStripMenuItem
         '
@@ -200,40 +194,34 @@ Partial Class ProductsPartsForm
         '
         'DirectUpdatingToolStripMenuItem
         '
-        Me.DirectUpdatingToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MarkAllRecordsAsForDeletionToolStripMenuItem, Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem, Me.ToggleFilterToForDeletionOnOffToolStripMenuItem, Me.ReIDSelectedToolStripMenuItem, Me.UpdatePackingForAllRecordsToolStripMenuItem1})
+        Me.DirectUpdatingToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToggleFilterToForDeletionOnOffToolStripMenuItem, Me.ReIDSelectedToolStripMenuItem, Me.UpdatePackingForAllRecordsToolStripMenuItem1, Me.DeleteRelationToolStripMenuItem})
         Me.DirectUpdatingToolStripMenuItem.Name = "DirectUpdatingToolStripMenuItem"
         Me.DirectUpdatingToolStripMenuItem.Size = New System.Drawing.Size(131, 25)
         Me.DirectUpdatingToolStripMenuItem.Text = "Direct Updating"
         '
-        'MarkAllRecordsAsForDeletionToolStripMenuItem
-        '
-        Me.MarkAllRecordsAsForDeletionToolStripMenuItem.Name = "MarkAllRecordsAsForDeletionToolStripMenuItem"
-        Me.MarkAllRecordsAsForDeletionToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
-        Me.MarkAllRecordsAsForDeletionToolStripMenuItem.Text = "Mark all records as for deletion"
-        '
-        'SetToFalseForAllRecordsWithUnitToolStripMenuItem
-        '
-        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem.Name = "SetToFalseForAllRecordsWithUnitToolStripMenuItem"
-        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
-        Me.SetToFalseForAllRecordsWithUnitToolStripMenuItem.Text = "Set To false for all records with unit"
-        '
         'ToggleFilterToForDeletionOnOffToolStripMenuItem
         '
         Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Name = "ToggleFilterToForDeletionOnOffToolStripMenuItem"
-        Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
+        Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Size = New System.Drawing.Size(317, 26)
         Me.ToggleFilterToForDeletionOnOffToolStripMenuItem.Text = "Toggle filter to ForDeletion On/Off"
         '
         'ReIDSelectedToolStripMenuItem
         '
         Me.ReIDSelectedToolStripMenuItem.Name = "ReIDSelectedToolStripMenuItem"
-        Me.ReIDSelectedToolStripMenuItem.Size = New System.Drawing.Size(322, 26)
+        Me.ReIDSelectedToolStripMenuItem.Size = New System.Drawing.Size(317, 26)
         Me.ReIDSelectedToolStripMenuItem.Text = "Re-ID Selected"
         '
         'UpdatePackingForAllRecordsToolStripMenuItem1
         '
         Me.UpdatePackingForAllRecordsToolStripMenuItem1.Name = "UpdatePackingForAllRecordsToolStripMenuItem1"
-        Me.UpdatePackingForAllRecordsToolStripMenuItem1.Size = New System.Drawing.Size(322, 26)
+        Me.UpdatePackingForAllRecordsToolStripMenuItem1.Size = New System.Drawing.Size(317, 26)
         Me.UpdatePackingForAllRecordsToolStripMenuItem1.Text = "Update Packing for all records"
+        '
+        'DeleteRelationToolStripMenuItem
+        '
+        Me.DeleteRelationToolStripMenuItem.Name = "DeleteRelationToolStripMenuItem"
+        Me.DeleteRelationToolStripMenuItem.Size = New System.Drawing.Size(317, 26)
+        Me.DeleteRelationToolStripMenuItem.Text = "Delete Relation"
         '
         'ProductDetailsGroup
         '
@@ -264,6 +252,43 @@ Partial Class ProductsPartsForm
         Me.ProductDetailsGroup.TabStop = False
         Me.ProductDetailsGroup.Text = "Product Details"
         Me.ProductDetailsGroup.Visible = False
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(4, 275)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(38, 20)
+        Me.Label6.TabIndex = 139
+        Me.Label6.Text = "Unit"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(4, 302)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(65, 20)
+        Me.Label1.TabIndex = 138
+        Me.Label1.Text = "Packing"
+        '
+        'PackingTextBox
+        '
+        Me.PackingTextBox.Location = New System.Drawing.Point(242, 302)
+        Me.PackingTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.PackingTextBox.Name = "PackingTextBox"
+        Me.PackingTextBox.ReadOnly = True
+        Me.PackingTextBox.Size = New System.Drawing.Size(202, 26)
+        Me.PackingTextBox.TabIndex = 133
+        '
+        'UnitTextBox
+        '
+        Me.UnitTextBox.Location = New System.Drawing.Point(242, 268)
+        Me.UnitTextBox.Name = "UnitTextBox"
+        Me.UnitTextBox.ReadOnly = True
+        Me.UnitTextBox.Size = New System.Drawing.Size(98, 26)
+        Me.UnitTextBox.TabIndex = 130
         '
         'ProductSpecificationTextBox
         '
@@ -636,48 +661,30 @@ Partial Class ProductsPartsForm
         Me.HistoriesDataGridView.Size = New System.Drawing.Size(305, 66)
         Me.HistoriesDataGridView.TabIndex = 52
         '
-        'Label1
+        'ScratchDataGridView
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(4, 302)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(65, 20)
-        Me.Label1.TabIndex = 138
-        Me.Label1.Text = "Packing"
-        '
-        'PackingTextBox
-        '
-        Me.PackingTextBox.Location = New System.Drawing.Point(242, 302)
-        Me.PackingTextBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.PackingTextBox.Name = "PackingTextBox"
-        Me.PackingTextBox.ReadOnly = True
-        Me.PackingTextBox.Size = New System.Drawing.Size(202, 26)
-        Me.PackingTextBox.TabIndex = 133
-        '
-        'UnitTextBox
-        '
-        Me.UnitTextBox.Location = New System.Drawing.Point(242, 268)
-        Me.UnitTextBox.Name = "UnitTextBox"
-        Me.UnitTextBox.ReadOnly = True
-        Me.UnitTextBox.Size = New System.Drawing.Size(98, 26)
-        Me.UnitTextBox.TabIndex = 130
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(4, 275)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(38, 20)
-        Me.Label6.TabIndex = 139
-        Me.Label6.Text = "Unit"
+        Me.ScratchDataGridView.AllowUserToAddRows = False
+        Me.ScratchDataGridView.AllowUserToDeleteRows = False
+        Me.ScratchDataGridView.AllowUserToOrderColumns = True
+        Me.ScratchDataGridView.AllowUserToResizeRows = False
+        Me.ScratchDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ScratchDataGridView.Location = New System.Drawing.Point(42, 215)
+        Me.ScratchDataGridView.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.ScratchDataGridView.MultiSelect = False
+        Me.ScratchDataGridView.Name = "ScratchDataGridView"
+        Me.ScratchDataGridView.ReadOnly = True
+        Me.ScratchDataGridView.RowHeadersVisible = False
+        Me.ScratchDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.ScratchDataGridView.Size = New System.Drawing.Size(653, 65)
+        Me.ScratchDataGridView.TabIndex = 129
+        Me.ScratchDataGridView.Visible = False
         '
         'ProductsPartsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1275, 729)
+        Me.Controls.Add(Me.ScratchDataGridView)
         Me.Controls.Add(Me.HistoriesGroupBox)
         Me.Controls.Add(Me.ProductsPartsPackingsGroupBox)
         Me.Controls.Add(Me.ProductDetailsGroup)
@@ -703,13 +710,13 @@ Partial Class ProductsPartsForm
         Me.ProductsPartsDataGridViewContextMenuStrip.PerformLayout()
         Me.HistoriesGroupBox.ResumeLayout(False)
         CType(Me.HistoriesDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ScratchDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents ProductsPartsMenuStrip As MenuStrip
     Friend WithEvents SelectToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents UpdateMasterCodeLinkToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AddToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeleteToolStripMenuItem As ToolStripMenuItem
@@ -757,8 +764,6 @@ Partial Class ProductsPartsForm
     Friend WithEvents EditPackingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MarkSeletedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DirectUpdatingToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MarkAllRecordsAsForDeletionToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SetToFalseForAllRecordsWithUnitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToggleFilterToForDeletionOnOffToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents UpdatePackingForAllRecordsToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ReIDSelectedToolStripMenuItem As ToolStripMenuItem
@@ -770,4 +775,6 @@ Partial Class ProductsPartsForm
     Friend WithEvents Label1 As Label
     Friend WithEvents PackingTextBox As TextBox
     Friend WithEvents UnitTextBox As TextBox
+    Friend WithEvents DeleteRelationToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ScratchDataGridView As DataGridView
 End Class

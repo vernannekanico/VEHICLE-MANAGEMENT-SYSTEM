@@ -60,11 +60,18 @@
         ' CALLING FORM DETERMINE WHETHER THIS FORM WORKS WITH PAT OR SPECIFICATION BY
         ' ENABLING EITHER PartNumberSpecificationTextBox TO WORK WITH PATNUMBERS
         ' OR PartSpecificationsTextBox TO WORK WITH SPECIFICATION
+        'HERE WE HAVE TO DETERMINE WHAT IS REQUESTED FOR
+        'AND FOR EACH
+        '   WE HAVE 2 MODES   - 1 SELECTING AN SPECIFICATION FROM ALL THE LISTINGS FOR ALL SPECS FOR THE PART
+        '   AND                      2 SELECTING AN SPECIFICATION FROM THE SPECIFICATION SPECIFIC FOR THE CAR MODEL
+        '   AND CAN BE DETERMINED BY 
+        'BEFORE CALLING  ASSIGN    PartsSpecificationsForm.VehicleModelTextBox.Text VALUE IF VEHICLE SPECIF 
+
         SavedCallingForm = CallingForm
-        Select Case CallingForm.Name
-            Case "ProductsPartsForm"
-                PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = True
-        End Select
+        '       Select Case CallingForm.Name
+        '       Case "ProductsPartsForm"
+        '       PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = True
+        '        End Select
         If IsNotEmpty(Tunnel1) Then
             CurrentJobDesCription = Tunnel1
             CurrentCodeVehicleID = Tunnel2
@@ -72,12 +79,11 @@
             PartSpecificationsTextBox.Enabled = True
         End If
         CurrentMasterCodeBookID = Tunnel3
-        VehicleModelTextBox.Text = RequestPartsForm.VehicleNameButton.Text
         ' Initialize TEXT BOXES TO DEFINE WHAT TYPE OF DATA TO STORE
         If PartSpecificationsTextBox.Enabled Then
             'HERE WORK WITH TYPE SPECIFICATIONS ONLY
             PartNoSpecificationsItemToolStripMenuItem.Visible = False
-            If IsNotEmpty(Tunnel1) Then
+            If IsNotEmpty(Tunnel1) Then 'IS JOB SPECIFIED?
                 CodeVehiclePartsSpecificationsRelationsGroupBox.Text = "Specifications for " + GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld")
                 CodeVehiclePartsSpecificationsSelectionFilter = " WHERE CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString &
                                                                     " AND MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookID.ToString
@@ -99,7 +105,7 @@
             Else
                 CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = False
             End If
-            PartsSpecificationsGroupBox.Text = "All Part Specs for " + GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld")
+            PartsSpecificationsGroupBox.Text = "All Part Specs for " & GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld")
             PartsSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
             FillPartsSpecificationsDataGridView()
         Else
@@ -122,7 +128,6 @@
         ServiceToPerformTextBox.Text = CurrentJobDesCription
         SpecifiedQuantityTextBox.Text = RequestPartsForm.SpecifiedQuantityTextBox.Text
         SpecifiedUnitTextBox.Text = RequestPartsForm.SpecifiedUnitTextBox.Text
-
     End Sub
     Private Sub FillCodeVehiclePartsSpecificationsRelations()
         ' FOLLOWING StripMenuItem ARE MADE VISIBLE ONLY WHEN THERE IS A RECORD FOUND
@@ -203,11 +208,6 @@ FROM PartsSpecificationsTable
         PartsSpecificationsRecordCount = RecordCount
         ' HERE PartsSpecificationsGroupBox IS SET VISIBLE WHEN 
         ' CodeVehiclePartsSpecificationsCOUNT > 0
-        If CodeVehiclePartsSpecificationsRecordCount = 0 Then
-            PartsSpecificationsGroupBox.Visible = True
-        Else
-            PartsSpecificationsGroupBox.Visible = False
-        End If
         PartsSpecificationsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         If Not PartsSpecificationsDataGridViewAlreadyFormatted Then
             FormatPartsSpecificationsDataGridView()
@@ -721,7 +721,8 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
 
                 RequestPartsForm.SpecificationsTextBox.Text = CodeVehiclePartsSpecificationsRelationsDataGridView.Item("PartSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value
             Case Else
-                MsgBox("Break, there has been chages here")
+                MsgBox("Break, there has been chages here, UPDATING WILL BE I 2 MODES, CALLER SPECIFIES THE VEHICLE OR JUST SPECIFICATION IS FOR ALL PARTS")
+                Stop
         End Select
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
@@ -787,10 +788,9 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     End Sub
 
     Private Sub AddPartsSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPartSpecificationsToolStripMenuItem.Click
+        'IF THE GENERAL SPECIFICATIONS FOR THE PART IS VISIBLE THEN WHAT HAS BEEN SELECTED WILL BE ADDED TO THE
+        ' SPECIFIC CAR OTHERWISE INPUT AS NEW SPECIFICATION FOR THE PART AND SAVE IT AS A GENERAL SPECIFICATION FOR THE PART
 
-        If PartsSpecificationsGroupBox.Visible = False Then
-            PartsSpecificationsGroupBox.Visible = True
-        End If
         CurrentPartsSpecificationsID = -1
         PartSpecificationsTextBox.Text = "type new specifications"
         PartSpecificationsTextBox.ReadOnly = False
@@ -864,8 +864,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         Clipboard.SetText(CodeVehiclePartsSpecificationsRelationsDataGridView.Item("PartsSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value)
     End Sub
 
-    Private Sub PasteSpecificationToolStripTextBox_Click(sender As Object, e As EventArgs) Handles PasteSpecificationToolStripTextBox.Click
-        PartSpecificationTextBoxContextMenuStrip.Hide()
+    Private Sub PasteSpecificationToolStripTextBox_Click(sender As Object, e As EventArgs)
         PartSpecificationsTextBox.Text = Clipboard.GetText()
     End Sub
 

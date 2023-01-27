@@ -418,7 +418,7 @@ WorkOrderIssuedPartsTable.WorkOrderIssuedPartID_AutoNumber,
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
-WorkOrderIssuedPartsTable.ReceivedQuantity_Double, 
+WorkOrderIssuedPartsTable.IssuedQuantity_Double, 
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartPackingsQuery.QuantityPerPack_Double, 
 ProductPartPackingsQuery.UnitOfTheQuantity_ShortText3,
@@ -458,7 +458,7 @@ FROM (WorkOrderIssuedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderIssuedP
                     CustomerSuppliedPartsDataGridView.Columns.Item(i).HeaderText = "Product "
                     CustomerSuppliedPartsDataGridView.Columns.Item(i).Width = 400
                     CustomerSuppliedPartsDataGridView.Columns.Item(i).Visible = True
-                Case "ReceivedQuantity_Double"
+                Case "IssuedQuantity_Double"
                     CustomerSuppliedPartsDataGridView.Columns.Item(i).HeaderText = "Received QTY"
                     CustomerSuppliedPartsDataGridView.Columns.Item(i).Width = 100
                     CustomerSuppliedPartsDataGridView.Columns.Item(i).Visible = True
@@ -628,7 +628,7 @@ FROM (WorkOrderIssuedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderIssuedP
     Private Function AChangeInCustomerSuppliedPartsOccured()
         If CustomerSuppliedPartsRecordCount < 1 Then Return True 'NEWLY INSERTED CUSTOMER SUPPLIED PART
         If TheseAreNotEqual(ProductTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentCustomerSuppliedPartsRow).Value)) Then Return True
-        If TheseAreNotEqual(CustomerSuppliedQuantityTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("ReceivedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value)) Then Return True
+        If TheseAreNotEqual(CustomerSuppliedQuantityTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("IssuedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value)) Then Return True
         If TheseAreNotEqual(CustomerSuppliedUnitTextBox.Text, NotNull(CustomerSuppliedPartsDataGridView.Item("Unit_ShortText3", CurrentWorkOrderPartsRow).Value)) Then Return True
         Return False
     End Function
@@ -804,7 +804,7 @@ FROM (WorkOrderIssuedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderIssuedP
                                   "  ProductPartID_LongInteger, " &
                           "  ReceivedBy_LongInteger, " &
                                 " DateReceived_DateTime," &
-                       "  ReceivedQuantity_Double ," &
+                       "  IssuedQuantity_Double ," &
                        "  WorkOrderIssuedPartStatusID_LongInteger "
 
         Dim FieldsData = CurrentWorkOrderPartID.ToString & ",  " &
@@ -835,7 +835,7 @@ FROM (WorkOrderIssuedPartsTable LEFT JOIN ProductsPartsTable ON WorkOrderIssuedP
             Exit Sub
         End If
         Dim RecordFilter = " WHERE WorkOrderIssuedPartID_AutoNumber = " & CurrentCustomerSuppliedPartID.ToString
-        Dim SetCommand = " SET  ReceivedQuantity_Double = " & Val(CustomerSuppliedQuantityTextBox.Text).ToString
+        Dim SetCommand = " SET  IssuedQuantity_Double = " & Val(CustomerSuppliedQuantityTextBox.Text).ToString
         UpdateTable("WorkOrderIssuedPartsTable", SetCommand, RecordFilter)
     End Sub
 
@@ -1160,7 +1160,7 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
             Stop
             FillField(CurrentCustomerSuppliedPartID, CustomerSuppliedPartsDataGridView.Item("WorkOrderIssuedPartID_AutoNumber", CurrentCustomerSuppliedPartsRow).Value)
             FillField(CurrentProductPartID, CustomerSuppliedPartsDataGridView.Item("ProductsPartID_Autonumber", CurrentCustomerSuppliedPartsRow).Value)
-            FillField(CustomerSuppliedQuantityTextBox.Text, CustomerSuppliedPartsDataGridView.Item("ReceivedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value)
+            FillField(CustomerSuppliedQuantityTextBox.Text, CustomerSuppliedPartsDataGridView.Item("IssuedQuantity_Double", CurrentCustomerSuppliedPartsRow).Value)
             FillField(CustomerSuppliedUnitTextBox.Text, CustomerSuppliedPartsDataGridView.Item("Unit_ShortText3", CurrentCustomerSuppliedPartsRow).Value)
             FillField(ProductTextBox.Text, CustomerSuppliedPartsDataGridView.Item("ManufacturerDescription_ShortText250", CurrentCustomerSuppliedPartsRow).Value)
             FillField(PartNumberTextBox.Text, CustomerSuppliedPartsDataGridView.Item("ManufacturerPartNo_ShortText30Fld", CurrentCustomerSuppliedPartsRow).Value)
@@ -1330,6 +1330,7 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
         Tunnel1 = WorkOrderConcernJobsDataGridView.Item("InformationsHeaderDescription_ShortText255", CurrentWorkOrderConcernJobsRow).Value
         Tunnel2 = CurrentCodeVehicleID
         Tunnel3 = CurrentMasterCodeBookID
+        PartsSpecificationsForm.VehicleModelTextBox.Text = VehicleNameButton.Text
         ShowCalledForm(Me, PartsSpecificationsForm)
     End Sub
 

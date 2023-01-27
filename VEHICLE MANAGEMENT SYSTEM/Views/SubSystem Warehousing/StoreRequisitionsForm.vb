@@ -483,6 +483,8 @@ FROM (RequisitionsTable LEFT JOIN PersonnelTable ON RequisitionsTable.RequestedB
         End If
         Tunnel1 = "Tunnel2IsMasterCodeBookID"
         Tunnel2 = CurrentMasterCodeBookId
+
+        PartsSpecificationsForm.VehicleModelTextBox.Text = StoreSuppliesRequisitionsItemsDataGridView.Item("StatusText_ShortText25", CurrentStoreSuppliesRequisitionsItemsDataGridViewRow).Value
         ShowCalledForm(Me, PartsSpecificationsForm)
     End Sub
     Private Sub POItemProductDescTextBox_TextChanged(sender As Object, e As EventArgs) Handles RequisitionItemProductDescTextBox.Click

@@ -42,7 +42,7 @@
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
-
+        If ProductPartsPackingRelationsRecordCount = 0 Then Exit Sub
         Tunnel1 = "Tunnel2IsProductsPartsPackingRelationID"
         Tunnel2 = CurrentProductsPartsPackingRelationID
         If CurrentProductPartsPackingRelationsRow = -1 Then 'for some reasons after adding CurrentProductPartsPackingRelationsRow

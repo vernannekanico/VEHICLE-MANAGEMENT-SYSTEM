@@ -209,7 +209,7 @@ Public Class MasterCodeBookForm
         CurrentSubSystemName = Trim(SubSystemCodeDataGridView.Item(CurrentSubCodeColumn + 1, CurrentSubSystemCodeRow).Value)
         CurrentSubSystemCode = LTrim(RTrim(SubSystemCodeDataGridView.Item(0, CurrentSubSystemCodeRow).Value))
         CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
-        DeleteMasterCodeToolStripMenuItem.Visible = False
+        '    DeleteMasterCodeToolStripMenuItem.Visible = False
         CurrentMasterCodeBookSubSystemID = SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value
 
         FillCodeInformationsHeaderRelationsDataGridView()
@@ -1194,7 +1194,8 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         JustExecuteMySelection()
         If RecordCount > 0 Then
             If RecordCount > 0 Then
-                MsgBox("That number already exist")
+                MsgBox("That number already exist, OR MAYBE SOME MEMBERS LOST EXIST, YOU MAY ADD THIS NUMBER AS DUMMY IF IT DOES NOT APPEAR ON THE LIST")
+                RenumberGroupBox.Visible = False
                 Exit Sub
             End If
         End If
@@ -1226,6 +1227,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         Dim InfoPerVehicleRecordCount = 0
 
         If MsgBox(ThereIsThereAre & Str(RecordCount) & ARecords & " found to be renumbered, " & " CONTINUE renumbering " & ThisThese, vbYesNo) = vbNo Then
+            RenumberGroupBox.Visible = False
             Exit Sub
         End If
 
@@ -1239,8 +1241,6 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
             Dim SetCommand = " SET SubSystemCode_ShortText24Fld  = " & ReplacementCode
 
             UpdateTable("MasterCodeBookTable", SetCommand, RecordFilter)
-            MsgBox("recover following process, break the progrm")
-            Exit Sub
             ' RENUMBER THE InfoPerVehicle TOO if exist(s)
             If InfoPerVehicleRecordCount > 0 Then
 
@@ -1441,6 +1441,8 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         Tunnel1 = "Tunnel2IsMasterCodeBookID"
         Tunnel2 = CurrentMasterCodeBookSubSystemID
         Tunnel3 = CurrentSubSystemName & " for " & CurrentVehicleString
+        PartsSpecificationsForm.VehicleModelTextBox.Text = CurrentVehicleString
+
         ShowCalledForm(Me, PartsSpecificationsForm)
     End Sub
 

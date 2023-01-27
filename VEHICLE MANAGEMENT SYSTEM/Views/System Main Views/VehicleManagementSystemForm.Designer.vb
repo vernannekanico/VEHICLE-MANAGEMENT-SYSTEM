@@ -66,11 +66,11 @@ Partial Class VehicleManagementSystemForm
         Me.StoreSuppliesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DepartmentSuppliesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StorageSystemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InventoriesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LOGOFFToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LOGINToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EXITSYSTEMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UsersDataGridView = New System.Windows.Forms.DataGridView()
-        Me.InventoriesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VehicleManagementMenuStrip.SuspendLayout()
         CType(Me.UsersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -357,6 +357,12 @@ Partial Class VehicleManagementSystemForm
         Me.StorageSystemToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
         Me.StorageSystemToolStripMenuItem.Text = "Storage System"
         '
+        'InventoriesToolStripMenuItem
+        '
+        Me.InventoriesToolStripMenuItem.Name = "InventoriesToolStripMenuItem"
+        Me.InventoriesToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
+        Me.InventoriesToolStripMenuItem.Text = "Inventories"
+        '
         'LOGOFFToolStripMenuItem
         '
         Me.LOGOFFToolStripMenuItem.Name = "LOGOFFToolStripMenuItem"
@@ -415,12 +421,6 @@ Partial Class VehicleManagementSystemForm
         Me.UsersDataGridView.Size = New System.Drawing.Size(263, 297)
         Me.UsersDataGridView.TabIndex = 58
         '
-        'InventoriesToolStripMenuItem
-        '
-        Me.InventoriesToolStripMenuItem.Name = "InventoriesToolStripMenuItem"
-        Me.InventoriesToolStripMenuItem.Size = New System.Drawing.Size(253, 26)
-        Me.InventoriesToolStripMenuItem.Text = "Inventories"
-        '
         'VehicleManagementSystemForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -432,9 +432,9 @@ Partial Class VehicleManagementSystemForm
         Me.Controls.Add(Me.CurrentPersonnelNameLabel)
         Me.Controls.Add(Me.VehicleManagementMenuStrip)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.VehicleManagementMenuStrip
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "VehicleManagementSystemForm"
         Me.ShowIcon = False

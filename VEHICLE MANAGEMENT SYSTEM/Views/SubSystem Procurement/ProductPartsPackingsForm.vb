@@ -52,7 +52,7 @@ SELECT * FROM ProductPartsPackingsTable "
             FormatProductPartsPackingsDataGridView()
         End If
 
-        Dim RecordsToDisplay = 25
+        Dim RecordsToDisplay = 20
         SetGroupBoxHeight(RecordsToDisplay, ProductPartsPackingsRecordCount, ProductPartsPackingsGroupBox, ProductPartsPackingsDataGridView)
         ProductPartsPackingsGroupBox.Top = ProductsPartsPackingMenuStrip.Top + ProductsPartsPackingMenuStrip.Height
         PackingDetailsGroupBox.Top = ProductPartsPackingsGroupBox.Top + ProductPartsPackingsGroupBox.Height

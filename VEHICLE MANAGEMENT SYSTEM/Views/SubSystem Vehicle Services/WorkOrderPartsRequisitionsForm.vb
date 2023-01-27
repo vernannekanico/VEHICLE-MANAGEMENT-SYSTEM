@@ -691,7 +691,7 @@ WorkOrderIssuedPartsTable.WorkOrderIssuedPartStatusID_LongInteger,
 ProductsPartsTable.ProductsPartID_Autonumber, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
-WorkOrderIssuedPartsTable.ReceivedQuantity_Double, 
+WorkOrderIssuedPartsTable.IssuedQuantity_Double, 
 ProductsPartsTable.Unit_ShortText3, 
 ProductPartsPackingsTable.QuantityPerPack_Double, 
 ProductPartsPackingsTable.UnitOfTheQuantity_ShortText3,
@@ -735,7 +735,7 @@ FROM (WorkOrderIssuedPartsTable LEFT JOIN (ProductPartsPackingsTable RIGHT JOIN 
                     WorkOrderIssuedPartsDataGridView.Columns.Item(i).HeaderText = "Manuf Desc."
                     WorkOrderIssuedPartsDataGridView.Columns.Item(i).Width = 300
                     WorkOrderIssuedPartsDataGridView.Columns.Item(i).Visible = True
-                Case "ReceivedQuantity_Double"
+                Case "IssuedQuantity_Double"
                     WorkOrderIssuedPartsDataGridView.Columns.Item(i).HeaderText = "Issued Qty"
                     WorkOrderIssuedPartsDataGridView.Columns.Item(i).Width = 70
                     WorkOrderIssuedPartsDataGridView.Columns.Item(i).Visible = True

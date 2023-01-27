@@ -149,6 +149,7 @@
 
     End Sub
     Public Function NotNull(DbField)
+        'THIS FUNCTION RETURNS "" OR -1 TO FOR A NULL FIELD
         If DbField.GetType.Name = "String" Then
             If IsDBNull(DbField) Or DbField Is Nothing Then
                 Return ""
@@ -417,11 +418,13 @@
     Public Sub DisAbleAccess(MenuOption As ToolStripMenuItem)
         MenuOption.Enabled = False
     End Sub
-    Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, RecordFilter As String)
+    Public Sub UpdateTable(TableToUpdate As String, SetCommand As String, RecordFilter As String, Optional DisregardNotFound As Boolean = False)
         MySelection = " Select  * FROM " & Space(1) & TableToUpdate & Space(1) & RecordFilter
         JustExecuteMySelection()
         If RecordCount = 0 Then
-            MsgBox("Unable to Update " & TableToUpdate & " Table, NO MATCHING RECORD FOUND " & TableToUpdate & " FILTER: " & RecordFilter)
+            If Not DisregardNotFound Then
+                MsgBox("Unable to Update " & TableToUpdate & " Table, NO MATCHING RECORD FOUND " & TableToUpdate & " FILTER: " & RecordFilter)
+            End If
             Exit Sub
         End If
         MySelection = " UPDATE " & TableToUpdate & Space(1) & SetCommand & Space(1) & RecordFilter

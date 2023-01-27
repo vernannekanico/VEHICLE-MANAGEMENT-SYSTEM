@@ -391,7 +391,7 @@ InformationsHeadersTable.InformationsHeaderID_AutoNumber,
 WorkOrderPartsTable.CodeVehicleID_LongInteger, 
 OrderedProductsPartsTable.ManufacturerDescription_ShortText250, 
 OrderedProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
-WorkOrderIssuedPartsTable.ReceivedQuantity_Double, 
+WorkOrderIssuedPartsTable.IssuedQuantity_Double, 
 ProductsPartsTable.ManufacturerPartNo_ShortText30Fld, 
 ProductsPartsTable.ManufacturerDescription_ShortText250, 
 ProductsPartsTable.Unit_ShortText3, 
@@ -441,7 +441,7 @@ FROM ((WorkOrderIssuedPartsTable RIGHT JOIN (((((WorkOrderPartsTable LEFT JOIN M
                     WorkOrderPartsPerJobDataGridView.Columns.Item(i).HeaderText = "UNIT"
                     WorkOrderPartsPerJobDataGridView.Columns.Item(i).Width = 100
                     WorkOrderPartsPerJobDataGridView.Columns.Item(i).Visible = True
-                Case "ReceivedQuantity_Double"
+                Case "IssuedQuantity_Double"
                     WorkOrderPartsPerJobDataGridView.Columns.Item(i).HeaderText = "QTY"
                     WorkOrderPartsPerJobDataGridView.Columns.Item(i).Width = 60
                     WorkOrderPartsPerJobDataGridView.Columns.Item(i).Visible = True
@@ -618,7 +618,7 @@ FROM ((WorkOrderIssuedPartsTable RIGHT JOIN (((((WorkOrderPartsTable LEFT JOIN M
                     Dim xxProduct = WorkOrderPartsPerJobDataGridView.Item("ProductsPartsTable.ManufacturerDescription_ShortText250", WorkOrderPartsPerJobIndex).Value
                     Dim xxBrand = WorkOrderPartsPerJobDataGridView.Item("BrandName_ShortText20", WorkOrderPartsPerJobIndex).Value
                     xxProduct = Replace(xxProduct, vbCrLf, Space(1))
-                    Dim xxQuantity = WorkOrderPartsPerJobDataGridView.Item("ReceivedQuantity_Double", WorkOrderPartsPerJobIndex).Value
+                    Dim xxQuantity = WorkOrderPartsPerJobDataGridView.Item("IssuedQuantity_Double", WorkOrderPartsPerJobIndex).Value
                     Dim xxUnit = WorkOrderPartsPerJobDataGridView.Item("ProductsPartsTable.Unit_ShortText3", WorkOrderPartsPerJobIndex).Value
                     If xxQuantity > 1 Then
                         xxUnit = xxUnit & "s"

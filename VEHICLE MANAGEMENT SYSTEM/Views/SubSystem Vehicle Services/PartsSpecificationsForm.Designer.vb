@@ -58,8 +58,6 @@ Partial Class PartsSpecificationsForm
         Me.SpecifiedUnitTextBox = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.PartSpecificationsTextBox = New System.Windows.Forms.TextBox()
-        Me.PartSpecificationTextBoxContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PasteSpecificationToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.Specification = New System.Windows.Forms.Label()
         Me.ServiceToPerformTextBox = New System.Windows.Forms.TextBox()
         Me.PartDescriptionTextBox = New System.Windows.Forms.TextBox()
@@ -82,7 +80,6 @@ Partial Class PartsSpecificationsForm
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SpecificationsMenuStrip.SuspendLayout()
         Me.PartSpecificationsDetailsGroup.SuspendLayout()
-        Me.PartSpecificationTextBoxContextMenuStrip.SuspendLayout()
         CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SpecificationsContextMenuStrip.SuspendLayout()
         CType(Me.QuantitySpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,14 +101,14 @@ Partial Class PartsSpecificationsForm
         Me.SpecificationsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.SpecificationsMenuStrip.Name = "SpecificationsMenuStrip"
         Me.SpecificationsMenuStrip.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
-        Me.SpecificationsMenuStrip.Size = New System.Drawing.Size(963, 33)
+        Me.SpecificationsMenuStrip.Size = New System.Drawing.Size(963, 29)
         Me.SpecificationsMenuStrip.TabIndex = 54
         Me.SpecificationsMenuStrip.Text = "MenuStrip1"
         '
         'CancelToolStripMenuItem
         '
         Me.CancelToolStripMenuItem.Name = "CancelToolStripMenuItem"
-        Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(40, 29)
+        Me.CancelToolStripMenuItem.Size = New System.Drawing.Size(40, 25)
         Me.CancelToolStripMenuItem.Text = "◄ "
         '
         'PartNoSpecificationsItemToolStripMenuItem
@@ -155,7 +152,7 @@ Partial Class PartsSpecificationsForm
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 29)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
         'PartsSpecificationsHeaderMenuToolStripMenuItem
         '
@@ -170,28 +167,28 @@ Partial Class PartsSpecificationsForm
         '
         Me.SelectPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SelectPartSpecificationsToolStripMenuItem.Name = "SelectPartSpecificationsToolStripMenuItem"
-        Me.SelectPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.SelectPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.SelectPartSpecificationsToolStripMenuItem.Text = "Select"
         '
         'AddPartSpecificationsToolStripMenuItem
         '
         Me.AddPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AddPartSpecificationsToolStripMenuItem.Name = "AddPartSpecificationsToolStripMenuItem"
-        Me.AddPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.AddPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.AddPartSpecificationsToolStripMenuItem.Text = "Add"
         '
         'EditPartSpecificationsToolStripMenuItem
         '
         Me.EditPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.EditPartSpecificationsToolStripMenuItem.Name = "EditPartSpecificationsToolStripMenuItem"
-        Me.EditPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.EditPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.EditPartSpecificationsToolStripMenuItem.Text = "Edit"
         '
         'RemovePartSpecificationsToolStripMenuItem
         '
         Me.RemovePartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RemovePartSpecificationsToolStripMenuItem.Name = "RemovePartSpecificationsToolStripMenuItem"
-        Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.RemovePartSpecificationsToolStripMenuItem.Text = "Remove"
         '
         'QuantitySpecificationsToolStripTextBox
@@ -205,7 +202,7 @@ Partial Class PartsSpecificationsForm
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(55, 29)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveToolStripMenuItem.Text = "Save"
         Me.SaveToolStripMenuItem.Visible = False
         '
@@ -321,7 +318,6 @@ Partial Class PartsSpecificationsForm
         '
         'PartSpecificationsTextBox
         '
-        Me.PartSpecificationsTextBox.ContextMenuStrip = Me.PartSpecificationTextBoxContextMenuStrip
         Me.PartSpecificationsTextBox.Enabled = False
         Me.PartSpecificationsTextBox.Location = New System.Drawing.Point(136, 155)
         Me.PartSpecificationsTextBox.Multiline = True
@@ -330,19 +326,6 @@ Partial Class PartsSpecificationsForm
         Me.PartSpecificationsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.PartSpecificationsTextBox.Size = New System.Drawing.Size(405, 73)
         Me.PartSpecificationsTextBox.TabIndex = 44
-        '
-        'PartSpecificationTextBoxContextMenuStrip
-        '
-        Me.PartSpecificationTextBoxContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PasteSpecificationToolStripTextBox})
-        Me.PartSpecificationTextBoxContextMenuStrip.Name = "SpecificationsContextMenuStrip"
-        Me.PartSpecificationTextBoxContextMenuStrip.Size = New System.Drawing.Size(161, 29)
-        '
-        'PasteSpecificationToolStripTextBox
-        '
-        Me.PasteSpecificationToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.PasteSpecificationToolStripTextBox.Name = "PasteSpecificationToolStripTextBox"
-        Me.PasteSpecificationToolStripTextBox.Size = New System.Drawing.Size(100, 23)
-        Me.PasteSpecificationToolStripTextBox.Text = "Paste Specification"
         '
         'Specification
         '
@@ -654,8 +637,6 @@ Partial Class PartsSpecificationsForm
         Me.SpecificationsMenuStrip.PerformLayout()
         Me.PartSpecificationsDetailsGroup.ResumeLayout(False)
         Me.PartSpecificationsDetailsGroup.PerformLayout()
-        Me.PartSpecificationTextBoxContextMenuStrip.ResumeLayout(False)
-        Me.PartSpecificationTextBoxContextMenuStrip.PerformLayout()
         CType(Me.PartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SpecificationsContextMenuStrip.ResumeLayout(False)
         Me.SpecificationsContextMenuStrip.PerformLayout()
@@ -715,8 +696,6 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents Label2 As Label
     Friend WithEvents JobLabel As Label
     Friend WithEvents SpecificationsContextMenuStrip As ContextMenuStrip
-    Friend WithEvents PartSpecificationTextBoxContextMenuStrip As ContextMenuStrip
-    Friend WithEvents PasteSpecificationToolStripTextBox As ToolStripTextBox
     Friend WithEvents CopySpecificationToolStripTextBox As ToolStripTextBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
 End Class

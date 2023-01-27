@@ -172,10 +172,16 @@
     <Compile Include="Views\SubSystem Billing and Finance\PrintBillsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SubSystem Systems\DirectUpdateOfWorkOrderRequestedPartsTableForm.Designer.vb">
-      <DependentUpon>DirectUpdateOfWorkOrderRequestedPartsTableForm.vb</DependentUpon>
+    <Compile Include="Views\SubSystem Systems\DirectUpdateATableStandardForm.Designer.vb">
+      <DependentUpon>DirectUpdateATableStandardForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubSystem Systems\DirectUpdateOfWorkOrderRequestedPartsTableForm.vb">
+    <Compile Include="Views\SubSystem Systems\DirectUpdateATableStandardForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SubSystem Systems\DirectUpdateOfWorkOrderIssuedPartsForm.Designer.vb">
+      <DependentUpon>DirectUpdateOfWorkOrderIssuedPartsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubSystem Systems\DirectUpdateOfWorkOrderIssuedPartsForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\SubSystem Warehousing\InventoriesForm.Designer.vb">
@@ -508,8 +514,11 @@
     <EmbeddedResource Include="Views\SubSystem Procurement\ProductPartsPackingsForm.resx">
       <DependentUpon>ProductPartsPackingsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SubSystem Systems\DirectUpdateOfWorkOrderRequestedPartsTableForm.resx">
-      <DependentUpon>DirectUpdateOfWorkOrderRequestedPartsTableForm.vb</DependentUpon>
+    <EmbeddedResource Include="Views\SubSystem Systems\DirectUpdateATableStandardForm.resx">
+      <DependentUpon>DirectUpdateATableStandardForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SubSystem Systems\DirectUpdateOfWorkOrderIssuedPartsForm.resx">
+      <DependentUpon>DirectUpdateOfWorkOrderIssuedPartsForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SubSystem Warehousing\InventoriesForm.resx">
       <DependentUpon>InventoriesForm.vb</DependentUpon>
