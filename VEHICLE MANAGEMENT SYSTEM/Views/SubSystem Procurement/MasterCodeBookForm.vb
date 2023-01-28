@@ -22,6 +22,7 @@ Public Class MasterCodeBookForm
     Private CurrentParentName = ""
     Private CurrentMasterCodeBookSubSystemID = 1
     Private IncludeGrandChildren = False
+    Private SavedSubSystemCodeRow = ""
 
     Private CurrentChildCode = ""
     Private CurrentChildName = ""
@@ -66,13 +67,23 @@ Public Class MasterCodeBookForm
 
     Private Sub MasterCodeBookForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         SavedCallingForm = CallingForm
+        VerticalCenter(MasterCodeBookDetailsGroup, Me)
+        HorizontalCenter(MasterCodeBookDetailsGroup, Me)
+        VerticalCenter(RenumberGroupBox, Me)
+        HorizontalCenter(RenumberGroupBox, Me)
+        VerticalCenter(SearchGroupBox, Me)
+        HorizontalCenter(SearchGroupBox, Me)
         If Tunnel1 = "EntryIsForConsumables" Then
-            'tunnel 3 will hold the passed part description and it should be of the same description as its consumable counterpart
+            MsgBox("Document this")
+            Stop
+            'tunnel 3 will hold the PassedPart description and it should be of the same description as its consumable counterpart
+            'giving option to search seach descripton by enabling the search option
             PassedConsumable = Tunnel3
             SearchMasterCodeBookTextBox.Text = Tunnel3
             SearchGroupBox.Visible = True
-            'Use this to be appended to the CurrentSubSystemName
-            AllSearchAppex = "WHERE Mid(SubSystemCode_ShortText24Fld,1,6) = " & InQuotes("130301") & " AND ("
+            'Use this to be appended to the CurrentSubSystemNamefilter
+            AllSearchAppex = "WHERE Mid(SubSystemCode_ShortText24Fld,1,6) >= " & InQuotes("130301") & " AND ("
+            'disable/enable all other options
             SpecificationsToolStripMenuItem.Visible = False
             RenumberToolStripMenuItem.Visible = False
             CodeInformationsHeaderRelationsToolStripLabel.Visible = False
@@ -82,7 +93,6 @@ Public Class MasterCodeBookForm
         End If
         ' NOTE ON ENTRY TUNNEL THREE WILL CONTAIN THE SUBCODE IF REFERRING TO A SPECIFIC RECORD
         If CurrentWorkOrderID > -1 Then DefaultVehicleModelTextBox.Text = CurrentVehicleString
-        MasterCodeBookDetailsGroup.Location = New Point(50, 85)
         If DefaultVehicleModelTextBox.Text = "Set Default Vehicle" Then
             CurrentVehicleID = -1
         End If
@@ -106,8 +116,6 @@ Public Class MasterCodeBookForm
                 AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = False
         End Select
         If Not SearchMasterCodeBookTextBox.Text = "" Then EnableSearch()
-        SearchGroupBox.Top = MainSystemCodeDataGridView.Top
-        SearchGroupBox.Left = DefaultVehicleModelTextBox.Left
     End Sub
 
     Private Sub SelectMasterCodeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectMasterCodeToolStripMenuItem.Click
@@ -195,7 +203,11 @@ Public Class MasterCodeBookForm
             SubSystemCodeTablesLinks = " FROM MasterCodeBookTable "
             If SearchIsOnFlag = True Then
                 SearchIsOnFlag = False
-                SubSystemCodeSelectionFilter = "  WHERE SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
+                If IsNotEmpty(AllSearchAppex) Then
+                    SubSystemCodeSelectionFilter = "  WHERE Mid(SubSystemCode_ShortText24Fld,1,6) >= " & InQuotes("130301") & " And  SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
+                Else
+                    SubSystemCodeSelectionFilter = "  WHERE SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
+                End If
             Else
                 SubSystemCodeSelectionFilter = "where " & Siblings & " Or " & Children
                 If Len(Trim(CurrentSubSystemCode)) = 2 Then
@@ -208,12 +220,6 @@ Public Class MasterCodeBookForm
         SubSystemCodeSelectionOrder = " ORDER BY SubSystemCode_ShortText24Fld "
 
         If IsNotEmpty(AllSearchAppex) Then
-            If IsNotEmpty(SubSystemCodeSelectionFilter) Then
-                Dim xxx = Replace(SubSystemCodeSelectionFilter, "WHERE", AllSearchAppex) & ")"
-                SubSystemCodeSelectionFilter = xxx
-            Else
-                SubSystemCodeSelectionFilter = "WHERE (Mid(SubSystemCode_ShortText24Fld,1,6)) = " & InQuotes("130301")
-            End If
         Else
             CurrentSubSystemCode = CurrentMainSystemCode & "01"
         End If
@@ -240,7 +246,6 @@ Public Class MasterCodeBookForm
         CurrentSubSystemName = Trim(SubSystemCodeDataGridView.Item(CurrentSubCodeColumn + 1, CurrentSubSystemCodeRow).Value)
         CurrentSubSystemCode = LTrim(RTrim(SubSystemCodeDataGridView.Item(0, CurrentSubSystemCodeRow).Value))
         CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
-        '    DeleteMasterCodeToolStripMenuItem.Visible = False
         CurrentMasterCodeBookSubSystemID = SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value
 
         FillCodeInformationsHeaderRelationsDataGridView()
@@ -478,9 +483,10 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         CurrentSubSystemCodeBookID = -1
         MasterCodeBookDetailsGroup.Text = "Add a New Sub CODE"
         EnableModifyMasterCodeBookMode()          '' Add Edit Delete are turned off and Cancel ans Save options are made available
-        SearchMasterCodeBookTextBox.Visible = False
-        CodeInformationsHeaderRelationsToolStripLabel.Visible = False
-        AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = False
+        SpecificationsToolStripMenuItem.Visible = False
+        SearchToolStripMenuItem.Visible = False
+        RenumberToolStripMenuItem.Visible = False
+        MasterCodeBookDetailsGroup.Visible = True
         DetermineParentInfos()
         ParentSystemNameLabel.Text = CurrentParentName
         MainSystemPrefixLabel.Text = CurrentParentCode & "-"
@@ -555,7 +561,9 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
 
     Private Sub EnableModifyMasterCodeBookMode()
-        DisableAddEditDeleteMasterCodeMenuItems()
+        MsgBox("DisableAddEditDeleteMasterCodeMenuItems()")
+        Stop
+        'THIS IS TRIGGERED UPON GROUPDETAILS VISIBILITY CHANGE
         MainSystemCodeDataGridView.Enabled = False
         SubSystemCodeDataGridView.Enabled = False
         ShowMasterCodeBookDetailsGroup()
@@ -573,7 +581,11 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         EditTMasterCodeToolStripMenuItem.Visible = True
         CreateInformationDetailsToolStripMenuItem.Visible = True
         DeleteMasterCodeToolStripMenuItem.Visible = True
-
+        SpecificationsToolStripMenuItem.Visible = True
+        CodeInformationsHeaderRelationsToolStripLabel.Visible = True
+        AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = True
+        SearchToolStripMenuItem.Visible = True
+        RenumberGroupBox.Visible = True
     End Sub
     Private Sub DisableAddEditDeleteMasterCodeMenuItems()
         SaveMasterCodeToolStripMenuItem.Visible = True
@@ -582,6 +594,10 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         EditTMasterCodeToolStripMenuItem.Visible = False
         CreateInformationDetailsToolStripMenuItem.Visible = False
         DeleteMasterCodeToolStripMenuItem.Visible = False
+        CodeInformationsHeaderRelationsToolStripLabel.Visible = False
+        AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = False
+        SearchToolStripMenuItem.Visible = False
+        RenumberGroupBox.Visible = False
     End Sub
 
 
@@ -642,7 +658,6 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         CurrentSubSystemCode = Mid(CurrentSubSystemCode, 1, Len(CurrentSubSystemCode) - 2)
 
         FindSubCodeSelected()
-
     End Sub
 
     Private Sub MasterCodeBookForm_EnabledChanged(sender As Object, e As EventArgs) Handles Me.EnabledChanged
@@ -650,13 +665,27 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         CallingForm = SavedCallingForm
         Select Case Tunnel1
             Case "Tunnel2IsMasterCodeBookID"
-                If IsNotEmpty(AllSearchAppex) Then
-                    If Tunnel3 <> SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value Then
-                        If MsgBox("Woul you like to change the description of the part ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-                        UpdateTable("MasterCodeBookTable", " Set SystemDesc_ShortText100Fld=" & InQuotes(Tunnel3),
-                                        " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID.ToString)
-                    End If
+                CurrentSubSystemCodeRow = SavedSubSystemCodeRow
+                Dim OriginalPartDescription = ""
+                If MasterCodeBookDetailsGroup.Visible Then
+                    OriginalPartDescription = SystemNameTextBox.Text
+                Else
+                    OriginalPartDescription = SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value
                 End If
+                If Tunnel3 <> OriginalPartDescription Then
+                    If MsgBox("Making this part as consumable, both has to have the same exact description, CONTINUE change the description of this part into " & Tunnel3 & "?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+                End If
+
+                If MasterCodeBookDetailsGroup.Visible Then
+                    SystemNameTextBox.Text = Tunnel3
+                Else
+                    CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
+
+                    UpdateTable("MasterCodeBookTable", " Set SystemDesc_ShortText100Fld=" & InQuotes(Tunnel3),
+                                         " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID.ToString)
+                    FillSubSystemDataGridView()
+                End If
+
             Case "Tunnel2IsVehicleID"
                 SetDefaultVehicleLabel.Visible = False
                 MsgBox("please pause and check same Tunnel2IsVehicleID case below")
@@ -715,7 +744,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         Dim FieldsToUpdate = " ( " &
                     " CodeInformationsHeaderRelationID_LongInteger, " &
                     " VehicleRepairClassID_LongInteger, " &
-                    " FileName_ShortText255" & ")"
+                    " FileName_ShortText255" & ")Then"
 
 
         Dim ReplacementData = "(" &
@@ -1518,9 +1547,21 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
 
     Private Sub SetAsConsumableToolStripMenuItem_DoubleClick(sender As Object, e As EventArgs) Handles SetAsConsumableToolStripMenuItem.Click
+        MsgBox("document this")
+        Stop
+        'Setting the part as consumable has 2 possibilities
+        '   1.while you are in the edit mode
+        '   2.while in the browse mode
+        'Returning from ConsumablesForm resets the CurrentSubSystemCodeRow
+        SavedSubSystemCodeRow = CurrentSubSystemCodeRow
         Tunnel1 = "EntryIsForConsumables"
-        Tunnel3 = CurrentSubSystemName
+        If MasterCodeBookDetailsGroup.Visible Then
+            Tunnel3 = SystemNameTextBox.Text
+        Else
+            Tunnel3 = CurrentSubSystemName
+        End If
 
         ShowCalledForm(Me, ConsumablesForm)
     End Sub
+
 End Class

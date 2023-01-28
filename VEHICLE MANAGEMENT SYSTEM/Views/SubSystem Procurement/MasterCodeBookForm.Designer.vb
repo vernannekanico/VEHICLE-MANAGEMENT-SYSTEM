@@ -23,9 +23,9 @@ Partial Class MasterCodeBookForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MainSystemCodeDataGridView = New System.Windows.Forms.DataGridView()
         Me.SubSystemCodeDataGridView = New System.Windows.Forms.DataGridView()
         Me.SubSystemContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -104,14 +104,14 @@ Partial Class MasterCodeBookForm
         'MainSystemCodeDataGridView
         '
         Me.MainSystemCodeDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.MainSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.MainSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle8
         Me.MainSystemCodeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.MainSystemCodeDataGridView.Location = New System.Drawing.Point(6, 9)
         Me.MainSystemCodeDataGridView.Name = "MainSystemCodeDataGridView"
@@ -124,14 +124,14 @@ Partial Class MasterCodeBookForm
         'SubSystemCodeDataGridView
         '
         Me.SubSystemCodeDataGridView.AllowUserToAddRows = False
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.SubSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.SubSystemCodeDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.SubSystemCodeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.SubSystemCodeDataGridView.ContextMenuStrip = Me.SubSystemContextMenuStrip
         Me.SubSystemCodeDataGridView.Location = New System.Drawing.Point(0, 339)
@@ -158,10 +158,7 @@ Partial Class MasterCodeBookForm
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.SearchGroupBox)
-        Me.GroupBox1.Controls.Add(Me.MasterCodeBookDetailsGroup)
         Me.GroupBox1.Controls.Add(Me.IncludeGrandChildrenButton)
-        Me.GroupBox1.Controls.Add(Me.RenumberGroupBox)
         Me.GroupBox1.Controls.Add(Me.ChildrenButton)
         Me.GroupBox1.Controls.Add(Me.UpButton)
         Me.GroupBox1.Controls.Add(Me.Button2)
@@ -176,10 +173,11 @@ Partial Class MasterCodeBookForm
         '
         'SearchGroupBox
         '
+        Me.SearchGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.SearchGroupBox.Controls.Add(Me.SearchButton)
         Me.SearchGroupBox.Controls.Add(Me.SearchMasterCodeBookTextBox)
         Me.SearchGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SearchGroupBox.Location = New System.Drawing.Point(91, 400)
+        Me.SearchGroupBox.Location = New System.Drawing.Point(654, 574)
         Me.SearchGroupBox.Name = "SearchGroupBox"
         Me.SearchGroupBox.Size = New System.Drawing.Size(395, 116)
         Me.SearchGroupBox.TabIndex = 86
@@ -215,7 +213,7 @@ Partial Class MasterCodeBookForm
         Me.MasterCodeBookDetailsGroup.Controls.Add(Me.SystemNameTextBox)
         Me.MasterCodeBookDetailsGroup.Controls.Add(Me.ParentSystemCodeTextBox)
         Me.MasterCodeBookDetailsGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MasterCodeBookDetailsGroup.Location = New System.Drawing.Point(507, 99)
+        Me.MasterCodeBookDetailsGroup.Location = New System.Drawing.Point(654, 298)
         Me.MasterCodeBookDetailsGroup.Name = "MasterCodeBookDetailsGroup"
         Me.MasterCodeBookDetailsGroup.Size = New System.Drawing.Size(726, 250)
         Me.MasterCodeBookDetailsGroup.TabIndex = 80
@@ -328,13 +326,14 @@ Partial Class MasterCodeBookForm
         '
         'RenumberGroupBox
         '
+        Me.RenumberGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.RenumberGroupBox.Controls.Add(Me.GoRenumberButton)
         Me.RenumberGroupBox.Controls.Add(Me.NewNumberTextBox)
         Me.RenumberGroupBox.Controls.Add(Me.OldNumberTextBox)
         Me.RenumberGroupBox.Controls.Add(Me.Label4)
         Me.RenumberGroupBox.Controls.Add(Me.Label3)
         Me.RenumberGroupBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RenumberGroupBox.Location = New System.Drawing.Point(69, 154)
+        Me.RenumberGroupBox.Location = New System.Drawing.Point(663, 94)
         Me.RenumberGroupBox.Name = "RenumberGroupBox"
         Me.RenumberGroupBox.Size = New System.Drawing.Size(395, 116)
         Me.RenumberGroupBox.TabIndex = 85
@@ -458,14 +457,14 @@ Partial Class MasterCodeBookForm
         '
         Me.CodeInformationsHeaderRelationsDataGridView.AllowUserToResizeColumns = False
         Me.CodeInformationsHeaderRelationsDataGridView.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.CodeInformationsHeaderRelationsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.CodeInformationsHeaderRelationsDataGridView.Location = New System.Drawing.Point(22, 9)
         Me.CodeInformationsHeaderRelationsDataGridView.MultiSelect = False
@@ -556,11 +555,11 @@ Partial Class MasterCodeBookForm
         '
         Me.MasterCodeBookMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MasterCodeBookMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MasterCodeBookMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartToolStripLabel, Me.SelectMasterCodeToolStripMenuItem, Me.AddMasterCodeToolStripMenuItem, Me.EditTMasterCodeToolStripMenuItem, Me.DeleteMasterCodeToolStripMenuItem, Me.SaveMasterCodeToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.SearchToolStripMenuItem, Me.RenumberToolStripMenuItem, Me.CodeInformationsHeaderRelationsToolStripLabel, Me.EditCodeInformationsHeaderRelationsToolStripMenuItem, Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem, Me.AddCodeInformationsHeaderRelationsToolStripMenuItem, Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem, Me.InformationDetailsToolStripLabel, Me.SetAsConsumableToolStripMenuItem})
+        Me.MasterCodeBookMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartToolStripLabel, Me.SelectMasterCodeToolStripMenuItem, Me.AddMasterCodeToolStripMenuItem, Me.EditTMasterCodeToolStripMenuItem, Me.DeleteMasterCodeToolStripMenuItem, Me.SaveMasterCodeToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.SetAsConsumableToolStripMenuItem, Me.SearchToolStripMenuItem, Me.RenumberToolStripMenuItem, Me.CodeInformationsHeaderRelationsToolStripLabel, Me.EditCodeInformationsHeaderRelationsToolStripMenuItem, Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem, Me.AddCodeInformationsHeaderRelationsToolStripMenuItem, Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem, Me.InformationDetailsToolStripLabel})
         Me.MasterCodeBookMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MasterCodeBookMenuStrip.Name = "MasterCodeBookMenuStrip"
         Me.MasterCodeBookMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
-        Me.MasterCodeBookMenuStrip.Size = New System.Drawing.Size(1031, 31)
+        Me.MasterCodeBookMenuStrip.Size = New System.Drawing.Size(1212, 31)
         Me.MasterCodeBookMenuStrip.TabIndex = 79
         Me.MasterCodeBookMenuStrip.Text = "MenuStrip"
         '
@@ -706,8 +705,11 @@ Partial Class MasterCodeBookForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1031, 727)
+        Me.ClientSize = New System.Drawing.Size(1212, 727)
         Me.ControlBox = False
+        Me.Controls.Add(Me.SearchGroupBox)
+        Me.Controls.Add(Me.MasterCodeBookDetailsGroup)
+        Me.Controls.Add(Me.RenumberGroupBox)
         Me.Controls.Add(Me.DefaultVehicleModelRepairRangeTextBox)
         Me.Controls.Add(Me.DefaultVehicleModelTextBox)
         Me.Controls.Add(Me.ChangeVehicleDefaults)
