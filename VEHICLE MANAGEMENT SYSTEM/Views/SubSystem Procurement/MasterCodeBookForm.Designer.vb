@@ -85,6 +85,7 @@ Partial Class MasterCodeBookForm
         Me.InformationDetailsToolStripLabel = New System.Windows.Forms.ToolStripMenuItem()
         Me.CreateInformationDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditInformationDetailsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetAsConsumableToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DefaultVehicleModelTextBox = New System.Windows.Forms.TextBox()
         Me.DefaultVehicleModelRepairRangeTextBox = New System.Windows.Forms.TextBox()
         CType(Me.MainSystemCodeDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -555,7 +556,7 @@ Partial Class MasterCodeBookForm
         '
         Me.MasterCodeBookMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MasterCodeBookMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.MasterCodeBookMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartToolStripLabel, Me.SelectMasterCodeToolStripMenuItem, Me.AddMasterCodeToolStripMenuItem, Me.EditTMasterCodeToolStripMenuItem, Me.DeleteMasterCodeToolStripMenuItem, Me.SaveMasterCodeToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.SearchToolStripMenuItem, Me.RenumberToolStripMenuItem, Me.CodeInformationsHeaderRelationsToolStripLabel, Me.EditCodeInformationsHeaderRelationsToolStripMenuItem, Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem, Me.AddCodeInformationsHeaderRelationsToolStripMenuItem, Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem, Me.InformationDetailsToolStripLabel})
+        Me.MasterCodeBookMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartToolStripLabel, Me.SelectMasterCodeToolStripMenuItem, Me.AddMasterCodeToolStripMenuItem, Me.EditTMasterCodeToolStripMenuItem, Me.DeleteMasterCodeToolStripMenuItem, Me.SaveMasterCodeToolStripMenuItem, Me.SpecificationsToolStripMenuItem, Me.SearchToolStripMenuItem, Me.RenumberToolStripMenuItem, Me.CodeInformationsHeaderRelationsToolStripLabel, Me.EditCodeInformationsHeaderRelationsToolStripMenuItem, Me.SelectCodeInformationsHeaderRelationsToolStripMenuItem, Me.AddCodeInformationsHeaderRelationsToolStripMenuItem, Me.RemoveCodeInformationsHeaderRelationToolStripMenuItem, Me.InformationDetailsToolStripLabel, Me.SetAsConsumableToolStripMenuItem})
         Me.MasterCodeBookMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MasterCodeBookMenuStrip.Name = "MasterCodeBookMenuStrip"
         Me.MasterCodeBookMenuStrip.Padding = New System.Windows.Forms.Padding(10, 3, 0, 3)
@@ -675,6 +676,12 @@ Partial Class MasterCodeBookForm
         Me.EditInformationDetailsToolStripMenuItem.Size = New System.Drawing.Size(125, 26)
         Me.EditInformationDetailsToolStripMenuItem.Text = "Edit"
         Me.EditInformationDetailsToolStripMenuItem.Visible = False
+        '
+        'SetAsConsumableToolStripMenuItem
+        '
+        Me.SetAsConsumableToolStripMenuItem.Name = "SetAsConsumableToolStripMenuItem"
+        Me.SetAsConsumableToolStripMenuItem.Size = New System.Drawing.Size(156, 25)
+        Me.SetAsConsumableToolStripMenuItem.Text = "Set As Consumable"
         '
         'DefaultVehicleModelTextBox
         '
@@ -796,4 +803,5 @@ Partial Class MasterCodeBookForm
     Friend WithEvents SetDefaultVehicleLabel As Label
     Friend WithEvents SubSystemContextMenuStrip As ContextMenuStrip
     Friend WithEvents CopyDescriptionToolStripTextBox As ToolStripTextBox
+    Friend WithEvents SetAsConsumableToolStripMenuItem As ToolStripMenuItem
 End Class

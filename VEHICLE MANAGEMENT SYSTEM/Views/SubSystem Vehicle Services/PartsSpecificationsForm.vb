@@ -861,7 +861,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
 
     Private Sub CopySpecificationToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopySpecificationToolStripTextBox.Click
         SpecificationsContextMenuStrip.Hide()
-        Clipboard.SetText(CodeVehiclePartsSpecificationsRelationsDataGridView.Item("PartsSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value)
+        Clipboard.SetText(PartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value)
     End Sub
 
     Private Sub PasteSpecificationToolStripTextBox_Click(sender As Object, e As EventArgs)
@@ -887,4 +887,5 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
             PartsSpecificationsGroupBox.Visible = True
         End If
     End Sub
+
 End Class

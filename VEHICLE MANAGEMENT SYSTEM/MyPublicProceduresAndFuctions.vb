@@ -559,8 +559,10 @@
     End Sub
     Public Sub ShowCalledForm(PassedCallingForm As Form, PassedCalledForm As Form)
         If InStr(ActiveFormsQueue, PassedCalledForm.Name) > 0 Then
-            MsgBox("Error. Recursive call to a form" & vbCrLf & " Called form is currently active")
-            Exit Sub
+            If Not PassedCalledForm.Name = "" Then
+                MsgBox("Error. Recursive call to a form" & vbCrLf & " Called form is currently active")
+                '         Exit Sub
+            End If
         End If
         ActiveFormsQueue = ActiveFormsQueue & "," & PassedCalledForm.Name
         CallingForm = PassedCallingForm
@@ -570,7 +572,11 @@
         ShowInTaskbarFlag = False
         PassedCalledForm.Text = PassedCalledForm.Name
         PassedCalledForm.Show()
-        PassedCalledForm.Select()
+        Try
+            PassedCalledForm.Select()
+        Catch ex As Exception
+
+        End Try
         ResetTunnels() ' INFORMATION IN TUNNELS HAVE BEEN RECEIVED
     End Sub
     Public Sub DoCommonHouseKeeping(CalledForm As Form, CallingForm As Form)

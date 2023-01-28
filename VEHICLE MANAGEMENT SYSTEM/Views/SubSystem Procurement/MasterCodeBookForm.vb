@@ -26,7 +26,6 @@ Public Class MasterCodeBookForm
     Private CurrentChildCode = ""
     Private CurrentChildName = ""
 
-    '   Private MyAccess As New MyDbControls
     Private SubSystemCodeFieldsToSelect = ""
     Private SubSystemCodeTablesLinks = ""
     Private SubSystemCodeSelectionFilter = ""
@@ -54,6 +53,7 @@ Public Class MasterCodeBookForm
     Private MasterCodeBookFieldsValues = ""
     Private MasterCodeBookFieldsToReplace = ""
 
+    Private AllSearchAppex = " "
     Private DefaultProcedurePath = DefaultSystemPath & "\Procedures\"
     Private ExcelFileName = ""
     Private ProcedureExists = ""
@@ -62,10 +62,24 @@ Public Class MasterCodeBookForm
     Private ChangeItemDefaultEnabled = False
     Private SavedCallingForm As Form
     Private FixedMasterCodeId = False
+    Private PassedConsumable = ""
 
     Private Sub MasterCodeBookForm_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-
         SavedCallingForm = CallingForm
+        If Tunnel1 = "EntryIsForConsumables" Then
+            'tunnel 3 will hold the passed part description and it should be of the same description as its consumable counterpart
+            PassedConsumable = Tunnel3
+            SearchMasterCodeBookTextBox.Text = Tunnel3
+            SearchGroupBox.Visible = True
+            'Use this to be appended to the CurrentSubSystemName
+            AllSearchAppex = "WHERE Mid(SubSystemCode_ShortText24Fld,1,6) = " & InQuotes("130301") & " AND ("
+            SpecificationsToolStripMenuItem.Visible = False
+            RenumberToolStripMenuItem.Visible = False
+            CodeInformationsHeaderRelationsToolStripLabel.Visible = False
+            AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = False
+            ChangeVehicleDefaults.Enabled = False
+            SetAsConsumableToolStripMenuItem.Visible = False
+        End If
         ' NOTE ON ENTRY TUNNEL THREE WILL CONTAIN THE SUBCODE IF REFERRING TO A SPECIFIC RECORD
         If CurrentWorkOrderID > -1 Then DefaultVehicleModelTextBox.Text = CurrentVehicleString
         MasterCodeBookDetailsGroup.Location = New Point(50, 85)
@@ -101,6 +115,11 @@ Public Class MasterCodeBookForm
         Tunnel2 = CurrentMasterCodeBookSubSystemID
         Tunnel3 = SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value
         Tunnel4 = CurrentSubSystemCode
+        If IsNotEmpty(AllSearchAppex) Then
+            If Tunnel3 <> PassedConsumable Then
+                If MsgBox("You are returning not same as what is passed, continue?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+            End If
+        End If
 
         DoCommonHouseKeeping(Me, SavedCallingForm)
 
@@ -114,6 +133,12 @@ Public Class MasterCodeBookForm
         MainSystemCodeSelectionOrder = " ORDER BY SubSystemCode_ShortText24Fld "
         SubSystemCodeTablesLinks = " FROM MasterCodebookTable "
 
+        'FOR CONSUMABLES FILTER
+        If IsNotEmpty(AllSearchAppex) Then
+            '1 to select all Headers 
+            '13 to select all consumables
+            MainSystemCodeSelectionFilter = MainSystemCodeSelectionFilter & " AND SubSystemCode_ShortText24Fld = " & InQuotes("13")
+        End If
         MySelection = MainSystemCodeFieldsToSelect & SubSystemCodeTablesLinks & MainSystemCodeSelectionFilter & MainSystemCodeSelectionOrder
 
         JustExecuteMySelection()
@@ -122,7 +147,6 @@ Public Class MasterCodeBookForm
         MainSystemCodeDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
 
         ' Initialize MasterCodeBookDataGridView
-
         MainSystemCodeDataGridView.Columns.Item("SubSystemCode_ShortText24Fld").Width = 100
         MainSystemCodeDataGridView.Columns.Item("SystemDesc_ShortText100Fld").Width = 400
 
@@ -143,7 +167,6 @@ Public Class MasterCodeBookForm
         Siblings = first2codes & LengthOf4
         Children = " (mid(SubSystemCode_ShortText24Fld,1,4) = " & InQuotes(CurrentMainSystemCode & "01") & ")"
         CurrentSubSystemCode = CurrentMainSystemCode & "01"
-        CurrentSubSystemName = ""
         FillSubSystemDataGridView()
         If RecordCount > 0 Then SubSystemCodeDataGridView.Rows(0).Selected = True
     End Sub
@@ -155,18 +178,16 @@ Public Class MasterCodeBookForm
         Else
             Dim SubCodeLength = Len(Trim(CurrentSubSystemCode))
             Dim Parent = "Mid(SubSystemCode_ShortText24Fld,1," & Str(SubCodeLength - 2) & ")"
-            CurrentParentCode = Parent & " = " & Mid(CurrentSubSystemCode, 1, SubCodeLength - 2)
+            CurrentParentCode = Parent & " = " & InQuotes(Mid(CurrentSubSystemCode, 1, SubCodeLength - 2))
             Dim ParentKeyLength = " And Len(Trim(SubSystemCode_ShortText24Fld)) = " & Str(SubCodeLength)
             Siblings = "(" & CurrentParentCode & ParentKeyLength & ")"
             Children = " (mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(CurrentSubSystemCode))) & ") = " & InQuotes(CurrentSubSystemCode) & ")"
             Dim ChildrenLength = " And Len(Trim(SubSystemCode_ShortText24Fld)) = " & Str(SubCodeLength + 2)
-            Dim GrandChildren = ""
             If IncludeGrandChildren Then
                 Children = "(" & Children & ")"
             Else
                 Children = "(" & Children & ChildrenLength & ")"
             End If
-
             SubSystemCodeFieldsToSelect = "Select " &
                 " SubSystemCode_ShortText24Fld, " &
                 " SystemDesc_ShortText100Fld, " &
@@ -186,8 +207,18 @@ Public Class MasterCodeBookForm
 
         SubSystemCodeSelectionOrder = " ORDER BY SubSystemCode_ShortText24Fld "
 
-        MySelection = SubSystemCodeFieldsToSelect & SubSystemCodeTablesLinks & SubSystemCodeSelectionFilter & SubSystemCodeSelectionOrder
+        If IsNotEmpty(AllSearchAppex) Then
+            If IsNotEmpty(SubSystemCodeSelectionFilter) Then
+                Dim xxx = Replace(SubSystemCodeSelectionFilter, "WHERE", AllSearchAppex) & ")"
+                SubSystemCodeSelectionFilter = xxx
+            Else
+                SubSystemCodeSelectionFilter = "WHERE (Mid(SubSystemCode_ShortText24Fld,1,6)) = " & InQuotes("130301")
+            End If
+        Else
+            CurrentSubSystemCode = CurrentMainSystemCode & "01"
+        End If
 
+        MySelection = SubSystemCodeFieldsToSelect & SubSystemCodeTablesLinks & SubSystemCodeSelectionFilter & SubSystemCodeSelectionOrder
         JustExecuteMySelection()
         SubSystemCodeDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
         SubSystemCodeDataGridView.Columns("MasterCodeBookID_Autonumber").Visible = False
@@ -618,6 +649,14 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         If Me.Enabled = False Then Exit Sub
         CallingForm = SavedCallingForm
         Select Case Tunnel1
+            Case "Tunnel2IsMasterCodeBookID"
+                If IsNotEmpty(AllSearchAppex) Then
+                    If Tunnel3 <> SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value Then
+                        If MsgBox("Woul you like to change the description of the part ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+                        UpdateTable("MasterCodeBookTable", " Set SystemDesc_ShortText100Fld=" & InQuotes(Tunnel3),
+                                        " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID.ToString)
+                    End If
+                End If
             Case "Tunnel2IsVehicleID"
                 SetDefaultVehicleLabel.Visible = False
                 MsgBox("please pause and check same Tunnel2IsVehicleID case below")
@@ -1476,5 +1515,12 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
     Private Sub CopyDescriptionToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopyDescriptionToolStripTextBox.Click
         Clipboard.SetText(SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value)
+    End Sub
+
+    Private Sub SetAsConsumableToolStripMenuItem_DoubleClick(sender As Object, e As EventArgs) Handles SetAsConsumableToolStripMenuItem.Click
+        Tunnel1 = "EntryIsForConsumables"
+        Tunnel3 = CurrentSubSystemName
+
+        ShowCalledForm(Me, ConsumablesForm)
     End Sub
 End Class
