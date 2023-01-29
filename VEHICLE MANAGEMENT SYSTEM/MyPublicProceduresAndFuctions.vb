@@ -177,7 +177,6 @@
         Dim TotalRecord = RecordCount
         MySelection = " INSERT INTO " & SubjectTable & " (" & FieldsToUpdate & ") VALUES (" & FieldsData & ")"
         JustExecuteMySelection()
-
         MySelection = " SELECT * FROM " & SubjectTable
         JustExecuteMySelection()
         If TotalRecord = RecordCount Then 'THERE IS NO INSERTION  DONE
@@ -269,7 +268,7 @@
 
         JustExecuteMySelection()
         If RecordCount = 0 Then
-            MsgBox("Input parameter error")
+            MsgBox("Input parameter error, record not found")
             Return -1
         End If
         r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)

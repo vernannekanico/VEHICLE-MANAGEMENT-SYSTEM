@@ -872,6 +872,7 @@ FROM ((WorkOrderPartsTable LEFT JOIN WorkOrdersTable ON WorkOrderPartsTable.Work
         Tunnel1 = ""
         Tunnel2 = -1
         Tunnel3 = CurrentMasterCodeBookID
+        PartsSpecificationsForm.PartDescriptionTextBox.Text = ManufacturerPartDescTextBox.Text
         ShowCalledForm(Me, PartsSpecificationsForm)
     End Sub
 

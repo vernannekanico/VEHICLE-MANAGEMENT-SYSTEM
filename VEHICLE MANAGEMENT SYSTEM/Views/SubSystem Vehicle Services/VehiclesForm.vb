@@ -504,6 +504,7 @@ YearManufactured_ShortText4
                             VehicleDetailsDataGridView.Item("VehicleModel_ShortText20", CurrentVehicleDetailsRow).Value & " " &
                             VehicleDetailsDataGridView.Item("VehicleTrimName_ShortText25", CurrentVehicleDetailsRow).Value & " " &
                             VehicleDetailsDataGridView.Item("Engine_ShortText20", CurrentVehicleDetailsRow).Value
+        Tunnel4 = CurrentVehicleRepairClassID
         DoCommonHouseKeeping(Me, SavedCallingForm)
     End Sub
     Private Sub VehicleDetailsDetailsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles VehicleDetailsDetailsGroupBox.VisibleChanged

@@ -74,7 +74,6 @@ Public Class MasterCodeBookForm
         VerticalCenter(SearchGroupBox, Me)
         HorizontalCenter(SearchGroupBox, Me)
         If Tunnel1 = "EntryIsForConsumables" Then
-            MsgBox("Document this")
             Stop
             'tunnel 3 will hold the PassedPart description and it should be of the same description as its consumable counterpart
             'giving option to search seach descripton by enabling the search option
@@ -483,9 +482,6 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         CurrentSubSystemCodeBookID = -1
         MasterCodeBookDetailsGroup.Text = "Add a New Sub CODE"
         EnableModifyMasterCodeBookMode()          '' Add Edit Delete are turned off and Cancel ans Save options are made available
-        SpecificationsToolStripMenuItem.Visible = False
-        SearchToolStripMenuItem.Visible = False
-        RenumberToolStripMenuItem.Visible = False
         MasterCodeBookDetailsGroup.Visible = True
         DetermineParentInfos()
         ParentSystemNameLabel.Text = CurrentParentName
@@ -561,9 +557,6 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
 
     Private Sub EnableModifyMasterCodeBookMode()
-        MsgBox("DisableAddEditDeleteMasterCodeMenuItems()")
-        Stop
-        'THIS IS TRIGGERED UPON GROUPDETAILS VISIBILITY CHANGE
         MainSystemCodeDataGridView.Enabled = False
         SubSystemCodeDataGridView.Enabled = False
         ShowMasterCodeBookDetailsGroup()
@@ -585,7 +578,8 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         CodeInformationsHeaderRelationsToolStripLabel.Visible = True
         AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = True
         SearchToolStripMenuItem.Visible = True
-        RenumberGroupBox.Visible = True
+        RenumberToolStripMenuItem.Visible = True
+        SpecificationsToolStripMenuItem.Visible = True
     End Sub
     Private Sub DisableAddEditDeleteMasterCodeMenuItems()
         SaveMasterCodeToolStripMenuItem.Visible = True
@@ -597,7 +591,8 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         CodeInformationsHeaderRelationsToolStripLabel.Visible = False
         AddCodeInformationsHeaderRelationsToolStripMenuItem.Visible = False
         SearchToolStripMenuItem.Visible = False
-        RenumberGroupBox.Visible = False
+        RenumberToolStripMenuItem.Visible = False
+        SpecificationsToolStripMenuItem.Visible = False
     End Sub
 
 
@@ -687,16 +682,23 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
                 End If
 
             Case "Tunnel2IsVehicleID"
+                'RETURNED VARIABLES
+                '               Tunnel1 = "Tunnel2IsVehicleID"
+                '               Tunnel2 = CurrentVehicleID
+                '               Tunnel3 = Vehicle Description
+                '               Tunnel4 = CurrentVehicleRepairClassID
+
                 SetDefaultVehicleLabel.Visible = False
-                MsgBox("please pause and check same Tunnel2IsVehicleID case below")
                 CurrentVehicleID = Tunnel2
                 DefaultVehicleModelTextBox.Text = Tunnel3
-            Case "Tunnel2IsVehicleID"
-                DefaultVehicleModelTextBox.Text = Tunnel3
-                CurrentVehicleRepairClassID = Tunnel2
+                CurrentVehicleString = Tunnel3
+                CurrentVehicleRepairClassID = Tunnel4
                 MySelection = "Select * from VehicleRepairClassTable WHERE VehicleRepairClassID_AutoNumber = " & Str(CurrentVehicleRepairClassID)
+
+                'Get the year coverage of this model for this CurrentVehicleRepairClassID and display for users to have idea what years
+                'applies to this models the specification 
                 If NoRecordFound() Then
-                    MsgBox("break, PROBLEM Not found, Update Vehicle Repair Class code For thid vehicle ")
+                    MsgBox("break, PROBLEM Not found, Update Vehicle Repair Class code For this vehicle ")
                     GetDefaultVehicle()
                     Exit Sub
                 End If
@@ -1306,7 +1308,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
 
             Dim RecordFilter = " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID
             Dim ReplacementCode = Replace(CurrentSubSystemCode, OldNumberTextBox.Text, NewNumberTextBox.Text)
-            Dim SetCommand = " SET SubSystemCode_ShortText24Fld  = " & ReplacementCode
+            Dim SetCommand = " SET SubSystemCode_ShortText24Fld  = " & InQuotes(ReplacementCode)
 
             UpdateTable("MasterCodeBookTable", SetCommand, RecordFilter)
             ' RENUMBER THE InfoPerVehicle TOO if exist(s)
@@ -1498,6 +1500,11 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
 
     Private Sub SpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SpecificationsToolStripMenuItem.Click
+        If CurrentSubSystemCode >= "13" Then
+            MsgBox("Pls select only non consumable part, non 13 code")
+            Exit Sub
+        End If
+
         If DefaultVehicleModelTextBox.Text = "Set Default Vehicle" Then
             MsgBox("Pls Set Default Vehicle first")
             Exit Sub
@@ -1506,12 +1513,38 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
             MsgBox("Pls choose the subject vehicle")
             Exit Sub
         End If
-        Tunnel1 = "Tunnel2IsMasterCodeBookID"
-        Tunnel2 = CurrentMasterCodeBookSubSystemID
-        Tunnel3 = CurrentSubSystemName & " for " & CurrentVehicleString
-        PartsSpecificationsForm.VehicleModelTextBox.Text = CurrentVehicleString
+        MySelection = "SELECT * FROM CodeVehiclesTable WHERE  MasterCodeBookID_LongInteger = " & CurrentSubSystemCodeBookID &
+                                " AND VehicleID_LongInteger = " & CurrentVehicleID
+        JustExecuteMySelection()
+        If RecordCount = 0 Then
+            'add new reference record
+            Dim FieldsToUpdate = " MasterCodeBookID_LongInteger, " &
+                                    "VehicleID_LongInteger"
+            Dim FieldsData = CurrentSubSystemCodeBookID & ", " & CurrentVehicleID.ToString
+            CurrentCodeVehicleID = InsertNewRecord("CodeVehiclesTable", FieldsToUpdate, FieldsData)
+        Else
+            Dim r = RecordFinderDbControls.MyAccessDbDataTable.Rows(0)
 
+            CurrentCodeVehicleID = r("CodeVehicleID_AutoNumber")
+        End If
+
+        ' INPUT to PartsSpecificationsForm WILL BE MASTERCODEBOOKID AND VEHICLEID and job
+        ' Tunnel 1 - InformationsHeaderID (Job Description)
+        ' Tunnel 2 - CodeVehicleID
+        ' Tunnel 3 - MasterCodeBookID
+        ' Tunnel 4 - Vehicle Description
+        ' CALLING FORM DETERMINE WHETHER THIS FORM WORKS WITH PART OR SPECIFICATION  OR BOTH
+        ' ENABLING EITHER PartNumberSpecificationTextBox TO WORK WITH PATNUMBERS
+        ' OR PartSpecificationsTextBox TO WORK WITH SPECIFICATION
+        PartsSpecificationsForm.PartNumberSpecificationTextBox.Enabled = True
+        PartsSpecificationsForm.PartSpecificationsTextBox.Enabled = True
+        Tunnel1 = "" ' documented as InformationsHeaderID (Job Description)
+        Tunnel2 = CurrentCodeVehicleID  'THIS SHOULD BE SET UPON VEHICLE SELECTION
+        Tunnel3 = CurrentSubSystemCodeBookID
+        Tunnel4 = DefaultVehicleModelTextBox.Text
+        PartsSpecificationsForm.PartDescriptionTextBox.Text = CurrentSubSystemName
         ShowCalledForm(Me, PartsSpecificationsForm)
+
     End Sub
 
     Private Sub SearchToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchToolStripMenuItem.Click
@@ -1519,6 +1552,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
 
     End Sub
     Private Sub EnableSearch()
+        'Disabling MasterCodeBookMenuStrip disables even to cancel key
         SearchGroupBox.Visible = True
         MasterCodeBookMenuStrip.Enabled = False
         MainSystemCodeDataGridView.Enabled = False
