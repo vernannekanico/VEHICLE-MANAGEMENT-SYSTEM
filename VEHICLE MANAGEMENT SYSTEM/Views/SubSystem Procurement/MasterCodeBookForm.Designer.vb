@@ -707,8 +707,8 @@ Partial Class MasterCodeBookForm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1212, 727)
         Me.ControlBox = False
-        Me.Controls.Add(Me.RenumberGroupBox)
         Me.Controls.Add(Me.MasterCodeBookDetailsGroup)
+        Me.Controls.Add(Me.RenumberGroupBox)
         Me.Controls.Add(Me.SearchGroupBox)
         Me.Controls.Add(Me.DefaultVehicleModelRepairRangeTextBox)
         Me.Controls.Add(Me.DefaultVehicleModelTextBox)

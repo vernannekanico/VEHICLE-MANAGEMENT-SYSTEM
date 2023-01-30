@@ -53,8 +53,9 @@ Public Class MasterCodeBookForm
 
     Private MasterCodeBookFieldsValues = ""
     Private MasterCodeBookFieldsToReplace = ""
+    Private CurrentProductsPartsConsumablesRelation = -1
 
-    Private AllSearchAppex = " "
+    Private AllSearchPrefix = " "
     Private DefaultProcedurePath = DefaultSystemPath & "\Procedures\"
     Private ExcelFileName = ""
     Private ProcedureExists = ""
@@ -74,14 +75,13 @@ Public Class MasterCodeBookForm
         VerticalCenter(SearchGroupBox, Me)
         HorizontalCenter(SearchGroupBox, Me)
         If Tunnel1 = "EntryIsForConsumables" Then
-            Stop
             'tunnel 3 will hold the PassedPart description and it should be of the same description as its consumable counterpart
             'giving option to search seach descripton by enabling the search option
             PassedConsumable = Tunnel3
             SearchMasterCodeBookTextBox.Text = Tunnel3
             SearchGroupBox.Visible = True
             'Use this to be appended to the CurrentSubSystemNamefilter
-            AllSearchAppex = "WHERE Mid(SubSystemCode_ShortText24Fld,1,6) >= " & InQuotes("130301") & " AND ("
+            AllSearchPrefix = "AND (Mid(SubSystemCode_ShortText24Fld,1,6) >= " & InQuotes("130301") & ")"
             'disable/enable all other options
             SpecificationsToolStripMenuItem.Visible = False
             RenumberToolStripMenuItem.Visible = False
@@ -122,7 +122,7 @@ Public Class MasterCodeBookForm
         Tunnel2 = CurrentMasterCodeBookSubSystemID
         Tunnel3 = SubSystemCodeDataGridView.Item("SystemDesc_ShortText100Fld", CurrentSubSystemCodeRow).Value
         Tunnel4 = CurrentSubSystemCode
-        If IsNotEmpty(AllSearchAppex) Then
+        If IsNotEmpty(AllSearchPrefix) Then
             If Tunnel3 <> PassedConsumable Then
                 If MsgBox("You are returning not same as what is passed, continue?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
             End If
@@ -135,18 +135,17 @@ Public Class MasterCodeBookForm
     Private Sub FillMainSystemCodeDataGridView()
         Dim MainSystemCodeInQuote = InQuotes("1")
         MainSystemCodeFieldsToSelect = "Select SubSystemCode_ShortText24Fld, " &
-                                    " SystemDesc_ShortText100Fld "
+                                    " SystemDesc_ShortText100Fld FROM MasterCodebookTable "
         MainSystemCodeSelectionFilter = " WHERE MainSystemCode_ShortText1 = " & MainSystemCodeInQuote
         MainSystemCodeSelectionOrder = " ORDER BY SubSystemCode_ShortText24Fld "
-        SubSystemCodeTablesLinks = " FROM MasterCodebookTable "
 
         'FOR CONSUMABLES FILTER
-        If IsNotEmpty(AllSearchAppex) Then
+        If IsNotEmpty(AllSearchPrefix) Then
             '1 to select all Headers 
             '13 to select all consumables
             MainSystemCodeSelectionFilter = MainSystemCodeSelectionFilter & " AND SubSystemCode_ShortText24Fld = " & InQuotes("13")
         End If
-        MySelection = MainSystemCodeFieldsToSelect & SubSystemCodeTablesLinks & MainSystemCodeSelectionFilter & MainSystemCodeSelectionOrder
+        MySelection = MainSystemCodeFieldsToSelect & MainSystemCodeSelectionFilter & MainSystemCodeSelectionOrder
 
         JustExecuteMySelection()
 
@@ -180,32 +179,38 @@ Public Class MasterCodeBookForm
 
     Private Sub FillSubSystemDataGridView()
         If FixedMasterCodeId Then
-            SubSystemCodeSelectionFilter = "  WHERE MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookSubSystemID.ToString
+            SubSystemCodeSelectionFilter = "  WHERE MasterCodeBookTable.MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookSubSystemID.ToString
 
         Else
             Dim SubCodeLength = Len(Trim(CurrentSubSystemCode))
-            Dim Parent = "Mid(SubSystemCode_ShortText24Fld,1," & Str(SubCodeLength - 2) & ")"
+            Dim Parent = "Mid(MasterCodeBookTable.SubSystemCode_ShortText24Fld,1," & Str(SubCodeLength - 2) & ")"
             CurrentParentCode = Parent & " = " & InQuotes(Mid(CurrentSubSystemCode, 1, SubCodeLength - 2))
-            Dim ParentKeyLength = " And Len(Trim(SubSystemCode_ShortText24Fld)) = " & Str(SubCodeLength)
+            Dim ParentKeyLength = " And Len(Trim(MasterCodeBookTable.SubSystemCode_ShortText24Fld)) = " & Str(SubCodeLength)
             Siblings = "(" & CurrentParentCode & ParentKeyLength & ")"
-            Children = " (mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(CurrentSubSystemCode))) & ") = " & InQuotes(CurrentSubSystemCode) & ")"
-            Dim ChildrenLength = " And Len(Trim(SubSystemCode_ShortText24Fld)) = " & Str(SubCodeLength + 2)
+            Children = " (mid(MasterCodeBookTable.SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(CurrentSubSystemCode))) & ") = " & InQuotes(CurrentSubSystemCode) & ")"
+            Dim ChildrenLength = " And Len(Trim(MasterCodeBookTable.SubSystemCode_ShortText24Fld)) = " & Str(SubCodeLength + 2)
             If IncludeGrandChildren Then
                 Children = "(" & Children & ")"
             Else
                 Children = "(" & Children & ChildrenLength & ")"
             End If
-            SubSystemCodeFieldsToSelect = "Select " &
-                " SubSystemCode_ShortText24Fld, " &
-                " SystemDesc_ShortText100Fld, " &
-                " MasterCodeBookID_Autonumber "
-            SubSystemCodeTablesLinks = " FROM MasterCodeBookTable "
+            SubSystemCodeFieldsToSelect =
+"
+SELECT 
+MasterCodeBookTable.SubSystemCode_ShortText24Fld, 
+MasterCodeBookTable.SystemDesc_ShortText100Fld, 
+MasterCodeBookTable.MasterCodeBookID_Autonumber, 
+ProductsPartsConsumablesRelationsTable.ProductsPartsConsumablesRelationID_AutoNumber,
+ProductsPartsConsumablesRelationsTable.ConsumablesCodeBookConsumableID_LongInteger, 
+ConsumablesCodeBookTable.MasterCodeBookID_Autonumber
+FROM (MasterCodeBookTable LEFT JOIN ProductsPartsConsumablesRelationsTable ON MasterCodeBookTable.MasterCodeBookID_Autonumber = ProductsPartsConsumablesRelationsTable.MasterCodeBookPartID_LongInteger) LEFT JOIN MasterCodeBookTable AS ConsumablesCodeBookTable ON ProductsPartsConsumablesRelationsTable.ConsumablesCodeBookConsumableID_LongInteger = ConsumablesCodeBookTable.MasterCodeBookID_Autonumber
+"
             If SearchIsOnFlag = True Then
                 SearchIsOnFlag = False
-                If IsNotEmpty(AllSearchAppex) Then
-                    SubSystemCodeSelectionFilter = "  WHERE Mid(SubSystemCode_ShortText24Fld,1,6) >= " & InQuotes("130301") & " And  SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
+                If IsNotEmpty(AllSearchPrefix) Then
+                    SubSystemCodeSelectionFilter = "  WHERE Mid(MasterCodeBookTable.SubSystemCode_ShortText24Fld,1,6) >= " & InQuotes("130301") & " And  MasterCodeBookTable.SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
                 Else
-                    SubSystemCodeSelectionFilter = "  WHERE SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
+                    SubSystemCodeSelectionFilter = "  WHERE MasterCodeBookTable.SystemDesc_ShortText100Fld Like " & InQuotes("%" & Trim(SearchMasterCodeBookTextBox.Text) & "%")
                 End If
             Else
                 SubSystemCodeSelectionFilter = "where " & Siblings & " Or " & Children
@@ -216,17 +221,17 @@ Public Class MasterCodeBookForm
 
         End If
 
-        SubSystemCodeSelectionOrder = " ORDER BY SubSystemCode_ShortText24Fld "
+        SubSystemCodeSelectionOrder = " ORDER BY MasterCodeBookTable.SubSystemCode_ShortText24Fld "
 
-        If IsNotEmpty(AllSearchAppex) Then
+        If IsNotEmpty(AllSearchPrefix) Then
         Else
             CurrentSubSystemCode = CurrentMainSystemCode & "01"
         End If
 
-        MySelection = SubSystemCodeFieldsToSelect & SubSystemCodeTablesLinks & SubSystemCodeSelectionFilter & SubSystemCodeSelectionOrder
+        MySelection = SubSystemCodeFieldsToSelect & SubSystemCodeSelectionFilter & SubSystemCodeSelectionOrder
         JustExecuteMySelection()
         SubSystemCodeDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        SubSystemCodeDataGridView.Columns("MasterCodeBookID_Autonumber").Visible = False
+        SubSystemCodeDataGridView.Columns("MasterCodeBookTable.MasterCodeBookID_Autonumber").Visible = False
 
         SubSystemCodeDataGridView.Columns.Item("SubSystemCode_ShortText24Fld").Width = 135
         SubSystemCodeDataGridView.Columns.Item("SystemDesc_ShortText100Fld").Width = 400
@@ -244,12 +249,21 @@ Public Class MasterCodeBookForm
 
         CurrentSubSystemName = Trim(SubSystemCodeDataGridView.Item(CurrentSubCodeColumn + 1, CurrentSubSystemCodeRow).Value)
         CurrentSubSystemCode = LTrim(RTrim(SubSystemCodeDataGridView.Item(0, CurrentSubSystemCodeRow).Value))
-        CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
-        CurrentMasterCodeBookSubSystemID = SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value
+        CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookTable.MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
+        CurrentMasterCodeBookSubSystemID = SubSystemCodeDataGridView.Item("MasterCodeBookTable.MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value
+        FillField(CurrentProductsPartsConsumablesRelation, SubSystemCodeDataGridView.Item("ProductsPartsConsumablesRelationID_AutoNumber", CurrentSubSystemCodeRow).Value)
 
         FillCodeInformationsHeaderRelationsDataGridView()
         '  Update Parent header values here 
         GEtParentDetails()
+        Dim SubSystemCode_ShortText24Fld = LTrim(RTrim(SubSystemCodeDataGridView.Item("SubSystemCode_ShortText24Fld", CurrentSubSystemCodeRow).Value))
+        If IsEmpty(CurrentProductsPartsConsumablesRelation) Then
+            SpecificationsToolStripMenuItem.Visible = False
+            SetAsConsumableToolStripMenuItem.Text = "Set As Consumable"
+        Else
+            SpecificationsToolStripMenuItem.Visible = True
+            SetAsConsumableToolStripMenuItem.Text = "Consumable Part"
+        End If
     End Sub
     Private Sub GEtParentDetails()
         If SearchIsOnFlag Then
@@ -671,16 +685,20 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
                     If MsgBox("Making this part as consumable, both has to have the same exact description, CONTINUE change the description of this part into " & Tunnel3 & "?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
                 End If
 
+                If MsgBox("Continue Mark this as consumable ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
+                'make both description the same
+
                 If MasterCodeBookDetailsGroup.Visible Then
                     SystemNameTextBox.Text = Tunnel3
                 Else
-                    CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
+                    CurrentSubSystemCodeBookID = LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookTable.MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value))
 
                     UpdateTable("MasterCodeBookTable", " Set SystemDesc_ShortText100Fld=" & InQuotes(Tunnel3),
                                          " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID.ToString)
                     FillSubSystemDataGridView()
                 End If
-
+                'Update ProductsPartsConsumablesRelationsTable
+                RegisterProductsPartsConsumablesRelationsTableChanges()
             Case "Tunnel2IsVehicleID"
                 'RETURNED VARIABLES
                 '               Tunnel1 = "Tunnel2IsVehicleID"
@@ -730,6 +748,30 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
                 CodeInformationsHeaderRelationsSelectionFilter = SavedCodeInformationsHeaderRelationsSelectionFilter
                 FillCodeInformationsHeaderRelationsDataGridView()
         End Select
+
+    End Sub
+    Sub RegisterProductsPartsConsumablesRelationsTableChanges()
+        MySelection = " SELECT TOP 1 * FROM ProductsPartsConsumablesRelationsTable WHERE MasterCodeBookPartID_LongInteger = " & CurrentSubSystemCodeBookID.ToString &
+                                                                                       " AND ConsumablesCodeBookConsumableID_LongInteger = " & Tunnel2.ToString
+        JustExecuteMySelection()
+        If RecordCount > 0 Then
+            UpdateProductsPartsConsumablesRelationsTable()
+        Else
+            InsertNewProductsPartsConsumablesRelationsTable()
+        End If
+    End Sub
+    Sub UpdateProductsPartsConsumablesRelationsTable()
+
+    End Sub
+    Sub InsertNewProductsPartsConsumablesRelationsTable()
+        Dim FieldsToUpdate =
+                                " MasterCodeBookPartID_LongInteger, " &
+                                " ConsumablesCodeBookConsumableID_LongInteger "
+
+        Dim FieldsData =
+                                CurrentSubSystemCodeBookID.ToString & ", " &
+                                Tunnel2.ToString
+        CurrentProductsPartsConsumablesRelation = InsertNewRecord("ProductsPartsConsumablesRelationsTable", FieldsToUpdate, FieldsData)
 
     End Sub
     Private Sub InsertANewInfoPerVehicleTable()
@@ -1007,7 +1049,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         '      CurrentSubSystemCodeRow = e.RowIndex
         CurrentSubSystemName = Trim(SubSystemCodeDataGridView.Item(CurrentSubCodeColumn + 1, CurrentSubSystemCodeRow).Value)
         CurrentSubSystemCode = LTrim(RTrim(SubSystemCodeDataGridView.Item(0, CurrentSubSystemCodeRow).Value))
-        CurrentSubSystemCodeBookID = Val(LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value)))
+        CurrentSubSystemCodeBookID = Val(LTrim(RTrim(SubSystemCodeDataGridView.Item("MasterCodeBookTable.MasterCodeBookID_Autonumber", CurrentSubSystemCodeRow).Value)))
         If Len(Trim(CurrentSubSystemCode)) = 2 Then
             CurrentParentCode = CurrentMainSystemCode
         Else
@@ -1536,8 +1578,6 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         ' CALLING FORM DETERMINE WHETHER THIS FORM WORKS WITH PART OR SPECIFICATION  OR BOTH
         ' ENABLING EITHER PartNumberSpecificationTextBox TO WORK WITH PATNUMBERS
         ' OR PartSpecificationsTextBox TO WORK WITH SPECIFICATION
-        PartsSpecificationsForm.PartNumberSpecificationTextBox.Enabled = True
-        PartsSpecificationsForm.PartSpecificationsTextBox.Enabled = True
         Tunnel1 = "" ' documented as InformationsHeaderID (Job Description)
         Tunnel2 = CurrentCodeVehicleID  'THIS SHOULD BE SET UPON VEHICLE SELECTION
         Tunnel3 = CurrentSubSystemCodeBookID
@@ -1581,12 +1621,20 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
     End Sub
 
     Private Sub SetAsConsumableToolStripMenuItem_DoubleClick(sender As Object, e As EventArgs) Handles SetAsConsumableToolStripMenuItem.Click
-        MsgBox("document this")
-        Stop
         'Setting the part as consumable has 2 possibilities
         '   1.while you are in the edit mode
         '   2.while in the browse mode
         'Returning from ConsumablesForm resets the CurrentSubSystemCodeRow
+        If SetAsConsumableToolStripMenuItem.Text = "Consumable Part" Then
+            If MsgBox("This is flagged as a CONSUMABLE part," & vbCrLf & vbCrLf & vbCrLf _
+                      & "Do you intend to remove this as CONSUMABLE part",
+                      MsgBoxStyle.YesNo + vbDefaultButton2 + vbCritical) = MsgBoxResult.No Then
+                Exit Sub
+            Else
+                Stop
+                MySelection = "DELETE FROM "
+            End If
+        End If
         SavedSubSystemCodeRow = CurrentSubSystemCodeRow
         Tunnel1 = "EntryIsForConsumables"
         If MasterCodeBookDetailsGroup.Visible Then

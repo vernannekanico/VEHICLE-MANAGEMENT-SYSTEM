@@ -1313,7 +1313,7 @@ FROM (WorkOrderPartsTable LEFT JOIN WorkOrderConcernJobsTable ON WorkOrderPartsT
 
     Private Sub SpecificationsTextBox_Click(sender As Object, e As EventArgs) Handles SpecificationsTextBox.Click
         PartsSpecificationsForm.PartNumberSpecificationTextBox.Enabled = False
-        PartsSpecificationsForm.PartSpecificationsTextBox.Enabled = True
+        PartsSpecificationsForm.ProductPartSpecificationsTextBox.Enabled = True
         ShowPartsSpecificationsForm("fluid specification", SpecificationsTextBox)
     End Sub
 
