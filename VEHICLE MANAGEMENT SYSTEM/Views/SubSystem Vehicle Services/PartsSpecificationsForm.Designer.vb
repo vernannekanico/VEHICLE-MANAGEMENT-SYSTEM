@@ -41,13 +41,15 @@ Partial Class PartsSpecificationsForm
         Me.EditPartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemovePartNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SelectPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AddPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemovePartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.QuantitySpecificationsToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddPartSpecificationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EDITToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DELETEToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PartSpecificationsDetailsGroup = New System.Windows.Forms.GroupBox()
         Me.PartNumberButton = New System.Windows.Forms.Button()
         Me.QuantitySpecificationButton = New System.Windows.Forms.Button()
@@ -78,10 +80,6 @@ Partial Class PartsSpecificationsForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.JobLabel = New System.Windows.Forms.Label()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ADDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SELECTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EDITToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DELETEToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SpecificationsMenuStrip.SuspendLayout()
         Me.PartSpecificationsDetailsGroup.SuspendLayout()
         CType(Me.ProductsPartsSpecificationsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -101,7 +99,7 @@ Partial Class PartsSpecificationsForm
         '
         Me.SpecificationsMenuStrip.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SpecificationsMenuStrip.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.SpecificationsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartNoSpecificationsItemToolStripMenuItem, Me.ToolStripMenuItem1, Me.PartsSpecificationsHeaderMenuToolStripMenuItem, Me.QuantitySpecificationsToolStripTextBox, Me.SaveToolStripMenuItem, Me.SELECTToolStripMenuItem, Me.ADDToolStripMenuItem, Me.EDITToolStripMenuItem, Me.DELETEToolStripMenuItem})
+        Me.SpecificationsMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelToolStripMenuItem, Me.PartNoSpecificationsItemToolStripMenuItem, Me.ToolStripMenuItem1, Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem, Me.QuantitySpecificationsToolStripTextBox, Me.SaveToolStripMenuItem, Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EDITToolStripMenuItem, Me.DELETEToolStripMenuItem})
         Me.SpecificationsMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.SpecificationsMenuStrip.Name = "SpecificationsMenuStrip"
         Me.SpecificationsMenuStrip.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
@@ -128,28 +126,28 @@ Partial Class PartsSpecificationsForm
         '
         Me.SelectPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SelectPartNumberToolStripMenuItem.Name = "SelectPartNumberToolStripMenuItem"
-        Me.SelectPartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.SelectPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.SelectPartNumberToolStripMenuItem.Text = "Select"
         '
         'AddPartNumberToolStripMenuItem
         '
         Me.AddPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AddPartNumberToolStripMenuItem.Name = "AddPartNumberToolStripMenuItem"
-        Me.AddPartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.AddPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.AddPartNumberToolStripMenuItem.Text = "Add"
         '
         'EditPartNumberToolStripMenuItem
         '
         Me.EditPartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.EditPartNumberToolStripMenuItem.Name = "EditPartNumberToolStripMenuItem"
-        Me.EditPartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.EditPartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.EditPartNumberToolStripMenuItem.Text = "Edit"
         '
         'RemovePartNumberToolStripMenuItem
         '
         Me.RemovePartNumberToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RemovePartNumberToolStripMenuItem.Name = "RemovePartNumberToolStripMenuItem"
-        Me.RemovePartNumberToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.RemovePartNumberToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.RemovePartNumberToolStripMenuItem.Text = "Remove"
         Me.RemovePartNumberToolStripMenuItem.Visible = False
         '
@@ -158,41 +156,27 @@ Partial Class PartsSpecificationsForm
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(12, 25)
         '
-        'PartsSpecificationsHeaderMenuToolStripMenuItem
+        'ProductsPartsSpecificationsHeaderMenuToolStripMenuItem
         '
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectPartSpecificationsToolStripMenuItem, Me.AddPartSpecificationsToolStripMenuItem, Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem})
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Name = "PartsSpecificationsHeaderMenuToolStripMenuItem"
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Size = New System.Drawing.Size(189, 29)
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Text = "PART SPECIFICATIONS"
-        Me.PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = False
-        '
-        'SelectPartSpecificationsToolStripMenuItem
-        '
-        Me.SelectPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SelectPartSpecificationsToolStripMenuItem.Name = "SelectPartSpecificationsToolStripMenuItem"
-        Me.SelectPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
-        Me.SelectPartSpecificationsToolStripMenuItem.Text = "Select"
-        '
-        'AddPartSpecificationsToolStripMenuItem
-        '
-        Me.AddPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AddPartSpecificationsToolStripMenuItem.Name = "AddPartSpecificationsToolStripMenuItem"
-        Me.AddPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
-        Me.AddPartSpecificationsToolStripMenuItem.Text = "Add"
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditPartSpecificationsToolStripMenuItem, Me.RemovePartSpecificationsToolStripMenuItem})
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Name = "ProductsPartsSpecificationsHeaderMenuToolStripMenuItem"
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Size = New System.Drawing.Size(189, 29)
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Text = "PART SPECIFICATIONS"
+        Me.ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Visible = False
         '
         'EditPartSpecificationsToolStripMenuItem
         '
         Me.EditPartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.EditPartSpecificationsToolStripMenuItem.Name = "EditPartSpecificationsToolStripMenuItem"
-        Me.EditPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.EditPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.EditPartSpecificationsToolStripMenuItem.Text = "Edit"
         '
         'RemovePartSpecificationsToolStripMenuItem
         '
         Me.RemovePartSpecificationsToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RemovePartSpecificationsToolStripMenuItem.Name = "RemovePartSpecificationsToolStripMenuItem"
-        Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(180, 26)
+        Me.RemovePartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(137, 26)
         Me.RemovePartSpecificationsToolStripMenuItem.Text = "Remove"
         '
         'QuantitySpecificationsToolStripTextBox
@@ -209,6 +193,30 @@ Partial Class PartsSpecificationsForm
         Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(55, 25)
         Me.SaveToolStripMenuItem.Text = "Save"
         Me.SaveToolStripMenuItem.Visible = False
+        '
+        'SelectPartSpecificationsToolStripMenuItem
+        '
+        Me.SelectPartSpecificationsToolStripMenuItem.Name = "SelectPartSpecificationsToolStripMenuItem"
+        Me.SelectPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(73, 25)
+        Me.SelectPartSpecificationsToolStripMenuItem.Text = "SELECT"
+        '
+        'AddPartSpecificationsToolStripMenuItem
+        '
+        Me.AddPartSpecificationsToolStripMenuItem.Name = "AddPartSpecificationsToolStripMenuItem"
+        Me.AddPartSpecificationsToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
+        Me.AddPartSpecificationsToolStripMenuItem.Text = "ADD"
+        '
+        'EDITToolStripMenuItem
+        '
+        Me.EDITToolStripMenuItem.Name = "EDITToolStripMenuItem"
+        Me.EDITToolStripMenuItem.Size = New System.Drawing.Size(53, 25)
+        Me.EDITToolStripMenuItem.Text = "EDIT"
+        '
+        'DELETEToolStripMenuItem
+        '
+        Me.DELETEToolStripMenuItem.Name = "DELETEToolStripMenuItem"
+        Me.DELETEToolStripMenuItem.Size = New System.Drawing.Size(73, 25)
+        Me.DELETEToolStripMenuItem.Text = "DELETE"
         '
         'PartSpecificationsDetailsGroup
         '
@@ -616,30 +624,6 @@ Partial Class PartsSpecificationsForm
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(61, 4)
         '
-        'ADDToolStripMenuItem
-        '
-        Me.ADDToolStripMenuItem.Name = "ADDToolStripMenuItem"
-        Me.ADDToolStripMenuItem.Size = New System.Drawing.Size(54, 25)
-        Me.ADDToolStripMenuItem.Text = "ADD"
-        '
-        'SELECTToolStripMenuItem
-        '
-        Me.SELECTToolStripMenuItem.Name = "SELECTToolStripMenuItem"
-        Me.SELECTToolStripMenuItem.Size = New System.Drawing.Size(73, 25)
-        Me.SELECTToolStripMenuItem.Text = "SELECT"
-        '
-        'EDITToolStripMenuItem
-        '
-        Me.EDITToolStripMenuItem.Name = "EDITToolStripMenuItem"
-        Me.EDITToolStripMenuItem.Size = New System.Drawing.Size(53, 25)
-        Me.EDITToolStripMenuItem.Text = "EDIT"
-        '
-        'DELETEToolStripMenuItem
-        '
-        Me.DELETEToolStripMenuItem.Name = "DELETEToolStripMenuItem"
-        Me.DELETEToolStripMenuItem.Size = New System.Drawing.Size(73, 25)
-        Me.DELETEToolStripMenuItem.Text = "DELETE"
-        '
         'PartsSpecificationsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -685,7 +669,7 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents PartNoSpecificationsItemToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents PartsSpecificationsHeaderMenuToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ProductsPartsSpecificationsHeaderMenuToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PartSpecificationsDetailsGroup As GroupBox
     Friend WithEvents PartNumberSpecificationTextBox As TextBox
     Friend WithEvents SpecifiedQuantityTextBox As TextBox
@@ -710,8 +694,6 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents ProductsPartsSpecificationsGroupBox As GroupBox
     Friend WithEvents QuantitySpecificationsGroupBox As GroupBox
     Friend WithEvents CodeVehiclePNSpecificationsGroupBox As GroupBox
-    Friend WithEvents SelectPartSpecificationsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AddPartSpecificationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditPartSpecificationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemovePartSpecificationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SelectPartNumberToolStripMenuItem As ToolStripMenuItem
@@ -725,8 +707,8 @@ Partial Class PartsSpecificationsForm
     Friend WithEvents SpecificationsContextMenuStrip As ContextMenuStrip
     Friend WithEvents CopySpecificationToolStripTextBox As ToolStripTextBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Friend WithEvents SELECTToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ADDToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SelectPartSpecificationsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AddPartSpecificationsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EDITToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DELETEToolStripMenuItem As ToolStripMenuItem
 End Class

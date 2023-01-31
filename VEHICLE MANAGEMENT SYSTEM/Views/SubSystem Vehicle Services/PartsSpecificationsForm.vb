@@ -1,11 +1,11 @@
 ﻿Public Class PartsSpecificationsForm
-    Private PartsSpecificationsFieldsToSelect = ""
-    Private PartsSpecificationsSelectionFilter = ""
-    Private PartsSpecificationsSelectionOrder = ""
-    Private PartsSpecificationsRecordCount As Integer = -1
-    Private CurrentPartsSpecificationsDataGridViewRow As Integer = -1
-    Private CurrentPartsSpecificationsID = -1
-    Private PartsSpecificationsDataGridViewAlreadyFormatted = False
+    Private ProductsPartsSpecificationsFieldsToSelect = ""
+    Private ProductsPartsSpecificationsSelectionFilter = ""
+    Private ProductsPartsSpecificationsSelectionOrder = ""
+    Private ProductsPartsSpecificationsRecordCount As Integer = -1
+    Private CurrentProductsPartsSpecificationsDataGridViewRow As Integer = -1
+    Private CurrentProductsPartsSpecificationID = -1
+    Private ProductsPartsSpecificationsDataGridViewAlreadyFormatted = False
 
     Private CodeVehiclePartsSpecificationsFieldsToSelect = ""
     Private CodeVehiclePartsSpecificationsSelectionFilter = ""
@@ -67,12 +67,36 @@
         '   WE HAVE 3 MODES   - 1 SELECTING AN SPECIFICATION FROM ALL THE LISTINGS FOR ALL SPECS FOR THE PART/product
         '   AND                      2 SELECTING AN SPECIFICATION FROM THE SPECIFICATION SPECIFIC FOR THE CAR MODEL
         '   and 3 Requesting for the specified quantity and unit
+        '   at all times (everytime there is a call to the fill routine
+        '   if CodeVehiclePartsSpecificationsRelationsDataGridView is not empty then
+        '           the CodeVehiclePartsSpecificationsRelationsGroupBox.Enabled and always visible
+        '           the CodeVehiclePartsSpecificationsRelationsGroupBox is enabled
+        '           the ProductsPartsSpecificationsGroupBox is hidden
+        '   otherwise (CodeVehiclePartsSpecificationsRelationsDataGridView is empty)
+        '           then   ProductsPartsSpecificationsGroupBox is shown
 
         SavedCallingForm = CallingForm
         'determine what informations are to be displayed based on the requesting form
+        'Product Specifications use CodeVehiclePartsSpecificationsRelationsTable and PartsSpecificationsTable
+        'Part Number Specifications use CodeVehiclePartNumbersSpecificationsRelationsTable and PartNumbersSpecificationsTable
         Select Case CallingForm.Name
             Case "ProductsPartsForm"
-                '               PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = True
+                ProductPartSpecificationsTextBox.Visible = True
+            Case "MasterCodeBookForm"
+                'Enable partnumber and part specification
+                'Use CodeVehiclePartsSpecificationsRelationsGroupBox is used
+                ' when working with part specification the CodeVehiclePartsSpecificationsRelationsGroupBox should always be visible
+                ' ProductPartSpecificationsTextBox will be visible when 
+                ' CodeVehiclePartsSpecificationsRelationsRecordCount is 0
+                ' and when ADD is requested
+
+                ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Visible = True
+                PartNoSpecificationsItemToolStripMenuItem.Visible = True
+                CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = True
+                PartNumberSpecificationTextBox.Visible = False
+                ProductPartSpecificationsTextBox.Visible = False
+            Case Else
+                Stop
         End Select
 
 
@@ -80,67 +104,49 @@
         CurrentMasterCodeBookID = Tunnel3
         VehicleModelTextBox.Text = Tunnel4
 
-        If IsNotEmpty(Tunnel1) Then
-            'dealing with quantity and unit specifications
-            CurrentJobDesCription = Tunnel1
-        Else
-            ProductPartSpecificationsTextBox.Enabled = True
-        End If
         ' Initialize TEXT BOXES TO DEFINE WHAT TYPE OF DATA TO STORE
-        If ProductPartSpecificationsTextBox.Enabled Then
-            'revised HERE WORK WITH TYPE SPECIFICATIONS ONLY
-            'revision Since a part can have an specified part number and part specification also
-            'then will disable this PartNoSpecificationsItemToolStripMenuItem.Visible = False
-
-            If IsNotEmpty(Tunnel1) Then 'IS JOB SPECIFIED?
-                CodeVehiclePartsSpecificationsRelationsGroupBox.Text = "Specifications for " + GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld").ToString
-                CodeVehiclePartsSpecificationsSelectionFilter = " WHERE CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString &
-                                                                    " AND MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookID.ToString
-                FillCodeVehiclePartsSpecificationsRelations()
-                'THERE WILL BE ONLY 1 PART TYPE SPECIFICATION PER VEHICLE PER PART
-                'WHICH DIFFER WITH PART NUMBER SPECIFICATIONS WHERE MULTIPLE PARTS NUMBERS CAN SUPERCEEDE OTHERS
-                ' SO DISABLE ABILITY TO ADD MORE SPECIFICATION BY DISABLING PartsSpecificationsGroupBox
-                ' AND THE MENU OPTION
-                If RecordCount > 0 Then
-                    CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = True
-                    PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = True
-                    ProductsPartsSpecificationsGroupBox.Visible = False
-                    AddPartSpecificationsToolStripMenuItem.Visible = False
-                Else
-                    CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = False
-                    ProductsPartsSpecificationsGroupBox.Visible = False
-                    AddPartSpecificationsToolStripMenuItem.Visible = True
-                End If
-            Else
-                'work with product specifications
-                CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = False
-            End If
+        If IsNotEmpty(Tunnel2) Then 'IS there CodevehicleID?
+            'then for sure it will be working on vehicle specipics
+            CodeVehiclePartsSpecificationsRelationsGroupBox.Text = "Specifications for " &
+                    GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld").ToString &
+                    " for " & VehicleModelTextBox.Text
+            ProductsPartsSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
+            FillProductsPartsSpecificationsDataGridView()
             ProductsPartsSpecificationsGroupBox.Text = "All Part Specs for " & GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld")
-            PartsSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
-            FillPartsSpecificationsDataGridView()
+            ProductsPartsSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
+            CodeVehiclePartsSpecificationsSelectionFilter = " WHERE CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString
+            FillCodeVehiclePartsSpecificationsRelations()
+            'THERE WILL BE ONLY 1 PART TYPE SPECIFICATION PER VEHICLE PER PART
+            'WHICH DIFFER WITH PART NUMBER SPECIFICATIONS WHERE MULTIPLE PARTS NUMBERS CAN SUPERCEDE OTHERS
+            ' SO DISABLE ABILITY TO ADD MORE SPECIFICATION BY DISABLING PartsSpecificationsGroupBox
+            ' AND THE MENU OPTION
+            'work with product specifications
+            FillProductsPartsSpecificationsDataGridView()
+            MsgBox("Check this when working with the following 3 commands")
+            Stop
             ServiceToPerformTextBox.Text = CurrentJobDesCription
             SpecifiedQuantityTextBox.Text = RequestPartsForm.SpecifiedQuantityTextBox.Text
             SpecifiedUnitTextBox.Text = RequestPartsForm.SpecifiedUnitTextBox.Text
         Else
-            PartNoSpecificationsItemToolStripMenuItem.Visible = True
+            '  here not working with vehicle specific informations
             DisablePartsSpecificationsOPtions()
             DisableQuantitySpecificationsOPtions()
             PartNumberSpecificationsGroupBox.Visible = False
-            CodeVehiclePNSpecificationsGroupBox.Visible = True
-            CodeVehiclePNSpecificationsGroupBox.Enabled = True
-            MsgBox("following filter was not yet tested just modified to copy above filter of type specification")
-            Stop
-            CodeVehiclePNSpecificationsSelectionFilter = " WHERE CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString &
-                                                                    " AND MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookID.ToString
-            FillCodeVehiclePNSpecificationsRelations()
-            PartNumberSpecificationsGroupBox.Text = "All part number Specs for " + GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld")
-            PartNumberSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
-            FillPartNumberSpecificationsDataGridView()
-            PartNoSpecificationsItemToolStripMenuItem.Select()
+            ProductsPartsSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
+            FillProductsPartsSpecificationsDataGridView()
+            ProductsPartsSpecificationsGroupBox.Text = "All part Specs for " & PartDescriptionTextBox.Text
+            ProductsPartsSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
+            FillProductsPartsSpecificationsDataGridView()
         End If
     End Sub
     Private Sub FillCodeVehiclePartsSpecificationsRelations()
-        ' FOLLOWING StripMenuItem ARE MADE VISIBLE ONLY WHEN THERE IS A RECORD FOUND
+        'at all times
+        '   if CodeVehiclePartsSpecificationsRelationsDataGridView is not empty then
+        '           the CodeVehiclePartsSpecificationsRelationsGroupBox.Enabled and always visible
+        '           the ProductsPartsSpecificationsGroupBox is hidden
+        '   otherwise (CodeVehiclePartsSpecificationsRelationsDataGridView is empty)
+        '           then   ProductsPartsSpecificationsGroupBox is shown
+        ' FOLLOWING StripMenuItems ARE MADE VISIBLE ONLY WHEN THERE IS A RECORD FOUND
         SelectPartSpecificationsToolStripMenuItem.Visible = False
         EditPartSpecificationsToolStripMenuItem.Visible = False
         RemovePartSpecificationsToolStripMenuItem.Visible = False
@@ -158,13 +164,16 @@ FROM ((CodeVehiclePartsSpecificationsRelationsTable LEFT JOIN PartsSpecification
 
         JustExecuteMySelection()
         CodeVehiclePartsSpecificationsRecordCount = RecordCount
-        If RecordCount > 0 Then
+        If CodeVehiclePartsSpecificationsRecordCount > 0 Then
             SelectPartSpecificationsToolStripMenuItem.Visible = True
             EditPartSpecificationsToolStripMenuItem.Visible = True
             RemovePartSpecificationsToolStripMenuItem.Visible = True
+            ProductsPartsSpecificationsGroupBox.Visible = False     'from this point adding a new can only trigger this to be shown
+        Else
+            ProductsPartsSpecificationsGroupBox.Visible = True
+            ProductsPartsSpecificationsGroupBox.Focus()
         End If
         CodeVehicleSpecificationsRelationsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = True
         If Not CodeVehiclePartsSpecificationsDataGridViewAlreadyFormatted Then
             FormatCodeVehiclePartsSpecificationsRelationsDataGridView()
         End If
@@ -172,7 +181,9 @@ FROM ((CodeVehiclePartsSpecificationsRelationsTable LEFT JOIN PartsSpecification
         CodeVehiclePartsSpecificationsRelationsGroupBox.Top = BottomOf(VehicleModelTextBox)
         CodeVehiclePartsSpecificationsRelationsGroupBox.Left = 1
         CodeVehiclePartsSpecificationsRelationsGroupBox.BringToFront()
+        'Always set this visible when working with parts specs
         CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = True
+        ProductsPartsSpecificationsGroupBox.Top = BottomOf(CodeVehiclePartsSpecificationsRelationsGroupBox)
     End Sub
 
     Private Sub FormatCodeVehiclePartsSpecificationsRelationsDataGridView()
@@ -203,8 +214,8 @@ FROM ((CodeVehiclePartsSpecificationsRelationsTable LEFT JOIN PartsSpecification
         CurrentCodeVehiclePartsSpecificationsDataGridViewRow = e.RowIndex
         CurrentCodeVehiclePartsSpecificationsRelationID = CodeVehicleSpecificationsRelationsDataGridView.Item("CodeVehiclePartsSpecificationsRelationID_AutoNumber", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value
     End Sub
-    Private Sub FillPartsSpecificationsDataGridView()
-        PartsSpecificationsFieldsToSelect =
+    Private Sub FillProductsPartsSpecificationsDataGridView()
+        ProductsPartsSpecificationsFieldsToSelect =
 " 
 SELECT 
 PartsSpecificationsTable.PartsSpecificationID_AutoNumber, 
@@ -212,22 +223,26 @@ PartsSpecificationsTable.MasterCodeBookID_LongInteger,
 PartsSpecificationsTable.PartSpecifications_ShortText255
 FROM PartsSpecificationsTable
 "
-        MySelection = PartsSpecificationsFieldsToSelect & PartsSpecificationsSelectionFilter
+        MySelection = ProductsPartsSpecificationsFieldsToSelect & ProductsPartsSpecificationsSelectionFilter
 
         JustExecuteMySelection()
-        PartsSpecificationsRecordCount = RecordCount
-        ' HERE PartsSpecificationsGroupBox IS SET VISIBLE WHEN 
-        ' CodeVehiclePartsSpecificationsCOUNT > 0
+        ProductsPartsSpecificationsRecordCount = RecordCount
         ProductsPartsSpecificationsDataGridView.DataSource = RecordFinderDbControls.MyAccessDbDataTable
-        If Not PartsSpecificationsDataGridViewAlreadyFormatted Then
+        If Not ProductsPartsSpecificationsDataGridViewAlreadyFormatted Then
             FormatPartsSpecificationsDataGridView()
         End If
-        SetGroupBoxHeight(6, PartsSpecificationsRecordCount + 1, ProductsPartsSpecificationsGroupBox, ProductsPartsSpecificationsDataGridView)
-        ProductsPartsSpecificationsGroupBox.Top = BottomOf(VehicleModelTextBox)
+        SetGroupBoxHeight(6, ProductsPartsSpecificationsRecordCount + 1, ProductsPartsSpecificationsGroupBox, ProductsPartsSpecificationsDataGridView)
+        ProductsPartsSpecificationsGroupBox.Top = BottomOf(CodeVehiclePartsSpecificationsRelationsGroupBox)
+        ' HERE PartsSpecificationsGroupBox IS SET VISIBLE WHEN 
+        ' CodeVehiclePartsSpecificationsCOUNT = 0
+        If CodeVehiclePartsSpecificationsRecordCount < 1 Then
+            If SavedCallingForm.Name = "ProductsPartsForm" Then Exit Sub
+            CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = True
+        End If
     End Sub
 
     Private Sub FormatPartsSpecificationsDataGridView()
-        PartsSpecificationsDataGridViewAlreadyFormatted = True
+        ProductsPartsSpecificationsDataGridViewAlreadyFormatted = True
         ProductsPartsSpecificationsGroupBox.Width = 0
 
         For i = 0 To ProductsPartsSpecificationsDataGridView.Columns.GetColumnCount(0) - 1
@@ -251,10 +266,10 @@ FROM PartsSpecificationsTable
         If ShowInTaskbarFlag Then Exit Sub
         If Me.Enabled = False Then Exit Sub
         If e.RowIndex < 0 Then Exit Sub
-        If PartsSpecificationsRecordCount = 0 Then Exit Sub
+        If ProductsPartsSpecificationsRecordCount = 0 Then Exit Sub
 
-        CurrentPartsSpecificationsDataGridViewRow = e.RowIndex
-        FillField(CurrentPartsSpecificationsID, ProductsPartsSpecificationsDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentPartsSpecificationsDataGridViewRow).Value)
+        CurrentProductsPartsSpecificationsDataGridViewRow = e.RowIndex
+        FillField(CurrentProductsPartsSpecificationID, ProductsPartsSpecificationsDataGridView.Item("PartsSpecificationID_AutoNumber", CurrentProductsPartsSpecificationsDataGridViewRow).Value)
         If ProductPartSpecificationsTextBox.Text = "type new specifications" Then ProductPartSpecificationsTextBox.SelectAll()
         EnablePartOPtions()
     End Sub
@@ -271,9 +286,9 @@ FROM (CodeVehiclePartNumbersSpecificationsRelationsTable LEFT JOIN PartNumbersSp
         MySelection = CodeVehiclePNSpecificationsFieldsToSelect & CodeVehiclePNSpecificationsSelectionFilter
 
         JustExecuteMySelection()
-        CodeVehiclePNSpecificationsDataGridView.Enabled = True
         PartNumberSpecificationsGroupBox.Visible = False
         CodeVehiclePNSpecificationsRecordCount = RecordCount
+        CodeVehiclePNSpecificationsDataGridView.Enabled = True
         If CodeVehiclePNSpecificationsRecordCount = 0 Then
             'THERE IS NO part SPECIFICATION YET FOR THIS CODE
             'MUST ADD NEW PART SPECIFICATION 1ST IN THE PART SPECIFICATION LIST
@@ -522,7 +537,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         If CurrentPartNumberSpecificationID = -1 Then
             If IsNotEmpty(PartNumberSpecificationTextBox.Text) Then Return True
         Else
-            If TheseAreNotEqual(PartNumberSpecificationTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("PartNumber_ShortText25", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
+            If TheseAreNotEqual(PartNumberSpecificationTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("PartNumber_ShortText25", CurrentProductsPartsSpecificationsDataGridViewRow).Value) Then Return True
         End If
         Return False
     End Function
@@ -587,11 +602,11 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
             InsertNewPartsSpecification()
         End If
 
-        FillPartsSpecificationsDataGridView()
+        FillProductsPartsSpecificationsDataGridView()
     End Sub
     Private Sub UpdatePartsSpecifications()
         'UPDATE LIST OF ALL Parts SPECIFICATIONS
-        Dim RecordFilter = " WHERE PartsSpecificationID_AutoNumber = " & CurrentPartsSpecificationsID.ToString
+        Dim RecordFilter = " WHERE PartsSpecificationID_AutoNumber = " & CurrentProductsPartsSpecificationID.ToString
         Dim SetCommand = " SET MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString & "," &
                           " PartsSpecifications_ShortText255 = " & InQuotes(ProductPartSpecificationsTextBox.Text)
         UpdateTable("PartsSpecificationsTable", SetCommand, RecordFilter)
@@ -608,9 +623,9 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
     End Sub
 
     Private Function AChangeInQuantitySpecificationsOccured()
-        If CurrentPartsSpecificationsDataGridViewRow > -1 Then
-            If TheseAreNotEqual(SpecifiedQuantityTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("SpecifiedQuantity_Double", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
-            If TheseAreNotEqual(SpecifiedUnitTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("SpecifiedUnit_ShortText3", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
+        If CurrentProductsPartsSpecificationsDataGridViewRow > -1 Then
+            If TheseAreNotEqual(SpecifiedQuantityTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("SpecifiedQuantity_Double", CurrentProductsPartsSpecificationsDataGridViewRow).Value) Then Return True
+            If TheseAreNotEqual(SpecifiedUnitTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("SpecifiedUnit_ShortText3", CurrentProductsPartsSpecificationsDataGridViewRow).Value) Then Return True
         Else
             If IsNotEmpty(SpecifiedQuantityTextBox.Text) Then Return True
             If IsNotEmpty(SpecifiedUnitTextBox.Text) Then Return True
@@ -618,8 +633,8 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         Return False
     End Function
     Private Function AChangeInPartSpecificationsOccured()
-        If CurrentPartsSpecificationsDataGridViewRow > -1 Then
-            If TheseAreNotEqual(ProductPartSpecificationsTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value) Then Return True
+        If CurrentProductsPartsSpecificationsDataGridViewRow > -1 Then
+            If TheseAreNotEqual(ProductPartSpecificationsTextBox.Text, ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsSpecificationsDataGridViewRow).Value) Then Return True
         Else
             If IsNotEmpty(ProductPartSpecificationsTextBox.Text) Then Return True
         End If
@@ -693,51 +708,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
                           "PartSpecifications_ShortText255 = " & InQuotes(ProductPartSpecificationsTextBox.Text)
         UpdateTable("PartsSpecificationsTable", SetCommand, RecordFilter)
     End Sub
-    Private Sub SelectPartsSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectPartSpecificationsToolStripMenuItem.Click
-        Select Case CallingForm.Name
-            Case "ProductsPartsForm"
-                ProductsPartsForm.ProductSpecificationTextBox.Text =
-                    ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value
-
-                Tunnel1 = "Tunnel2IsPartsSpecificationsID"
-                Tunnel2 = CurrentPartsSpecificationsID
-            Case "RequestPartsForm"
-                'HERE WE HAVE TO DETERMINE WHAT IS REQUESTED FOR
-                'AND FOR EACH
-                '   WE HAVE 2 MODES   - 1 SELECTING AN SPECIFICATION FROM ALL THE LISTINGS FOR ALL SPECS FOR THE PART
-                '   AND                      2 SELECTING AN SPECIFICATION FROM THE SPECIFICATION SPECIFIC FOR THE CAR MODEL
-                '   AND CAN BE DETERMINED BY 
-                If ProductPartSpecificationsTextBox.Enabled Then ' PART TYPE SPECIFICATION IS REQESTED
-                    If ProductsPartsSpecificationsGroupBox.Visible Then ' SELECT MEANS SELECTING FOR PARTICULAR SPECIFICATION FOR
-                        ' THIS VEHICLE
-                        If MsgBox("Continue Adding this as Specification for " & VehicleModelTextBox.Text, MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                            Dim FieldsToUpdate = "  CodeVehicleID_LongInteger, " &
-                                         " PartsSpecificationID_LongInteger "
-                            Dim FieldsData = CurrentCodeVehicleID.ToString & ", " &
-                                     CurrentPartsSpecificationsID
-
-                            CurrentCodeVehiclePartsSpecificationsRelationID = InsertNewRecord("CodeVehiclePartsSpecificationsRelationsTable", FieldsToUpdate, FieldsData)
-                            FillCodeVehiclePartsSpecificationsRelations()
-                            CodeVehiclePartsSpecificationsRelationsGroupBox.Enabled = True
-                            ProductsPartsSpecificationsGroupBox.Visible = False
-                            Exit Sub
-                        End If
-                    End If
-                End If
-                'RETURN THE SPECIFICATION
-                Tunnel1 = "CodeVehiclePartsSpecificationsRelationID"
-                Tunnel2 = CurrentCodeVehiclePartsSpecificationsRelationID
-
-
-                RequestPartsForm.SpecificationsTextBox.Text = CodeVehicleSpecificationsRelationsDataGridView.Item("PartSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value
-            Case Else
-                MsgBox("Break, there has been chages here, UPDATING WILL BE I 2 MODES, CALLER SPECIFIES THE VEHICLE OR JUST SPECIFICATION IS FOR ALL PARTS")
-                Stop
-        End Select
-        DoCommonHouseKeeping(Me, SavedCallingForm)
-    End Sub
     Private Sub SpecifiedPartNumberTextBox_TextChanged(sender As Object, e As EventArgs) Handles PartNumberSpecificationTextBox.TextChanged
-
     End Sub
 
     Private Sub PartsSpecificationsTextBox_Click(sender As Object, e As EventArgs) Handles ProductPartSpecificationsTextBox.Click
@@ -745,8 +716,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         EnablePartOPtions()
     End Sub
     Private Sub EnablePartOPtions()
-        PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = True
-        If PartsSpecificationsRecordCount = 0 Then
+        If ProductsPartsSpecificationsRecordCount = 0 Then
             SelectPartSpecificationsToolStripMenuItem.Visible = False
             EditPartSpecificationsToolStripMenuItem.Visible = False
             RemovePartSpecificationsToolStripMenuItem.Visible = False
@@ -757,7 +727,6 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         End If
     End Sub
     Private Sub EnablePartNUmberOPtions()
-        PartNoSpecificationsItemToolStripMenuItem.Visible = True
         If PartNumberSpecificationsRecordCount = 0 Then
             SelectPartNumberToolStripMenuItem.Visible = False
             EditPartNumberToolStripMenuItem.Visible = False
@@ -769,16 +738,14 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         End If
     End Sub
     Private Sub DisablePartsSpecificationsOPtions()
-        PartsSpecificationsHeaderMenuToolStripMenuItem.Visible = False
+        'why
         SelectPartSpecificationsToolStripMenuItem.Visible = False
         EditPartSpecificationsToolStripMenuItem.Visible = False
         RemovePartSpecificationsToolStripMenuItem.Visible = False
     End Sub
     Private Sub EnablePartSpecificationsOPtions()
-        PartNoSpecificationsItemToolStripMenuItem.Visible = True
     End Sub
     Private Sub DisablePartSpecificationsOPtions()
-        PartNoSpecificationsItemToolStripMenuItem.Visible = False
     End Sub
     Private Sub EnableQuantitySpecificationsOPtions()
         QuantitySpecificationsToolStripTextBox.Visible = True
@@ -797,29 +764,18 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
 
     End Sub
 
-    Private Sub AddPartsSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPartSpecificationsToolStripMenuItem.Click
-        'IF THE GENERAL SPECIFICATIONS FOR THE PART IS VISIBLE THEN WHAT HAS BEEN SELECTED WILL BE ADDED TO THE
-        ' SPECIFIC CAR OTHERWISE INPUT AS NEW SPECIFICATION FOR THE PART AND SAVE IT AS A GENERAL SPECIFICATION FOR THE PART
-
-        CurrentPartsSpecificationsID = -1
-        ProductPartSpecificationsTextBox.Text = "type new specifications"
-        ProductPartSpecificationsTextBox.ReadOnly = False
-        ProductPartSpecificationsTextBox.SelectAll()
-        SaveToolStripMenuItem.Visible = True
-        '        PartSpecificationsDetailsGroup.Visible = True
-    End Sub
 
 
     Private Sub RemovePartsSpecificationsToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles RemovePartSpecificationsToolStripMenuItem.Click
         Dim TablesToCheck = {"ProductsPartsTable"}
-        If LinkExistsIn(TablesToCheck, "PartsSpecificationID_LongInteger", CurrentPartsSpecificationsID) Then
+        If LinkExistsIn(TablesToCheck, "PartsSpecificationID_LongInteger", CurrentProductsPartsSpecificationID) Then
             MsgBox("Remove first the link in ProductsPartsTable before you can delete this")
             Exit Sub
         End If
         If MsgBox("NO link found, Are sure you want to delete this specification ?", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        MySelection = " DELETE FROM PartsSpecificationsTable WHERE PartsSpecificationID_AutoNumber =  " & CurrentPartsSpecificationsID
+        MySelection = " DELETE FROM PartsSpecificationsTable WHERE PartsSpecificationID_AutoNumber =  " & CurrentProductsPartsSpecificationID
         JustExecuteMySelection()
-        FillPartsSpecificationsDataGridView()
+        FillProductsPartsSpecificationsDataGridView()
     End Sub
 
     Private Sub SelectPartNumberToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectPartNumberToolStripMenuItem.Click
@@ -831,6 +787,10 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
             JustExecuteMySelection()
             If RecordCount > 0 Then
                 MsgBox("Selected Specification already in the list")
+                CodeVehiclePNSpecificationsSelectionFilter = " WHERE PartNumbersSpecificationID_LongInteger = " & CurrentPartNumberSpecificationID &
+                            " And CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString
+                CurrentPartNumberSpecificationID.ToString()
+                FillCodeVehiclePNSpecificationsRelations()
                 Exit Sub
             End If
             Dim FieldsToUpdate = "  CodeVehicleID_LongInteger, " &
@@ -858,7 +818,7 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         CurrentPartNumberSpecificationID = -1
         PartNumberSpecificationTextBox.ReadOnly = False
         PartNumberSpecificationTextBox.Enabled = True
-        PartNumberSpecificationTextBox.Text = "type new part number specification"
+        PartNumberSpecificationTextBox.Text = "type New part number specification"
         PartNumberSpecificationTextBox.SelectAll()
         SaveToolStripMenuItem.Visible = True
     End Sub
@@ -873,16 +833,177 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
 
     Private Sub CopySpecificationToolStripTextBox_Click(sender As Object, e As EventArgs) Handles CopySpecificationToolStripTextBox.Click
         SpecificationsContextMenuStrip.Hide()
-        Clipboard.SetText(ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value)
+        Clipboard.SetText(ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsSpecificationsDataGridViewRow).Value)
     End Sub
 
     Private Sub PasteSpecificationToolStripTextBox_Click(sender As Object, e As EventArgs)
         ProductPartSpecificationsTextBox.Text = Clipboard.GetText()
     End Sub
 
-    Private Sub EditPartSpecificationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditPartSpecificationsToolStripMenuItem.Click
+    Private Sub PartNoSpecificationsItemToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PartNoSpecificationsItemToolStripMenuItem.Click
+        CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = False
+        ProductsPartsSpecificationsGroupBox.Visible = False
+        CodeVehiclePNSpecificationsSelectionFilter = " WHERE CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString &
+                                                                    " AND MasterCodeBookID_Autonumber = " & CurrentMasterCodeBookID.ToString
+        FillCodeVehiclePNSpecificationsRelations()
+        FillCodeVehiclePNSpecificationsRelations()
+        PartNumberSpecificationsGroupBox.Text = "All part number Specs for " + GetFieldValue("MasterCodeBookTable", "MasterCodeBookID_Autonumber", CurrentMasterCodeBookID, "SystemDesc_ShortText100Fld")
+        PartNumberSpecificationsSelectionFilter = " WHERE MasterCodeBookID_LongInteger = " & CurrentMasterCodeBookID.ToString
+        FillPartNumberSpecificationsDataGridView()
+        CodeVehiclePNSpecificationsGroupBox.Visible = True
+    End Sub
+
+    Private Sub ProductsPartsSpecificationsHeaderMenuToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductsPartsSpecificationsHeaderMenuToolStripMenuItem.Click
+        CodeVehiclePartsSpecificationsRelationsGroupBox.Visible = True
+        CodeVehiclePNSpecificationsGroupBox.Visible = False
+        FillCodeVehiclePartsSpecificationsRelations()
+    End Sub
+
+    Private Sub ADDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddPartSpecificationsToolStripMenuItem.Click
+        Select Case SavedCallingForm.Name
+            Case "MasterCodeBookForm"
+                If CodeVehiclePartsSpecificationsRelationsGroupBox.Visible Then
+                    'work with parts specs
+                    If ProductsPartsSpecificationsGroupBox.Visible Then
+                        'active specsgridview is products spcs
+                        CurrentProductsPartsSpecificationID = -1
+                        ProductPartSpecificationsTextBox.Text = "type New specifications"
+                        ProductPartSpecificationsTextBox.ReadOnly = False
+                        ProductPartSpecificationsTextBox.SelectAll()
+                        SaveToolStripMenuItem.Visible = True
+                        '        PartSpecificationsDetailsGroup.Visible = True
+                    Else
+                        'then display the all specs available for the product
+                        ProductsPartsSpecificationsGroupBox.Visible = True
+                    End If
+                Else
+                    'work with parts specification
+                End If
+            Case Else
+                Stop
+        End Select
+        'IF THE GENERAL SPECIFICATIONS FOR THE PART IS VISIBLE THEN WHAT HAS BEEN SELECTED WILL BE ADDED TO THE
+        ' SPECIFIC CAR OTHERWISE INPUT AS NEW SPECIFICATION FOR THE PART AND SAVE IT AS A GENERAL SPECIFICATION FOR THE PART
+
+    End Sub
+
+    Private Sub SELECTToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectPartSpecificationsToolStripMenuItem.Click
+        Select Case CallingForm.Name
+            Case "ProductsPartsForm"
+                ProductsPartsForm.ProductSpecificationTextBox.Text =
+                    ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsSpecificationsDataGridViewRow).Value
+
+                Tunnel1 = "Tunnel2IsPartsSpecificationsID"
+                Tunnel2 = CurrentProductsPartsSpecificationID
+            Case "RequestPartsForm"
+                'HERE WE HAVE TO DETERMINE WHAT IS REQUESTED FOR
+                'AND FOR EACH
+                '   WE HAVE 2 MODES   - 1 SELECTING AN SPECIFICATION FROM ALL THE LISTINGS FOR ALL SPECS FOR THE PART
+                '   AND                      2 SELECTING AN SPECIFICATION FROM THE SPECIFICATION SPECIFIC FOR THE CAR MODEL
+                '   AND CAN BE DETERMINED BY 
+                If ProductPartSpecificationsTextBox.Enabled Then ' PART TYPE SPECIFICATION IS REQESTED
+                    If ProductsPartsSpecificationsGroupBox.Visible Then ' SELECT MEANS SELECTING FOR PARTICULAR SPECIFICATION FOR
+                        ' THIS VEHICLE
+                        If MsgBox("Continue Adding this As Specification For " & VehicleModelTextBox.Text, MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                            Dim FieldsToUpdate = "  CodeVehicleID_LongInteger, " &
+                                         " PartsSpecificationID_LongInteger "
+                            Dim FieldsData = CurrentCodeVehicleID.ToString & ", " &
+                                     CurrentProductsPartsSpecificationID
+
+                            CurrentCodeVehiclePartsSpecificationsRelationID = InsertNewRecord("CodeVehiclePartsSpecificationsRelationsTable", FieldsToUpdate, FieldsData)
+                            FillCodeVehiclePartsSpecificationsRelations()
+                            CodeVehiclePartsSpecificationsRelationsGroupBox.Enabled = True
+                            ProductsPartsSpecificationsGroupBox.Visible = False
+                            Exit Sub
+                        End If
+                    End If
+                End If
+                'RETURN THE SPECIFICATION
+                Tunnel1 = "CodeVehiclePartsSpecificationsRelationID"
+                Tunnel2 = CurrentCodeVehiclePartsSpecificationsRelationID
+
+
+                RequestPartsForm.SpecificationsTextBox.Text = CodeVehicleSpecificationsRelationsDataGridView.Item("PartSpecifications_ShortText255", CurrentCodeVehiclePartsSpecificationsDataGridViewRow).Value
+            Case "MasterCodeBookForm"
+                MsgBox(" 'document this")
+                Stop
+
+                'Product Specifications use CodeVehiclePartsSpecificationsRelationsTable and PartsSpecificationsTable
+                'Part Number Specifications use CodeVehiclePartNumbersSpecificationsRelationsTable and PartNumbersSpecificationsTable
+                'HERE WE HAVE TO DETERMINE WHAT IS REQUESTED FOR
+                'AND FOR EACH
+                '   WE HAVE 2 MODES   - 1 SELECTING AN SPECIFICATION FROM ALL THE LISTINGS of the SPECS FOR THE PART
+                '   AND                 2 SELECTING AN SPECIFICATION FROM THE ALL THE LISTINGS of the SPECS FOR THE PART OF THE
+                '                           SPECIFIC MODEL
+                '   AND CAN BE DETERMINED by which ever of the GridView is active
+                If CodeVehiclePartsSpecificationsRelationsGroupBox.Visible Then ' otherswise PartNumber actions are active
+                    'work with the ProductsParts Specification here
+                    If ProductsPartsSpecificationsGroupBox.Visible Then ' SELECT MEANS SELECTING FOR the PARTICULAR SPECIFICATION FOR
+                        ' THIS VEHICLE
+                        If ProductsPartsSpecificationsRecordCount = 0 Then
+                            MsgBox("There is nothing to select", vbExclamation)
+                            Exit Sub
+                        End If
+                        If MsgBox("Continue Adding this as Specification for " & VehicleModelTextBox.Text, MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                            'Check if this record is already in the codevehiclepart specs list
+                            MySelection = " SELECT * FROM CodeVehiclePartsSpecificationsRelationsTable WHERE " &
+                                                " CodeVehicleID_LongInteger = " & CurrentCodeVehicleID.ToString & " AND " &
+                                                "  PartsSpecificationID_LongInteger  = " & CurrentProductsPartsSpecificationID.ToString
+                            JustExecuteMySelection()
+                            If RecordCount > 0 Then
+                                MsgBox("This specificatation already exist in the list")
+                                Exit Sub
+                            End If
+                            Dim FieldsToUpdate = "  CodeVehicleID_LongInteger, " &
+                                         " PartsSpecificationID_LongInteger "
+                            Dim FieldsData = CurrentCodeVehicleID.ToString & ", " &
+                                     CurrentProductsPartsSpecificationID
+
+                            CurrentCodeVehiclePartsSpecificationsRelationID = InsertNewRecord("CodeVehiclePartsSpecificationsRelationsTable", FieldsToUpdate, FieldsData)
+                            FillCodeVehiclePartsSpecificationsRelations()
+                            CodeVehiclePartsSpecificationsRelationsGroupBox.Enabled = True
+                            ProductsPartsSpecificationsGroupBox.Visible = False
+                        End If
+                    Else
+                        'return the value of the select codevehicle relation
+                    End If
+                Else
+                    'work with part number specifications
+                    If PartNumberSpecificationsGroupBox.Visible Then ' SELECT MEANS SELECTING FOR PARTICULAR SPECIFICATION FOR
+                        ' THIS VEHICLE
+                        If ProductsPartsSpecificationsRecordCount = 0 Then
+                            MsgBox("There is nothing to select", vbExclamation)
+                            Exit Sub
+                        End If
+                        If MsgBox("Continue Adding this as PN Specification for " & VehicleModelTextBox.Text, MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                            Dim FieldsToUpdate = "  CodeVehicleID_LongInteger, " &
+                                             " PartNumbersSpecificationID_LongInteger "
+                            Dim FieldsData = CurrentCodeVehicleID.ToString & ", " &
+                                         CurrentPartNumberSpecificationID
+
+                            CurrentCodeVehiclePartsSpecificationsRelationID = InsertNewRecord("CodeVehiclePartNumbersSpecificationsRelationsTable", FieldsToUpdate, FieldsData)
+                            FillCodeVehiclePartsSpecificationsRelations()
+                            CodeVehiclePartsSpecificationsRelationsGroupBox.Enabled = True
+                            ProductsPartsSpecificationsGroupBox.Visible = False
+                            Exit Sub
+                        End If
+                    End If
+                End If
+                'RETURN THE SPECIFICATION
+                Tunnel1 = "CodeVehiclePartsSpecificationsRelationID"
+                Tunnel2 = CurrentCodeVehiclePartsSpecificationsRelationID
+
+
+            Case Else
+                MsgBox("Break, there has been chages here, UPDATING WILL BE I 2 MODES, CALLER SPECIFIES THE VEHICLE OR JUST SPECIFICATION IS FOR ALL PARTS")
+                Stop
+        End Select
+        DoCommonHouseKeeping(Me, SavedCallingForm)
+    End Sub
+
+    Private Sub EDITToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EDITToolStripMenuItem.Click
         If MsgBox("Are you sure you want to change description ? ", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
-        ProductPartSpecificationsTextBox.Text = ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentPartsSpecificationsDataGridViewRow).Value
+        ProductPartSpecificationsTextBox.Text = ProductsPartsSpecificationsDataGridView.Item("PartSpecifications_ShortText255", CurrentProductsPartsSpecificationsDataGridViewRow).Value
         If ProductsPartsSpecificationsGroupBox.Visible = False Then
             ProductsPartsSpecificationsGroupBox.Visible = True
         End If
@@ -891,14 +1012,4 @@ FROM QuantitySpecificationsTable INNER JOIN InformationsHeadersTable ON Quantity
         SaveToolStripMenuItem.Visible = True
         PartSpecificationsDetailsGroup.Visible = True
     End Sub
-
-    Private Sub CodeVehiclePartsSpecificationsGroupBox_VisibleChanged(sender As Object, e As EventArgs) Handles CodeVehiclePartsSpecificationsRelationsGroupBox.VisibleChanged
-        ' WHEN PRODUCT SPECIFICATION is visible/activated then CodeVehiclePartsSpecificationsRelationsGroupBox is deactivated and vice versa
-        If CodeVehiclePartsSpecificationsRelationsGroupBox.Visible Then
-            ProductsPartsSpecificationsGroupBox.Visible = False
-        Else
-            ProductsPartsSpecificationsGroupBox.Visible = True
-        End If
-    End Sub
-
 End Class

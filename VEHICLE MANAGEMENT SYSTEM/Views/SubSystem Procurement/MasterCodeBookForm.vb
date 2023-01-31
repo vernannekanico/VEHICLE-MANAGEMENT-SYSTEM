@@ -1315,9 +1315,9 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         ' now SELECT ALL records  TO BE REPLACED
         ' STARTING FROM THE GIVEN BASE CODES AND ITS CHILDREN
 
-        MySelection = " SELECT MasterCodeBookID_Autonumber, SubSystemCode_ShortText24Fld,  SystemDesc_ShortText100Fld FROM MasterCodeBookTable 
-                                        WHERE mid(SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text)) &
-                                        SubSystemCodeSelectionOrder
+        SubSystemCodeSelectionFilter = "WHERE mid(MasterCodeBookTable.SubSystemCode_ShortText24Fld,1," & Str(Len(Trim(OldNumberTextBox.Text))) & ") = " & InQuotes(Trim(OldNumberTextBox.Text))
+        MySelection = SubSystemCodeFieldsToSelect & SubSystemCodeSelectionFilter & SubSystemCodeSelectionOrder
+
         JustExecuteMySelection()
 
         ' THEN LOAD THE RECORDS IN THE SubSystemCodeDataGridView
@@ -1328,7 +1328,7 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         Dim ARecords = ""
         If RecordCount = 1 Then
             ThisThese = "this record ?"
-            ThereIsThereAre = "There is "
+            ThereIsThereAre = "There Is "
             ARecords = " record"
         Else
             ThisThese = "these records ?"
@@ -1338,19 +1338,19 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         ' CHECK HOW MANY InfoPerVehicle WILL BE RENUMBERED
         Dim InfoPerVehicleRecordCount = 0
 
-        If MsgBox(ThereIsThereAre & Str(RecordCount) & ARecords & " found to be renumbered, " & " CONTINUE renumbering " & ThisThese, vbYesNo) = vbNo Then
+        If MsgBox(ThereIsThereAre & Str(RecordCount) & ARecords & " found To be renumbered, " & " Continue renumbering " & ThisThese, vbYesNo) = vbNo Then
             RenumberGroupBox.Visible = False
             Exit Sub
         End If
 
         'UPDATE NOW, DO CHANGES HERE FOR ALL SELECTED RECORDS IN THE SubSystemCodeDataGridView
         For I = 0 To RecordCount - 1
-            CurrentSubSystemCodeBookID = SubSystemCodeDataGridView.Item("MasterCodeBookID_Autonumber", I).Value
+            CurrentSubSystemCodeBookID = SubSystemCodeDataGridView.Item("MasterCodeBookTable.MasterCodeBookID_Autonumber", I).Value
             CurrentSubSystemCode = SubSystemCodeDataGridView.Item("SubSystemCode_ShortText24Fld", I).Value
 
             Dim RecordFilter = " WHERE MasterCodeBookID_Autonumber = " & CurrentSubSystemCodeBookID
             Dim ReplacementCode = Replace(CurrentSubSystemCode, OldNumberTextBox.Text, NewNumberTextBox.Text)
-            Dim SetCommand = " SET SubSystemCode_ShortText24Fld  = " & InQuotes(ReplacementCode)
+            Dim SetCommand = " Set SubSystemCode_ShortText24Fld  = " & InQuotes(ReplacementCode)
 
             UpdateTable("MasterCodeBookTable", SetCommand, RecordFilter)
             ' RENUMBER THE InfoPerVehicle TOO if exist(s)
@@ -1580,7 +1580,12 @@ FROM ((CodeInformationsHeaderRelationsTable LEFT JOIN InformationsHeadersTable O
         ' OR PartSpecificationsTextBox TO WORK WITH SPECIFICATION
         Tunnel1 = "" ' documented as InformationsHeaderID (Job Description)
         Tunnel2 = CurrentCodeVehicleID  'THIS SHOULD BE SET UPON VEHICLE SELECTION
-        Tunnel3 = CurrentSubSystemCodeBookID
+        If IsEmpty(CurrentProductsPartsConsumablesRelation) Then
+            Tunnel3 = CurrentSubSystemCodeBookID
+        Else
+            Tunnel3 = SubSystemCodeDataGridView.Item("ConsumablesCodeBookConsumableID_LongInteger", CurrentSubSystemCodeRow).Value
+
+        End If
         Tunnel4 = DefaultVehicleModelTextBox.Text
         PartsSpecificationsForm.PartDescriptionTextBox.Text = CurrentSubSystemName
         ShowCalledForm(Me, PartsSpecificationsForm)
